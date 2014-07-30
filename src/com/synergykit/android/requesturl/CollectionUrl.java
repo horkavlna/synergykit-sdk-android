@@ -1,4 +1,11 @@
-package com.synergykit.android.request;
+package com.synergykit.android.requesturl;
+
+/**
+ * 
+ * @author Pavel Stambrecht
+ *
+ */
+
 
 public class CollectionUrl {
 	
