@@ -7,19 +7,20 @@ package com.synergykit.android.requesturl;
  */
 
 public class LogUrl {
-	/* Attributes */
+	
+	/* Constants */
 	final private static String SLASH = "/";
 	final private static String URL_TEMPLATE = "https://%s.api.synergykit.com/logs%s?application=%s";
 
 	
 	/* Get url */
-	public String getUrl(String tenant, String appKey){
-		return this.getUrl(tenant, appKey, null);
+	public static String getUrl(String tenant, String appKey){
+		return LogUrl.getUrl(tenant, appKey, null);
 	}
 	
 	
 	/* Get url */
-	public String getUrl(String tenant, String appKey, String logId){
+	public static String getUrl(String tenant, String appKey, String logId){
 		
 		//set log id
 		if(logId!=null && logId.length()>0)

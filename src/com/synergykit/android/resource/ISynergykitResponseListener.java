@@ -1,5 +1,7 @@
 package com.synergykit.android.resource;
 
-public interface ISynergykitResponseListener {
-	public void run();
+import org.apache.http.HttpResponse;
+
+public interface ISynergykitResponseListener<T> {
+	public void run(HttpResponse httpResponse,T object);
 }

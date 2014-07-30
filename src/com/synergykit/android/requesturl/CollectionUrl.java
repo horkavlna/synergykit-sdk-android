@@ -9,18 +9,18 @@ package com.synergykit.android.requesturl;
 
 public class CollectionUrl {
 	
-	/* Attributes */
+	/* Constants */
 	final private static String SLASH = "/";
 	final private static String URL_TEMPLATE = "https://%s.api.synergykit.com/collections%s?application=%s";
 	
 	
 	/* Get url */
-	public String getUrl(String tenant, String appKey ){
-		 return this.getUrl(tenant, appKey, null);
+	public static String getUrl(String tenant, String appKey ){
+		 return CollectionUrl.getUrl(tenant, appKey, null);
 	}
 	
 	/* Get url */
-	public String getUrl(String tenant, String appKey, String collectionUrl ){
+	public static String getUrl(String tenant, String appKey, String collectionUrl ){
 		
 		//set collection url
 		if(collectionUrl!=null && collectionUrl.length()>0)

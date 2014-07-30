@@ -7,17 +7,18 @@ package com.synergykit.android.requesturl;
  */
 
 public class DataUrl {
-	/* Attributes */
+	
+	/* Constants */
 	final private static String SLASH = "/";
 	final private static String URL_TEMPLATE = "https://%s.api.synergykit.com/data/%s%s?application=%s";
 	
 	/*Get url */
-	public String getUrl(String tenant, String appKey, String collectionUrl){
-		return this.getUrl(tenant, appKey, collectionUrl,null);
+	public static String getUrl(String tenant, String appKey, String collectionUrl){
+		return DataUrl.getUrl(tenant, appKey, collectionUrl,null);
 	}
 	
 	/*Get url */
-	public String getUrl(String tenant, String appKey, String collectionUrl, String recordId){
+	public static String getUrl(String tenant, String appKey, String collectionUrl, String recordId){
 		
 		//set record id
 		if(recordId!=null && recordId.length() > 0)

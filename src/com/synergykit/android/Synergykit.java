@@ -1,8 +1,8 @@
 package com.synergykit.android;
 
-import com.synergykit.android.provider.IProvider;
+import com.synergykit.android.exception.NotInitializedException;
 import com.synergykit.android.provider.Provider;
-
+import com.synergykit.android.resource.ISynergykitResponseListener;
 
 /**
  * 
@@ -10,17 +10,31 @@ import com.synergykit.android.provider.Provider;
  *
  */
 public class Synergykit {
-	/* Attributes */
-	private static Synergykit mInstance=null;
-	private IProvider mProvider;
+	private static Synergykit mInstance = null;
+
 	
-	/* Constructor */
-	public Synergykit(String tenant, String applicationKey){
-		mProvider = new Provider(tenant, applicationKey);
+	/* Instance getter */
+	/*public static Synergykit getInstance() {
+		
+		if (mInstance == null) {
+			mInstance = new Synergykit();
+		}
+		
+		return mInstance;
+	}*/
+
+	/* Init */
+	public static void init(String tenant, String applicationKey) {
+		Provider.getInstance().init(tenant, applicationKey);
 	}
+
 	
-	
-	public boolean createRecord(String collectionUrl, Object object){
-		return mProvider.createRecord(collectionUrl, object);
+	/* Create record */
+	public static boolean createRecord(String collectionUrl, Object object, ISynergykitResponseListener listener)
+			throws NotInitializedException {
+
+		return Provider.getInstance().createRecord(collectionUrl, object, listener);
 	}
+
+
 }

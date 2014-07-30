@@ -1,9 +1,6 @@
 package com.synergykit.android.request;
 
-import java.io.IOException;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.entity.StringEntity;
+import com.synergykit.android.resource.ISynergykitResponseListener;
 
 /**
  * 
@@ -11,12 +8,11 @@ import org.apache.http.entity.StringEntity;
  *
  */
 
-public class Request implements IRequest{
+public class Request{
 
 	/* Request GET */
-	@Override
-	public HttpResponse get(String url) {
-		Get get = new Get(url) {
+	public static void get(String url) {
+	/*	Get get = new Get(url) {
 		};
 		try {
 			HttpResponse response = get.execute();
@@ -25,27 +21,21 @@ public class Request implements IRequest{
 			e.printStackTrace();
 			return null;
 		}
+		*/
 	}
 
 	/* Request POST */
-	@Override
-	public HttpResponse post(String url, String json) {
-		boolean state;
-		Post post = new Post(url){};
-		try {
-			HttpResponse response = post
-					.execute(new StringEntity(json, "UTF-8"));
-			return response;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		}
+	public static void post(String url, String json,ISynergykitResponseListener listener) {
+		PostRunnable runnabe = new PostRunnable();
+		runnabe.mJson = json;
+		runnabe.mUrl = url;
+		runnabe.mListener=listener;
+		new Thread(runnabe).start();	
 	}
 
 	/* Request PUT */
-	@Override
-	public HttpResponse put(String url, String json) {
-		Put put = new Put(url) {
+	public static void put(String url, String json) {
+	/*	Put put = new Put(url) {
 		};
 		try {
 			HttpResponse response = put
@@ -54,13 +44,12 @@ public class Request implements IRequest{
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
-		}
+		}*/
 	}
 
 	/* Request DELETE */
-	@Override
-	public HttpResponse delete(String url) {
-		Delete delete = new Delete(url) {
+	public static void delete(String url) {
+	/*	Delete delete = new Delete(url) {
 		};
 		try {
 			HttpResponse response = delete.execute();
@@ -68,7 +57,7 @@ public class Request implements IRequest{
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
-		}
+		}*/
 	}
 
 }

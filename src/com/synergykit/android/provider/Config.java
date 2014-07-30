@@ -5,6 +5,7 @@ public class Config {
 	private String mTenant;
 	private String mAppKey;
 	
+	
 	/* Constructor */ 
 	public Config(String tenant, String appKey){
 		this.mTenant =tenant;
