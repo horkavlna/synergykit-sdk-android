@@ -12,7 +12,7 @@ public class Query {
 
 	public Query(Synergykit synergykit) {
 		this.synergykit = synergykit;
-		url = String.format(RESTHelper.BASE_URL, synergykit.getApplication());
+		//url = String.format(RESTHelper.BASE_URL, synergykit.getApplication());
 	}
 
 	public Query getUsers() {
@@ -104,7 +104,7 @@ public class Query {
 	}
 
 	private Query addApplicationKey() {
-		url += "?application=" + synergykit.getKey();
+		//url += "?application=" + synergykit.getKey();
 		return this;
 	}
 

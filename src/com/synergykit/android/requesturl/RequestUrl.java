@@ -8,7 +8,7 @@ import com.google.gson.Gson;
  *
  */
 
-public class RequestURL {
+public class RequestUrl {
 	
 	/* Attributes */
 	private static CollectionUrl mCollectionUrl = new CollectionUrl();
