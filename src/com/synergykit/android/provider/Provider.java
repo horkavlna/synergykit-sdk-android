@@ -4,13 +4,16 @@ import java.util.List;
 
 import android.util.Log;
 
-import com.google.gson.Gson;
 import com.synergykit.android.exception.NotInitializedException;
 import com.synergykit.android.gsonwrapper.GsonWrapper;
 import com.synergykit.android.request.Request;
 import com.synergykit.android.requesturl.RequestUrl;
 import com.synergykit.android.resource.ISynergykitResponseListener;
-
+/**
+ * 
+ * @author Pavel Stambrecht
+ *
+ */
 public class Provider{
 
 	/* Attributes */

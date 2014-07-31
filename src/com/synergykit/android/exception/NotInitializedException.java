@@ -1,5 +1,9 @@
 package com.synergykit.android.exception;
-
+/**
+ * 
+ * @author Pavel Stambrecht
+ *
+ */
 public class NotInitializedException extends Exception {
 
 	/* Constants */

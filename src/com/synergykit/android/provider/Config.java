@@ -1,5 +1,9 @@
 package com.synergykit.android.provider;
-
+/**
+ * 
+ * @author Pavel Stambrecht
+ *
+ */
 public class Config {
 	/* Attributes */
 	private String mTenant;

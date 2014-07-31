@@ -12,31 +12,33 @@ public class Request{
 
 	/* Request GET */
 	public static void get(String url, ISynergykitResponseListener listener, Class<?> classOfT) {
-		GetRunnable runnable = new GetRunnable();
-		runnable.mUrl = url;
-		runnable.mListener=listener;
-		runnable.mClassOfT = classOfT;
-		new Thread(runnable).start();
+		GetAsyncTask get = new GetAsyncTask();
+		get.mUrl=url;
+		get.mListener=listener;
+		get.mClassOfT=classOfT;
+		
+		get.execute();
 	}
 
 	/* Request POST */
 	public static void post(String url, String json,ISynergykitResponseListener listener, Class<?> classOfT) {
-		PostRunnable runnabe = new PostRunnable();
-		runnabe.mJson = json;
-		runnabe.mUrl = url;
-		runnabe.mListener=listener;
-		runnabe.mClassOfT = classOfT;
-		new Thread(runnabe).start();	
+		PostAsyncTask post = new PostAsyncTask();
+		post.mJson=json;
+		post.mUrl=url;
+		post.mListener=listener;
+		post.mClassOfT = classOfT;
+		
+		post.execute();
 	}
 
 	/* Request PUT */
 	public static void put(String url, String json,ISynergykitResponseListener listener, Class<?> classOfT) {
-		PutRunnable runnabe = new PutRunnable();
-		runnabe.mJson = json;
-		runnabe.mUrl = url;
-		runnabe.mListener=listener;
-		runnabe.mClassOfT = classOfT;
-		new Thread(runnabe).start();	
+		PutAsyncTask put = new PutAsyncTask();
+		put.mJson=json;
+		put.mUrl=url;
+		put.mListener=listener;
+		put.mClassOfT=classOfT;
+		put.execute();
 	}
 
 	/* Request DELETE */

@@ -10,7 +10,13 @@ import org.apache.http.entity.StringEntity;
 
 import com.synergykit.android.resource.ISynergykitResponseListener;
 
-public class PutRunnable implements Runnable {
+import android.os.AsyncTask;
+/**
+ * 
+ * @author Pavel Stambrecht
+ *
+ */
+public class PutAsyncTask extends AsyncTask<Void, Void, Void> {
 
 	/* Attributes */
 	public ISynergykitResponseListener mListener;
@@ -18,15 +24,15 @@ public class PutRunnable implements Runnable {
 	public String mJson;
 	public Class<?> mClassOfT;
 	
-	/* Run */
+	/* Do in background */
 	@Override
-	public void run() {
+	protected Void doInBackground(Void... params) {
 		Put put = new Put(mUrl){};
 		HttpResponse httpResponse;
 		
 		//Listener check
 		if(mListener==null)
-			return;
+			throw new NullPointerException();
 		
 		
 		try {
@@ -48,7 +54,7 @@ public class PutRunnable implements Runnable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+		return null;
 	}
 
 }

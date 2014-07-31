@@ -6,30 +6,38 @@ import java.io.UnsupportedEncodingException;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.entity.StringEntity;
+
+import android.os.AsyncTask;
 
 import com.synergykit.android.resource.ISynergykitResponseListener;
+/**
+ * 
+ * @author Pavel Stambrecht
+ *
+ */
+public class PostAsyncTask extends AsyncTask<Void, Void, Void>{
 
-public class GetRunnable implements Runnable{
-
-	/* Attributes */
+	/*Attributes */
 	public ISynergykitResponseListener mListener;
 	public String mUrl;
+	public String mJson;
 	public Class<?> mClassOfT;
 	
-	/* Run */
+	/* Do  in background */
 	@Override
-	public void run() {
-		Get get = new Get(mUrl) {};
+	protected Void doInBackground(Void... params) {
+		Post post = new Post(mUrl){};
 		HttpResponse httpResponse;
 		
 		//Listener check
-		if(mListener==null){
+		if(mListener==null)
 			throw new NullPointerException();
-		}
+		
 		
 		try {
 			//post data
-			httpResponse = get.execute();
+			httpResponse = post.execute(new StringEntity(mJson, "UTF-8"));
 			
 			//callback result
 			if(httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK)				
@@ -47,8 +55,7 @@ public class GetRunnable implements Runnable{
 			e.printStackTrace();
 		}
 		
-		
+		return null;
 	}
-	
-	
+
 }
