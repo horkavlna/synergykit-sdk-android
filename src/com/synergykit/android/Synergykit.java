@@ -36,7 +36,14 @@ public class Synergykit {
 		}
 	}
 	
-	
+	/* Update record */
+	public static void updateRecord(String collectionUrl, String recordId, Object object, ISynergykitResponseListener listener, Class<?> classOfT){
+		try {
+			Provider.getInstance().updateRecord(collectionUrl, recordId, object, listener, classOfT);
+		} catch (NotInitializedException e) {
+			e.printStackTrace();
+		}
+	}
 
 
 }

@@ -30,17 +30,13 @@ public class Request{
 	}
 
 	/* Request PUT */
-	public static void put(String url, String json) {
-	/*	Put put = new Put(url) {
-		};
-		try {
-			HttpResponse response = put
-					.execute(new StringEntity(json, "UTF-8"));
-			return response;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		}*/
+	public static void put(String url, String json,ISynergykitResponseListener listener, Class<?> classOfT) {
+		PutRunnable runnabe = new PutRunnable();
+		runnabe.mJson = json;
+		runnabe.mUrl = url;
+		runnabe.mListener=listener;
+		runnabe.mClassOfT = classOfT;
+		new Thread(runnabe).start();	
 	}
 
 	/* Request DELETE */

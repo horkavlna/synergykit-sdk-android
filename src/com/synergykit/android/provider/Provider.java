@@ -67,7 +67,8 @@ public class Provider{
 				
 		//json & url initialization
 		String url = RequestUrl.getRecordUrl(mConfig.getTenant(), mConfig.getApplicationKey(), collectionUrl, recordId);
-
+		
+		//request GET
 		Request.get(url, listener, classOfT);
 	}
 	
@@ -81,13 +82,23 @@ public class Provider{
 		String json = GsonWrapper.getInstance().getGson().toJson(object);
 		String url = RequestUrl.postRecordUrl(mConfig.getTenant(), mConfig.getApplicationKey(), collectionUrl);
 
+		//request POST
 		Request.post(url, json,listener,classOfT);
 	}
 
-	public boolean updateRecord(String collectionUrl, String recordId,
-			Object object) {
-		// TODO Auto-generated method stub
-		return false;
+	public void updateRecord(String collectionUrl, String recordId, Object object, ISynergykitResponseListener listener, Class<?> classOfT) throws NotInitializedException {
+		
+		//initialization check
+		this.initCheck();
+				
+		//json & url initialization
+		String json = GsonWrapper.getInstance().getGson().toJson(object);
+		String url = RequestUrl.putRecordUrl(mConfig.getTenant(), mConfig.getApplicationKey(), collectionUrl,recordId);
+		
+		Log.e("PUT",json);
+		
+		//request PUT
+		Request.put(url, json, listener, classOfT);
 	}
 
 	public boolean deleteRecord(String collectionUrl, String recordId) {
