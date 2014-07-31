@@ -1,6 +1,7 @@
 package com.synergykit.android;
 
 import com.synergykit.android.exception.NotInitializedException;
+import com.synergykit.android.gsonwrapper.GsonWrapper;
 import com.synergykit.android.provider.Provider;
 import com.synergykit.android.resource.ISynergykitResponseListener;
 
@@ -10,31 +11,32 @@ import com.synergykit.android.resource.ISynergykitResponseListener;
  *
  */
 public class Synergykit {
-	private static Synergykit mInstance = null;
-
-	
-	/* Instance getter */
-	/*public static Synergykit getInstance() {
-		
-		if (mInstance == null) {
-			mInstance = new Synergykit();
-		}
-		
-		return mInstance;
-	}*/
 
 	/* Init */
 	public static void init(String tenant, String applicationKey) {
 		Provider.getInstance().init(tenant, applicationKey);
 	}
 
+	/* Get record */
+	public static void getRecord(String collectionUrl, String recordId, ISynergykitResponseListener listener, Class<?> classOfT){
+		try {
+			Provider.getInstance().getRecord(collectionUrl, recordId, listener, classOfT);
+		} catch (NotInitializedException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	
 	/* Create record */
-	public static boolean createRecord(String collectionUrl, Object object, ISynergykitResponseListener listener)
-			throws NotInitializedException {
-
-		return Provider.getInstance().createRecord(collectionUrl, object, listener);
+	public static void createRecord(String collectionUrl, Object object, ISynergykitResponseListener listener,Class<?> classOfT){
+		try {
+			Provider.getInstance().createRecord(collectionUrl, object, listener, classOfT);
+		} catch (NotInitializedException e) {
+			e.printStackTrace();
+		}
 	}
+	
+	
 
 
 }

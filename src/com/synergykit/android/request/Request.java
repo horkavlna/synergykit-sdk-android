@@ -11,25 +11,21 @@ import com.synergykit.android.resource.ISynergykitResponseListener;
 public class Request{
 
 	/* Request GET */
-	public static void get(String url) {
-	/*	Get get = new Get(url) {
-		};
-		try {
-			HttpResponse response = get.execute();
-			return response;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		}
-		*/
+	public static void get(String url, ISynergykitResponseListener listener, Class<?> classOfT) {
+		GetRunnable runnable = new GetRunnable();
+		runnable.mUrl = url;
+		runnable.mListener=listener;
+		runnable.mClassOfT = classOfT;
+		new Thread(runnable).start();
 	}
 
 	/* Request POST */
-	public static void post(String url, String json,ISynergykitResponseListener listener) {
+	public static void post(String url, String json,ISynergykitResponseListener listener, Class<?> classOfT) {
 		PostRunnable runnabe = new PostRunnable();
 		runnabe.mJson = json;
 		runnabe.mUrl = url;
 		runnabe.mListener=listener;
+		runnabe.mClassOfT = classOfT;
 		new Thread(runnabe).start();	
 	}
 

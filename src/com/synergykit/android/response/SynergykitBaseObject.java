@@ -3,7 +3,7 @@ package com.synergykit.android.response;
 /**
  * Created by tomas_000 on 24.2.14.
  */
-public class BaseResponse {
+public class SynergykitBaseObject {
     private String _id;
     private String __v;
 

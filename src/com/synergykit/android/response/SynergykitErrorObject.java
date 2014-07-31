@@ -3,7 +3,7 @@ package com.synergykit.android.response;
 /**
  * Created by tomas_000 on 24.2.14.
  */
-public class ErrorResponse {
+public class SynergykitErrorObject {
     private String status;
     private String message;
 
@@ -22,5 +22,6 @@ public class ErrorResponse {
     public void setMessage(String message) {
         this.message = message;
     }
+
 }
 

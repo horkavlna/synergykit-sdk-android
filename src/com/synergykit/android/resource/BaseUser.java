@@ -1,6 +1,6 @@
 package com.synergykit.android.resource;
 
-import com.synergykit.android.response.BaseResponse;
+import com.synergykit.android.response.SynergykitBaseObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Created by tomas_000 on 27.2.14.
  */
-public class BaseUser extends BaseResponse {
+public class BaseUser extends SynergykitBaseObject {
     private List<Platform> platforms;
 
     public BaseUser(String registrationId) {

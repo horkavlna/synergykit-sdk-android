@@ -59,28 +59,29 @@ public class Provider{
 		return false;
 	}
 
-	public boolean getRecord(String collectionUrl, String recordId,
-			Class<?> classOf) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	public boolean createRecord(String collectionUrl, Object object, ISynergykitResponseListener listener) throws NotInitializedException {
+	/* Get record */
+	public void getRecord(String collectionUrl, String recordId, ISynergykitResponseListener listener, Class<?> classOfT) throws NotInitializedException {
 		
 		//initialization check
 		this.initCheck();
+				
+		//json & url initialization
+		String url = RequestUrl.getRecordUrl(mConfig.getTenant(), mConfig.getApplicationKey(), collectionUrl, recordId);
+
+		Request.get(url, listener, classOfT);
+	}
+	
+	/* Create record */
+	public void createRecord(String collectionUrl, Object object, ISynergykitResponseListener listener, Class<?> classOfT) throws NotInitializedException {
 		
-		//Synergykit response listener check
-		if(listener==null)
-			throw new NullPointerException();
+		//initialization check
+		this.initCheck();
 		
 		//json & url initialization
 		String json = GsonWrapper.getInstance().getGson().toJson(object);
 		String url = RequestUrl.postRecordUrl(mConfig.getTenant(), mConfig.getApplicationKey(), collectionUrl);
 
-		Request.post(url, json,listener);
-		
-		return true;
+		Request.post(url, json,listener,classOfT);
 	}
 
 	public boolean updateRecord(String collectionUrl, String recordId,
