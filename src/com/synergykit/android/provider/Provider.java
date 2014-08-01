@@ -1,14 +1,13 @@
 package com.synergykit.android.provider;
 
-import java.util.List;
-
-import android.util.Log;
-
+import java.lang.reflect.Type;
 import com.synergykit.android.exception.NotInitializedException;
 import com.synergykit.android.gsonwrapper.GsonWrapper;
 import com.synergykit.android.request.Request;
 import com.synergykit.android.requesturl.RequestUrl;
-import com.synergykit.android.resource.ISynergykitResponseListener;
+import com.synergykit.android.response.BaseResponseListener;
+import com.synergykit.android.response.DeleteResponseListener;
+import com.synergykit.android.response.GetAllResponseListener;
 /**
  * 
  * @author Pavel Stambrecht
@@ -35,6 +34,11 @@ public class Provider{
 		mConfig = new Config(tenant, appKey);
 	}
 	
+	/* Reset */
+	public void reset(){
+		mConfig=null;
+	}
+	
 	/* Tenant setter */
 	public void setTenant(String tenant) {
 		mConfig.setTenant(tenant);
@@ -57,26 +61,33 @@ public class Provider{
 	}
 	
 	/* All record getter */
-	public boolean getAllRecords(String collectionUrl, List<?> list, Class<?> classOf) {
-		// TODO Auto-generated method stub
-		return false;
+	public void getAllRecords(String collectionUrl, GetAllResponseListener listener, Type type) throws NotInitializedException {
+		
+		//initialization check
+		this.initCheck();
+		
+		//url initialization
+		String url = RequestUrl.getAllRecordsUrl(mConfig.getTenant(), mConfig.getApplicationKey(), collectionUrl);
+		
+		//request GET ALL
+		Request.getAll(url, listener, type);
 	}
 
 	/* Get record */
-	public void getRecord(String collectionUrl, String recordId, ISynergykitResponseListener listener, Class<?> classOfT) throws NotInitializedException {
+	public void getRecord(String collectionUrl, String recordId, BaseResponseListener listener, Type type) throws NotInitializedException {
 		
 		//initialization check
 		this.initCheck();
 				
-		//json & url initialization
+		//url initialization
 		String url = RequestUrl.getRecordUrl(mConfig.getTenant(), mConfig.getApplicationKey(), collectionUrl, recordId);
 		
 		//request GET
-		Request.get(url, listener, classOfT);
+		Request.get(url, listener, type);
 	}
 	
 	/* Create record */
-	public void createRecord(String collectionUrl, Object object, ISynergykitResponseListener listener, Class<?> classOfT) throws NotInitializedException {
+	public void createRecord(String collectionUrl, Object object, BaseResponseListener listener, Type type) throws NotInitializedException {
 		
 		//initialization check
 		this.initCheck();
@@ -86,10 +97,11 @@ public class Provider{
 		String url = RequestUrl.postRecordUrl(mConfig.getTenant(), mConfig.getApplicationKey(), collectionUrl);
 
 		//request POST
-		Request.post(url, json,listener,classOfT);
+		Request.post(url, json,listener,type);
 	}
 
-	public void updateRecord(String collectionUrl, String recordId, Object object, ISynergykitResponseListener listener, Class<?> classOfT) throws NotInitializedException {
+	/* Update record */
+	public void updateRecord(String collectionUrl, String recordId, Object object, BaseResponseListener listener, Type type) throws NotInitializedException {
 		
 		//initialization check
 		this.initCheck();
@@ -98,14 +110,21 @@ public class Provider{
 		String json = GsonWrapper.getInstance().getGson().toJson(object);
 		String url = RequestUrl.putRecordUrl(mConfig.getTenant(), mConfig.getApplicationKey(), collectionUrl,recordId);
 		
-		Log.e("PUT",json);
-		
 		//request PUT
-		Request.put(url, json, listener, classOfT);
+		Request.put(url, json, listener, type);
 	}
 
-	public boolean deleteRecord(String collectionUrl, String recordId) {
-		// TODO Auto-generated method stub
+	public boolean deleteRecord(String collectionUrl, String recordId, DeleteResponseListener listener) throws NotInitializedException {
+		
+		//initialization check
+		this.initCheck();
+		
+		//url initialization
+		String url = RequestUrl.deleteRecordUrl(mConfig.getTenant(), mConfig.getApplicationKey(), collectionUrl, recordId);
+		
+		//request DELETE
+		Request.delete(url,listener);
+		
 		return false;
 	}
 

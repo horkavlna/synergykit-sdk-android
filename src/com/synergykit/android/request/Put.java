@@ -10,7 +10,9 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
-
+/**
+ * Created by tomas_000 on 10.3.14.
+ */
 public abstract class Put {
 	private String uri;
 	private String accept;

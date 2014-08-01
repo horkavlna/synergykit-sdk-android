@@ -1,11 +1,12 @@
-package com.synergykit.android.resource;
+package com.synergykit.android.response;
 
 import org.apache.http.HttpResponse;
-
-import com.synergykit.android.response.SynergykitBaseObject;
-import com.synergykit.android.response.SynergykitErrorObject;
-
-public interface ISynergykitResponseListener {
+/**
+ * 
+ * @author Pavel Stambrecht
+ *
+ */
+public interface BaseResponseListener {
 	public void doneCallback(HttpResponse httpResponse,SynergykitBaseObject baseObject);
 	public void errorCallback(HttpResponse httpResponse, SynergykitErrorObject errorObject);
 }
