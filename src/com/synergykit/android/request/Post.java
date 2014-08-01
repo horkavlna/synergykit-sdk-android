@@ -10,7 +10,9 @@ import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 
 import java.io.IOException;
-
+/**
+ * Created by tomas_000 on 10.3.14.
+ */
 public abstract class Post {
 	private String uri;
 	private String accept;

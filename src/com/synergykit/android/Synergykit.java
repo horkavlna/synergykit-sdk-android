@@ -1,92 +1,74 @@
 package com.synergykit.android;
 
-import com.google.gson.Gson;
-import com.synergykit.android.request.Delete;
-import com.synergykit.android.request.Get;
-import com.synergykit.android.request.Post;
-import com.synergykit.android.request.Put;
-import org.apache.http.HttpResponse;
-import org.apache.http.entity.StringEntity;
+import java.lang.reflect.Type;
 
-import java.io.IOException;
+import com.synergykit.android.exception.NotInitializedException;
+import com.synergykit.android.gsonwrapper.GsonWrapper;
+import com.synergykit.android.provider.Provider;
+import com.synergykit.android.response.BaseResponseListener;
+import com.synergykit.android.response.DeleteResponseListener;
+import com.synergykit.android.response.GetAllResponseListener;
 
 /**
- * Created by tomas_000 on 27.2.14.
+ * 
+ * @author Pavel Stambrecht
+ *
  */
 public class Synergykit {
-	private String application;
-	private String key;
-	private Gson gson;
 
-	public String getKey() {
-		return key;
+	/* Init */
+	public static void init(String tenant, String applicationKey) {
+		Provider.getInstance().init(tenant, applicationKey);
 	}
 
-	public void setKey(String key) {
-		this.key = key;
+	/* Reset */
+	public static void reset(){
+		Provider.getInstance().reset();
 	}
-
-	public Synergykit(String application, String key) {
-		this.application = application;
-		this.key = key;
-		gson = new Gson();
-	}
-
-	public String getApplication() {
-		return application;
-	}
-
-	public void setApplication(String application) {
-		this.application = application;
-	}
-
-	public HttpResponse get(String url) {
-		Get get = new Get(url) {
-		};
+	
+	/* Get record */
+	public static void getRecord(String collectionUrl, String recordId, BaseResponseListener listener, Type type){
 		try {
-			HttpResponse response = get.execute();
-			return response;
-		} catch (IOException e) {
+			Provider.getInstance().getRecord(collectionUrl, recordId, listener, type);
+		} catch (NotInitializedException e) {
 			e.printStackTrace();
-			return null;
+		}
+	}
+	
+	/* Get all records */
+	public static void getAllRecords(String collectionUrl,GetAllResponseListener listener, Type type){
+		try {
+			Provider.getInstance().getAllRecords(collectionUrl, listener,type);
+		} catch (NotInitializedException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/* Create record */
+	public static void createRecord(String collectionUrl, Object object, BaseResponseListener listener,Type type){
+		try {
+			Provider.getInstance().createRecord(collectionUrl, object, listener, type);
+		} catch (NotInitializedException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/* Update record */
+	public static void updateRecord(String collectionUrl, String recordId, Object object, BaseResponseListener listener, Type type){
+		try {
+			Provider.getInstance().updateRecord(collectionUrl, recordId, object, listener, type);
+		} catch (NotInitializedException e) {
+			e.printStackTrace();
 		}
 	}
 
-	public HttpResponse post(String url, String json) {
-		Post post = new Post(url) {
-		};
+	/* Delete record */
+	public static void deleteRecord(String collectionUrl, String recordId, DeleteResponseListener listener){
 		try {
-			HttpResponse response = post
-					.execute(new StringEntity(json, "UTF-8"));
-			return response;
-		} catch (IOException e) {
+			Provider.getInstance().deleteRecord(collectionUrl, recordId, listener);
+		} catch (NotInitializedException e) {
 			e.printStackTrace();
-			return null;
 		}
 	}
 
-	public HttpResponse put(String url, String json) {
-		Put put = new Put(url) {
-		};
-		try {
-			HttpResponse response = put
-					.execute(new StringEntity(json, "UTF-8"));
-			return response;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	public HttpResponse delete(String url) {
-		Delete delete = new Delete(url) {
-		};
-		try {
-			HttpResponse response = delete.execute();
-			return response;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
 }
