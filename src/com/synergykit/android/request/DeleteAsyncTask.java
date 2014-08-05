@@ -3,20 +3,16 @@ package com.synergykit.android.request;
 import java.io.IOException;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
 
+import com.synergykit.android.resource.BaseRequestAsyncTask;
 import com.synergykit.android.response.DeleteResponseListener;
 
 import android.os.AsyncTask;
 
-public class DeleteAsyncTask extends AsyncTask<Void, Void, Void>{
+public class DeleteAsyncTask extends BaseRequestAsyncTask{
 	/* Attributes */
-	private String mUrl;
 	private DeleteResponseListener mListener;
-	
-	/* Url setter */
-	public void setUrl(String url){
-		mUrl = url;
-	}
 	
 	/* Listener setter */
 	public void setListener(DeleteResponseListener listener){
@@ -25,17 +21,13 @@ public class DeleteAsyncTask extends AsyncTask<Void, Void, Void>{
 	
 	/* Do in background */
 	@Override
-	protected Void doInBackground(Void... params) {
-				
-		
+	protected HttpResponse doInBackground(Void... params) {
 		Delete delete = new Delete(mUrl) {};
+		HttpResponse httpResponse;
+		
 		try {
-			HttpResponse httpResponse = delete.execute();
-			
-			//call callback 
-			if(mListener!=null)
-				mListener.callback(httpResponse);
-			
+			httpResponse = delete.execute();
+			return httpResponse;		
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -43,6 +35,23 @@ public class DeleteAsyncTask extends AsyncTask<Void, Void, Void>{
 		}
 		
 		return null;
+	}
+
+	/* On post execute */
+	@Override
+	protected void onPostExecute(HttpResponse httpResponse) {
+		
+		//call callback 
+		if(mListener==null || httpResponse==null)
+			return;
+		
+		//callback result
+		if(httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK)				
+			mListener.doneCallback(httpResponse);
+		else
+			mListener.errorCallback(httpResponse);
+				
+		
 	}
 
 }

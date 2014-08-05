@@ -1,6 +1,5 @@
-package com.synergykit.android.response;
+package com.synergykit.android.resource;
 
-import com.google.gson.annotations.Expose;
 
 /**
  * 

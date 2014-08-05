@@ -2,8 +2,6 @@ package com.synergykit.android.request;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -11,8 +9,8 @@ import org.apache.http.ParseException;
 import org.apache.http.util.EntityUtils;
 
 import com.synergykit.android.gsonwrapper.GsonWrapper;
-import com.synergykit.android.response.SynergykitBaseObject;
-import com.synergykit.android.response.SynergykitErrorObject;
+import com.synergykit.android.resource.SynergykitBaseObject;
+import com.synergykit.android.resource.SynergykitErrorObject;
 
 /**
  * 

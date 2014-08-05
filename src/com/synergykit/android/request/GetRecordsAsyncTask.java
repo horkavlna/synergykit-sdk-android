@@ -4,72 +4,62 @@ import java.lang.reflect.Type;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
-import org.apache.http.entity.StringEntity;
 
 import com.synergykit.android.resource.BaseRequestAsyncTask;
-import com.synergykit.android.response.BaseResponseListener;
+import com.synergykit.android.response.GetRecordsResponseListener;
+
 /**
  * 
  * @author Pavel Stambrecht
  *
  */
-public class PutAsyncTask extends BaseRequestAsyncTask {
-
-
-	/*Attributes */
-	private BaseResponseListener mListener;
-	private String mJson;
+public class GetRecordsAsyncTask extends BaseRequestAsyncTask{
+	/* Attributes */
 	private Type mType;
-	
-	
-	
-	/* Json setter */
-	public void setJson(String json){
-		mJson = json;
-	}
+	private GetRecordsResponseListener mListener;
 	
 	/* Listener setter */
-	public void setListener(BaseResponseListener listener){
+	public void setListener(GetRecordsResponseListener listener){
 		mListener =listener;
 	}
 	
-	/* ClassOf setter */
+	/* Type setter */
 	public void setType(Type type){
 		mType = type;
-	}
+	}	
 	
-	
+
 	/* Do in background */
 	@Override
 	protected HttpResponse doInBackground(Void... params) {
-		Put put = new Put(mUrl){};
+		Get request = new Get(mUrl){};
 		HttpResponse httpResponse;
-
+		
 		try {
-			//post data
-			httpResponse = put.execute(new StringEntity(mJson, "UTF-8"));
+			//send request
+			httpResponse = request.execute();
+		
 			return httpResponse;
-			
 		} catch (Exception e) {
 			e.printStackTrace();
-		}		
-	
+		}
+		
+		
 		return null;
 	}
+	
 
 	/* On post execute */
 	@Override
 	protected void onPostExecute(HttpResponse httpResponse) {
-		//Listener check
 		if(mListener==null || httpResponse==null)
 			return;
 		
 		//callback result
 		if(httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK)				
-			mListener.doneCallback(httpResponse, ResultObjectBuilder.buildBaseObject(httpResponse, mType));
+			mListener.doneCallback(httpResponse, ResultObjectBuilder.buildBaseObjects(httpResponse, mType));
 		else
 			mListener.errorCallback(httpResponse, ResultObjectBuilder.buildErrorObject(httpResponse));
-		
-	}
+	}	
 
 }

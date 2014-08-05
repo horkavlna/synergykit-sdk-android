@@ -1,7 +1,5 @@
 package com.synergykit.android.resource;
 
-import com.synergykit.android.response.SynergykitBaseObject;
-
 import java.util.ArrayList;
 import java.util.List;
 

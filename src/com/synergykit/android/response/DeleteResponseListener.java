@@ -9,5 +9,6 @@ import org.apache.http.HttpResponse;
  */
 
 public interface DeleteResponseListener {
-	public void callback(HttpResponse httpResponse);
+	public void doneCallback(HttpResponse httpResponse);
+	public void errorCallback(HttpResponse httpResponse);
 }

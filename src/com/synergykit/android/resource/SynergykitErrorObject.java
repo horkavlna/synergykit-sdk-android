@@ -1,4 +1,4 @@
-package com.synergykit.android.response;
+package com.synergykit.android.resource;
 
 /**
  * 

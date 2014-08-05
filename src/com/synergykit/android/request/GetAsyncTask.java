@@ -1,28 +1,23 @@
 package com.synergykit.android.request;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
-import org.apache.http.client.ClientProtocolException;
 
+import com.synergykit.android.resource.BaseRequestAsyncTask;
 import com.synergykit.android.response.BaseResponseListener;
-
-import android.os.AsyncTask;
 /**
  * 
  * @author Pavel Stambrecht
  *
  */
-public class GetAsyncTask  extends AsyncTask<Void, Void, Void>{
-
-	/* Attributes */
-	protected BaseResponseListener mListener;
-	protected String mUrl;
-	protected Type mType;
+public class GetAsyncTask  extends BaseRequestAsyncTask{
 	
+	/* Attributes */
+	private String mUrl;
+	private Type mType;
+	private BaseResponseListener mListener;
 	
 	/* Url setter */
 	public void setUrl(String url){
@@ -37,39 +32,44 @@ public class GetAsyncTask  extends AsyncTask<Void, Void, Void>{
 	/* Type setter */
 	public void setType(Type type){
 		mType = type;
-	}
+	}	
 	
+
 	/* Do in background */
 	@Override
-	protected Void doInBackground(Void... params) {
-		Get get = new Get(mUrl) {};
+	protected HttpResponse doInBackground(Void... params) {
+		Get request = new Get(mUrl){};
 		HttpResponse httpResponse;
 		
-
 		try {
-			//post data
-			httpResponse = get.execute();
-			
-			//Listener check
-			if(mListener==null)
-				return null;
-			
-			//callback result
-			if(httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK)				
-				mListener.doneCallback(httpResponse, ResultObjectBuilder.buildBaseObject(httpResponse, mType));
-			else
-				mListener.errorCallback(httpResponse, ResultObjectBuilder.buildErrorObject(httpResponse));
-		
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+			//send request
+			httpResponse = request.execute();
+			return httpResponse;
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		
 		return null;
 	}
+	
+
+	/* On post execute */
+	@Override
+	protected void onPostExecute(HttpResponse httpResponse) {
+		if(mListener==null || httpResponse==null)
+			return;
+		
+		//callback result
+		if(httpResponse.getStatusLine().getStatusCode() == HttpStatus.SC_OK)				
+			mListener.doneCallback(httpResponse, ResultObjectBuilder.buildBaseObject(httpResponse, mType));
+		else
+			mListener.errorCallback(httpResponse, ResultObjectBuilder.buildErrorObject(httpResponse));
+		
+	}
+
+
+
+	
 
 }

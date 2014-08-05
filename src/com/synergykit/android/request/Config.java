@@ -1,4 +1,4 @@
-package com.synergykit.android.provider;
+package com.synergykit.android.request;
 /**
  * 
  * @author Pavel Stambrecht
