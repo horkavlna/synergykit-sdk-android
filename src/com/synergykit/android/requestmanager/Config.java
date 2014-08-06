@@ -1,4 +1,4 @@
-package com.synergykit.android.request;
+package com.synergykit.android.requestmanager;
 /**
  * 
  * @author Pavel Stambrecht

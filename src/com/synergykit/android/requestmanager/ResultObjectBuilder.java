@@ -1,4 +1,4 @@
-package com.synergykit.android.request;
+package com.synergykit.android.requestmanager;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -7,6 +7,8 @@ import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.ParseException;
 import org.apache.http.util.EntityUtils;
+
+import android.util.Log;
 
 import com.synergykit.android.gsonwrapper.GsonWrapper;
 import com.synergykit.android.resource.SynergykitBaseObject;
@@ -76,6 +78,7 @@ public class ResultObjectBuilder {
 		
 		try {
 			jsonContent = EntityUtils.toString(httpResponse.getEntity(),"UTF-8");
+			Log.e("Synergykit", jsonContent);
 			return (SynergykitErrorObject) GsonWrapper.getInstance().getGson().fromJson(jsonContent, SynergykitErrorObject.class);
 		} catch (ParseException e) {
 			e.printStackTrace();

@@ -14,7 +14,7 @@ import com.synergykit.android.resource.SynergykitErrorObject;
  */
 
 public interface GetRecordsResponseListener {
-	public void doneCallback(HttpResponse httpResponse,SynergykitBaseObject[] baseObjects);
-	public void errorCallback(HttpResponse httpResponse, SynergykitErrorObject errorObject);
+	public void doneCallback(int statusCode,SynergykitBaseObject[] baseObjects);
+	public void errorCallback(int statusCode, SynergykitErrorObject errorObject);
 
 }

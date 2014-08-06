@@ -1,6 +1,7 @@
 package com.synergykit.android.response;
 
-import org.apache.http.HttpResponse;
+import com.synergykit.android.resource.SynergykitErrorObject;
+
 
 /**
  * 
@@ -9,6 +10,6 @@ import org.apache.http.HttpResponse;
  */
 
 public interface DeleteResponseListener {
-	public void doneCallback(HttpResponse httpResponse);
-	public void errorCallback(HttpResponse httpResponse);
+	public void doneCallback(int statusCode);
+	public void errorCallback(int statusCode, SynergykitErrorObject errorObject);
 }

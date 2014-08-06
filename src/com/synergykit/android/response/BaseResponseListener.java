@@ -1,7 +1,5 @@
 package com.synergykit.android.response;
 
-import org.apache.http.HttpResponse;
-
 import com.synergykit.android.resource.SynergykitBaseObject;
 import com.synergykit.android.resource.SynergykitErrorObject;
 /**
@@ -10,6 +8,6 @@ import com.synergykit.android.resource.SynergykitErrorObject;
  *
  */
 public interface BaseResponseListener {
-	public void doneCallback(HttpResponse httpResponse,SynergykitBaseObject baseObject);
-	public void errorCallback(HttpResponse httpResponse, SynergykitErrorObject errorObject);
+	public void doneCallback(int statusCode,SynergykitBaseObject baseObject);
+	public void errorCallback(int statusCode, SynergykitErrorObject errorObject);
 }

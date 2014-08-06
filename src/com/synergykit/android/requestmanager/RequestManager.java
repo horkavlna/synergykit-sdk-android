@@ -1,11 +1,10 @@
-package com.synergykit.android.request;
+package com.synergykit.android.requestmanager;
 
 import java.lang.reflect.Type;
 
 import android.util.Log;
 
 import com.synergykit.android.exception.NotInitializedException;
-import com.synergykit.android.gsonwrapper.GsonWrapper;
 import com.synergykit.android.resource.BaseRequestAsyncTask;
 import com.synergykit.android.response.BaseResponseListener;
 import com.synergykit.android.response.DeleteResponseListener;
@@ -16,17 +15,18 @@ import com.synergykit.android.urlbuilder.UrlBuilder;
  * @author Pavel Stambrecht
  *
  */
-public class Request{
+public class RequestManager{
+
 
 	/* Attributes */
-	private static Request mInstance = null;
-	private Config mConfig=null;
+	private static RequestManager mInstance = null;
+	private Config mConfig=new Config(null, null);
 	
 	
 	/* Instance getter */
-	public static Request getInstance(){
+	public static RequestManager getInstance(){
 		if(mInstance==null){
-			mInstance=new Request();
+			mInstance=new RequestManager();
 		}
 		
 		return mInstance;
@@ -34,12 +34,14 @@ public class Request{
 	
 	/* Initialization */
 	public void init(String tenant, String appKey){		
-		mConfig = new Config(tenant, appKey);
+		mConfig.setTenant(tenant);
+		mConfig.setApplicationKey(appKey);
 	}
 	
 	/* Reset */
 	public void reset(){
-		mConfig=null;
+		mConfig.setApplicationKey(null);
+		mConfig.setTenant(null);
 	}
 	
 	/* Tenant setter */
@@ -66,7 +68,7 @@ public class Request{
 	/* Get records */
 	public void getRecords(String collectionUrl,GetRecordsResponseListener listener,Type type){
 		UrlBuilder urlBuilder = new UrlBuilder();
-		GetRecordsAsyncTask getAsyncTask = new GetRecordsAsyncTask();	
+		GetAllRequest getAsyncTask = new GetAllRequest();	
 		
 		
 		try {
@@ -81,10 +83,10 @@ public class Request{
 		urlBuilder.setResource(UrlBuilder.RESOURCE_DATA)
 				  .setResourceUrl(collectionUrl);
 		
-		Log.e("Synergykit",urlBuilder.build().getUrl(getTenant(), getApplicationKey()));
+		Log.e("Synergykit",urlBuilder.build().getUrl());
 				  
 		//set request
-		getAsyncTask.setUrl(urlBuilder.build().getUrl(getTenant(), getApplicationKey()));
+		getAsyncTask.setUrl(urlBuilder.build());
 		getAsyncTask.setType(type);
 		getAsyncTask.setListener(listener);
 		
@@ -95,7 +97,7 @@ public class Request{
 	/* Get record */
 	public void getRecord(String collectionUrl, String recordId,BaseResponseListener listener,Type type){
 		UrlBuilder urlBuilder = new UrlBuilder();
-		GetAsyncTask getAsyncTask = new GetAsyncTask();	
+		GetRequest getAsyncTask = new GetRequest();	
 		
 		
 		try {
@@ -113,7 +115,7 @@ public class Request{
 		
 		
 		//set request
-		getAsyncTask.setUrl(urlBuilder.build().getUrl(getTenant(), getApplicationKey()));
+		getAsyncTask.setUrl(urlBuilder.build());
 		getAsyncTask.setType(type);
 		getAsyncTask.setListener(listener);
 		
@@ -128,7 +130,7 @@ public class Request{
 	/* Create record */
 	public void createRecord(String collectionUrl, Object object, BaseResponseListener listener,Type type){
 		UrlBuilder urlBuilder =	new UrlBuilder();
-		PostAsyncTask postAsyncTask = new PostAsyncTask();
+		PostRequest postAsyncTask = new PostRequest();
 		
 		try {
 			//init check
@@ -143,8 +145,8 @@ public class Request{
 				  .setResourceUrl(collectionUrl);
 		
 		//set request
-		postAsyncTask.setUrl(urlBuilder.build().getUrl(getTenant(), getApplicationKey()));
-		postAsyncTask.setJson(GsonWrapper.getInstance().getGson().toJson(object));
+		postAsyncTask.setUrl(urlBuilder.build());
+		postAsyncTask.setObject(object);
 		postAsyncTask.setListener(listener);
 		postAsyncTask.setType(type);
 		
@@ -156,7 +158,7 @@ public class Request{
 	/* Update record */
 	public void updateRecord(String collectionUrl, String recordId, Object object, BaseResponseListener listener, Type type){
 		UrlBuilder urlBuilder =	new UrlBuilder();
-		PutAsyncTask putAsyncTask = new PutAsyncTask();
+		PutRequest putAsyncTask = new PutRequest();
 		
 		try {
 			//init check
@@ -171,8 +173,8 @@ public class Request{
 				  .setResourceId(recordId);
 		
 		//set request
-		putAsyncTask.setUrl(urlBuilder.build().getUrl(getTenant(), getApplicationKey()));
-		putAsyncTask.setJson(GsonWrapper.getInstance().getGson().toJson(object));
+		putAsyncTask.setUrl(urlBuilder.build());
+		putAsyncTask.setObject(object);
 		putAsyncTask.setListener(listener);
 		putAsyncTask.setType(type);
 		
@@ -183,7 +185,7 @@ public class Request{
 	/* Delete record */
 	public void deleteRecord(String collectionUrl, String recordId, DeleteResponseListener listener){
 		UrlBuilder urlBuilder =	new UrlBuilder();
-		DeleteAsyncTask deleteAsyncTask = new DeleteAsyncTask();
+		DeleteRequest deleteAsyncTask = new DeleteRequest();
 		
 		try {
 			//init check
@@ -199,7 +201,7 @@ public class Request{
 		
 		
 		//set request
-		deleteAsyncTask.setUrl(urlBuilder.build().getUrl(getTenant(), getApplicationKey()));
+		deleteAsyncTask.setUrl(urlBuilder.build());
 		deleteAsyncTask.setListener(listener);
 				
 		//send request
@@ -212,10 +214,17 @@ public class Request{
 		baseRequestAsyncTask.execute();
 	}
 
+	/* Is Init */
+	public boolean isInit(){
+		if( mConfig.getTenant()==null || mConfig.getApplicationKey()==null)
+			return false;
+		
+		return true;
+	}
 
 	/* initialization check */
 	public void initCheck() throws NotInitializedException{
-		if(mConfig==null)
+		if(!this.isInit())
 			throw new NotInitializedException();
 	}
 }

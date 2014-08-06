@@ -1,5 +1,8 @@
 package com.synergykit.android.urlbuilder;
 
+import com.synergykit.android.Synergykit;
+import com.synergykit.android.exception.NotInitializedException;
+
 public class Url {
 	
 	/* Attributes */
@@ -11,15 +14,21 @@ public class Url {
 	}
 	
 	/* Url getter */
-	public String getUrl(String tenant, String applicationKey){
+	public String getUrl(){
 		String url;
 		
-		//null pointer check
-		if(tenant==null || applicationKey==null)
-			return null;
+		//Init check
+		if(!Synergykit.isInit()){
+			try {
+				throw new NotInitializedException();
+			} catch (NotInitializedException e) {
+				e.printStackTrace();
+				return null;
+			}
+		}
 		
-		url = String.format(mUrl, tenant);
-		url += "?application=" + applicationKey;
+		url = String.format(mUrl, Synergykit.getTenant());		
+		url += "?application=" + Synergykit.getApplicationKey();
 		
 		return url;
 	}
