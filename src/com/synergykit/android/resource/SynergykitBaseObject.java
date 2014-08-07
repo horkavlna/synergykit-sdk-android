@@ -1,13 +1,12 @@
 package com.synergykit.android.resource;
 
 
-/**
- * 
- * @author Pavel Stambrecht & tomas_000
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
  *
  */
 
-public abstract class SynergykitBaseObject {
+public abstract class SynergyKITBaseObject {
    	protected String _id;
     protected String __v;
     protected long createdAt;

@@ -1,5 +1,6 @@
 package com.synergykit.android;
 
+
 import java.lang.reflect.Type;
 
 import com.synergykit.android.requestmanager.RequestManager;
@@ -8,12 +9,12 @@ import com.synergykit.android.response.BaseResponseListener;
 import com.synergykit.android.response.DeleteResponseListener;
 import com.synergykit.android.response.GetRecordsResponseListener;
 
-/**
- * 
- * @author Pavel Stambrecht
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
  *
  */
-public class Synergykit {
+
+public class SynergyKIT {
 
 	/* Init */
 	public static void init(String tenant, String applicationKey) {

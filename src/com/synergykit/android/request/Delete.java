@@ -10,60 +10,74 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
+ *
+ */
+
 public abstract class Delete {
-    private String uri;
-    private String accept;
-    private String contentType;
+	/* Attributes */
+    private String mUrl;
+    private String mAccept;
+    private String mContentType;
 
-    private DefaultHttpClient httpClient;
-    private HttpDelete httpDelete;
+    private DefaultHttpClient mHttpClient;
+    private HttpDelete mHttpDelete;
 
+    /* Constructor */
     public Delete(String uri) {
-        this.uri = uri;
+        this.mUrl = uri;
     }
 
+    /* Execute */
     public HttpResponse execute()
 			throws ClientProtocolException, IOException, IllegalStateException {
     	
         final HttpParams httpParams = new BasicHttpParams();
         HttpConnectionParams.setConnectionTimeout(httpParams, 60000);
         HttpConnectionParams.setSoTimeout(httpParams, 30000);
-        httpClient = new DefaultHttpClient(httpParams);
+        mHttpClient = new DefaultHttpClient(httpParams);
 
 
-        httpDelete = new HttpDelete(uri);
-        httpDelete.addHeader("User-Agent", "Android");
+        mHttpDelete = new HttpDelete(mUrl);
+        mHttpDelete.addHeader("User-Agent", "Android");
         
         
-        HttpResponse response = httpClient.execute(httpDelete);
+        HttpResponse response = mHttpClient.execute(mHttpDelete);
 
         return response;
     }
 
-    public String getUri() {
-        return uri;
+    /* URL getter */
+    public String getUrl() {
+        return mUrl;
     }
 
+    /* Accept getter */
     public String getAccept() {
-        return accept;
+        return mAccept;
     }
 
+    /* Accept setter */
     public void setAccept(String accept) {
-        this.accept = accept;
+        this.mAccept = accept;
     }
 
+    /* Content type getter */
     public String getContentType() {
-        return contentType;
+        return mContentType;
     }
 
+    /* Content type setter */
     public void setContentType(String contentType) {
-        this.contentType = contentType;
+        this.mContentType = contentType;
     }
 
+    /* Finalize */
     @Override
     protected void finalize() {
         try {
-            httpClient.getConnectionManager().shutdown();
+            mHttpClient.getConnectionManager().shutdown();
             super.finalize();
         } catch (Exception e) {
 

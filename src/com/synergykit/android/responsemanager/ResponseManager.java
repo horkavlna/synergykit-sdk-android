@@ -8,16 +8,20 @@ import org.apache.http.HttpStatus;
 import android.util.Log;
 
 import com.synergykit.android.requestmanager.ResultObjectBuilder;
-import com.synergykit.android.resource.SynergykitErrorObject;
+import com.synergykit.android.resource.SynergyKITErrorObject;
 import com.synergykit.android.response.BaseResponseListener;
 import com.synergykit.android.response.DeleteResponseListener;
 import com.synergykit.android.response.GetRecordsResponseListener;
 
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
+ *
+ */
 public class ResponseManager {
 
 	/* Empty http response */
 	private void emptyHttpResponse(HttpResponse httpResponse, BaseResponseListener listener){
-		SynergykitErrorObject errorObject= new SynergykitErrorObject();
+		SynergyKITErrorObject errorObject= new SynergyKITErrorObject();
 		errorObject.setStatus(Integer.toString(ErrorMessages.NETWORK_CONNECTION_ERROR_CODE));
 		errorObject.setMessage(ErrorMessages.NETWORK_CONNECTION_ERROR_MESSAGE);		
 		listener.errorCallback(ErrorMessages.NETWORK_CONNECTION_ERROR_CODE, errorObject);
@@ -26,7 +30,7 @@ public class ResponseManager {
 	
 	/* Empty http response */
 	private void emptyHttpResponse(HttpResponse httpResponse,GetRecordsResponseListener listener){
-		SynergykitErrorObject errorObject= new SynergykitErrorObject();
+		SynergyKITErrorObject errorObject= new SynergyKITErrorObject();
 		errorObject.setStatus(Integer.toString(ErrorMessages.NETWORK_CONNECTION_ERROR_CODE));
 		errorObject.setMessage(ErrorMessages.NETWORK_CONNECTION_ERROR_MESSAGE);		
 		listener.errorCallback(ErrorMessages.NETWORK_CONNECTION_ERROR_CODE, errorObject);
@@ -35,7 +39,7 @@ public class ResponseManager {
 	
 	/* Empty http response */
 	private void emptyHttpResponse(HttpResponse httpResponse, DeleteResponseListener listener){
-		SynergykitErrorObject errorObject= new SynergykitErrorObject();
+		SynergyKITErrorObject errorObject= new SynergyKITErrorObject();
 		errorObject.setStatus(Integer.toString(ErrorMessages.NETWORK_CONNECTION_ERROR_CODE));
 		errorObject.setMessage(ErrorMessages.NETWORK_CONNECTION_ERROR_MESSAGE);
 				

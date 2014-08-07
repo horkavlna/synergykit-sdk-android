@@ -2,13 +2,17 @@ package com.synergykit.android.resource;
 
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- * Created by tomas_000 on 27.2.14.
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
+ *
  */
-public class BaseUser extends SynergykitBaseObject {
-    private List<Platform> platforms;
+public class BaseUser extends SynergyKITBaseObject {
+    /* Attributes */
+	private String application;
+	private String name;
+	private List<Platform> platforms;
 
+	/* Constructor */
     public BaseUser(String registrationId) {
         Platform platform = new Platform();
         platforms = new ArrayList<Platform>();
@@ -16,27 +20,45 @@ public class BaseUser extends SynergykitBaseObject {
         platform.setName("android");
         platforms.add(platform);
     }
+    
 
+	/* application getter  */
+	public String getApplication() {
+		return application;
+	}
+
+	/* application setter */
+	public void setApplication(String application) {
+		this.application = application;
+	}
+
+	/* name getter */
+	public String getName() {
+		return name;
+	}
+
+	/* name setter */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/* Platforms getter */
     public List<Platform> getPlatforms() {
         return platforms;
     }
 
+    /*Platforms setter */
     public void setPlatforms(List<Platform> platforms) {
         this.platforms = platforms;
     }
 
+    /* Static class Platform */
     public static class Platform {
         private String name;
+        private String applicationId;
         private String registrationId;
-        private Boolean development;
+        
 
-        public Boolean getDevelopment() {
-            return development;
-        }
-
-        public void setDevelopment(Boolean development) {
-            this.development = development;
-        }
 
         public String getName() {
             return name;
@@ -53,6 +75,14 @@ public class BaseUser extends SynergykitBaseObject {
         public void setRegistrationId(String registrationId) {
             this.registrationId = registrationId;
         }
+
+		public String getApplicationId() {
+			return applicationId;
+		}
+
+		public void setApplicationId(String applicationId) {
+			this.applicationId = applicationId;
+		}
     }
 
 }

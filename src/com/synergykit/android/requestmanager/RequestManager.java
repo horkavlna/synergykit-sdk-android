@@ -10,9 +10,8 @@ import com.synergykit.android.response.BaseResponseListener;
 import com.synergykit.android.response.DeleteResponseListener;
 import com.synergykit.android.response.GetRecordsResponseListener;
 import com.synergykit.android.urlbuilder.UrlBuilder;
-/**
- * 
- * @author Pavel Stambrecht
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
  *
  */
 public class RequestManager{
@@ -64,7 +63,7 @@ public class RequestManager{
 	public String getApplicationKey() {
 		return mConfig.getApplicationKey();
 	}
-	
+	//----------------------------------------------------------------------------------------------------------------------
 	/* Get records */
 	public void getRecords(String collectionUrl,GetRecordsResponseListener listener,Type type){
 		UrlBuilder urlBuilder = new UrlBuilder();
@@ -208,7 +207,7 @@ public class RequestManager{
 		this.synergylize(deleteAsyncTask);
 		
 	}
-	
+	//----------------------------------------------------------------------------------------------------------------------
 	/* Serialize */
 	public void synergylize(BaseRequestAsyncTask baseRequestAsyncTask){
 		baseRequestAsyncTask.execute();

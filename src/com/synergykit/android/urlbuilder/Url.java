@@ -1,8 +1,11 @@
 package com.synergykit.android.urlbuilder;
 
-import com.synergykit.android.Synergykit;
+import com.synergykit.android.SynergyKIT;
 import com.synergykit.android.exception.NotInitializedException;
-
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
+ *
+ */
 public class Url {
 	
 	/* Attributes */
@@ -18,7 +21,7 @@ public class Url {
 		String url;
 		
 		//Init check
-		if(!Synergykit.isInit()){
+		if(!SynergyKIT.isInit()){
 			try {
 				throw new NotInitializedException();
 			} catch (NotInitializedException e) {
@@ -27,8 +30,8 @@ public class Url {
 			}
 		}
 		
-		url = String.format(mUrl, Synergykit.getTenant());		
-		url += "?application=" + Synergykit.getApplicationKey();
+		url = String.format(mUrl, SynergyKIT.getTenant());		
+		url += "?application=" + SynergyKIT.getApplicationKey();
 		
 		return url;
 	}

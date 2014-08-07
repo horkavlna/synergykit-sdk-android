@@ -2,7 +2,7 @@ package com.synergykit.android.resource;
 
 import java.lang.reflect.Type;
 
-import com.synergykit.android.Synergykit;
+import com.synergykit.android.SynergyKIT;
 import com.synergykit.android.exception.NotInitializedException;
 import com.synergykit.android.response.BaseResponseListener;
 import com.synergykit.android.response.DeleteResponseListener;
@@ -10,6 +10,10 @@ import com.synergykit.android.response.GetRecordsResponseListener;
 import com.synergykit.android.responsemanager.ResponseManager;
 import com.synergykit.android.urlbuilder.Url;
 
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
+ *
+ */
 
 public abstract class SynergylizeRequestAsyncTask extends BaseRequestAsyncTask {
 
@@ -80,7 +84,7 @@ public abstract class SynergylizeRequestAsyncTask extends BaseRequestAsyncTask {
 	
 	/* initialization check */
 	public void initCheck() throws NotInitializedException{
-		if(!Synergykit.isInit())
+		if(!SynergyKIT.isInit())
 			throw new NotInitializedException();
 	}
 }

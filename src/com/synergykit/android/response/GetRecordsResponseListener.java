@@ -1,16 +1,15 @@
 package com.synergykit.android.response;
 
-import com.synergykit.android.resource.SynergykitBaseObject;
-import com.synergykit.android.resource.SynergykitErrorObject;
+import com.synergykit.android.resource.SynergyKITBaseObject;
+import com.synergykit.android.resource.SynergyKITErrorObject;
 
-/**
- * 
- * @author Pavel Stambrecht
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
  *
  */
 
 public interface GetRecordsResponseListener {
-	public void doneCallback(int statusCode,SynergykitBaseObject[] baseObjects);
-	public void errorCallback(int statusCode, SynergykitErrorObject errorObject);
+	public void doneCallback(int statusCode,SynergyKITBaseObject[] baseObjects);
+	public void errorCallback(int statusCode, SynergyKITErrorObject errorObject);
 
 }

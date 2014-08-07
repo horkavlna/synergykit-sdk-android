@@ -14,6 +14,10 @@ import com.synergykit.android.request.Post;
 import com.synergykit.android.request.Put;
 import com.synergykit.android.urlbuilder.Url;
 
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
+ *
+ */
 public abstract class BaseRequestAsyncTask extends AsyncTask<Void, Void, Object>{
 
 	/* Attribute */

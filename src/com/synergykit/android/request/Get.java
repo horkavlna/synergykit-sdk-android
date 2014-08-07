@@ -11,15 +11,15 @@ import org.apache.http.params.HttpParams;
 import java.io.IOException;
 
 public abstract class Get {
-    private String uri;
-    private String accept;
-    private String contentType;
+	private String mUrl;
+    private String mAccept;
+    private String mContentType;
 
-    private DefaultHttpClient httpClient;
-    private HttpGet httpGet;
+    private DefaultHttpClient mHttpClient;
+    private HttpGet mHttpGet;
 
     public Get(String uri) {
-        this.uri = uri;
+        this.mUrl = uri;
     }
 
     public HttpResponse execute()
@@ -28,42 +28,42 @@ public abstract class Get {
         final HttpParams httpParams = new BasicHttpParams();
         HttpConnectionParams.setConnectionTimeout(httpParams, 60000);
         HttpConnectionParams.setSoTimeout(httpParams, 30000);
-        httpClient = new DefaultHttpClient(httpParams);
+        mHttpClient = new DefaultHttpClient(httpParams);
 
 
-        httpGet = new HttpGet(uri);
-        httpGet.addHeader("User-Agent", "Android");
+        mHttpGet = new HttpGet(mUrl);
+        mHttpGet.addHeader("User-Agent", "Android");
         
         
-        HttpResponse response = httpClient.execute(httpGet);
+        HttpResponse response = mHttpClient.execute(mHttpGet);
 
         return response;
     }
 
     public String getUri() {
-        return uri;
+        return mUrl;
     }
 
     public String getAccept() {
-        return accept;
+        return mAccept;
     }
 
     public void setAccept(String accept) {
-        this.accept = accept;
+        this.mAccept = accept;
     }
 
     public String getContentType() {
-        return contentType;
+        return mContentType;
     }
 
     public void setContentType(String contentType) {
-        this.contentType = contentType;
+        this.mContentType = contentType;
     }
 
     @Override
     protected void finalize() {
         try {
-            httpClient.getConnectionManager().shutdown();
+            mHttpClient.getConnectionManager().shutdown();
             super.finalize();
         } catch (Exception e) {
 

@@ -7,10 +7,8 @@ import com.synergykit.android.resource.BaseRequestAsyncTask;
 import com.synergykit.android.response.GetRecordsResponseListener;
 import com.synergykit.android.responsemanager.ResponseManager;
 
-
-/**
- * 
- * @author Pavel Stambrecht
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
  *
  */
 public class GetAllRequest extends BaseRequestAsyncTask{

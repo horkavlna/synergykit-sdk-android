@@ -11,18 +11,17 @@ import org.apache.http.util.EntityUtils;
 import android.util.Log;
 
 import com.synergykit.android.gsonwrapper.GsonWrapper;
-import com.synergykit.android.resource.SynergykitBaseObject;
-import com.synergykit.android.resource.SynergykitErrorObject;
+import com.synergykit.android.resource.SynergyKITBaseObject;
+import com.synergykit.android.resource.SynergyKITErrorObject;
 
-/**
- * 
- * @author Pavel Stambrecht
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
  *
  */
 public class ResultObjectBuilder {
 	
 	/* Build base object */
-	public static SynergykitBaseObject buildBaseObject(HttpResponse httpResponse,Type type){
+	public static SynergyKITBaseObject buildBaseObject(HttpResponse httpResponse,Type type){
 		String jsonContent;		
 		
 		// Param check
@@ -31,7 +30,7 @@ public class ResultObjectBuilder {
 		
 		try {
 			jsonContent = EntityUtils.toString(httpResponse.getEntity(),"UTF-8");
-			return (SynergykitBaseObject) GsonWrapper.getInstance().getGson().fromJson(jsonContent, type);
+			return (SynergyKITBaseObject) GsonWrapper.getInstance().getGson().fromJson(jsonContent, type);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -43,9 +42,9 @@ public class ResultObjectBuilder {
 	
 	
 	/* Build base objects */
-	public static SynergykitBaseObject[] buildBaseObjects(HttpResponse httpResponse, Type type){
+	public static SynergyKITBaseObject[] buildBaseObjects(HttpResponse httpResponse, Type type){
 		String jsonContent;
-		SynergykitBaseObject[] baseObjects;
+		SynergyKITBaseObject[] baseObjects;
 		
 		// Param check
 		if(httpResponse == null || httpResponse.getStatusLine().getStatusCode()!=HttpStatus.SC_OK)
@@ -54,7 +53,7 @@ public class ResultObjectBuilder {
 		
 		try {
 			jsonContent = EntityUtils.toString(httpResponse.getEntity(),"UTF-8");
-			baseObjects = (SynergykitBaseObject[]) GsonWrapper.getInstance().getGson().fromJson(jsonContent, type);
+			baseObjects = (SynergyKITBaseObject[]) GsonWrapper.getInstance().getGson().fromJson(jsonContent, type);
 			
 			return baseObjects;
 			
@@ -69,7 +68,7 @@ public class ResultObjectBuilder {
 	}
 	
 	/* Build error object */
-	public static SynergykitErrorObject buildErrorObject(HttpResponse httpResponse){
+	public static SynergyKITErrorObject buildErrorObject(HttpResponse httpResponse){
 		String jsonContent;		
 		
 		// Param check
@@ -79,7 +78,7 @@ public class ResultObjectBuilder {
 		try {
 			jsonContent = EntityUtils.toString(httpResponse.getEntity(),"UTF-8");
 			Log.e("Synergykit", jsonContent);
-			return (SynergykitErrorObject) GsonWrapper.getInstance().getGson().fromJson(jsonContent, SynergykitErrorObject.class);
+			return (SynergyKITErrorObject) GsonWrapper.getInstance().getGson().fromJson(jsonContent, SynergyKITErrorObject.class);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

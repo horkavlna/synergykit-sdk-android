@@ -1,15 +1,14 @@
 package com.synergykit.android.response;
 
-import com.synergykit.android.resource.SynergykitErrorObject;
+import com.synergykit.android.resource.SynergyKITErrorObject;
 
 
-/**
- * 
- * @author Pavel Stambrecht
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
  *
  */
 
 public interface DeleteResponseListener {
 	public void doneCallback(int statusCode);
-	public void errorCallback(int statusCode, SynergykitErrorObject errorObject);
+	public void errorCallback(int statusCode, SynergyKITErrorObject errorObject);
 }

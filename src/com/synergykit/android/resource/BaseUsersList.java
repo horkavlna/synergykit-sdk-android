@@ -2,8 +2,9 @@ package com.synergykit.android.resource;
 
 import java.util.ArrayList;
 
-/**
- * Created by tomas_000 on 4.3.14.
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
+ *
  */
 public class BaseUsersList extends ArrayList<BaseUser> {
 

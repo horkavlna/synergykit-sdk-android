@@ -1,11 +1,11 @@
 package com.synergykit.android.resource;
 
-/**
- * 
- * @author Pavel Stambrecht & tomas_000
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
  *
  */
-public class SynergykitErrorObject {
+
+public class SynergyKITErrorObject {
     private String status;
     private String message;
 

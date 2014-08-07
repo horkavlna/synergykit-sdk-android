@@ -7,9 +7,8 @@ import org.apache.http.HttpResponse;
 import com.synergykit.android.resource.BaseRequestAsyncTask;
 import com.synergykit.android.response.BaseResponseListener;
 import com.synergykit.android.responsemanager.ResponseManager;
-/**
- * 
- * @author Pavel Stambrecht
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
  *
  */
 public class PostRequest extends BaseRequestAsyncTask{

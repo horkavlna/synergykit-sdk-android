@@ -1,5 +1,8 @@
 package com.synergykit.android.urlbuilder;
-
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
+ *
+ */
 public class UrlBuilder {
 	/* Constants */
 	private static final String BASE_SYNERGYKIT_URL = "https://%s.api.synergykit.com";

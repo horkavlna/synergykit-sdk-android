@@ -6,6 +6,10 @@ import com.synergykit.android.resource.BaseRequestAsyncTask;
 import com.synergykit.android.response.DeleteResponseListener;
 import com.synergykit.android.responsemanager.ResponseManager;
 
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
+ *
+ */
 public class DeleteRequest extends BaseRequestAsyncTask{
 	/* Attributes */
 	private DeleteResponseListener mListener;
