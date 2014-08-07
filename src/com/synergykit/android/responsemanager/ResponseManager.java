@@ -7,7 +7,6 @@ import org.apache.http.HttpStatus;
 
 import android.util.Log;
 
-import com.synergykit.android.requestmanager.RequestManager;
 import com.synergykit.android.requestmanager.ResultObjectBuilder;
 import com.synergykit.android.resource.SynergykitErrorObject;
 import com.synergykit.android.response.BaseResponseListener;

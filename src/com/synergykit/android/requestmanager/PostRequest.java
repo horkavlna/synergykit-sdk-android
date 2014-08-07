@@ -3,10 +3,8 @@ package com.synergykit.android.requestmanager;
 import java.lang.reflect.Type;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
 
 import com.synergykit.android.resource.BaseRequestAsyncTask;
-import com.synergykit.android.resource.SynergykitErrorObject;
 import com.synergykit.android.response.BaseResponseListener;
 import com.synergykit.android.responsemanager.ResponseManager;
 /**
