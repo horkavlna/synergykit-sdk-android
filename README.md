@@ -14,6 +14,7 @@ synergykit-android
 	String recordId = "0123456789abcdefghijklmn"; //Unique record ID
 	MyObject myObecjt = new MyObject(); //Some object to store/unstore
 	Type type = MyObject.class; //Object type
+	Type arrayType = MyObject[].class //Object type
   ```
 	
 **Initialization:**
@@ -92,7 +93,7 @@ synergykit-android
   		MyObject object = (MyObject)baseObject[0]; //Change data type of first object
   		
   	}
-  }, type);
+  }, arrayType);
   ```
   
   **Update record:**
