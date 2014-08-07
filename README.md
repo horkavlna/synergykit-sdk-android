@@ -7,8 +7,8 @@ synergykit-android
   **Attributes:**
   
   ```
-	static final String TENANT = "example-tenant";	//Registrated tenant on www.synergykit.com
-	static final String APPLICATION_KEY = "01234567-890a-bcde-fghi-jklmnopqrstu";	//Unique key generetad on www.synergykit.com
+	static final String TENANT = "example-tenant";	//Registered tenant on www.synergykit.com
+	static final String APPLICATION_KEY = "01234567-890a-bcde-fghi-jklmnopqrstu";	//Unique key genereted on www.synergykit.com
 	
 	String collectionUrl = "example-collection"; //Unique collection URL 
 	String recordId = "0123456789abcdefghijklmn"; //Unique record ID
