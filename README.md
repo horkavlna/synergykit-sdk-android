@@ -1,7 +1,8 @@
 synergykit-android
 ==================
 
-###SynergyKIT examples###
+###SynergyKIT examples:
+
 
   **Attributes:**
   
@@ -218,4 +219,5 @@ synergykit-android
   		
   		return null;
   	}
-  });```
+  });
+  ```
