@@ -9,7 +9,10 @@ import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 
 import java.io.IOException;
-
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
+ *
+ */
 public abstract class Get {
 	private String mUrl;
     private String mAccept;

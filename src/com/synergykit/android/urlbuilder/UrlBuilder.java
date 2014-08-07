@@ -38,18 +38,20 @@ public class UrlBuilder {
 	}
 	
 	/* Values checker */
-	private void checkValue(String value, boolean canBeEmpty){
+	private boolean checkValue(String value){
 		
 		//null pointer check
-		if(!canBeEmpty && value==null){
-			throw new NullPointerException();
+		if( value==null){
+			return false;
 		}
 			
 		
 		//value length check
 		if(value!=null && value.length()<MIN_VALUE_LENGTH){
-			throw new IllegalArgumentException();
+			return false;
 		}
+		
+		return true;
 	}
 	
 	/* Build */
@@ -57,16 +59,15 @@ public class UrlBuilder {
 		String url = new String(BASE_SYNERGYKIT_URL);
 		
 		//set resource
-		this.checkValue(mResource, false);
-		url += "/" + mResource;
+		if(this.checkValue(mResource))
+			url += "/" + mResource;
 		
 		//set resource url
-		this.checkValue(mResourceUrl, false);
-		url += "/" + mResourceUrl;
+		if(this.checkValue(mResourceUrl))
+			url += "/" + mResourceUrl;
 		
 		//set resource id 
-		this.checkValue(mResourceId, true);
-		if(mResourceId!=null)
+		if(this.checkValue(mResourceId))
 			url += "/" + mResourceId;
 		
 		return new Url(url);	

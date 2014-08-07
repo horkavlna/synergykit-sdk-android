@@ -8,81 +8,57 @@ import java.util.List;
  */
 public class BaseUser extends SynergyKITBaseObject {
     /* Attributes */
-	private String application;
-	private String name;
-	private List<Platform> platforms;
+	private String password;
+	private String email;
+	private String registrationId;
+	private String platform;
+
+	public String getRegistrationId() {
+		return registrationId;
+	}
+
+
+	public void setRegistrationId(String registrationId) {
+		this.registrationId = registrationId;
+	}
+
+
+	public String getPlatform() {
+		return platform;
+	}
+
+
+	public void setPlatform(String platform) {
+		this.platform = platform;
+	}
+
 
 	/* Constructor */
     public BaseUser(String registrationId) {
-        Platform platform = new Platform();
-        platforms = new ArrayList<Platform>();
-        platform.setRegistrationId(registrationId);
-        platform.setName("android");
-        platforms.add(platform);
+    	this.registrationId = registrationId;
     }
     
 
-	/* application getter  */
-	public String getApplication() {
-		return application;
+	/* Email getter  */
+	public String getEmail() {
+		return email;
 	}
 
-	/* application setter */
-	public void setApplication(String application) {
-		this.application = application;
+	/* Email setter */
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	/* name getter */
-	public String getName() {
-		return name;
+	/* Password getter */
+	public String getPassword() {
+		return password;
 	}
 
-	/* name setter */
-	public void setName(String name) {
-		this.name = name;
+	/* Password setter */
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
-	/* Platforms getter */
-    public List<Platform> getPlatforms() {
-        return platforms;
-    }
 
-    /*Platforms setter */
-    public void setPlatforms(List<Platform> platforms) {
-        this.platforms = platforms;
-    }
-
-    /* Static class Platform */
-    public static class Platform {
-        private String name;
-        private String applicationId;
-        private String registrationId;
-        
-
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public String getRegistrationId() {
-            return registrationId;
-        }
-
-        public void setRegistrationId(String registrationId) {
-            this.registrationId = registrationId;
-        }
-
-		public String getApplicationId() {
-			return applicationId;
-		}
-
-		public void setApplicationId(String applicationId) {
-			this.applicationId = applicationId;
-		}
-    }
 
 }

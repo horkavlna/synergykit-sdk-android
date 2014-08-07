@@ -2,9 +2,9 @@ package com.synergykit.android.request;
 
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- * Created by tomas_000 on 10.3.14.
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
+ *
  */
 public class Notification {
     private String payload;

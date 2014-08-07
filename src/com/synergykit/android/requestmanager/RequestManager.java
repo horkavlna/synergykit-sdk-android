@@ -9,6 +9,7 @@ import com.synergykit.android.resource.BaseRequestAsyncTask;
 import com.synergykit.android.response.BaseResponseListener;
 import com.synergykit.android.response.DeleteResponseListener;
 import com.synergykit.android.response.GetRecordsResponseListener;
+import com.synergykit.android.response.GetUsersResponseListener;
 import com.synergykit.android.urlbuilder.UrlBuilder;
 /*
  * Copyright 2014 Letsgood.com s.r.o.
@@ -67,7 +68,7 @@ public class RequestManager{
 	/* Get records */
 	public void getRecords(String collectionUrl,GetRecordsResponseListener listener,Type type){
 		UrlBuilder urlBuilder = new UrlBuilder();
-		GetAllRequest getAsyncTask = new GetAllRequest();	
+		GetRecordsRequest getAsyncTask = new GetRecordsRequest();	
 		
 		
 		try {
@@ -205,6 +206,32 @@ public class RequestManager{
 				
 		//send request
 		this.synergylize(deleteAsyncTask);
+		
+	}
+	//----------------------------------------------------------------------------------------------------------------------
+	/* Get Users */
+	public void getUsers(GetUsersResponseListener listener, Type type){
+		UrlBuilder urlBuilder = new UrlBuilder();
+		GetUsersRequest getRequest = new GetUsersRequest();
+		
+		try {
+			//init check
+			this.initCheck();
+		} catch (NotInitializedException e) {
+			e.printStackTrace();
+			return;
+		}
+		
+		//build url
+		urlBuilder.setResource(UrlBuilder.RESOURCE_USERS);
+		
+		//set request
+		getRequest.setUrl(urlBuilder.build());
+		getRequest.setListener(listener);
+		getRequest.setType(type);
+
+		//send request
+		this.synergylize(getRequest);
 		
 	}
 	//----------------------------------------------------------------------------------------------------------------------

@@ -53,6 +53,7 @@ public class ResultObjectBuilder {
 		
 		try {
 			jsonContent = EntityUtils.toString(httpResponse.getEntity(),"UTF-8");
+			Log.e("Synergykit", jsonContent);
 			baseObjects = (SynergyKITBaseObject[]) GsonWrapper.getInstance().getGson().fromJson(jsonContent, type);
 			
 			return baseObjects;

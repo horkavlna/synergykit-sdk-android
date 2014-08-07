@@ -1,19 +1,18 @@
 package com.synergykit.android.requestmanager;
-/**
- * 
- * @author Pavel Stambrecht
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
  *
  */
 public class Config {
 	/* Attributes */
 	private String mTenant;
-	private String mAppKey;
+	private String mApplicationKey;
 	
 	
 	/* Constructor */ 
 	public Config(String tenant, String appKey){
 		this.mTenant =tenant;
-		this.mAppKey= appKey;				
+		this.mApplicationKey= appKey;				
 	}
 	
 	/* Tenant setter */
@@ -28,11 +27,11 @@ public class Config {
 	
 	/* Application key setter */
 	public void setApplicationKey(String appKey){
-		this.mAppKey = appKey;
+		this.mApplicationKey = appKey;
 	}
 	
 	/* Application key getter */
 	public String getApplicationKey(){
-		return mAppKey;
+		return mApplicationKey;
 	}
 }

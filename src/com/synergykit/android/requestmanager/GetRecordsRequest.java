@@ -11,7 +11,7 @@ import com.synergykit.android.responsemanager.ResponseManager;
  * Copyright 2014 Letsgood.com s.r.o.
  *
  */
-public class GetAllRequest extends BaseRequestAsyncTask{
+public class GetRecordsRequest extends BaseRequestAsyncTask{
 	/* Attributes */
 	private Type mType;
 	private GetRecordsResponseListener mListener;
