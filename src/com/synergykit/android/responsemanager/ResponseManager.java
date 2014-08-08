@@ -161,8 +161,30 @@ public class ResponseManager {
 	}
 
 	/* Manage result */
-	public void manageResult(HttpResponse httpResponse, BaseUserResponseListener listener){
+	public void manageResult(HttpResponse httpResponse, BaseUserResponseListener listener, Type type){
+		int statusCode;
 		
+		
+		//Empty listener
+		if(listener == null)
+			return;
+		
+		//Empty http response
+		if(httpResponse==null){
+			this.emptyHttpResponse(httpResponse, listener);
+			return;
+		}
+		
+		//get status code
+		statusCode = httpResponse.getStatusLine().getStatusCode();
+		
+		//
+		//callback result
+		if(statusCode>= HttpStatus.SC_OK && statusCode < HttpStatus.SC_MULTIPLE_CHOICES)				
+			listener.doneCallback(httpResponse.getStatusLine().getStatusCode(),(BaseUser)(ResultObjectBuilder.buildBaseObject(httpResponse, type)));
+		else
+			listener.errorCallback(httpResponse.getStatusLine().getStatusCode(),ResultObjectBuilder.buildErrorObject(httpResponse));
+			
 	}
 	
 	/* Manage result */

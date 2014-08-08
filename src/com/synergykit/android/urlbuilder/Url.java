@@ -16,6 +16,8 @@ public class Url {
 		this.mUrl = url;
 	}
 	
+	
+	
 	/* Url getter */
 	public String getUrl(){
 		String url;
@@ -30,8 +32,7 @@ public class Url {
 			}
 		}
 		
-		url = String.format(mUrl, SynergyKIT.getTenant());		
-		url += "?application=" + SynergyKIT.getApplicationKey();
+		url = String.format(mUrl, SynergyKIT.getTenant(),"?application=" + SynergyKIT.getApplicationKey());		
 		
 		return url;
 	}

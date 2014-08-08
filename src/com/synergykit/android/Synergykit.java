@@ -4,11 +4,14 @@ package com.synergykit.android;
 import java.lang.reflect.Type;
 
 import com.synergykit.android.requestmanager.RequestManager;
+import com.synergykit.android.resource.BaseUser;
 import com.synergykit.android.resource.SynergylizeRequestAsyncTask;
 import com.synergykit.android.response.BaseResponseListener;
+import com.synergykit.android.response.BaseUserResponseListener;
 import com.synergykit.android.response.DeleteResponseListener;
 import com.synergykit.android.response.GetRecordsResponseListener;
 import com.synergykit.android.response.GetUsersResponseListener;
+import com.synergykit.android.usermanager.UserManager;
 
 /*
  * Copyright 2014 Letsgood.com s.r.o.
@@ -77,13 +80,39 @@ public class SynergyKIT {
 		RequestManager.getInstance().updateRecord(collectionUrl, recordId, object, listener,type);
 	}
 	
-	/* Delete record */
+		/* Delete record */
 	public static void deleteRecord(String collectionUrl, String recordId, DeleteResponseListener listener){
 		RequestManager.getInstance().deleteRecord(collectionUrl, recordId, listener);
 	}
 	//----------------------------------------------------------------------------------------------------------------------
+	/* Get users */
 	public static void getUsers(GetUsersResponseListener listener,Type type){
-		RequestManager.getInstance().getUsers(listener, type);
+		UserManager.getInstance().getUsers(listener, type);
+	}
+	
+	/* Get user */
+	public static void getUser(String userId, BaseUserResponseListener listener, Type type){
+		UserManager.getInstance().getUser(userId, listener, type);
+	}
+	
+	/* Create user */
+	public static void createUser(BaseUser baseUser, BaseUserResponseListener listener, Type type){
+		UserManager.getInstance().createUser(baseUser, listener, type);
+	}
+	
+	/* Update user */
+	public static void updateUser(String userId, BaseUser baseUser, BaseUserResponseListener listener, Type type){
+		UserManager.getInstance().updateUser(userId, baseUser, listener, type);
+	}
+	
+	/* Delete user */
+	public static void deleteUser(String userId, DeleteResponseListener listener){
+		UserManager.getInstance().deleteUser(userId, listener);
+	}
+	
+	/* Login user */
+	public static void loginUser(BaseUser baseUser, BaseUserResponseListener listener, Type type){
+		UserManager.getInstance().loginUser(baseUser, listener, type);
 	}
 }
 	

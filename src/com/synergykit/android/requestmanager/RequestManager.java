@@ -6,7 +6,9 @@ import android.util.Log;
 
 import com.synergykit.android.exception.NotInitializedException;
 import com.synergykit.android.resource.BaseRequestAsyncTask;
+import com.synergykit.android.resource.BaseUser;
 import com.synergykit.android.response.BaseResponseListener;
+import com.synergykit.android.response.BaseUserResponseListener;
 import com.synergykit.android.response.DeleteResponseListener;
 import com.synergykit.android.response.GetRecordsResponseListener;
 import com.synergykit.android.response.GetUsersResponseListener;
@@ -234,6 +236,118 @@ public class RequestManager{
 		this.synergylize(getRequest);
 		
 	}
+	
+	/* Get user */
+	public void getUser(String userId, BaseUserResponseListener listener, Type type){
+		UrlBuilder urlBuilder = new UrlBuilder();
+		GetUserRequest getRequest = new GetUserRequest();
+		
+		
+		try {
+			//init check
+			this.initCheck();
+		} catch (NotInitializedException e) {
+			e.printStackTrace();
+			return;
+		}
+		
+		//build url
+		urlBuilder.setResource(UrlBuilder.RESOURCE_USERS)
+				  .setResourceId(userId);
+		
+		//set request
+		getRequest.setUrl(urlBuilder.build());
+		getRequest.setListener(listener);
+		getRequest.setType(type);
+
+		//send request
+		this.synergylize(getRequest);
+	}
+	
+	
+	/* Create user */
+	public void createUser(BaseUser baseUser, BaseUserResponseListener listener, Type type ){
+		UrlBuilder urlBuilder = new UrlBuilder();
+		PostUserRequest postRequest = new PostUserRequest();
+		
+		
+		try {
+			//init check
+			this.initCheck();
+		} catch (NotInitializedException e) {
+			e.printStackTrace();
+			return;
+		}
+		
+		//build url
+		urlBuilder.setResource(UrlBuilder.RESOURCE_USERS);
+		
+		//set request
+		postRequest.setUrl(urlBuilder.build());		
+		postRequest.setListener(listener);
+		postRequest.setType(type);
+		postRequest.setObject(baseUser);
+
+		//send request
+		this.synergylize(postRequest);
+	}
+	
+	/* Create user */
+	public void updateUser(String userId, BaseUser baseUser, BaseUserResponseListener listener, Type type ){
+		UrlBuilder urlBuilder = new UrlBuilder();
+		PostUserRequest postRequest = new PostUserRequest();
+		
+		
+		try {
+			//init check
+			this.initCheck();
+		} catch (NotInitializedException e) {
+			e.printStackTrace();
+			return;
+		}
+		
+		//build url
+		urlBuilder.setResource(UrlBuilder.RESOURCE_USERS);
+		
+		//set request
+		postRequest.setUrl(urlBuilder.build());		
+		postRequest.setListener(listener);
+		postRequest.setType(type);
+		postRequest.setObject(baseUser);
+
+		//send request
+		this.synergylize(postRequest);
+	}
+	
+	/* Delete user */
+	public void deleteUser(String userId, DeleteResponseListener listener ){
+		UrlBuilder urlBuilder = new UrlBuilder();
+		DeleteRequest deleteRequest = new DeleteRequest();
+		
+		
+		try {
+			//init check
+			this.initCheck();
+		} catch (NotInitializedException e) {
+			e.printStackTrace();
+			return;
+		}
+		
+		//build url
+		urlBuilder.setResource(UrlBuilder.RESOURCE_USERS)
+				  .setResourceId(userId);
+		
+		//set request
+		deleteRequest.setUrl(urlBuilder.build());		
+		deleteRequest.setListener(listener);
+
+
+		//send request
+		this.synergylize(deleteRequest);
+	}
+	
+	
+	
 	//----------------------------------------------------------------------------------------------------------------------
 	/* Serialize */
 	public void synergylize(BaseRequestAsyncTask baseRequestAsyncTask){

@@ -29,5 +29,9 @@ public class SynergyKITErrorObject {
         this.message = message;
     }
 
+    /* To String */
+    public String toString(){
+    	return "Status code: " + status + ", Message: " + message;
+    }
 }
 

@@ -17,6 +17,7 @@ public class UrlBuilder {
 	private String mResource = null;
 	private String mResourceUrl = null;
 	private String mResourceId = null;
+	private String mFilter = null;
 	
 		
 	/* Resource setter */
@@ -34,6 +35,12 @@ public class UrlBuilder {
 	/* Resource Id setter */
 	public UrlBuilder setResourceId(String resourceId){
 		this.mResourceId = resourceId;
+		return this;
+	}
+	
+	/* Filter setter */
+	public UrlBuilder setFilter(String filter){
+		this.mFilter=filter;
 		return this;
 	}
 	
@@ -69,6 +76,13 @@ public class UrlBuilder {
 		//set resource id 
 		if(this.checkValue(mResourceId))
 			url += "/" + mResourceId;
+		
+		//add application key tag
+		url+="%s";
+		
+		//set filter
+		if(this.checkValue(mFilter))
+			url+="&$filter=" + mFilter;
 		
 		return new Url(url);	
 	}
