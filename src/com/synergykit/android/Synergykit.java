@@ -114,5 +114,10 @@ public class SynergyKIT {
 	public static void loginUser(BaseUser baseUser, BaseUserResponseListener listener, Type type){
 		UserManager.getInstance().loginUser(baseUser, listener, type);
 	}
+	
+	/* Register user */
+	public static void registerUser(BaseUser baseUser, BaseUserResponseListener listener, Type type){
+		UserManager.getInstance().createUser(baseUser, listener, type);
+	}
 }
 	

@@ -29,8 +29,8 @@ public class ResultObjectBuilder {
 			return null;
 		
 		try {
-			jsonContent = EntityUtils.toString(httpResponse.getEntity(),"UTF-8");
-			Log.e("Synergykit", jsonContent);
+			jsonContent = EntityUtils.toString(httpResponse.getEntity(),"UTF-8");		
+			//Log.e("Synergykit", jsonContent);
 			return (SynergyKITBaseObject) GsonWrapper.getInstance().getGson().fromJson(jsonContent, type);
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -54,7 +54,6 @@ public class ResultObjectBuilder {
 		
 		try {
 			jsonContent = EntityUtils.toString(httpResponse.getEntity(),"UTF-8");
-			Log.e("Synergykit", jsonContent);
 			baseObjects = (SynergyKITBaseObject[]) GsonWrapper.getInstance().getGson().fromJson(jsonContent, type);
 			
 			return baseObjects;
@@ -79,7 +78,6 @@ public class ResultObjectBuilder {
 		
 		try {
 			jsonContent = EntityUtils.toString(httpResponse.getEntity(),"UTF-8");
-			Log.e("Synergykit", jsonContent);
 			return (SynergyKITErrorObject) GsonWrapper.getInstance().getGson().fromJson(jsonContent, SynergyKITErrorObject.class);
 		} catch (ParseException e) {
 			e.printStackTrace();

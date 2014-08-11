@@ -91,7 +91,7 @@ public class ResponseManager {
 		
 		//get status code
 		statusCode = httpResponse.getStatusLine().getStatusCode();
-		
+
 		//
 		//callback result
 		if(statusCode >= HttpStatus.SC_OK && statusCode < HttpStatus.SC_MULTIPLE_CHOICES)				
@@ -148,7 +148,6 @@ public class ResponseManager {
 		//get status code
 		statusCode = httpResponse.getStatusLine().getStatusCode();
 		
-		Log.e("Synergykit",Integer.toString(statusCode));
 		
 		//
 		//callback result
@@ -178,12 +177,15 @@ public class ResponseManager {
 		//get status code
 		statusCode = httpResponse.getStatusLine().getStatusCode();
 		
+		Log.e("Synergykit",Integer.toString(statusCode));
+		
 		//
 		//callback result
-		if(statusCode>= HttpStatus.SC_OK && statusCode < HttpStatus.SC_MULTIPLE_CHOICES)				
+		if(statusCode>= HttpStatus.SC_OK && statusCode < HttpStatus.SC_MULTIPLE_CHOICES)			
 			listener.doneCallback(httpResponse.getStatusLine().getStatusCode(),(BaseUser)(ResultObjectBuilder.buildBaseObject(httpResponse, type)));
+		
 		else
-			listener.errorCallback(httpResponse.getStatusLine().getStatusCode(),ResultObjectBuilder.buildErrorObject(httpResponse));
+			listener.errorCallback(httpResponse.getStatusLine().getStatusCode(),(ResultObjectBuilder.buildErrorObject(httpResponse)));
 			
 	}
 	

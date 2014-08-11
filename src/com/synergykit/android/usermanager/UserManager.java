@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
+import org.apache.http.util.EntityUtils;
 
 import android.util.Log;
 
@@ -24,9 +25,10 @@ import com.synergykit.android.urlbuilder.Url;
 import com.synergykit.android.urlbuilder.UrlBuilder;
 
 public class UserManager {
-	/* Constructor */
+	/* Constants */
 	private static final String STATUS_CODE = "status_code";
 	private static final String OBJECT = "object";
+	private static final int LOGGIN_URL_TOP  = 1;
 	
 	/* Attributes */
 	private static UserManager mInstance = null;
@@ -77,26 +79,22 @@ public class UserManager {
 			
 			@Override
 			protected void onPostExecute(Object object) {
-			/*	HttpResponse httpResponse = (HttpResponse)object;
+				HttpResponse httpResponse = (HttpResponse)object;
 				ResponseManager responseManager = new ResponseManager();
-				responseManager.manageResult(httpResponse, listener, type);
-				
-				*/
+				responseManager.manageResult(httpResponse, listener, type);				
 			}
 			
 			@Override
 			protected Object doInBackground(Void... params) {
 				UrlBuilder urlBuilder = new UrlBuilder();
-				urlBuilder.setResource(UrlBuilder.RESOURCE_USERS)
-						  .setFilter("email eq '" + baseUser.getEmail() + "'");
+				urlBuilder.setResource(UrlBuilder.RESOURCE_USER_LOGIN);
 				
 				
-				Url url = urlBuilder.build();
+				Url url = urlBuilder.build();		
 				
-				String strUrl = url.getUrl();
-				Log.e("SynergyKIT",strUrl);
+				Log.e("SynergyKIT",url.getUrl());
 				
-				HttpResponse httpResponse = requestGet(url);
+				HttpResponse httpResponse = requestPost(url, baseUser);
 				
 				
 				return httpResponse;
@@ -106,6 +104,8 @@ public class UserManager {
 			
 	
 	}
+	
+	
 	
 	
 	//------------------------------------------------------------------------------------------------------

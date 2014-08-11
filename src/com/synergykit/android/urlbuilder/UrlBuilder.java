@@ -1,4 +1,7 @@
 package com.synergykit.android.urlbuilder;
+
+import android.util.Log;
+
 /*
  * Copyright 2014 Letsgood.com s.r.o.
  *
@@ -10,6 +13,7 @@ public class UrlBuilder {
 	final public static String RESOURCE_DATA = "data";
 	final public static String RESOURCE_LOGS = "logs";
 	final public static String RESOURCE_USERS = "users";
+	final public static String RESOURCE_USER_LOGIN = "users/login";
 	final public static String RESOURCE_VARIANTS = "variants";
 	private static final int MIN_VALUE_LENGTH = 1;
 	
@@ -18,6 +22,11 @@ public class UrlBuilder {
 	private String mResourceUrl = null;
 	private String mResourceId = null;
 	private String mFilter = null;
+	private String mSelect = null;
+	private Integer mTop = null;
+	private String mInlineCount = null;
+	private Integer mSkip = null;
+	private String mOrderBy = null;
 	
 		
 	/* Resource setter */
@@ -43,6 +52,37 @@ public class UrlBuilder {
 		this.mFilter=filter;
 		return this;
 	}
+	
+	/* Select setter */
+	public UrlBuilder setSelect(String select){
+		this.mSelect = select;
+		return this;
+	}
+	
+	/* In line count setter */
+	public UrlBuilder setInlineCount(String inlineCount){
+		this.mInlineCount = inlineCount;
+		return this;
+	}
+	
+	/* Top setter */
+	public UrlBuilder setTop(int top){
+		this.mTop = top;
+		return this;
+	}
+	
+	/* Skip setter */
+	public UrlBuilder setSkip(int skip){
+		this.mSkip = skip;
+		return this;
+	}
+	
+	/* Order By setter */
+	public UrlBuilder setOrderBy(String orderBy){
+		this.mOrderBy = orderBy;
+		return this;
+	}
+	
 	
 	/* Values checker */
 	private boolean checkValue(String value){
@@ -83,6 +123,28 @@ public class UrlBuilder {
 		//set filter
 		if(this.checkValue(mFilter))
 			url+="&$filter=" + mFilter;
+		
+		//set select
+		if(this.checkValue(mSelect))
+			url="&$select=" + mSelect;
+		
+		//set top
+		if(mTop!=null)
+			url+="&$top=" + mTop.toString();
+		
+		//set order by
+		if(this.checkValue(mOrderBy))
+			url+="&$orderby=" + mOrderBy;
+		
+		//set skip
+		if(mSkip != null)
+			url+="&$skip=" + mSkip.toString();
+		
+		//set in line count
+		if(this.checkValue(mInlineCount))
+			url+="&$inlinecount=" + mInlineCount;
+		
+		Log.e("SynergyKIT",url);
 		
 		return new Url(url);	
 	}
