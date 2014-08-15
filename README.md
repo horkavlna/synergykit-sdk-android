@@ -1,4 +1,4 @@
-synergykit-android
+synergykit-sdk-android
 ==================
 
 ###SynergyKIT examples:
