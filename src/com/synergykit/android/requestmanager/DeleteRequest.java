@@ -1,0 +1,35 @@
+package com.synergykit.android.requestmanager;
+
+import org.apache.http.HttpResponse;
+
+import com.synergykit.android.resource.BaseRequestAsyncTask;
+import com.synergykit.android.response.DeleteResponseListener;
+import com.synergykit.android.responsemanager.ResponseManager;
+
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
+ *
+ */
+public class DeleteRequest extends BaseRequestAsyncTask{
+	/* Attributes */
+	private DeleteResponseListener mListener;
+	
+	/* Listener setter */
+	public void setListener(DeleteResponseListener listener){
+		mListener = listener;
+	}
+	
+	/* Do in background */
+	@Override
+	protected Object doInBackground(Void... params) {
+		return requestDelete(getUrl());
+	}
+
+	/* On post execute */
+	@Override
+	protected void onPostExecute(Object object) {
+		ResponseManager responseManager = new ResponseManager();
+		responseManager.manageResult((HttpResponse) object, mListener);		
+	}
+
+}

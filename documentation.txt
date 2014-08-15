@@ -1,0 +1,35 @@
+** SYNERGYKIT DOKUMENTACE **
+
+## Inicializace Synergykitu ##
+		String tenant = "tenant-example"; //tenant
+		String applicationKey = "01234567-890a-bcde-fghi-jklmnopqrstu"; //klíč aplikace
+		Synergykit.init(tenant, applicationKey);	//inicializce Synergykitu						
+
+## Vytvoření záznamu ##
+  	String collectionUrl = "example_collection"; //URL kolekce
+  	MyObject myObject = new MyObject(); //objekt určený k uložení
+  	Type type = MyObject.class; //datový ty objecktu, který je určený k nahrání na synergykit
+  	
+  	Synergykit.createRecord(collectionUrl, myObject, new BaseResponseListener() {
+  		
+  		//callback po nesprávném provedení dotazu
+  		@Override
+  		public void errorCallback(HttpResponse httpResponse,
+  				SynergykitErrorObject errorObject) {
+  			//httpResponse  - kompletní odpověď dotazu
+  			//errorObject - typ a zpráva chyby
+  			
+  			
+  		}
+  		
+  		//callback po správném provedení dotazu
+  		@Override
+  		public void doneCallback(HttpResponse httpResponse,
+  				SynergykitBaseObject baseObject) {
+  			//httpResponse - kompletní odpověď dotazu
+  			//base object - objekt, který byl nahrán na synergykit před přetypováním
+  			
+  			MyObject o = (MyObject)baseObject; //přetypování objektu
+  			
+  		}
+  	}, type);
