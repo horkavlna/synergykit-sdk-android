@@ -2,6 +2,8 @@ package com.synergykit.android.requestmanager;
 
 import java.lang.reflect.Type;
 
+import org.apache.http.HttpEntity;
+
 import android.util.Log;
 
 import com.synergykit.android.exception.NotInitializedException;
@@ -156,6 +158,34 @@ public class RequestManager{
 		this.synergylize(postAsyncTask);
 		
 	}
+	
+	/* Create record */
+	public void createFile(BaseResponseListener listener,Type type,HttpEntity multiPartEntity){
+		UrlBuilder urlBuilder =	new UrlBuilder();
+		PostFileRequest postAsyncTask = new PostFileRequest();
+		
+		try {
+			//init check
+			this.initCheck();
+		} catch (NotInitializedException e) {
+			e.printStackTrace();
+			return;
+		}
+		
+		
+		urlBuilder.setResource(UrlBuilder.RESOURCE_FILES);
+		
+		//set request
+		postAsyncTask.setUrl(urlBuilder.build());
+		postAsyncTask.setListener(listener);
+		postAsyncTask.setType(type);
+		postAsyncTask.setEntityType(multiPartEntity);
+		
+		//send request
+		this.synergylize(postAsyncTask);
+		
+	}
+	
 	
 	/* Update record */
 	public void updateRecord(String collectionUrl, String recordId, Object object, BaseResponseListener listener, Type type){

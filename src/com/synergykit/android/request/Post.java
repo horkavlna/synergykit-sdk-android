@@ -26,7 +26,7 @@ public abstract class Post {
 		this.uri = uri;
 	}
 
-	public HttpResponse execute(HttpEntity entity)
+	public HttpResponse execute(HttpEntity entity,String contentType)
 			throws ClientProtocolException, IOException, IllegalStateException {
 
 		final HttpParams httpParams = new BasicHttpParams();
@@ -38,7 +38,7 @@ public abstract class Post {
 
 		httpPost = new HttpPost(uri);
 		httpPost.addHeader("User-Agent", "Android");
-		httpPost.addHeader("Content-Type", "application/json");
+		httpPost.addHeader("Content-Type", contentType);
 		httpPost.addHeader("Accept", "application/json");
 		httpPost.setEntity(entity);
 
