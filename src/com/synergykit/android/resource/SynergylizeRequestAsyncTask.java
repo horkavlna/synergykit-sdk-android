@@ -51,7 +51,7 @@ public abstract class SynergylizeRequestAsyncTask extends BaseRequestAsyncTask {
 						
 			//create response objects
 			if(responseDataHolder.mStatusCode>= HttpStatus.SC_OK && responseDataHolder.mStatusCode < HttpStatus.SC_MULTIPLE_CHOICES){
-				responseDataHolder.mObject = ResultObjectBuilder.buildBaseObjects(responseDataHolder.mStatusCode, data,type);
+				responseDataHolder.mObject = ResultObjectBuilder.buildBaseObject(responseDataHolder.mStatusCode, data,type);
 			}else{
 				responseDataHolder.mErrorObject = ResultObjectBuilder.buildErrorObject(responseDataHolder.mStatusCode, data);
 
@@ -94,7 +94,7 @@ public abstract class SynergylizeRequestAsyncTask extends BaseRequestAsyncTask {
 						
 			//create response objects
 			if(responseDataHolder.mStatusCode>= HttpStatus.SC_OK && responseDataHolder.mStatusCode < HttpStatus.SC_MULTIPLE_CHOICES){
-				responseDataHolder.mObject = ResultObjectBuilder.buildBaseObjects(responseDataHolder.mStatusCode, data,type);
+				responseDataHolder.mObject = ResultObjectBuilder.buildBaseObject(responseDataHolder.mStatusCode, data,type);
 			}else{
 				responseDataHolder.mErrorObject = ResultObjectBuilder.buildErrorObject(responseDataHolder.mStatusCode, data);
 
@@ -137,7 +137,7 @@ public abstract class SynergylizeRequestAsyncTask extends BaseRequestAsyncTask {
 						
 			//create response objects
 			if(responseDataHolder.mStatusCode>= HttpStatus.SC_OK && responseDataHolder.mStatusCode < HttpStatus.SC_MULTIPLE_CHOICES){
-				responseDataHolder.mObject = ResultObjectBuilder.buildBaseObjects(responseDataHolder.mStatusCode, data,type);
+				responseDataHolder.mObject = ResultObjectBuilder.buildBaseObject(responseDataHolder.mStatusCode, data,type);
 			}else{
 				responseDataHolder.mErrorObject = ResultObjectBuilder.buildErrorObject(responseDataHolder.mStatusCode, data);
 
