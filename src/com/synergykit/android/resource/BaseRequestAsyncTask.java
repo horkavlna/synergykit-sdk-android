@@ -57,7 +57,7 @@ public abstract class BaseRequestAsyncTask extends AsyncTask<Void, Void, Object>
 		Post request = new Post(url.getUrl()){};
 		
 		try {
-			return request.execute(entity,"multipart/form-data");		
+			return request.execute(entity,null);		
 			//return request.execute(new ByteArrayEntity(json.getBytes()));
 		} catch (Exception e) {
 			e.printStackTrace();

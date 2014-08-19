@@ -10,6 +10,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
+
 /*
  * Copyright 2014 Letsgood.com s.r.o.
  *
@@ -26,7 +27,7 @@ public abstract class Post {
 		this.uri = uri;
 	}
 
-	public HttpResponse execute(HttpEntity entity,String contentType)
+	public HttpResponse execute(HttpEntity entity, String contentType)
 			throws ClientProtocolException, IOException, IllegalStateException {
 
 		final HttpParams httpParams = new BasicHttpParams();
@@ -34,11 +35,11 @@ public abstract class Post {
 		HttpConnectionParams.setSoTimeout(httpParams, 90000);
 		HttpConnectionParams.setLinger(httpParams, 0);
 		httpClient = new DefaultHttpClient(httpParams);
-		
 
 		httpPost = new HttpPost(uri);
 		httpPost.addHeader("User-Agent", "Android");
-		httpPost.addHeader("Content-Type", contentType);
+		if (contentType != null)
+			httpPost.addHeader("Content-Type", contentType);
 		httpPost.addHeader("Accept", "application/json");
 		httpPost.setEntity(entity);
 

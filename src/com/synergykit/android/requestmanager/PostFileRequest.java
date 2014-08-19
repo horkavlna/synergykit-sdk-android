@@ -62,6 +62,7 @@ public class PostFileRequest extends BaseRequestAsyncTask {
 				.getStatusCode(); // set status code
 
 		try {
+			
 			BufferedReader data = new BufferedReader(new InputStreamReader(
 					httpResponse.getEntity().getContent(), "UTF-8"));
 			
