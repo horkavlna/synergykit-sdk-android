@@ -84,7 +84,7 @@ public class ResponseManager {
 			return;
 		
 		//Empty http response
-		if((baseObject==null && errorObject==null) || statusCode>=HttpStatus.SC_INTERNAL_SERVER_ERROR){
+		if(statusCode>=HttpStatus.SC_INTERNAL_SERVER_ERROR){
 			this.emptyHttpResponse(listener);
 			return;
 		}
@@ -109,7 +109,7 @@ public class ResponseManager {
 			return;
 		
 		//Empty http response
-		if(errorObject==null|| statusCode>=HttpStatus.SC_INTERNAL_SERVER_ERROR){
+		if( statusCode>=HttpStatus.SC_INTERNAL_SERVER_ERROR || statusCode==-1){
 			this.emptyHttpResponse( listener);
 			return;
 		}
@@ -133,7 +133,7 @@ public class ResponseManager {
 			return;
 		
 		//Empty http response
-		if((baseObjects==null && errorObject==null) || statusCode>=HttpStatus.SC_INTERNAL_SERVER_ERROR){
+		if(statusCode>=HttpStatus.SC_INTERNAL_SERVER_ERROR || statusCode==-1){
 			this.emptyHttpResponse( listener);
 			return;
 		}
@@ -158,7 +158,7 @@ public class ResponseManager {
 			return;
 		
 		//Empty http response
-		if((baseUser==null && errorObject==null) || statusCode>=HttpStatus.SC_INTERNAL_SERVER_ERROR){
+		if( statusCode>=HttpStatus.SC_INTERNAL_SERVER_ERROR || statusCode==-1){
 			this.emptyHttpResponse(listener);
 			return;
 		}
@@ -181,7 +181,7 @@ public class ResponseManager {
 			return;
 		
 		//Empty http response
-		if((baseUsers==null && errorObject==null)|| statusCode>=HttpStatus.SC_INTERNAL_SERVER_ERROR){
+		if(statusCode>=HttpStatus.SC_INTERNAL_SERVER_ERROR || statusCode==-1){
 			this.emptyHttpResponse( listener);
 			return;
 		}
