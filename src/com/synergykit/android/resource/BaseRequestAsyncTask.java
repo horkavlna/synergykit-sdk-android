@@ -44,7 +44,20 @@ public abstract class BaseRequestAsyncTask extends AsyncTask<Void, Void, Object>
 		Post request = new Post(url.getUrl()){};
 		
 		try {
-			return request.execute(new StringEntity(json, "UTF-8"));		
+			return request.execute(new StringEntity(json, "UTF-8"),"application/json");		
+			//return request.execute(new ByteArrayEntity(json.getBytes()));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		} 
+	}
+	
+	/* Post with custom Entity request */
+	protected HttpResponse requestPostWithEntity(Url url, HttpEntity entity){
+		Post request = new Post(url.getUrl()){};
+		
+		try {
+			return request.execute(entity,null);		
 			//return request.execute(new ByteArrayEntity(json.getBytes()));
 		} catch (Exception e) {
 			e.printStackTrace();
