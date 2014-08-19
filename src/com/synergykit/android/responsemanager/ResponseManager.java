@@ -1,14 +1,16 @@
 package com.synergykit.android.responsemanager;
 
+import java.io.BufferedReader;
 import java.lang.reflect.Type;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 
 import android.util.Log;
 
-import com.synergykit.android.requestmanager.ResultObjectBuilder;
 import com.synergykit.android.resource.BaseUser;
+import com.synergykit.android.resource.SynergyKITBaseObject;
 import com.synergykit.android.resource.SynergyKITErrorObject;
 import com.synergykit.android.response.BaseResponseListener;
 import com.synergykit.android.response.BaseUserResponseListener;
@@ -25,7 +27,7 @@ import com.synergykit.android.response.GetUsersResponseListener;
 public class ResponseManager {
 
 	/* Empty http response */
-	private void emptyHttpResponse(HttpResponse httpResponse, BaseResponseListener listener){
+	private void emptyHttpResponse( BaseResponseListener listener){
 		SynergyKITErrorObject errorObject= new SynergyKITErrorObject();
 		errorObject.setStatus(Integer.toString(ErrorMessages.NETWORK_CONNECTION_ERROR_CODE));
 		errorObject.setMessage(ErrorMessages.NETWORK_CONNECTION_ERROR_MESSAGE);		
@@ -34,7 +36,7 @@ public class ResponseManager {
 	}
 	
 	/* Empty http response */
-	private void emptyHttpResponse(HttpResponse httpResponse,GetRecordsResponseListener listener){
+	private void emptyHttpResponse(GetRecordsResponseListener listener){
 		SynergyKITErrorObject errorObject= new SynergyKITErrorObject();
 		errorObject.setStatus(Integer.toString(ErrorMessages.NETWORK_CONNECTION_ERROR_CODE));
 		errorObject.setMessage(ErrorMessages.NETWORK_CONNECTION_ERROR_MESSAGE);		
@@ -43,7 +45,7 @@ public class ResponseManager {
 	}
 	
 	/* Empty http response */
-	private void emptyHttpResponse(HttpResponse httpResponse, DeleteResponseListener listener){
+	private void emptyHttpResponse(DeleteResponseListener listener){
 		SynergyKITErrorObject errorObject= new SynergyKITErrorObject();
 		errorObject.setStatus(Integer.toString(ErrorMessages.NETWORK_CONNECTION_ERROR_CODE));
 		errorObject.setMessage(ErrorMessages.NETWORK_CONNECTION_ERROR_MESSAGE);
@@ -53,7 +55,7 @@ public class ResponseManager {
 	}
 	
 	/* Empty http response */
-	private void emptyHttpResponse(HttpResponse httpResponse, GetUsersResponseListener listener){
+	private void emptyHttpResponse( GetUsersResponseListener listener){
 		SynergyKITErrorObject errorObject= new SynergyKITErrorObject();
 		errorObject.setStatus(Integer.toString(ErrorMessages.NETWORK_CONNECTION_ERROR_CODE));
 		errorObject.setMessage(ErrorMessages.NETWORK_CONNECTION_ERROR_MESSAGE);
@@ -63,7 +65,7 @@ public class ResponseManager {
 	}
 	
 	/* Empty http response */
-	private void emptyHttpResponse(HttpResponse httpResponse, BaseUserResponseListener listener){
+	private void emptyHttpResponse( BaseUserResponseListener listener){
 		SynergyKITErrorObject errorObject= new SynergyKITErrorObject();
 		errorObject.setStatus(Integer.toString(ErrorMessages.NETWORK_CONNECTION_ERROR_CODE));
 		errorObject.setMessage(ErrorMessages.NETWORK_CONNECTION_ERROR_MESSAGE);
@@ -75,36 +77,31 @@ public class ResponseManager {
 	
 	//--------------------------------------------------------------------------------------------------------
 	/* Manage Result */
-	public void manageResult(HttpResponse httpResponse, BaseResponseListener listener, Type type){
-		int statusCode;
-		
+	public void manageResult(int statusCode, SynergyKITBaseObject baseObject, SynergyKITErrorObject errorObject, BaseResponseListener listener, Type type){
 		
 		//Empty listener
 		if(listener == null)
 			return;
 		
 		//Empty http response
-		if(httpResponse==null){
-			this.emptyHttpResponse(httpResponse, listener);
+		if((baseObject==null && errorObject==null) || statusCode>=HttpStatus.SC_INTERNAL_SERVER_ERROR){
+			this.emptyHttpResponse(listener);
 			return;
 		}
-		
-		//get status code
-		statusCode = httpResponse.getStatusLine().getStatusCode();
 
 		//
 		//callback result
 		if(statusCode >= HttpStatus.SC_OK && statusCode < HttpStatus.SC_MULTIPLE_CHOICES)				
-			listener.doneCallback(httpResponse.getStatusLine().getStatusCode(), ResultObjectBuilder.buildBaseObject(httpResponse, type));
+			listener.doneCallback(statusCode,baseObject);
 		else
-			listener.errorCallback(httpResponse.getStatusLine().getStatusCode(), ResultObjectBuilder.buildErrorObject(httpResponse));
+			listener.errorCallback(statusCode,errorObject);
 			
 		
 	}
 
 	/* Manage results */
-	public void manageResult(HttpResponse httpResponse, DeleteResponseListener listener){
-		int statusCode;
+	public void manageResult(int statusCode, SynergyKITErrorObject errorObject, DeleteResponseListener listener){
+
 		
 		
 		//Empty listener
@@ -112,56 +109,48 @@ public class ResponseManager {
 			return;
 		
 		//Empty http response
-		if(httpResponse==null){
-			this.emptyHttpResponse(httpResponse, listener);
+		if(errorObject==null|| statusCode>=HttpStatus.SC_INTERNAL_SERVER_ERROR){
+			this.emptyHttpResponse( listener);
 			return;
 		}
-		
-		//get status code
-		statusCode = httpResponse.getStatusLine().getStatusCode();
-		
+		Log.e("SynergyKIT",Integer.toString(statusCode));
 		//
 		//callback result
 		if(statusCode>= HttpStatus.SC_OK && statusCode < HttpStatus.SC_MULTIPLE_CHOICES)				
-			listener.doneCallback(httpResponse.getStatusLine().getStatusCode());
+			listener.doneCallback(statusCode);
 		else
-			listener.errorCallback(httpResponse.getStatusLine().getStatusCode(),ResultObjectBuilder.buildErrorObject(httpResponse));
+			listener.errorCallback(statusCode,errorObject);
 			
 		
 	}
 	
 	/* Manage result */
-	public void manageResult(HttpResponse httpResponse, GetRecordsResponseListener listener, Type type){
-		int statusCode;
-		
+	public void manageResult(int statusCode, SynergyKITBaseObject[] baseObjects, SynergyKITErrorObject errorObject, GetRecordsResponseListener listener, Type type){
+
 		
 		//Empty listener
 		if(listener == null)
 			return;
 		
 		//Empty http response
-		if(httpResponse==null){
-			this.emptyHttpResponse(httpResponse, listener);
+		if((baseObjects==null && errorObject==null) || statusCode>=HttpStatus.SC_INTERNAL_SERVER_ERROR){
+			this.emptyHttpResponse( listener);
 			return;
 		}
-		
-		//get status code
-		statusCode = httpResponse.getStatusLine().getStatusCode();
-		
+		Log.e("SynergyKIT",Integer.toString(statusCode));
 		
 		//
 		//callback result
 		if(statusCode >= HttpStatus.SC_OK && statusCode < HttpStatus.SC_MULTIPLE_CHOICES)				
-			listener.doneCallback(httpResponse.getStatusLine().getStatusCode(), ResultObjectBuilder.buildBaseObjects(httpResponse, type));
+			listener.doneCallback(statusCode, baseObjects);
 		else
-			listener.errorCallback(httpResponse.getStatusLine().getStatusCode(), ResultObjectBuilder.buildErrorObject(httpResponse));
+			listener.errorCallback(statusCode, errorObject);
 			
 		
 	}
 
 	/* Manage result */
-	public void manageResult(HttpResponse httpResponse, BaseUserResponseListener listener, Type type){
-		int statusCode;
+	public void manageResult(int statusCode, BaseUser baseUser, SynergyKITErrorObject errorObject, BaseUserResponseListener listener, Type type){
 		
 		
 		//Empty listener
@@ -169,50 +158,40 @@ public class ResponseManager {
 			return;
 		
 		//Empty http response
-		if(httpResponse==null){
-			this.emptyHttpResponse(httpResponse, listener);
+		if((baseUser==null && errorObject==null) || statusCode>=HttpStatus.SC_INTERNAL_SERVER_ERROR){
+			this.emptyHttpResponse(listener);
 			return;
 		}
-		
-		//get status code
-		statusCode = httpResponse.getStatusLine().getStatusCode();
-		
-		Log.e("Synergykit",Integer.toString(statusCode));
-		
+		Log.e("SynergyKIT",Integer.toString(statusCode));
 		//
 		//callback result
 		if(statusCode>= HttpStatus.SC_OK && statusCode < HttpStatus.SC_MULTIPLE_CHOICES)			
-			listener.doneCallback(httpResponse.getStatusLine().getStatusCode(),(BaseUser)(ResultObjectBuilder.buildBaseObject(httpResponse, type)));
+			listener.doneCallback(statusCode,baseUser);
 		
 		else
-			listener.errorCallback(httpResponse.getStatusLine().getStatusCode(),(ResultObjectBuilder.buildErrorObject(httpResponse)));
+			listener.errorCallback(statusCode,errorObject);
 			
 	}
 	
 	/* Manage result */
-	public void manageResult(HttpResponse httpResponse, GetUsersResponseListener listener, Type type){
-		int statusCode;
-		
+	public void manageResult(int statusCode,BaseUser[] baseUsers, SynergyKITErrorObject errorObject, GetUsersResponseListener listener, Type type){
 		
 		//Empty listener
 		if(listener == null)
 			return;
 		
 		//Empty http response
-		if(httpResponse==null){
-			this.emptyHttpResponse(httpResponse, listener);
+		if((baseUsers==null && errorObject==null)|| statusCode>=HttpStatus.SC_INTERNAL_SERVER_ERROR){
+			this.emptyHttpResponse( listener);
 			return;
 		}
-		
-		//get status code
-		statusCode = httpResponse.getStatusLine().getStatusCode();
-		
+		Log.e("SynergyKIT",Integer.toString(statusCode));
 		//
 		//callback result
 		if(statusCode>= HttpStatus.SC_OK && statusCode < HttpStatus.SC_MULTIPLE_CHOICES)				
-			listener.doneCallback(httpResponse.getStatusLine().getStatusCode(),(BaseUser[])(ResultObjectBuilder.buildBaseObjects(httpResponse, type)));
+			listener.doneCallback(statusCode,baseUsers);
 		else
-			listener.errorCallback(httpResponse.getStatusLine().getStatusCode(),ResultObjectBuilder.buildErrorObject(httpResponse));
+			listener.errorCallback(statusCode,errorObject);
 			
 	}
 	

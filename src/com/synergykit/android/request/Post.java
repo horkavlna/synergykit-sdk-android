@@ -30,9 +30,11 @@ public abstract class Post {
 			throws ClientProtocolException, IOException, IllegalStateException {
 
 		final HttpParams httpParams = new BasicHttpParams();
-		HttpConnectionParams.setConnectionTimeout(httpParams, 60000);
-		HttpConnectionParams.setSoTimeout(httpParams, 30000);
+		HttpConnectionParams.setConnectionTimeout(httpParams, 120000);
+		HttpConnectionParams.setSoTimeout(httpParams, 90000);
+		HttpConnectionParams.setLinger(httpParams, 0);
 		httpClient = new DefaultHttpClient(httpParams);
+		
 
 		httpPost = new HttpPost(uri);
 		httpPost.addHeader("User-Agent", "Android");

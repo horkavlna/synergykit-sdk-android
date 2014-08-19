@@ -12,4 +12,6 @@ public class BaseUsersList extends ArrayList<BaseUser> {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	
 }

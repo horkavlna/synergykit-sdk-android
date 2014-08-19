@@ -8,7 +8,7 @@ package com.synergykit.android.resource;
 
 public abstract class SynergyKITBaseObject {
    	protected String _id;
-    protected String __v;
+    protected long __v;
     protected long createdAt;
     protected long updatedAt;
 
@@ -22,12 +22,12 @@ public abstract class SynergyKITBaseObject {
         this._id = _id;
     }
     /* Version getter */
-    public String get__v() {
+    public long get__v() {
         return __v;
     }
 
     /* Version setter */
-    public void set__v(String __v) {
+    public void set__v(long __v) {
         this.__v = __v;
     }
     

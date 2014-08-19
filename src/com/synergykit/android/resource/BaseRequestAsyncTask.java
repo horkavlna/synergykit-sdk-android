@@ -1,11 +1,16 @@
 package com.synergykit.android.resource;
 
 
+import java.io.BufferedReader;
+
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.StringEntity;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.BaseAdapter;
 
 import com.synergykit.android.gsonwrapper.GsonWrapper;
 import com.synergykit.android.request.Delete;
@@ -38,12 +43,9 @@ public abstract class BaseRequestAsyncTask extends AsyncTask<Void, Void, Object>
 		String json = GsonWrapper.getInstance().getGson().toJson(object);
 		Post request = new Post(url.getUrl()){};
 		
-		Log.e("Synergykit",json);
-		Log.e("synergykit",url.getUrl());
-		
-		
 		try {
-			return request.execute(new StringEntity(json, "UTF-8"));			
+			return request.execute(new StringEntity(json, "UTF-8"));		
+			//return request.execute(new ByteArrayEntity(json.getBytes()));
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -91,4 +93,19 @@ public abstract class BaseRequestAsyncTask extends AsyncTask<Void, Void, Object>
 	/* On post execute */
 	@Override
 	protected abstract void onPostExecute(Object object);
+	
+	//----------------------------------------------------------------------------------
+	protected class ResponseDataHolder{
+		/* Constructor */
+		public ResponseDataHolder() {
+			mStatusCode = -1;
+			mErrorObject = null;
+			mObject = null;
+		}
+		
+		/* Attributes */
+		public SynergyKITErrorObject mErrorObject;
+		public Object mObject;
+		public int mStatusCode;
+	}
 }
