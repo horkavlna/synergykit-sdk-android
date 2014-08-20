@@ -57,8 +57,7 @@ public class ResultObjectBuilder {
 		
 		
 		try {
-			baseObjects = (SynergyKITBaseObject[]) GsonWrapper.getInstance().getGson().fromJson(data, type);
-																						
+			baseObjects = (SynergyKITBaseObject[]) GsonWrapper.getInstance().getGson().fromJson(data, type);																					
 			
 			return baseObjects;
 			

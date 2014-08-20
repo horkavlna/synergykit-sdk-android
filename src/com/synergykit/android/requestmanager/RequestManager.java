@@ -325,7 +325,7 @@ public class RequestManager{
 	/* Create user */
 	public void updateUser(String userId, BaseUser baseUser, BaseUserResponseListener listener, Type type ){
 		UrlBuilder urlBuilder = new UrlBuilder();
-		PostUserRequest postRequest = new PostUserRequest();
+		PutUserRequest putRequest = new PutUserRequest();
 		
 		
 		try {
@@ -337,16 +337,17 @@ public class RequestManager{
 		}
 		
 		//build url
-		urlBuilder.setResource(UrlBuilder.RESOURCE_USERS);
+		urlBuilder.setResource(UrlBuilder.RESOURCE_USERS)
+				  .setResourceId(userId);
 		
 		//set request
-		postRequest.setUrl(urlBuilder.build());		
-		postRequest.setListener(listener);
-		postRequest.setType(type);
-		postRequest.setObject(baseUser);
+		putRequest.setUrl(urlBuilder.build());		
+		putRequest.setListener(listener);
+		putRequest.setType(type);
+		putRequest.setObject(baseUser);
 
 		//send request
-		this.synergylize(postRequest);
+		this.synergylize(putRequest);
 	}
 	
 	/* Delete user */

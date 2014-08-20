@@ -12,13 +12,13 @@ import java.util.List;
 
 public class BaseUser extends SynergyKITBaseObject {
    /* Constants */
-	private static final String PLATFORM = "android";
+	protected static final String PLATFORM = "android";
 	
 	/* Attributes */
 	protected String password;	
 	protected String email;
 	private String registrationId;
-	protected String platform;
+	protected String platform = PLATFORM;
 	protected List<Platform> platforms;
 
 	/* Constructor */
