@@ -14,6 +14,7 @@ import com.synergykit.android.resource.SynergyKITBaseObject;
 import com.synergykit.android.response.BaseResponseListener;
 import com.synergykit.android.responsemanager.ResponseManager;
 import com.synergykit.android.responsemanager.ResultObjectBuilder;
+
 /*
  * Copyright 2014 Letsgood.com s.r.o.
  *
@@ -44,6 +45,7 @@ public class PutRequest extends BaseRequestAsyncTask {
 	}
 	
 	
+
 	/* Do  in background */
 	@Override
 	protected Object doInBackground(Void... params) {
@@ -72,12 +74,14 @@ public class PutRequest extends BaseRequestAsyncTask {
 		
 
 		return responseDataHolder;
+
 	}
 
 	/* On post execute */
 	@Override
 	protected void onPostExecute(Object object) {
 		ResponseManager responseManager = new ResponseManager();
+
 		ResponseDataHolder responseDataHolder = (ResponseDataHolder) object;
 		
 		responseManager.manageResult(responseDataHolder.mStatusCode,
@@ -85,6 +89,7 @@ public class PutRequest extends BaseRequestAsyncTask {
 										responseDataHolder.mErrorObject,
 										mListener,
 										mType);
+
 	}
 
 }

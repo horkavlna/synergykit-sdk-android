@@ -27,6 +27,7 @@ public abstract class Post {
 		this.uri = uri;
 	}
 
+
 	public HttpResponse execute(HttpEntity entity, String contentType)
 			throws ClientProtocolException, IOException, IllegalStateException {
 
@@ -34,12 +35,15 @@ public abstract class Post {
 		HttpConnectionParams.setConnectionTimeout(httpParams, 120000);
 		HttpConnectionParams.setSoTimeout(httpParams, 90000);
 		HttpConnectionParams.setLinger(httpParams, 0);
+
 		httpClient = new DefaultHttpClient(httpParams);
 
 		httpPost = new HttpPost(uri);
 		httpPost.addHeader("User-Agent", "Android");
+
 		if (contentType != null)
 			httpPost.addHeader("Content-Type", contentType);
+
 		httpPost.addHeader("Accept", "application/json");
 		httpPost.setEntity(entity);
 

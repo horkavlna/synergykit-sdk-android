@@ -78,3 +78,4 @@ public class GetUserRequest extends BaseRequestAsyncTask {
 	}
 
 }
+

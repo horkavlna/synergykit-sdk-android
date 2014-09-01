@@ -46,7 +46,6 @@ public class SynergyKIT {
 	/* Application key setter */
 	public static void setApplicationKey(String applicationKey) {
 		RequestManager.getInstance().setApplicationKey(applicationKey);
-
 	}
 
 	/* Application key getter */
@@ -57,29 +56,25 @@ public class SynergyKIT {
 	// ----------------------------------------------------------------------------------------------------------------------
 
 	/* Serialize */
-	public static void synergylize(
-			SynergylizeRequestAsyncTask synergylizeRequestAsyncTask) {
+	public static void synergylize(	SynergylizeRequestAsyncTask synergylizeRequestAsyncTask) {
 		RequestManager.getInstance().synergylize(synergylizeRequestAsyncTask);
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------------
 
 	/* Get records */
-	public static void getRecords(String collectionUrl,
-			GetRecordsResponseListener listener, Type type) {
+	public static void getRecords(String collectionUrl,	GetRecordsResponseListener listener, Type type) {
 		RequestManager.getInstance().getRecords(collectionUrl, listener, type);
 	}
 
 	/* Get record */
-	public static void getRecord(String collectionUrl, String recordId,
-			BaseResponseListener listener, Type type) {
+	public static void getRecord(String collectionUrl, String recordId, BaseResponseListener listener, Type type) {
 		RequestManager.getInstance().getRecord(collectionUrl, recordId,
 				listener, type);
 	}
 
-	/* Create record */
-	public static void createRecord(String collectionUrl, Object object,
-			BaseResponseListener listener, Type type) {
+	/* Create record */ 
+	public static void createRecord(String collectionUrl, Object object, BaseResponseListener listener, Type type) {
 		RequestManager.getInstance().createRecord(collectionUrl, object,
 				listener, type);
 	}
@@ -92,15 +87,12 @@ public class SynergyKIT {
 	}
 
 	/* Update record */
-	public static void updateRecord(String collectionUrl, String recordId,
-			Object object, BaseResponseListener listener, Type type) {
-		RequestManager.getInstance().updateRecord(collectionUrl, recordId,
-				object, listener, type);
+	public static void updateRecord(String collectionUrl, String recordId, 	Object object, BaseResponseListener listener, Type type) {
+		RequestManager.getInstance().updateRecord(collectionUrl, recordId, 	object, listener, type);
 	}
 
 	/* Delete record */
-	public static void deleteRecord(String collectionUrl, String recordId,
-			DeleteResponseListener listener) {
+	public static void deleteRecord(String collectionUrl, String recordId, 	DeleteResponseListener listener) {
 		RequestManager.getInstance().deleteRecord(collectionUrl, recordId,
 				listener);
 	}
@@ -146,3 +138,4 @@ public class SynergyKIT {
 		UserManager.getInstance().createUser(baseUser, listener, type);
 	}
 }
+

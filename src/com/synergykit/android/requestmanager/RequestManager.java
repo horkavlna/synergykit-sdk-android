@@ -2,7 +2,9 @@ package com.synergykit.android.requestmanager;
 
 import java.lang.reflect.Type;
 
+
 import org.apache.http.HttpEntity;
+
 
 import android.util.Log;
 
@@ -159,6 +161,7 @@ public class RequestManager{
 		
 	}
 	
+
 	/* Create record */
 	public void createFile(BaseResponseListener listener,Type type,HttpEntity multiPartEntity){
 		UrlBuilder urlBuilder =	new UrlBuilder();
@@ -187,6 +190,7 @@ public class RequestManager{
 	}
 	
 	
+
 	/* Update record */
 	public void updateRecord(String collectionUrl, String recordId, Object object, BaseResponseListener listener, Type type){
 		UrlBuilder urlBuilder =	new UrlBuilder();
@@ -325,7 +329,9 @@ public class RequestManager{
 	/* Create user */
 	public void updateUser(String userId, BaseUser baseUser, BaseUserResponseListener listener, Type type ){
 		UrlBuilder urlBuilder = new UrlBuilder();
+
 		PutUserRequest putRequest = new PutUserRequest();
+
 		
 		
 		try {
@@ -337,6 +343,7 @@ public class RequestManager{
 		}
 		
 		//build url
+
 		urlBuilder.setResource(UrlBuilder.RESOURCE_USERS)
 				  .setResourceId(userId);
 		
@@ -348,6 +355,7 @@ public class RequestManager{
 
 		//send request
 		this.synergylize(putRequest);
+
 	}
 	
 	/* Delete user */

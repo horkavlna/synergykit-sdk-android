@@ -11,7 +11,9 @@ public class UrlBuilder {
 	private static final String BASE_SYNERGYKIT_URL = "https://%s.api.synergykit.com";
 	final public static String RESOURCE_COLLECTIONS = "collections";
 	final public static String RESOURCE_DATA = "data";
+
 	final public static String RESOURCE_FILES = "files";
+
 	final public static String RESOURCE_LOGS = "logs";
 	final public static String RESOURCE_USERS = "users";
 	final public static String RESOURCE_USER_LOGIN = "users/login";

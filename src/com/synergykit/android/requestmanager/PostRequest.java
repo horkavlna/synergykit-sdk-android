@@ -18,6 +18,7 @@ import com.synergykit.android.responsemanager.ResultObjectBuilder;
  * Copyright 2014 Letsgood.com s.r.o.
  *
  */
+
 public class PostRequest extends BaseRequestAsyncTask {
 
 	/* Attributes */
@@ -77,17 +78,20 @@ public class PostRequest extends BaseRequestAsyncTask {
 		}
 
 		return responseDataHolder;
+
 	}
 
 	/* On post execute */
 	@Override
 	protected void onPostExecute(Object object) {
 		ResponseManager responseManager = new ResponseManager();
+
 		ResponseDataHolder responseDataHolder = (ResponseDataHolder) object;
 
 		responseManager.manageResult(responseDataHolder.mStatusCode,
 				(SynergyKITBaseObject) responseDataHolder.mObject,
 				responseDataHolder.mErrorObject, mListener, mType);
+
 	}
 
 }

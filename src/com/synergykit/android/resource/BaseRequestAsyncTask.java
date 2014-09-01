@@ -1,7 +1,9 @@
 package com.synergykit.android.resource;
 
 
+
 import org.apache.http.HttpEntity;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.entity.StringEntity;
 
@@ -38,6 +40,7 @@ public abstract class BaseRequestAsyncTask extends AsyncTask<Void, Void, Object>
 		String json = GsonWrapper.getInstance().getGson().toJson(object);
 		Post request = new Post(url.getUrl()){};
 		
+
 		try {
 			return request.execute(new StringEntity(json, "UTF-8"),"application/json");		
 			//return request.execute(new ByteArrayEntity(json.getBytes()));
@@ -54,6 +57,7 @@ public abstract class BaseRequestAsyncTask extends AsyncTask<Void, Void, Object>
 		try {
 			return request.execute(entity,null);		
 			//return request.execute(new ByteArrayEntity(json.getBytes()));
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -101,6 +105,7 @@ public abstract class BaseRequestAsyncTask extends AsyncTask<Void, Void, Object>
 	/* On post execute */
 	@Override
 	protected abstract void onPostExecute(Object object);
+
 	
 	//----------------------------------------------------------------------------------
 	protected class ResponseDataHolder{
@@ -116,4 +121,5 @@ public abstract class BaseRequestAsyncTask extends AsyncTask<Void, Void, Object>
 		public Object mObject;
 		public int mStatusCode;
 	}
+
 }

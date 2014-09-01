@@ -1,5 +1,6 @@
 package com.synergykit.android.resource;
 
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -8,6 +9,8 @@ import java.lang.reflect.Type;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.ParseException;
+
+
 
 import com.synergykit.android.SynergyKIT;
 import com.synergykit.android.exception.NotInitializedException;
@@ -30,8 +33,10 @@ public abstract class SynergylizeRequestAsyncTask extends BaseRequestAsyncTask {
 	
 	/* Post */
 	protected void post(Url url,Object object, BaseResponseListener listener, Type type){	
+
 		
 		//init check
+
 		try {
 			this.initCheck();
 		} catch (NotInitializedException e) {
@@ -39,6 +44,7 @@ public abstract class SynergylizeRequestAsyncTask extends BaseRequestAsyncTask {
 			return;
 		}
 		
+
 		
 		ResponseDataHolder responseDataHolder = new ResponseDataHolder();	//response data holder		
 		HttpResponse httpResponse = requestPost(url, object); //request
@@ -68,19 +74,23 @@ public abstract class SynergylizeRequestAsyncTask extends BaseRequestAsyncTask {
 									  responseDataHolder.mErrorObject,
 									  listener,
 									  type);		
+
 		
 	}
 	
 	/* Put */
 	protected void put(Url url, Object object, BaseResponseListener listener, Type type){	
 
+
 		//init check
+
 		try {
 			this.initCheck();
 		} catch (NotInitializedException e) {
 			e.printStackTrace();
 			return;
 		}
+
 		
 		
 		ResponseDataHolder responseDataHolder = new ResponseDataHolder();	//response data holder		
@@ -111,13 +121,16 @@ public abstract class SynergylizeRequestAsyncTask extends BaseRequestAsyncTask {
 									  responseDataHolder.mErrorObject,
 									  listener,
 									  type);		
+
 		
 	}
 	
 	/* Get */
 	protected void get(Url url, BaseResponseListener listener, Type type){
 
+
 		//init check
+
 		try {
 			this.initCheck();
 		} catch (NotInitializedException e) {
@@ -125,7 +138,7 @@ public abstract class SynergylizeRequestAsyncTask extends BaseRequestAsyncTask {
 			return;
 		}
 		
-		
+
 		ResponseDataHolder responseDataHolder = new ResponseDataHolder();	//response data holder		
 		HttpResponse httpResponse = requestGet(url); //request
 		responseDataHolder.mStatusCode = httpResponse.getStatusLine().getStatusCode(); //set status code
@@ -155,19 +168,22 @@ public abstract class SynergylizeRequestAsyncTask extends BaseRequestAsyncTask {
 									  listener,
 									  type);		
 		
+
 	}
 	
 	/* Get all */
 	protected void get(Url url, GetRecordsResponseListener listener, Type type){
 
+
 		//init check
+
 		try {
 			this.initCheck();
 		} catch (NotInitializedException e) {
 			e.printStackTrace();
 			return;
 		}
-		
+
 		
 		ResponseDataHolder responseDataHolder = new ResponseDataHolder();	//response data holder		
 		HttpResponse httpResponse = requestGet(url); //request
@@ -198,12 +214,15 @@ public abstract class SynergylizeRequestAsyncTask extends BaseRequestAsyncTask {
 									  listener,
 									  type);		
 		
+
 	}
 
 	/* Delete */
 	protected void delete(Url url, DeleteResponseListener listener){
 
+
 		//init check
+
 		try {
 			this.initCheck();
 		} catch (NotInitializedException e) {
@@ -211,6 +230,7 @@ public abstract class SynergylizeRequestAsyncTask extends BaseRequestAsyncTask {
 			return;
 		}
 		
+
 		
 		ResponseDataHolder responseDataHolder = new ResponseDataHolder();	//response data holder		
 		HttpResponse httpResponse = requestDelete(url); //request
@@ -239,6 +259,7 @@ public abstract class SynergylizeRequestAsyncTask extends BaseRequestAsyncTask {
 									  responseDataHolder.mErrorObject,
 									  listener);		
 		
+
 	}
 	
 	/* initialization check */

@@ -32,7 +32,7 @@ public abstract class Put {
 		final HttpParams httpParams = new BasicHttpParams();
 		HttpConnectionParams.setConnectionTimeout(httpParams, 60000);
 		HttpConnectionParams.setSoTimeout(httpParams, 30000);
-		HttpConnectionParams.setLinger(httpParams, 0);
+
 		httpClient = new DefaultHttpClient(httpParams);
 
 		httpPut = new HttpPut(uri);

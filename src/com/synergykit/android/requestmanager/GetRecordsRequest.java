@@ -1,4 +1,5 @@
-	package com.synergykit.android.requestmanager;
+package com.synergykit.android.requestmanager;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,6 +13,7 @@ import com.synergykit.android.resource.SynergyKITBaseObject;
 import com.synergykit.android.response.GetRecordsResponseListener;
 import com.synergykit.android.responsemanager.ResponseManager;
 import com.synergykit.android.responsemanager.ResultObjectBuilder;
+
 
 /*
  * Copyright 2014 Letsgood.com s.r.o.
@@ -36,6 +38,7 @@ public class GetRecordsRequest extends BaseRequestAsyncTask{
 	/* Do in background */
 	@Override
 	protected Object doInBackground(Void... params) {
+
 		ResponseDataHolder responseDataHolder = new ResponseDataHolder();	//response data holder
 		
 		HttpResponse httpResponse= requestGet(getUrl()); //request
@@ -62,6 +65,7 @@ public class GetRecordsRequest extends BaseRequestAsyncTask{
 
 		return responseDataHolder;
 				
+
 	}
 	
 
@@ -69,6 +73,7 @@ public class GetRecordsRequest extends BaseRequestAsyncTask{
 	@Override
 	protected void onPostExecute(Object object) {
 		ResponseManager responseManager = new ResponseManager();
+
 		ResponseDataHolder responseDataHolder = (ResponseDataHolder) object;
 		
 		responseManager.manageResult(responseDataHolder.mStatusCode,
@@ -76,6 +81,7 @@ public class GetRecordsRequest extends BaseRequestAsyncTask{
 									responseDataHolder.mErrorObject,
 									mListener,
 									mType);
-	}	
+	}
+	
 
 }

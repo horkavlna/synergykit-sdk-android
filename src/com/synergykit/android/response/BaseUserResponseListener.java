@@ -8,3 +8,4 @@ public interface BaseUserResponseListener{
 	public void errorCallback(int statusCode, SynergyKITErrorObject errorObject);
 
 }
+
