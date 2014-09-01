@@ -21,11 +21,7 @@ import com.synergykit.android.urlbuilder.Url;
 import com.synergykit.android.urlbuilder.UrlBuilder;
 
 public class UserManager {
-	/* Constants */
-	private static final String STATUS_CODE = "status_code";
-	private static final String OBJECT = "object";
-	private static final int LOGGIN_URL_TOP  = 1;
-	
+		
 	/* Attributes */
 	private static UserManager mInstance = null;
 	
@@ -96,7 +92,7 @@ public class UserManager {
 				
 				ResponseDataHolder responseDataHolder = new ResponseDataHolder();	//response data holder
 				
-				HttpResponse httpResponse= requestPost(getUrl(),baseUser); //request
+				HttpResponse httpResponse= requestPost(url,baseUser); //request
 				responseDataHolder.mStatusCode = httpResponse.getStatusLine().getStatusCode(); //set status code
 				
 				try {

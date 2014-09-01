@@ -1,22 +1,11 @@
 package com.synergykit.android.responsemanager;
 
 import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringReader;
 import java.lang.reflect.Type;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.ParseException;
-import org.apache.http.util.EntityUtils;
 
-import android.content.Entity;
-import android.util.Log;
-
-import com.google.gson.stream.JsonReader;
 import com.synergykit.android.gsonwrapper.GsonWrapper;
 import com.synergykit.android.resource.SynergyKITBaseObject;
 import com.synergykit.android.resource.SynergyKITErrorObject;

@@ -9,9 +9,7 @@ import java.lang.reflect.Type;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
-import org.apache.http.util.EntityUtils;
 
-import android.util.Log;
 
 import com.synergykit.android.resource.BaseRequestAsyncTask;
 import com.synergykit.android.resource.SynergyKITBaseObject;
@@ -27,14 +25,9 @@ public class PostFileRequest extends BaseRequestAsyncTask {
 
 	/* Attributes */
 	private BaseResponseListener mListener;
-	private Object mObject;
+
 	private Type mType;
 	private HttpEntity mEntityType;
-
-	/* Object setter */
-	public void setObject(Object object) {
-		mObject = object;
-	}
 
 	/* Listener setter */
 	public void setListener(BaseResponseListener listener) {

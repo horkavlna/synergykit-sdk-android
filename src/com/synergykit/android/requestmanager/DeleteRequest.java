@@ -7,8 +7,6 @@ import java.io.UnsupportedEncodingException;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
-import org.apache.http.ParseException;
-import org.apache.http.util.EntityUtils;
 
 import com.synergykit.android.resource.BaseRequestAsyncTask;
 import com.synergykit.android.response.DeleteResponseListener;

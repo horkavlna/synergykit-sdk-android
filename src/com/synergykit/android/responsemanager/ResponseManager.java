@@ -1,10 +1,7 @@
 package com.synergykit.android.responsemanager;
 
-import java.io.BufferedReader;
 import java.lang.reflect.Type;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 
 import android.util.Log;

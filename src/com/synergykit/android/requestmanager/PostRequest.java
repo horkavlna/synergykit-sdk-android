@@ -8,9 +8,6 @@ import java.lang.reflect.Type;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
-import org.apache.http.entity.StringEntity;
-
-import com.synergykit.android.gsonwrapper.GsonWrapper;
 import com.synergykit.android.resource.BaseRequestAsyncTask;
 import com.synergykit.android.resource.SynergyKITBaseObject;
 import com.synergykit.android.response.BaseResponseListener;

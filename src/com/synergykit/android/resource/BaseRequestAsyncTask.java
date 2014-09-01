@@ -1,16 +1,11 @@
 package com.synergykit.android.resource;
 
 
-import java.io.BufferedReader;
-
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.StringEntity;
 
 import android.os.AsyncTask;
-import android.util.Log;
-import android.widget.BaseAdapter;
 
 import com.synergykit.android.gsonwrapper.GsonWrapper;
 import com.synergykit.android.request.Delete;

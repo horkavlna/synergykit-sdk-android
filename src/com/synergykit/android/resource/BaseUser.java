@@ -1,7 +1,5 @@
 package com.synergykit.android.resource;
 
-import java.math.BigInteger;
-import java.security.SecureRandom;
 import java.util.LinkedList;
 import java.util.List;
 

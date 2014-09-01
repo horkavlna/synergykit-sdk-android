@@ -8,9 +8,6 @@ import java.lang.reflect.Type;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
-
-import android.util.Log;
-
 import com.synergykit.android.resource.BaseRequestAsyncTask;
 import com.synergykit.android.resource.BaseUser;
 import com.synergykit.android.response.BaseUserResponseListener;

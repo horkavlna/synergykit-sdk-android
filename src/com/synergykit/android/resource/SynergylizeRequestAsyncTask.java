@@ -8,11 +8,9 @@ import java.lang.reflect.Type;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.ParseException;
-import org.apache.http.util.EntityUtils;
 
 import com.synergykit.android.SynergyKIT;
 import com.synergykit.android.exception.NotInitializedException;
-import com.synergykit.android.resource.BaseRequestAsyncTask.ResponseDataHolder;
 import com.synergykit.android.response.BaseResponseListener;
 import com.synergykit.android.response.DeleteResponseListener;
 import com.synergykit.android.response.GetRecordsResponseListener;
@@ -58,10 +56,10 @@ public abstract class SynergylizeRequestAsyncTask extends BaseRequestAsyncTask {
 			}
 			
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
+			//empty
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			// empty
 			e.printStackTrace();
 		}
 		
@@ -101,10 +99,10 @@ public abstract class SynergylizeRequestAsyncTask extends BaseRequestAsyncTask {
 			}
 			
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
+			// empty
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			// empty
 			e.printStackTrace();
 		}
 		
@@ -144,10 +142,10 @@ public abstract class SynergylizeRequestAsyncTask extends BaseRequestAsyncTask {
 			}
 			
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
+			// empty
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			// empty
 			e.printStackTrace();
 		}
 		
@@ -187,10 +185,10 @@ public abstract class SynergylizeRequestAsyncTask extends BaseRequestAsyncTask {
 			}
 			
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
+			// empty
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			// empty
 			e.printStackTrace();
 		}
 		
@@ -230,10 +228,10 @@ public abstract class SynergylizeRequestAsyncTask extends BaseRequestAsyncTask {
 			}
 			
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
+			// empty
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			// empty
 			e.printStackTrace();
 		}
 		
