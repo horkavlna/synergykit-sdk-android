@@ -7,9 +7,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.ParseException;
 import org.apache.http.util.EntityUtils;
-
-import android.util.Log;
-
 import com.synergykit.android.gsonwrapper.GsonWrapper;
 import com.synergykit.android.resource.SynergyKITBaseObject;
 import com.synergykit.android.resource.SynergyKITErrorObject;
