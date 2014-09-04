@@ -8,6 +8,7 @@ import java.lang.reflect.Type;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
+
 import com.synergykit.android.resource.BaseRequestAsyncTask;
 import com.synergykit.android.resource.BaseUser;
 import com.synergykit.android.response.BaseUserResponseListener;
@@ -42,6 +43,13 @@ public class PostUserRequest extends BaseRequestAsyncTask {
 		ResponseDataHolder responseDataHolder = new ResponseDataHolder();	//response data holder
 		
 		HttpResponse httpResponse= requestPost(getUrl(),mObject); //request
+		
+		//if no network connection
+		if(httpResponse == null){
+			responseDataHolder.mStatusCode = -1;				
+			return responseDataHolder;
+		}
+		
 		responseDataHolder.mStatusCode = httpResponse.getStatusLine().getStatusCode(); //set status code
 		
 		try {

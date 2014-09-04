@@ -93,7 +93,7 @@ public class ResponseManager {
 			return;
 		
 		//Empty http response
-		if(statusCode>=HttpStatus.SC_INTERNAL_SERVER_ERROR){
+		if(statusCode>=HttpStatus.SC_INTERNAL_SERVER_ERROR || statusCode==-1){
 			this.emptyHttpResponse(listener);
 			return;
 		}

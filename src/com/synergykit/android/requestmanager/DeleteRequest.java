@@ -7,6 +7,7 @@ import java.io.UnsupportedEncodingException;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
+
 import com.synergykit.android.resource.BaseRequestAsyncTask;
 import com.synergykit.android.response.DeleteResponseListener;
 import com.synergykit.android.responsemanager.ResponseManager;
@@ -32,6 +33,14 @@ public class DeleteRequest extends BaseRequestAsyncTask{
 		ResponseDataHolder responseDataHolder = new ResponseDataHolder();	//response data holder
 		
 		HttpResponse httpResponse= requestDelete(getUrl());		//request delete
+		
+		//if no network connection
+		if(httpResponse == null){
+							
+			return responseDataHolder;
+		}
+		
+		
 		responseDataHolder.mStatusCode = httpResponse.getStatusLine().getStatusCode(); //set status code
 		
 		try {

@@ -52,6 +52,13 @@ public class PutRequest extends BaseRequestAsyncTask {
 		ResponseDataHolder responseDataHolder = new ResponseDataHolder();	//response data holder
 		
 		HttpResponse httpResponse= requestPut(getUrl(),mObject); //request
+		
+		//if no network connection
+		if(httpResponse == null){
+			responseDataHolder.mStatusCode = -1;				
+			return responseDataHolder;
+		}
+		
 		responseDataHolder.mStatusCode = httpResponse.getStatusLine().getStatusCode(); //set status code
 		
 		try {

@@ -10,7 +10,6 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 
-
 import com.synergykit.android.resource.BaseRequestAsyncTask;
 import com.synergykit.android.resource.SynergyKITBaseObject;
 import com.synergykit.android.response.BaseResponseListener;
@@ -51,6 +50,14 @@ public class PostFileRequest extends BaseRequestAsyncTask {
 																			// holder
 
 		HttpResponse httpResponse = requestPostWithEntity(getUrl(), mEntityType); // request
+		
+		//if no network connection
+		if(httpResponse == null){
+			responseDataHolder.mStatusCode = -1;	
+			return responseDataHolder;
+		}
+		
+		
 		responseDataHolder.mStatusCode = httpResponse.getStatusLine()
 				.getStatusCode(); // set status code
 

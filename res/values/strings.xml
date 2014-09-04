@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">ACTIVITY_ENTRY_NAME</string>
+    <string name="app_name">SynergyKIT Android SDK</string>
+    <string name="http_response_sc_1">No network connection</string>
+    <string name="http_response_sc_default">Undefined error</string>
 </resources>
