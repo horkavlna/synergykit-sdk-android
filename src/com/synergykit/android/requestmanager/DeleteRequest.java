@@ -49,6 +49,9 @@ public class DeleteRequest extends BaseRequestAsyncTask{
 			//create response objects
 			if(responseDataHolder.mStatusCode>= HttpStatus.SC_OK && responseDataHolder.mStatusCode < HttpStatus.SC_MULTIPLE_CHOICES){
 				//empty
+			}
+			else if(responseDataHolder.mStatusCode>=HttpStatus.SC_INTERNAL_SERVER_ERROR){
+				responseDataHolder.mStatusCode = -1;				
 			}else{
 				responseDataHolder.mErrorObject = ResultObjectBuilder.buildErrorObject(responseDataHolder.mStatusCode, data);
 

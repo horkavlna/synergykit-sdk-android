@@ -59,7 +59,11 @@ public class GetRequest  extends BaseRequestAsyncTask{
 			//create response objects
 			if(responseDataHolder.mStatusCode>= HttpStatus.SC_OK && responseDataHolder.mStatusCode < HttpStatus.SC_MULTIPLE_CHOICES){
 				responseDataHolder.mObject = ResultObjectBuilder.buildBaseObject(responseDataHolder.mStatusCode, data,mType);
-			}else{
+			}
+			else if(responseDataHolder.mStatusCode>=HttpStatus.SC_INTERNAL_SERVER_ERROR){
+				responseDataHolder.mStatusCode = -1;				
+			}
+			else{
 				responseDataHolder.mErrorObject = ResultObjectBuilder.buildErrorObject(responseDataHolder.mStatusCode, data);
 
 			}

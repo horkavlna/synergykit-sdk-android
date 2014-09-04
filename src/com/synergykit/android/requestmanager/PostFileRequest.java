@@ -72,6 +72,8 @@ public class PostFileRequest extends BaseRequestAsyncTask {
 				responseDataHolder.mObject = ResultObjectBuilder
 						.buildBaseObject(responseDataHolder.mStatusCode, data,
 								mType);
+			}else if(responseDataHolder.mStatusCode>=HttpStatus.SC_INTERNAL_SERVER_ERROR){
+				responseDataHolder.mStatusCode = -1;				
 			} else {
 				responseDataHolder.mErrorObject = ResultObjectBuilder
 						.buildErrorObject(responseDataHolder.mStatusCode, data);
