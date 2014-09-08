@@ -1,5 +1,8 @@
 package com.synergykit.android.urlbuilder;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import android.util.Log;
 
 /*
@@ -19,6 +22,7 @@ public class UrlBuilder {
 	final public static String RESOURCE_USER_LOGIN = "users/login";
 	final public static String RESOURCE_VARIANTS = "variants";
 	private static final int MIN_VALUE_LENGTH = 1;
+	private static final int MAX_ORDER_BY_SIZE  = 12;
 	
 	/* Attributes */
 	private String mResource = null;
@@ -29,7 +33,7 @@ public class UrlBuilder {
 	private Integer mTop = null;
 	private String mInlineCount = null;
 	private Integer mSkip = null;
-	private String mOrderBy = null;
+	private List<String> mOrderBy = new LinkedList<String>();
 	
 		
 	/* Resource setter */
@@ -82,7 +86,11 @@ public class UrlBuilder {
 	
 	/* Order By setter */
 	public UrlBuilder setOrderBy(String orderBy){
-		this.mOrderBy = orderBy;
+		
+		if(this.mOrderBy.size() == MAX_ORDER_BY_SIZE)
+			return this;
+		
+		this.mOrderBy.add(orderBy);
 		return this;
 	}
 	
@@ -136,8 +144,11 @@ public class UrlBuilder {
 			url+="&$top=" + mTop.toString();
 		
 		//set order by
-		if(this.checkValue(mOrderBy))
-			url+="&$orderby=" + mOrderBy;
+		for (String orderBy : mOrderBy) {
+			if(this.checkValue(orderBy))
+				url+="&$orderby=" + orderBy;
+		}
+		
 		
 		//set skip
 		if(mSkip != null)
