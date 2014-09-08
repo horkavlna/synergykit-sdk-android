@@ -142,13 +142,17 @@ public class UrlBuilder {
 		//set top
 		if(mTop!=null)
 			url+="&$top=" + mTop.toString();
-		
+	
 		//set order by
-		for (String orderBy : mOrderBy) {
-			if(this.checkValue(orderBy))
-				url+="&$orderby=" + orderBy;
+		for(int i=0; i<mOrderBy.size(); i++){
+			
+			if(i==0){
+				url+="&$orderby=" + mOrderBy.get(i);
+			}else{
+				url+="," + mOrderBy.get(i);
+			}
+			
 		}
-		
 		
 		//set skip
 		if(mSkip != null)
