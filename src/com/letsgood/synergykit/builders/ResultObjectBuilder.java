@@ -17,7 +17,7 @@ import com.letsgood.synergykit.resources.SynergyKITObject;
 public class ResultObjectBuilder {
 	
 	/* Build base object */
-	public static SynergyKITObject buildBaseObject(int statusCode,BufferedReader data,Type type){
+	public static SynergyKITObject buildObject(int statusCode,BufferedReader data,Type type){
 		
 		// Param check
 		if(data == null || statusCode!=HttpStatus.SC_OK)
@@ -36,7 +36,7 @@ public class ResultObjectBuilder {
 	
 	
 	/* Build base objects */
-	public static SynergyKITObject[] buildBaseObjects(int statusCode, BufferedReader data, Type type){
+	public static SynergyKITObject[] buildObjects(int statusCode, BufferedReader data, Type type){
 		SynergyKITObject[] baseObjects;
 		
 		// Param check
@@ -59,7 +59,7 @@ public class ResultObjectBuilder {
 	}
 	
 	/* Build error object */
-	public static SynergyKITError buildErrorObject(int statusCode, BufferedReader data){	
+	public static SynergyKITError buildError(int statusCode, BufferedReader data){	
 		
 		// Param check
 		if(data == null)

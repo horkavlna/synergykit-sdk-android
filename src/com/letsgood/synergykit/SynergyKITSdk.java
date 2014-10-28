@@ -1,13 +1,18 @@
 package com.letsgood.synergykit;
 
+import java.lang.reflect.Type;
+
 import android.os.AsyncTask;
 
 import com.letsgood.synergykit.interfaces.IRecords;
 import com.letsgood.synergykit.interfaces.ISynergyKITSdk;
+import com.letsgood.synergykit.listeners.DeleteListener;
+import com.letsgood.synergykit.listeners.RecordsResponseListener;
 import com.letsgood.synergykit.listeners.ResponseListener;
 import com.letsgood.synergykit.request.SynergyKITRequest;
 import com.letsgood.synergykit.resources.SynergyKITAuthConfig;
 import com.letsgood.synergykit.resources.SynergyKITConfig;
+import com.letsgood.synergykit.resources.SynergyKITObject;
 
 public class SynergyKITSdk implements ISynergyKITSdk, IRecords{
 
@@ -124,9 +129,50 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords{
 		
 	}
 
+	/* Get record */
 	@Override
-	public void getRecord(String collectionUrl, String recordId,
+	public void getRecord(String collectionUrl, String recordId, Type type,	ResponseListener listener, boolean parallelMode) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	/* Get records */
+	@Override
+	public void getRecords(SynergyKITConfig config,
+			RecordsResponseListener listener) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* Get records */
+	@Override
+	public void getRecords(String collectionUrl, Type type,
+			RecordsResponseListener listener, boolean parallelMode) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* Create record */
+	@Override
+	public void createRecord(String collectionUrl, SynergyKITObject object,
 			ResponseListener listener, boolean parallelMode) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* Update record */
+	@Override
+	public void updateRecord(String collectionUrl, String recordId,
+			SynergyKITObject object, ResponseListener listener,
+			boolean parallelMode) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/* Delete record */
+	@Override
+	public void deleteRecord(String collectionUrl, String recordId,
+			DeleteListener listener, boolean parallelMode) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -6,6 +6,9 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import com.letsgood.synergykit.SynergyKIT;
+
+import android.util.Base64;
 import android.util.Log;
 
 public class Get extends RequestMethod {
@@ -13,30 +16,26 @@ public class Get extends RequestMethod {
 	private static final String REQUEST_METHOD = "GET";
 	private static final String PROPERTY_USER_AGENT = "User-Agent";
 	private static final String PROPERTY_USER_AGENT_VALUE = "Android";
+	private static final String PROPERTY_AUTHORIZATION = "Authorization";
 
 	/* Execute */
 	@Override
 	public BufferedReader execute() {
-		int statusCode = 0;
-		
+	
 		
 		try {
-			//url = new URL(uri.getUri());
-			url = new URL("https://synergykit.com");
-			httpURLConnection = (HttpURLConnection) url.openConnection();
-			//httpURLConnection.setConnectTimeout(CONNECT_TIMEOUT);
-			//httpURLConnection.setReadTimeout(READ_TIMEOUT);	
-			httpURLConnection.setRequestMethod(REQUEST_METHOD);
-			//httpURLConnection.setRequestProperty(PROPERTY_USER_AGENT, PROPERTY_USER_AGENT_VALUE);
-			//httpURLConnection.setDoInput(true);
-			httpURLConnection.addRequestProperty("Authorization:", "Basic Zm9vdGJhbGwtdGltZTozY2FjMGU0MC0zMWU4LTExZTQtOWMyNi0zZGM5ODU1MWE4NDg=");
+			url = new URL(getUri().getUri()); // init url
+			
+			httpURLConnection = (HttpURLConnection) url.openConnection(); //open connection
+			
+			httpURLConnection.addRequestProperty(PROPERTY_AUTHORIZATION, "Basic " 
+												 + Base64.encodeToString(
+												(SynergyKIT.getTenant() + ":" + SynergyKIT.getApplicationKey()).getBytes(),
+												Base64.NO_WRAP)); //set authorization
 
 			
-			//status code
-			statusCode = httpURLConnection.getResponseCode();
-			Log.d("SK",url.toString());
-			Log.d("SK",Integer.toString(statusCode) + " " + httpURLConnection.getResponseMessage());
-			
+			statusCode = httpURLConnection.getResponseCode(); //get status code
+
 			//read stream
 			if(statusCode>=HttpURLConnection.HTTP_OK && statusCode<HttpURLConnection.HTTP_MULT_CHOICE){
 				return readStream(httpURLConnection.getInputStream());

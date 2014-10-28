@@ -1,7 +1,5 @@
 package com.letsgood.synergykit.request;
 
-import java.io.BufferedReader;
-
 import com.letsgood.synergykit.requestmethods.Get;
 import com.letsgood.synergykit.resources.SynergyKITError;
 import com.letsgood.synergykit.resources.SynergyKITResponse;
@@ -37,14 +35,12 @@ public abstract class SynergyKITRequest extends AsyncTask<Void, Void, Object> {
 		public SynergyKITError errorObject;
 		public Object object;
 		public int statusCode;
-		public BufferedReader bufferedReader;
 		
 		/* Constructor */
 		public ResponseDataHolder() {
 			statusCode = -1;
 			errorObject = null;
 			object = null;
-			bufferedReader = null;
 		}
 	}
 }

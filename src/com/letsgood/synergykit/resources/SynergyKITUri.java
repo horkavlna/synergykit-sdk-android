@@ -1,5 +1,7 @@
 package com.letsgood.synergykit.resources;
 
+import com.letsgood.synergykit.SynergyKIT;
+
 import android.webkit.URLUtil;
 
 public class SynergyKITUri {
@@ -19,24 +21,19 @@ public class SynergyKITUri {
 		String uri = null;
 		
 		
-		//TODO Uncomment
+		
 		//Init check
-	/*	if(!SynergyKIT.isInit()){
-			try {
-				throw new NotInitializedException();
-			} catch (NotInitializedException e) {
-				e.printStackTrace();
-				return null;
-			}
+		if(!SynergyKIT.isInit()){
+			return uri;
 		}
 		
-		uri = String.format(mUri, SynergyKIT.getTenant());		
+		uri = String.format(this.uri, SynergyKIT.getTenant());		
 		
 		if( URLUtil.isValidUrl(uri)==false || uri.contains(" ")){
 			throw new IllegalArgumentException(EXCEPTION_MESSAGE);
 		}
 	 
-	 */
+	
 		return uri;
 	}
 }
