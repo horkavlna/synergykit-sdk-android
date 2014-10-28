@@ -1,8 +1,11 @@
 package com.letsgood.synergykit;
 
+import android.os.AsyncTask;
+
 import com.letsgood.synergykit.interfaces.IRecords;
 import com.letsgood.synergykit.interfaces.ISynergyKITSdk;
 import com.letsgood.synergykit.listeners.ResponseListener;
+import com.letsgood.synergykit.request.SynergyKITRequest;
 import com.letsgood.synergykit.resources.SynergyKITAuthConfig;
 import com.letsgood.synergykit.resources.SynergyKITConfig;
 
@@ -12,6 +15,7 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords{
 	private static SynergyKITSdk instance = null;
 	private SynergyKITAuthConfig authConfig = new SynergyKITAuthConfig();
 	private SynergyKITConfig config = new SynergyKITConfig();
+	private Records records = new Records();
 	
 	//---------------------------------------------------------------------------------------
 	/* Instance static getter */
@@ -94,10 +98,29 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords{
 		return config;
 	}
 	
+	/* Synergylize */
+	@Override
+	public void synergylize(SynergyKITRequest request, boolean parallelMode) {
+		
+		if(request==null){
+			//TODO Exception
+			return;
+		}
+		
+		//execute
+		if(parallelMode==false){
+			request.execute();
+		}else{
+			request.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+		}
+		
+	}
+	
 	//---------------------------------------------------------------------------------------
+	/* Get record */
 	@Override
 	public void getRecord(SynergyKITConfig config, ResponseListener listener) {
-		// TODO Auto-generated method stub
+		records.getRecord(config, listener);
 		
 	}
 

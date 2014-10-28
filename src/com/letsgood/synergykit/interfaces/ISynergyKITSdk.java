@@ -1,5 +1,6 @@
 package com.letsgood.synergykit.interfaces;
 
+import com.letsgood.synergykit.request.SynergyKITRequest;
 import com.letsgood.synergykit.resources.SynergyKITConfig;
 
 public interface ISynergyKITSdk {
@@ -12,4 +13,5 @@ public interface ISynergyKITSdk {
 	public boolean isInit();
 	public void setConfig(SynergyKITConfig config);
 	public SynergyKITConfig getConfig();
+	public void synergylize(SynergyKITRequest request, boolean parallelMode);
 }
