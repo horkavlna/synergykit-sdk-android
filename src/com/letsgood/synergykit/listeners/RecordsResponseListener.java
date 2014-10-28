@@ -1,7 +1,7 @@
-package com.letsgood.synergykit.listener;
+package com.letsgood.synergykit.listeners;
 
-import com.letsgood.synergykit.resource.SynergyKITError;
-import com.letsgood.synergykit.resource.SynergyKITObject;
+import com.letsgood.synergykit.resources.SynergyKITError;
+import com.letsgood.synergykit.resources.SynergyKITObject;
 
 public interface RecordsResponseListener {
 	public void doneCallback(int statusCode,SynergyKITObject[] objects);

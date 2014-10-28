@@ -1,4 +1,4 @@
-package com.letsgood.synergykit.resource;
+package com.letsgood.synergykit.resources;
 
 public class SynergyKITAuthConfig {
 	

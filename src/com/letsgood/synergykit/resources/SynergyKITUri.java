@@ -1,4 +1,4 @@
-package com.letsgood.synergykit.resource;
+package com.letsgood.synergykit.resources;
 
 import android.webkit.URLUtil;
 
@@ -7,11 +7,11 @@ public class SynergyKITUri {
 	private final static String EXCEPTION_MESSAGE = "Not valid URI";
 	
 	/* Attributes */
-	private String mUri;
+	private String uri;
 	
 	/* Constructor */
 	public SynergyKITUri(String uri){
-		this.mUri = uri;
+		this.uri = uri;
 	}	
 	
 	/* Uri getter */

@@ -1,6 +1,6 @@
-package com.letsgood.synergykit.listener;
+package com.letsgood.synergykit.listeners;
 
-import com.letsgood.synergykit.resource.SynergyKITError;
+import com.letsgood.synergykit.resources.SynergyKITError;
 
 public interface DeleteListener {
 	public void doneCallback(int statusCode);

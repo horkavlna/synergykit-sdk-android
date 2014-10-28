@@ -1,7 +1,7 @@
-package com.letsgood.synergykit.listener;
+package com.letsgood.synergykit.listeners;
 
-import com.letsgood.synergykit.resource.SynergyKITError;
-import com.letsgood.synergykit.resource.SynergyKITUser;
+import com.letsgood.synergykit.resources.SynergyKITError;
+import com.letsgood.synergykit.resources.SynergyKITUser;
 
 public interface UserResponseListener {
 	public void doneCallback(int statusCode, SynergyKITUser user);

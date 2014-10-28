@@ -1,4 +1,4 @@
-package com.letsgood.synergykit.resource;
+package com.letsgood.synergykit.resources;
 
 import java.util.LinkedList;
 import java.util.List;
