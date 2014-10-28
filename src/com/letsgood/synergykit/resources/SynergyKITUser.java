@@ -3,8 +3,6 @@ package com.letsgood.synergykit.resources;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.synergykit.android.resource.Platform;
-
 public class SynergyKITUser extends SynergyKITObject {
 	/* Constants */
 	protected static final String PLATFORM = "android";
@@ -17,7 +15,7 @@ public class SynergyKITUser extends SynergyKITObject {
 
 	protected String platform = PLATFORM;
 
-	protected List<Platform> platforms;
+	protected List<SynergyKITPlatform> platforms;
 
 	/* Constructor */
     public SynergyKITUser(String registrationId) {
@@ -28,11 +26,11 @@ public class SynergyKITUser extends SynergyKITObject {
     	}
        	
     	//list of platforms
-    	platforms = new LinkedList<Platform>();
+    	platforms = new LinkedList<SynergyKITPlatform>();
 
     	
     	//add platforms to list
-    	Platform pl = new Platform();
+    	SynergyKITPlatform pl = new SynergyKITPlatform();
     	pl.setName(PLATFORM);
     	pl.setRegistrationId(registrationId);
     	platforms.add(pl);
@@ -55,7 +53,7 @@ public class SynergyKITUser extends SynergyKITObject {
 	}
 
 	/* Platform getter */
-	public List<Platform> getPlatforms() {
+	public List<SynergyKITPlatform> getPlatforms() {
 		return platforms;
 	}
 
