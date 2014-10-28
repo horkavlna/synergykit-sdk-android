@@ -28,7 +28,7 @@ public class Records implements IRecords {
 	/* Get record */
 	@Override
 	public void getRecord(String collectionUrl, String recordId, Type type, ResponseListener listener, boolean parallelMode) {
-		SynergyKITConfig config = new SynergyKITConfig();
+		SynergyKITConfig config = SynergyKIT.getConfig();
 
 		//Uri builder
 		UriBuilder uriBuilder = new UriBuilder()
@@ -79,9 +79,18 @@ public class Records implements IRecords {
 
 	/* Record creater */
 	@Override
-	public void createRecord(String collectionUrl, SynergyKITObject object,
-			ResponseListener listener, boolean parallelMode) {
-		// TODO Auto-generated method stub
+	public void createRecord(String collectionUrl, SynergyKITObject object,	ResponseListener listener, boolean parallelMode) {
+		SynergyKITConfig config = new SynergyKITConfig();
+		
+		//Uri builder
+		UriBuilder uriBuilder = new UriBuilder()
+								.setResource(Resource.RESOURCE_DATA)
+								.setDatabase(collectionUrl);
+		
+		//set config
+		config.setUri(uriBuilder.build());
+		config.setParallelMode(parallelMode);
+		config.setType(object.getClass());
 		
 	}
 

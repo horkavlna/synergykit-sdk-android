@@ -2,6 +2,7 @@ package com.letsgood.synergykit.request;
 
 import com.letsgood.synergykit.requestmethods.Get;
 import com.letsgood.synergykit.resources.SynergyKITError;
+import com.letsgood.synergykit.resources.SynergyKITObject;
 import com.letsgood.synergykit.resources.SynergyKITResponse;
 import com.letsgood.synergykit.resources.SynergyKITUri;
 
@@ -33,7 +34,8 @@ public abstract class SynergyKITRequest extends AsyncTask<Void, Void, Object> {
 	protected class ResponseDataHolder{
 		/* Attributes */
 		public SynergyKITError errorObject;
-		public Object object;
+		public SynergyKITObject object;
+		public SynergyKITObject[] objects;
 		public int statusCode;
 		
 		/* Constructor */
@@ -41,6 +43,7 @@ public abstract class SynergyKITRequest extends AsyncTask<Void, Void, Object> {
 			statusCode = -1;
 			errorObject = null;
 			object = null;
+			objects = null;
 		}
 	}
 }

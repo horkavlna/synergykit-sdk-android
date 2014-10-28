@@ -12,6 +12,7 @@ import com.letsgood.synergykit.resources.SynergyKITUri;
 
 public abstract class RequestMethod implements IRequestMethod {
 	/* Constants */
+	public static final int INTERNAL_STATUS_CODE = -1;
 	protected static final String CHARSET = "UTF-8";
 	protected static final int CONNECT_TIMEOUT = 5000;
 	protected static final int READ_TIMEOUT = 10000;

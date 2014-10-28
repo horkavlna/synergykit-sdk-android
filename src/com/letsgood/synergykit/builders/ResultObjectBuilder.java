@@ -25,7 +25,6 @@ public class ResultObjectBuilder {
 		
 		
 		try {	
-			//Log.e("Synergykit", jsonContent);
 			return (SynergyKITObject) GsonWrapper.getGson().fromJson(data, type);
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -42,8 +41,6 @@ public class ResultObjectBuilder {
 		// Param check
 		if(data == null || statusCode!=HttpStatus.SC_OK)
 			return null;
-
-		
 		
 		try {
 			baseObjects = (SynergyKITObject[]) GsonWrapper.getGson().fromJson(data, type);																					
@@ -53,7 +50,6 @@ public class ResultObjectBuilder {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		
 		
 		return null;
 	}
@@ -72,7 +68,17 @@ public class ResultObjectBuilder {
 			e.printStackTrace();
 		}
 		
+		return null;
+	}
 	
+	/* Build error object */
+	public static SynergyKITError buildError(int statusCode){	
+		
+		SynergyKITError error = new SynergyKITError();
+		error.setStatusCode(statusCode);
+		error.setMessage("Unspecified error");	
+		
+		
 		
 		return null;
 	}

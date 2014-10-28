@@ -45,7 +45,7 @@ public class RecordsRequestGet extends SynergyKITRequest{
 
 		
 		if(dataHolder.statusCode>= HttpStatus.SC_OK && dataHolder.statusCode < HttpStatus.SC_MULTIPLE_CHOICES){
-			dataHolder.object = ResultObjectBuilder.buildObjects(dataHolder.statusCode, response.getBufferedReader(),config.getType());
+			dataHolder.objects = ResultObjectBuilder.buildObjects(dataHolder.statusCode, response.getBufferedReader(),config.getType());
 		}
 		else if(dataHolder.statusCode>=HttpStatus.SC_INTERNAL_SERVER_ERROR){
 			dataHolder.statusCode = -1;				
