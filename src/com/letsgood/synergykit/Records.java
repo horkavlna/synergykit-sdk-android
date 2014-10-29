@@ -115,7 +115,8 @@ public class Records implements IRecords {
 		//Uri builder
 		UriBuilder uriBuilder = new UriBuilder()
 								.setResource(Resource.RESOURCE_DATA)
-								.setDatabase(collectionUrl);
+								.setDatabase(collectionUrl)
+								.setRecordId(recordId);
 		
 		//set config
 		config.setUri(uriBuilder.build());
