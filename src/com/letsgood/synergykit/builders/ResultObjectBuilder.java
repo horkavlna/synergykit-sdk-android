@@ -80,6 +80,6 @@ public class ResultObjectBuilder {
 		
 		
 		
-		return null;
+		return error;
 	}
 }

@@ -5,6 +5,7 @@ import java.lang.reflect.Type;
 import org.apache.http.HttpStatus;
 
 import com.letsgood.synergykit.builders.ResultObjectBuilder;
+import com.letsgood.synergykit.requestmethods.Delete;
 import com.letsgood.synergykit.requestmethods.Get;
 import com.letsgood.synergykit.requestmethods.Post;
 import com.letsgood.synergykit.requestmethods.Put;
@@ -59,25 +60,39 @@ public abstract class SynergyKITRequest extends AsyncTask<Void, Void, Object> {
 		return response;
 	}
 	
+	/* Request method DELETE */
+	protected static SynergyKITResponse put(SynergyKITUri uri){
+		SynergyKITResponse response = new SynergyKITResponse();
+		Delete delete = new Delete(uri);
+		
+		response.setBufferedReader(delete.execute());
+		response.setStatusCode(delete.getStatusCode());
+		
+		return response;
+	}
+	
 	/* Manage response */
-	protected ResponseDataHolder manageObjectResponse(SynergyKITResponse response, Type type){
+	protected ResponseDataHolder manageResponseToObject(SynergyKITResponse response, Type type){
 		ResponseDataHolder dataHolder = new ResponseDataHolder();
 		
 		if(response==null 
 			|| response.getStatusCode()>=HttpStatus.SC_INTERNAL_SERVER_ERROR 
 			|| response.getStatusCode() == RequestMethod.INTERNAL_STATUS_CODE){
 			
-			dataHolder.errorObject = ResultObjectBuilder.buildError(dataHolder.statusCode);		
+			dataHolder.errorObject = ResultObjectBuilder.buildError(response.getStatusCode());		
 			
 		}else if(response.getStatusCode()>= HttpStatus.SC_OK 
 				 && response.getStatusCode() < HttpStatus.SC_MULTIPLE_CHOICES){
 			
 			dataHolder.statusCode = response.getStatusCode();
-			dataHolder.object = ResultObjectBuilder.buildObject(dataHolder.statusCode, response.getBufferedReader(),type);
+			
+			if(response.getBufferedReader()!=null)
+				dataHolder.object = ResultObjectBuilder.buildObject(dataHolder.statusCode, response.getBufferedReader(),type);
 			
 		}else{
 			
 			dataHolder.statusCode = response.getStatusCode();
+			
 			dataHolder.errorObject = ResultObjectBuilder.buildError(dataHolder.statusCode, response.getBufferedReader());
 			
 		}		
@@ -86,17 +101,17 @@ public abstract class SynergyKITRequest extends AsyncTask<Void, Void, Object> {
 	} 
 	
 	/* Manage response */
-	protected ResponseDataHolder manageObjectsResponse(SynergyKITResponse response, Type type){
+	protected ResponseDataHolder manageResponseToObjects(SynergyKITResponse response, Type type){
 		ResponseDataHolder dataHolder = new ResponseDataHolder();
 		
 		if(response==null 
-			|| dataHolder.statusCode>=HttpStatus.SC_INTERNAL_SERVER_ERROR 
-			|| dataHolder.statusCode == RequestMethod.INTERNAL_STATUS_CODE){
+			|| response.getStatusCode()>=HttpStatus.SC_INTERNAL_SERVER_ERROR 
+			|| response.getStatusCode() == RequestMethod.INTERNAL_STATUS_CODE){
 			
-			dataHolder.errorObject = ResultObjectBuilder.buildError(dataHolder.statusCode);		
+			dataHolder.errorObject = ResultObjectBuilder.buildError(response.getStatusCode());		
 			
-		}else if(dataHolder.statusCode>= HttpStatus.SC_OK 
-				 && dataHolder.statusCode < HttpStatus.SC_MULTIPLE_CHOICES){
+		}else if(response.getStatusCode()>= HttpStatus.SC_OK 
+				 && response.getStatusCode() < HttpStatus.SC_MULTIPLE_CHOICES){
 			
 			dataHolder.statusCode = response.getStatusCode();
 			dataHolder.objects = ResultObjectBuilder.buildObjects(dataHolder.statusCode, response.getBufferedReader(),type);

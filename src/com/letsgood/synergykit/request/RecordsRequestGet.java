@@ -41,7 +41,7 @@ public class RecordsRequestGet extends SynergyKITRequest{
 		response = get(config.getUri());
 		
 		//manage response
-		dataHolder = manageObjectsResponse(response, config.getType());		
+		dataHolder = manageResponseToObjects(response, config.getType());		
 		
 		return dataHolder;
 	}
@@ -50,7 +50,11 @@ public class RecordsRequestGet extends SynergyKITRequest{
 	protected void onPostExecute(Object object) {
 		ResponseDataHolder dataHolder = (ResponseDataHolder) object;
 		
-		Log.i("SK",Integer.toString(dataHolder.statusCode));
+		if(dataHolder.statusCode>= HttpStatus.SC_OK && dataHolder.statusCode < HttpStatus.SC_MULTIPLE_CHOICES){
+			listener.doneCallback(dataHolder.statusCode, dataHolder.objects);
+		}else{
+			listener.errorCallback(dataHolder.statusCode, dataHolder.errorObject);
+		}
 	}
 
 }

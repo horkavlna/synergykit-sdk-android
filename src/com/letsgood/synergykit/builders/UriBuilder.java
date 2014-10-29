@@ -21,15 +21,15 @@ public class UriBuilder {
 	private static final String BASE_SYNERGYKIT_URL = "https://%s.api.synergykit.com/v2";		
 	
 	/* Attributes */
-	private Resource mResource = new Resource();
-	private Collection mDatabase = new Collection();
-	private RecordId mRecordId = new RecordId();
-	private Filter mFilter = new Filter();
-	private OrderBy mOrderBy = new OrderBy();
-	private Top mTop = new Top();
-	private Skip mSkip = new Skip();
-	private Select mSelect = new Select();
-	private InLineCount mInLineCount = new InLineCount();
+	private Resource resource = new Resource();
+	private Collection collection = new Collection();
+	private RecordId recordId = new RecordId();
+	private Filter filter = new Filter();
+	private OrderBy orderBy = new OrderBy();
+	private Top top = new Top();
+	private Skip skip = new Skip();
+	private Select select = new Select();
+	private InLineCount inLineCount = new InLineCount();
 
 	
 
@@ -37,72 +37,72 @@ public class UriBuilder {
 		
 	/* Resource setter */
 	public UriBuilder setResource(String resource){
-		mResource.setResource(resource);
+		this.resource.setResource(resource);
 		return this;
 	}
 	
 	/* Resource URL setter */
-	public UriBuilder setDatabase(String database){
-		mDatabase.setCollection(database);
+	public UriBuilder setCollection(String collection){
+		this.collection.setCollection(collection);
 		return this;
 	}
 	
 	/* Resource Id setter */
 	public UriBuilder setRecordId(String recordId){
-		mRecordId.setRecordId(recordId);
+		this.recordId.setRecordId(recordId);
 		return this;
 	}
 	
 	/* Filter setter */
 	public UriBuilder setFilter(String attribute, String operator, String parametr){
-		mFilter.setFilter(attribute, operator, parametr);;
+		this.filter.setFilter(attribute, operator, parametr);;
 		return this;
 	}
 	
 	/* Filter setter */
 	public UriBuilder setFilter(String attribute, String operator, int parametr){
-		mFilter.setFilter(attribute, operator, parametr);
+		this.filter.setFilter(attribute, operator, parametr);
 		return this;
 	}
 	
 	/* Filter setter */
 	public UriBuilder setFilter(String filter){
-		mFilter.setFilter(filter);
+		this.filter.setFilter(filter);
 		return this;
 	}
 	
 	/* Select setter */
 	public UriBuilder setSelect(String attribute){
-		mSelect.setSelect(attribute);
+		this.select.setSelect(attribute);
 		return this;
 	}
 	
 	/* Order by desc setter */
 	public UriBuilder setOrderByDesc(String parameter){
-		mOrderBy.setOrderByDesc(parameter);
+		this.orderBy.setOrderByDesc(parameter);
 		return this;
 	}
 
 	/* Order by asc setter */
 	public UriBuilder setOrderByAsc(String parameter){
-		mOrderBy.setOrderByAsc(parameter);
+		this.orderBy.setOrderByAsc(parameter);
 		return this;
 	}
 	
 	/* Top setter */
 	public UriBuilder setTop(int top){
-		mTop.setTop(top);
+		this.top.setTop(top);
 		return this;
 	}
 	
 	/* Top setter */
 	public UriBuilder setSkip(int skip){
-		mSkip.setSkip(skip);
+		this.skip.setSkip(skip);
 		return this;
 	}
 	
 	public UriBuilder setInLineCountEnabled(boolean enabled){
-		mInLineCount.setEnabled(enabled);
+		this.inLineCount.setEnabled(enabled);
 		return this;
 	}
 	
@@ -112,80 +112,80 @@ public class UriBuilder {
 		boolean hasFilters = false;
 		
 		
-		uri += "/" + mResource.getResource();  //set resource	
+		uri += "/" + resource.getResource();  //set resource	
 		
-		if(mDatabase.getCollection()!=null)
-			uri += "/" + mDatabase.getCollection();  //set collection
-		
-		
-		if(mRecordId.getRecordId()!=null)
-			uri += "/" + mRecordId.getRecordId();	//set resource id 
+		if(collection.getCollection()!=null)
+			uri += "/" + collection.getCollection();  //set collection
 		
 		
-		if(mSelect.getSelect()!=null){
+		if(recordId.getRecordId()!=null)
+			uri += "/" + recordId.getRecordId();	//set resource id 
+		
+		
+		if(select.getSelect()!=null){
 			
 			if(hasFilters==false){
 				uri+="?";
 				hasFilters=true;
 			}
 			
-			uri += mSelect.getSelect();
+			uri += select.getSelect();
 		}
 		
 		//set filter
-		if(mFilter.getFilter()!=null){
+		if(filter.getFilter()!=null){
 			
 			if(hasFilters==false){
 				uri+="?";
 				hasFilters=true;
 			}
 			
-			uri+=mFilter.getFilter();
+			uri+=filter.getFilter();
 		}
 		
 		//set order by
-		if(mOrderBy.getOrderBy()!=null){
+		if(orderBy.getOrderBy()!=null){
 			
 			if(hasFilters==false){
 				uri+="?";
 				hasFilters=true;
 			}
 			
-			uri+=mOrderBy.getOrderBy();
+			uri+=orderBy.getOrderBy();
 		}
 			
 		
 		//set top
-		if(mTop.getTop() != null){
+		if(top.getTop() != null){
 			
 			if(hasFilters==false){
 				uri+="?";
 				hasFilters=true;
 			}
 			
-			uri+=mTop.getTop();
+			uri+=top.getTop();
 		}
 		
 		//set skip
-		if(mSkip.getSkip()!=null){
+		if(skip.getSkip()!=null){
 			
 			if(hasFilters==false){
 				uri+="?";
 				hasFilters=true;
 			}
 			
-			uri+=mSkip.getSkip();
+			uri+=skip.getSkip();
 		}
 		
 		//set inline count
-		if(mInLineCount.isEnabled()){
+		if(inLineCount.isEnabled()){
 		
 			if(hasFilters==false){
 				uri+="?";
 				hasFilters=true;
 			}
 			
-			uri+=mInLineCount.getInLineCount();
+			uri+=inLineCount.getInLineCount();
 		}
 		
 		

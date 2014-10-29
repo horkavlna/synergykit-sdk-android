@@ -36,7 +36,7 @@ public class RecordRequestGet extends SynergyKITRequest{
 		response = get(config.getUri());
 		
 		//manage response
-		dataHolder = manageObjectResponse(response, config.getType());
+		dataHolder = manageResponseToObject(response, config.getType());
 		
 		
 		

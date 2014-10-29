@@ -13,14 +13,14 @@ import com.letsgood.synergykit.resources.SynergyKITUri;
 import android.util.Base64;
 import android.util.Log;
 
-public class Get extends RequestMethod {
+public class Delete extends RequestMethod {
 
 	/* Constants */
-	protected static final String REQUEST_METHOD = "GET";
+	protected static final String REQUEST_METHOD = "DELETE";
 
 	
 	/* Constructor */
-	public Get(SynergyKITUri uri) {
+	public Delete(SynergyKITUri uri) {
 		super();
 		
 		setUri(uri);
@@ -37,7 +37,7 @@ public class Get extends RequestMethod {
 			return null;
 		}
 		
-		
+			
 		try {
 			url = new URL(getUri().getUri()); // init url
 			

@@ -58,6 +58,6 @@ public abstract class RequestMethod implements IRequestMethod {
 		
 		return bufferedReader;
 	}
-
+	
 	
 }

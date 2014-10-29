@@ -2,16 +2,15 @@ package com.letsgood.synergykit.request;
 
 import org.apache.http.HttpStatus;
 
+import com.letsgood.synergykit.listeners.DeleteListener;
 import com.letsgood.synergykit.listeners.ResponseListener;
-import com.letsgood.synergykit.request.SynergyKITRequest.ResponseDataHolder;
 import com.letsgood.synergykit.resources.SynergyKITConfig;
 import com.letsgood.synergykit.resources.SynergyKITResponse;
 
-public class RecordRequestPut extends SynergyKITRequest{
+public class RecordRequestDelete extends SynergyKITRequest{
 	/* Attributes */
-	private SynergyKITConfig config = null;
-	private ResponseListener listener = null;
-	private Object object = null;;
+	private SynergyKITConfig config;
+	private DeleteListener listener;
 	
 	/* Config setter */
 	public void setConfig(SynergyKITConfig config){
@@ -19,20 +18,11 @@ public class RecordRequestPut extends SynergyKITRequest{
 	}
 	
 	/* Listener setter */
-	public void setListener(ResponseListener listener){
+	public void setListener(DeleteListener listener){
 		this.listener =listener;
 	}
 	
 
-	/* Object getter */
-	public Object getObject() {
-		return object;
-	}
-
-	/* Object setter */
-	public void setObject(Object object) {
-		this.object = object;
-	}
 	
 	@Override
 	protected Object doInBackground(Void... params) {
@@ -40,7 +30,7 @@ public class RecordRequestPut extends SynergyKITRequest{
 		SynergyKITResponse response = null;
 		
 		//do request
-		response = SynergyKITRequest.put(config.getUri(), object);
+		response = get(config.getUri());
 		
 		//manage response
 		dataHolder = manageResponseToObject(response, config.getType());
@@ -55,7 +45,7 @@ public class RecordRequestPut extends SynergyKITRequest{
 		ResponseDataHolder dataHolder = (ResponseDataHolder) object;
 		
 		if(dataHolder.statusCode>= HttpStatus.SC_OK && dataHolder.statusCode < HttpStatus.SC_MULTIPLE_CHOICES){
-			listener.doneCallback(dataHolder.statusCode, dataHolder.object);
+			listener.doneCallback(dataHolder.statusCode);
 		}else{
 			listener.errorCallback(dataHolder.statusCode, dataHolder.errorObject);
 		}

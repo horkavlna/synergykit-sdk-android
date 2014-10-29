@@ -16,6 +16,9 @@ import com.letsgood.synergykit.resources.SynergyKITObject;
 
 public class SynergyKITSdk implements ISynergyKITSdk, IRecords{
 
+	/* Constants */
+	public static final String TAG = "SynergyKIT";
+	
 	/* Attributes */
 	private static SynergyKITSdk instance = null;
 	private SynergyKITAuthConfig authConfig = new SynergyKITAuthConfig();
@@ -91,6 +94,7 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords{
 		return true;
 	}
 	
+	/*Config setter */ 
 	@Override
 	public void setConfig(SynergyKITConfig config) {
 		// TODO Exception
@@ -98,6 +102,7 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords{
 		this.config = config;
 	}
 
+	/* Config getter */
 	@Override
 	public SynergyKITConfig getConfig() {
 		return config;
@@ -132,23 +137,21 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords{
 	/* Get record */
 	@Override
 	public void getRecord(String collectionUrl, String recordId, Type type,	ResponseListener listener, boolean parallelMode) {
-		// TODO Auto-generated method stub
+		records.getRecord(collectionUrl, recordId, type, listener, parallelMode);
 		
 	}
 	
 	/* Get records */
 	@Override
-	public void getRecords(SynergyKITConfig config,
-			RecordsResponseListener listener) {
-		// TODO Auto-generated method stub
+	public void getRecords(SynergyKITConfig config,	RecordsResponseListener listener) {
+		records.getRecords(config, listener);
 		
 	}
 
 	/* Get records */
 	@Override
-	public void getRecords(String collectionUrl, Type type,
-			RecordsResponseListener listener, boolean parallelMode) {
-		// TODO Auto-generated method stub
+	public void getRecords(String collectionUrl, Type type,	RecordsResponseListener listener, boolean parallelMode) {
+		records.getRecords(collectionUrl, type, listener, parallelMode);
 		
 	}
 
@@ -168,8 +171,7 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords{
 
 	/* Delete record */
 	@Override
-	public void deleteRecord(String collectionUrl, String recordId,
-			DeleteListener listener, boolean parallelMode) {
+	public void deleteRecord(String collectionUrl, String recordId,	DeleteListener listener, boolean parallelMode) {
 		// TODO Auto-generated method stub
 		
 	}

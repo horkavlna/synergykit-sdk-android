@@ -9,6 +9,7 @@ import com.letsgood.synergykit.interfaces.IRecords;
 import com.letsgood.synergykit.listeners.DeleteListener;
 import com.letsgood.synergykit.listeners.RecordsResponseListener;
 import com.letsgood.synergykit.listeners.ResponseListener;
+import com.letsgood.synergykit.request.RecordRequestDelete;
 import com.letsgood.synergykit.request.RecordRequestGet;
 import com.letsgood.synergykit.request.RecordRequestPost;
 import com.letsgood.synergykit.request.RecordRequestPut;
@@ -35,7 +36,7 @@ public class Records implements IRecords {
 		//Uri builder
 		UriBuilder uriBuilder = new UriBuilder()
 								.setResource(Resource.RESOURCE_DATA)
-								.setDatabase(collectionUrl)
+								.setCollection(collectionUrl)
 								.setRecordId(recordId);
 		
 		//set config
@@ -45,6 +46,7 @@ public class Records implements IRecords {
 
 		//redirect
 		this.getRecord(config, listener);
+		
 		
 		
 	}
@@ -67,12 +69,14 @@ public class Records implements IRecords {
 		//Uri builder
 		UriBuilder uriBuilder = new UriBuilder()
 								.setResource(Resource.RESOURCE_DATA)
-								.setDatabase(collectionUrl);
+								.setCollection(collectionUrl)
+								.setTop(100);
 		
 		//set config
 		config.setUri(uriBuilder.build());
 		config.setParallelMode(parallelMode);
 		config.setType(type);
+		
 
 		//redirect
 		this.getRecords(config, listener);
@@ -88,7 +92,7 @@ public class Records implements IRecords {
 		//Uri builder
 		UriBuilder uriBuilder = new UriBuilder()
 								.setResource(Resource.RESOURCE_DATA)
-								.setDatabase(collectionUrl);
+								.setCollection(collectionUrl);
 		
 		//set config
 		config.setUri(uriBuilder.build());
@@ -115,7 +119,7 @@ public class Records implements IRecords {
 		//Uri builder
 		UriBuilder uriBuilder = new UriBuilder()
 								.setResource(Resource.RESOURCE_DATA)
-								.setDatabase(collectionUrl)
+								.setCollection(collectionUrl)
 								.setRecordId(recordId);
 		
 		//set config
@@ -136,9 +140,26 @@ public class Records implements IRecords {
 
 	/* Record deleter */
 	@Override
-	public void deleteRecord(String collectionUrl, String recordId,
-			DeleteListener listener, boolean parallelMode) {
-		// TODO Auto-generated method stub
+	public void deleteRecord(String collectionUrl, String recordId,	DeleteListener listener, boolean parallelMode) {
+		SynergyKITConfig config = new SynergyKITConfig();
+		RecordRequestDelete request = new RecordRequestDelete();
+		
+		//Uri builder
+		UriBuilder uriBuilder = new UriBuilder()
+								.setResource(Resource.RESOURCE_DATA)
+								.setCollection(collectionUrl)
+								.setRecordId(recordId);
+		
+		//set config
+		config.setUri(uriBuilder.build());
+		config.setParallelMode(parallelMode);		
+		
+		//set request
+		request.setConfig(config);
+		request.setListener(listener);
+		
+		//execute
+		SynergyKIT.synergylize(request, parallelMode);
 		
 	}
 
