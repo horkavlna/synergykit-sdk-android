@@ -16,6 +16,12 @@ public abstract class RequestMethod implements IRequestMethod {
 	protected static final String CHARSET = "UTF-8";
 	protected static final int CONNECT_TIMEOUT = 5000;
 	protected static final int READ_TIMEOUT = 10000;
+	protected static final String PROPERTY_USER_AGENT = "User-Agent";
+	protected static final String PROPERTY_USER_AGENT_VALUE = "Android";
+	protected static final String PROPERTY_AUTHORIZATION = "Authorization";
+	protected static final String PROPERTY_ACCEPT = "Accept";
+	protected static final String PROPERTY_ACCEPT_VALUE = "application/json";
+	
 	
 	/* Attributes */
 	protected SynergyKITUri uri = null;

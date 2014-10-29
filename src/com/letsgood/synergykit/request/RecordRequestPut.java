@@ -2,18 +2,16 @@ package com.letsgood.synergykit.request;
 
 import org.apache.http.HttpStatus;
 
-import com.letsgood.synergykit.builders.ResultObjectBuilder;
 import com.letsgood.synergykit.listeners.ResponseListener;
-import com.letsgood.synergykit.requestmethods.RequestMethod;
+import com.letsgood.synergykit.request.SynergyKITRequest.ResponseDataHolder;
 import com.letsgood.synergykit.resources.SynergyKITConfig;
 import com.letsgood.synergykit.resources.SynergyKITResponse;
 
-
-public class RecordRequestGet extends SynergyKITRequest{
-
+public class RecordRequestPut extends SynergyKITRequest{
 	/* Attributes */
-	private SynergyKITConfig config;
-	private ResponseListener listener;
+	private SynergyKITConfig config = null;
+	private ResponseListener listener = null;
+	private Object object = null;;
 	
 	/* Config setter */
 	public void setConfig(SynergyKITConfig config){
@@ -26,6 +24,15 @@ public class RecordRequestGet extends SynergyKITRequest{
 	}
 	
 
+	/* Object getter */
+	public Object getObject() {
+		return object;
+	}
+
+	/* Object setter */
+	public void setObject(Object object) {
+		this.object = object;
+	}
 	
 	@Override
 	protected Object doInBackground(Void... params) {
@@ -33,7 +40,7 @@ public class RecordRequestGet extends SynergyKITRequest{
 		SynergyKITResponse response = null;
 		
 		//do request
-		response = get(config.getUri());
+		response = SynergyKITRequest.put(config.getUri(), object);
 		
 		//manage response
 		dataHolder = manageObjectResponse(response, config.getType());
@@ -54,5 +61,4 @@ public class RecordRequestGet extends SynergyKITRequest{
 		}
 		
 	}
-
 }

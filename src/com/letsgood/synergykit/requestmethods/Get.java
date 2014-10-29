@@ -7,17 +7,24 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import com.letsgood.synergykit.SynergyKIT;
+import com.letsgood.synergykit.resources.SynergyKITUri;
 
 import android.util.Base64;
 import android.util.Log;
 
 public class Get extends RequestMethod {
-	/* Constants */
-	private static final String REQUEST_METHOD = "GET";
-	private static final String PROPERTY_USER_AGENT = "User-Agent";
-	private static final String PROPERTY_USER_AGENT_VALUE = "Android";
-	private static final String PROPERTY_AUTHORIZATION = "Authorization";
 
+	/* Constants */
+	protected static final String REQUEST_METHOD = "GET";
+
+	
+	/* Constructor */
+	public Get(SynergyKITUri uri) {
+		super();
+		
+		setUri(uri);
+	}
+	
 	/* Execute */
 	@Override
 	public BufferedReader execute() {
@@ -31,7 +38,7 @@ public class Get extends RequestMethod {
 			httpURLConnection.setReadTimeout(READ_TIMEOUT); //set read timeout
 			httpURLConnection.setRequestMethod(REQUEST_METHOD); //set method
 			httpURLConnection.addRequestProperty(PROPERTY_USER_AGENT, PROPERTY_USER_AGENT_VALUE); //set property
-			
+			httpURLConnection.setDoInput(true);
 			
 			httpURLConnection.addRequestProperty(PROPERTY_AUTHORIZATION, "Basic " 
 												 + Base64.encodeToString(

@@ -10,6 +10,8 @@ import com.letsgood.synergykit.listeners.DeleteListener;
 import com.letsgood.synergykit.listeners.RecordsResponseListener;
 import com.letsgood.synergykit.listeners.ResponseListener;
 import com.letsgood.synergykit.request.RecordRequestGet;
+import com.letsgood.synergykit.request.RecordRequestPost;
+import com.letsgood.synergykit.request.RecordRequestPut;
 import com.letsgood.synergykit.request.RecordsRequestGet;
 import com.letsgood.synergykit.resources.SynergyKITConfig;
 import com.letsgood.synergykit.resources.SynergyKITObject;
@@ -81,6 +83,7 @@ public class Records implements IRecords {
 	@Override
 	public void createRecord(String collectionUrl, SynergyKITObject object,	ResponseListener listener, boolean parallelMode) {
 		SynergyKITConfig config = new SynergyKITConfig();
+		RecordRequestPost request = new RecordRequestPost();
 		
 		//Uri builder
 		UriBuilder uriBuilder = new UriBuilder()
@@ -92,14 +95,41 @@ public class Records implements IRecords {
 		config.setParallelMode(parallelMode);
 		config.setType(object.getClass());
 		
+		
+		//set request
+		request.setConfig(config);
+		request.setListener(listener);
+		request.setObject(object);
+		
+		//execute
+		SynergyKIT.synergylize(request, parallelMode);
+		
 	}
 
 	/* Record updater */
 	@Override
-	public void updateRecord(String collectionUrl, String recordId,
-			SynergyKITObject object, ResponseListener listener,
-			boolean parallelMode) {
-		// TODO Auto-generated method stub
+	public void updateRecord(String collectionUrl, String recordId,	SynergyKITObject object, ResponseListener listener,	boolean parallelMode) {
+		SynergyKITConfig config = new SynergyKITConfig();
+		RecordRequestPut request = new RecordRequestPut();
+		
+		//Uri builder
+		UriBuilder uriBuilder = new UriBuilder()
+								.setResource(Resource.RESOURCE_DATA)
+								.setDatabase(collectionUrl);
+		
+		//set config
+		config.setUri(uriBuilder.build());
+		config.setParallelMode(parallelMode);
+		config.setType(object.getClass());
+		
+		
+		//set request
+		request.setConfig(config);
+		request.setListener(listener);
+		request.setObject(object);
+		
+		//execute
+		SynergyKIT.synergylize(request, parallelMode);
 		
 	}
 

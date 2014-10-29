@@ -34,25 +34,14 @@ public class RecordsRequestGet extends SynergyKITRequest{
 	
 	@Override
 	protected Object doInBackground(Void... params) {
-		ResponseDataHolder dataHolder = new ResponseDataHolder();
+		ResponseDataHolder dataHolder = null;
 		SynergyKITResponse response = null;
 		
 		//do request
 		response = get(config.getUri());
 		
-		//set status code
-		dataHolder.statusCode=response.getStatusCode();
-
-		
-		if(dataHolder.statusCode>= HttpStatus.SC_OK && dataHolder.statusCode < HttpStatus.SC_MULTIPLE_CHOICES){
-			dataHolder.objects = ResultObjectBuilder.buildObjects(dataHolder.statusCode, response.getBufferedReader(),config.getType());
-		}
-		else if(dataHolder.statusCode>=HttpStatus.SC_INTERNAL_SERVER_ERROR){
-			dataHolder.statusCode = -1;				
-		}
-		else{
-			dataHolder.errorObject = ResultObjectBuilder.buildError(dataHolder.statusCode, response.getBufferedReader());
-		}		
+		//manage response
+		dataHolder = manageObjectsResponse(response, config.getType());		
 		
 		return dataHolder;
 	}

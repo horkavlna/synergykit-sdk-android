@@ -154,18 +154,15 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords{
 
 	/* Create record */
 	@Override
-	public void createRecord(String collectionUrl, SynergyKITObject object,
-			ResponseListener listener, boolean parallelMode) {
-		// TODO Auto-generated method stub
+	public void createRecord(String collectionUrl, SynergyKITObject object,	ResponseListener listener, boolean parallelMode) {
+		records.createRecord(collectionUrl, object, listener, parallelMode);
 		
 	}
 
 	/* Update record */
 	@Override
-	public void updateRecord(String collectionUrl, String recordId,
-			SynergyKITObject object, ResponseListener listener,
-			boolean parallelMode) {
-		// TODO Auto-generated method stub
+	public void updateRecord(String collectionUrl, String recordId, SynergyKITObject object, ResponseListener listener,	boolean parallelMode) {
+		records.updateRecord(collectionUrl, recordId, object, listener, parallelMode);
 		
 	}
 

@@ -6,35 +6,31 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
 
-import org.apache.http.entity.StringEntity;
+import android.util.Base64;
 
 import com.letsgood.synergykit.SynergyKIT;
 import com.letsgood.synergykit.addons.GsonWrapper;
 import com.letsgood.synergykit.resources.SynergyKITUri;
 
-import android.util.Base64;
-import android.util.Log;
-
-public class Post extends RequestMethod {
+public class Put extends RequestMethod{
 
 	/* Constants */
-	protected static final String REQUEST_METHOD = "POST";
+	protected static final String REQUEST_METHOD = "PUT";
 	
 	/* Attributes */
 	private Object object = null;
 	private DataOutputStream dataOutputStream = null;
 	
 	/* Constructor */
-	public Post(SynergyKITUri uri, Object object) {
+	public Put(SynergyKITUri uri, Object object) {
 		super();
 		
 		setUri(uri);
 		this.object = object;
 		
 	}
-
+	
 	/* Execute */
 	@Override
 	public BufferedReader execute() {
@@ -94,5 +90,4 @@ public class Post extends RequestMethod {
 		}
 		
 	}
-
 }
