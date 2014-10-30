@@ -7,6 +7,7 @@ import org.apache.http.HttpStatus;
 import org.apache.http.ParseException;
 
 import com.letsgood.synergykit.addons.GsonWrapper;
+import com.letsgood.synergykit.builders.errors.Errors;
 import com.letsgood.synergykit.resources.SynergyKITError;
 import com.letsgood.synergykit.resources.SynergyKITObject;
 
@@ -56,6 +57,7 @@ public class ResultObjectBuilder {
 	
 	/* Build error object */
 	public static SynergyKITError buildError(int statusCode, BufferedReader data){	
+		SynergyKITError errorObject;
 		
 		// Param check
 		if(data == null)
@@ -63,7 +65,10 @@ public class ResultObjectBuilder {
 		
 		
 		try {
-			return (SynergyKITError) GsonWrapper.getGson().fromJson(data, SynergyKITError.class);
+			errorObject =  (SynergyKITError) GsonWrapper.getGson().fromJson(data, SynergyKITError.class);
+			errorObject.setStatusCode(statusCode);
+			return errorObject;
+			
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -72,11 +77,29 @@ public class ResultObjectBuilder {
 	}
 	
 	/* Build error object */
-	public static SynergyKITError buildError(int statusCode){	
-		
+	public static SynergyKITError buildError(int statusCode){			
 		SynergyKITError error = new SynergyKITError();
-		error.setStatusCode(statusCode);
-		error.setMessage("Unspecified error");	
+		
+		error.setStatusCode(statusCode); //set status code
+		
+		switch (statusCode) {
+		
+		case Errors.SC_NO_OBJECT:
+			error.setMessage(Errors.MSG_NO_OBJECT);
+			break;
+			
+		case Errors.SC_URI_NOT_VALID:
+			error.setMessage(Errors.MSG_URI_NOT_VALID);
+			break;
+			
+		case Errors.SC_SK_NOT_INITIALIZED:
+			error.setMessage(Errors.MSG_SK_NOT_INITIALIZED);
+			break;
+
+		default:
+			error.setMessage(Errors.MSG_UNSPECIFIED_ERROR);
+			break;
+		}
 		
 		
 		

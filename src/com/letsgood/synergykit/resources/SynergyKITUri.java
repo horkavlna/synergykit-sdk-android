@@ -1,12 +1,13 @@
 package com.letsgood.synergykit.resources;
 
 import com.letsgood.synergykit.SynergyKIT;
+import com.letsgood.synergykit.SynergyKITSdk;
+import com.letsgood.synergykit.builders.errors.Errors;
 
+import android.util.Log;
 import android.webkit.URLUtil;
 
 public class SynergyKITUri {
-	/* Constants */
-	private final static String EXCEPTION_MESSAGE = "Not valid URI";
 	
 	/* Attributes */
 	private String uri;
@@ -17,20 +18,17 @@ public class SynergyKITUri {
 	}	
 	
 	/* Uri getter */
-	public String getUri(){
+	public String toString(){
 		String uri = null;
-		
-		
-		
-		//Init check
-		if(!SynergyKIT.isInit()){
-			return uri;
-		}
 		
 		uri = String.format(this.uri, SynergyKIT.getTenant());		
 		
-		if( URLUtil.isValidUrl(uri)==false || uri.contains(" ")){
-			throw new IllegalArgumentException(EXCEPTION_MESSAGE);
+		if( URLUtil.isValidUrl(uri)==false || uri.contains(" ")){			
+			
+			if(SynergyKIT.isDebugModeEnabled())
+				Log.e(SynergyKITSdk.TAG,Errors.MSG_URI_NOT_VALID + " " + uri.toString());
+			
+			uri=null;
 		}
 	 
 	

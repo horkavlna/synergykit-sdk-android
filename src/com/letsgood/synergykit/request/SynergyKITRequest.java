@@ -5,11 +5,11 @@ import java.lang.reflect.Type;
 import org.apache.http.HttpStatus;
 
 import com.letsgood.synergykit.builders.ResultObjectBuilder;
+import com.letsgood.synergykit.builders.errors.Errors;
 import com.letsgood.synergykit.requestmethods.Delete;
 import com.letsgood.synergykit.requestmethods.Get;
 import com.letsgood.synergykit.requestmethods.Post;
 import com.letsgood.synergykit.requestmethods.Put;
-import com.letsgood.synergykit.requestmethods.RequestMethod;
 import com.letsgood.synergykit.resources.SynergyKITError;
 import com.letsgood.synergykit.resources.SynergyKITObject;
 import com.letsgood.synergykit.resources.SynergyKITResponse;
@@ -60,6 +60,17 @@ public abstract class SynergyKITRequest extends AsyncTask<Void, Void, Object> {
 		return response;
 	}
 	
+	/* Request method PUT */
+	protected static SynergyKITResponse delete(SynergyKITUri uri){
+		SynergyKITResponse response = new SynergyKITResponse();
+		Delete delete = new Delete(uri);
+		
+		response.setBufferedReader(delete.execute());
+		response.setStatusCode(delete.getStatusCode());
+		
+		return response;
+	}
+	
 	/* Request method DELETE */
 	protected static SynergyKITResponse put(SynergyKITUri uri){
 		SynergyKITResponse response = new SynergyKITResponse();
@@ -77,7 +88,7 @@ public abstract class SynergyKITRequest extends AsyncTask<Void, Void, Object> {
 		
 		if(response==null 
 			|| response.getStatusCode()>=HttpStatus.SC_INTERNAL_SERVER_ERROR 
-			|| response.getStatusCode() == RequestMethod.INTERNAL_STATUS_CODE){
+			|| response.getStatusCode() <=Errors.SC_UNSPECIFIED_ERROR){
 			
 			dataHolder.errorObject = ResultObjectBuilder.buildError(response.getStatusCode());		
 			
@@ -91,8 +102,7 @@ public abstract class SynergyKITRequest extends AsyncTask<Void, Void, Object> {
 			
 		}else{
 			
-			dataHolder.statusCode = response.getStatusCode();
-			
+			dataHolder.statusCode = response.getStatusCode();			
 			dataHolder.errorObject = ResultObjectBuilder.buildError(dataHolder.statusCode, response.getBufferedReader());
 			
 		}		
@@ -106,7 +116,7 @@ public abstract class SynergyKITRequest extends AsyncTask<Void, Void, Object> {
 		
 		if(response==null 
 			|| response.getStatusCode()>=HttpStatus.SC_INTERNAL_SERVER_ERROR 
-			|| response.getStatusCode() == RequestMethod.INTERNAL_STATUS_CODE){
+			|| response.getStatusCode() <= Errors.SC_UNSPECIFIED_ERROR){
 			
 			dataHolder.errorObject = ResultObjectBuilder.buildError(response.getStatusCode());		
 			
@@ -136,7 +146,7 @@ public abstract class SynergyKITRequest extends AsyncTask<Void, Void, Object> {
 		
 		/* Constructor */
 		public ResponseDataHolder() {
-			statusCode = -1;
+			statusCode = Errors.SC_UNSPECIFIED_ERROR;
 			errorObject = null;
 			object = null;
 			objects = null;

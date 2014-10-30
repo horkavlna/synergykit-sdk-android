@@ -1,17 +1,16 @@
 package com.letsgood.synergykit.requestmethods;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-
-import com.letsgood.synergykit.SynergyKIT;
-import com.letsgood.synergykit.SynergyKITSdk;
-import com.letsgood.synergykit.resources.SynergyKITUri;
 
 import android.util.Base64;
 import android.util.Log;
+
+import com.letsgood.synergykit.SynergyKIT;
+import com.letsgood.synergykit.SynergyKITSdk;
+import com.letsgood.synergykit.builders.errors.Errors;
+import com.letsgood.synergykit.resources.SynergyKITUri;
 
 public class Delete extends RequestMethod {
 
@@ -19,7 +18,7 @@ public class Delete extends RequestMethod {
 	protected static final String REQUEST_METHOD = "DELETE";
 
 	
-	/* Constructor */
+	/* Constructor */	
 	public Delete(SynergyKITUri uri) {
 		super();
 		
@@ -29,24 +28,35 @@ public class Delete extends RequestMethod {
 	/* Execute */
 	@Override
 	public BufferedReader execute() {
-	
+		String uri = null;
+		
 		//init check
 		if(!SynergyKIT.isInit()){
-			Log.e(SynergyKITSdk.TAG,"SynergyKIT is not initialized");
-			statusCode = -1;
+			//Log
+			if(SynergyKIT.isDebugModeEnabled())
+				Log.e(SynergyKITSdk.TAG,Errors.MSG_SK_NOT_INITIALIZED);
+			
+			statusCode = Errors.SC_SK_NOT_INITIALIZED;
+			return null;
+		}
+		
+		//URI check
+		uri = getUri().toString();
+		
+		if(uri==null){
+			statusCode = Errors.SC_URI_NOT_VALID;
 			return null;
 		}
 		
 			
 		try {
-			url = new URL(getUri().getUri()); // init url
+			url = new URL(uri); // init url
 			
 			httpURLConnection = (HttpURLConnection) url.openConnection(); //open connection
 			httpURLConnection.setConnectTimeout(CONNECT_TIMEOUT); //set connect timeout
 			httpURLConnection.setReadTimeout(READ_TIMEOUT); //set read timeout
 			httpURLConnection.setRequestMethod(REQUEST_METHOD); //set method
 			httpURLConnection.addRequestProperty(PROPERTY_USER_AGENT, PROPERTY_USER_AGENT_VALUE); //set property
-			httpURLConnection.setDoInput(true);
 			
 			httpURLConnection.addRequestProperty(PROPERTY_AUTHORIZATION, "Basic " 
 												 + Base64.encodeToString(
@@ -58,14 +68,13 @@ public class Delete extends RequestMethod {
 
 			//read stream
 			if(statusCode>=HttpURLConnection.HTTP_OK && statusCode<HttpURLConnection.HTTP_MULT_CHOICE){
-				return readStream(httpURLConnection.getInputStream());
+				return null;
 			}else{
 				return readStream(httpURLConnection.getErrorStream());
 			}
 			
 		} catch (Exception e) {
-			// TODO Exception
-			statusCode = RequestMethod.INTERNAL_STATUS_CODE;
+			statusCode = Errors.SC_UNSPECIFIED_ERROR;
 			e.printStackTrace();
 			return null;
 		}

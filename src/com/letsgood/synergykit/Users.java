@@ -7,42 +7,41 @@ import android.util.Log;
 import com.letsgood.synergykit.builders.UriBuilder;
 import com.letsgood.synergykit.builders.errors.Errors;
 import com.letsgood.synergykit.builders.uri.Resource;
-import com.letsgood.synergykit.interfaces.IRecords;
+import com.letsgood.synergykit.interfaces.IUsers;
 import com.letsgood.synergykit.listeners.DeleteResponseListener;
-import com.letsgood.synergykit.listeners.RecordsResponseListener;
-import com.letsgood.synergykit.listeners.ResponseListener;
+import com.letsgood.synergykit.listeners.UserResponseListener;
+import com.letsgood.synergykit.listeners.UsersResponseListener;
 import com.letsgood.synergykit.request.RequestDelete;
-import com.letsgood.synergykit.request.RecordRequestGet;
-import com.letsgood.synergykit.request.RecordRequestPost;
-import com.letsgood.synergykit.request.RecordRequestPut;
-import com.letsgood.synergykit.request.RecordsRequestGet;
+import com.letsgood.synergykit.request.UserRequestGet;
+import com.letsgood.synergykit.request.UserRequestPost;
+import com.letsgood.synergykit.request.UserRequestPut;
+import com.letsgood.synergykit.request.UsersRequestGet;
 import com.letsgood.synergykit.resources.SynergyKITConfig;
 import com.letsgood.synergykit.resources.SynergyKITError;
-import com.letsgood.synergykit.resources.SynergyKITObject;
-	
-public class Records implements IRecords {
+import com.letsgood.synergykit.resources.SynergyKITUser;
+
+public class Users implements IUsers{
 	/* Constants */
 	private static final int TOP = 100;
-
-	/* Get record*/
+	
+	/* Get user */
 	@Override
-	public void getRecord(SynergyKITConfig config, ResponseListener listener) {
-		RecordRequestGet request = new RecordRequestGet();		
+	public void getUser(SynergyKITConfig config, UserResponseListener listener) {
+		UserRequestGet request = new UserRequestGet();		
 		request.setConfig(config);
 		request.setListener(listener);
-		SynergyKIT.synergylize(request, config.isParallelMode());
+		SynergyKIT.synergylize(request, config.isParallelMode());	
 	}
-	
-	/* Get record */
+
+	/* Get user */
 	@Override
-	public void getRecord(String collectionUrl, String recordId, Type type, ResponseListener listener, boolean parallelMode) {
+	public void getUser(String userId, Type type, UserResponseListener listener, boolean parallelMode) {
 		SynergyKITConfig config = SynergyKIT.getConfig();
 
 		//Uri builder
 		UriBuilder uriBuilder = new UriBuilder()
-								.setResource(Resource.RESOURCE_DATA)
-								.setCollection(collectionUrl)
-								.setRecordId(recordId);
+								.setResource(Resource.RESOURCE_USERS)
+								.setRecordId(userId);
 		
 		//set config
 		config.setUri(uriBuilder.build());
@@ -50,52 +49,90 @@ public class Records implements IRecords {
 		config.setType(type);
 
 		//redirect
-		this.getRecord(config, listener);
-		
-		
-		
+		this.getUser(config, listener);		
 	}
 
-	/* Records getter */
+	/* Get users */
 	@Override
-	public void getRecords(SynergyKITConfig config,	RecordsResponseListener listener) {
-		RecordsRequestGet request = new RecordsRequestGet();		
+	public void getUsers(SynergyKITConfig config, UsersResponseListener listener) {
+		UsersRequestGet request = new UsersRequestGet();		
 		request.setConfig(config);
 		request.setListener(listener);
-		SynergyKIT.synergylize(request, config.isParallelMode());
+		SynergyKIT.synergylize(request, config.isParallelMode());	
 		
 	}
 
-	/* Records getter */
+	/* Get users */
 	@Override
-	public void getRecords(String collectionUrl, Type type,	RecordsResponseListener listener, boolean parallelMode) {
-		SynergyKITConfig config = new SynergyKITConfig();
+	public void getUsers(Type type, UsersResponseListener listener, boolean parallelMode) {
+		SynergyKITConfig config = SynergyKIT.getConfig();
 
 		//Uri builder
 		UriBuilder uriBuilder = new UriBuilder()
-								.setResource(Resource.RESOURCE_DATA)
-								.setCollection(collectionUrl)
+								.setResource(Resource.RESOURCE_USERS)
 								.setTop(TOP);
 		
 		//set config
 		config.setUri(uriBuilder.build());
 		config.setParallelMode(parallelMode);
 		config.setType(type);
-		
+
 
 		//redirect
-		this.getRecords(config, listener);
+		this.getUsers(config, listener);		
 		
 	}
 
-	/* Record creater */
+	/* Create user */
 	@Override
-	public void createRecord(String collectionUrl, SynergyKITObject object,	ResponseListener listener, boolean parallelMode) {
+	public void createUser(SynergyKITUser user, UserResponseListener listener,	boolean parallelMode) {
 		SynergyKITConfig config = new SynergyKITConfig();
-		RecordRequestPost request = new RecordRequestPost();
+		UserRequestPost request = new UserRequestPost();
+		
+		//User check
+		if(user == null){
+			//Log
+			if(SynergyKIT.isDebugModeEnabled())
+				Log.e(SynergyKITSdk.TAG,Errors.MSG_NO_OBJECT);		
+			
+			//error callback
+			if(listener!=null)
+				listener.errorCallback(Errors.SC_NO_OBJECT, new SynergyKITError(Errors.SC_NO_OBJECT, Errors.MSG_NO_OBJECT));
+			else if(SynergyKIT.isDebugModeEnabled())
+				Log.e(SynergyKITSdk.TAG,Errors.MSG_NO_CALLBACK_LISTENER);	
+			
+			return;
+		}
+		
+		//Uri builder
+		UriBuilder uriBuilder = new UriBuilder()
+								.setResource(Resource.RESOURCE_USERS);
+		
+		//set config
+		config.setUri(uriBuilder.build());
+		config.setParallelMode(parallelMode);
+		config.setType(user.getClass());
+		
+		
+		//set request
+		request.setConfig(config);
+		request.setListener(listener);
+		request.setObject(user);
+		
+		//execute
+		SynergyKIT.synergylize(request, parallelMode);
+		
+		
+	}
 
-		//Object check
-		if(object == null){
+	/* Update user */
+	@Override
+	public void updateUser(SynergyKITUser user, UserResponseListener listener, boolean parallelMode) {
+		SynergyKITConfig config = new SynergyKITConfig();
+		UserRequestPut request = new UserRequestPut();
+		
+		//User check
+		if(user == null){
 			//Log
 			if(SynergyKIT.isDebugModeEnabled())
 				Log.e(SynergyKITSdk.TAG,Errors.MSG_NO_OBJECT);		
@@ -109,80 +146,34 @@ public class Records implements IRecords {
 			return;
 		}
 		
-		
-		
 		//Uri builder
 		UriBuilder uriBuilder = new UriBuilder()
-								.setResource(Resource.RESOURCE_DATA)
-								.setCollection(collectionUrl);
+								.setResource(Resource.RESOURCE_USERS)
+								.setRecordId(user.get_id());
 		
 		//set config
 		config.setUri(uriBuilder.build());
 		config.setParallelMode(parallelMode);
-		config.setType(object.getClass());
+		config.setType(user.getClass());
 		
 		
 		//set request
 		request.setConfig(config);
 		request.setListener(listener);
-		request.setObject(object);
+		request.setObject(user);
 		
 		//execute
-		SynergyKIT.synergylize(request, parallelMode);
-		
+		SynergyKIT.synergylize(request, parallelMode);		
 	}
 
-	/* Record updater */
+	/* Delete user */
 	@Override
-	public void updateRecord(String collectionUrl, SynergyKITObject object, ResponseListener listener,	boolean parallelMode) {
-		SynergyKITConfig config = new SynergyKITConfig();
-		RecordRequestPut request = new RecordRequestPut();
-		
-		//Object check
-		if(object == null){
-			//Log
-			if(SynergyKIT.isDebugModeEnabled())
-				Log.e(SynergyKITSdk.TAG,Errors.MSG_NO_OBJECT);		
-			
-			//error callback
-			if(listener!=null)
-				listener.errorCallback(Errors.SC_NO_OBJECT, new SynergyKITError(Errors.SC_NO_OBJECT, Errors.MSG_NO_OBJECT));
-			else if(SynergyKIT.isDebugModeEnabled())
-				Log.e(SynergyKITSdk.TAG,Errors.MSG_NO_CALLBACK_LISTENER);
-			
-			return;
-		}
-		
-		//Uri builder
-		UriBuilder uriBuilder = new UriBuilder()
-								.setResource(Resource.RESOURCE_DATA)
-								.setCollection(collectionUrl)
-								.setRecordId(object.get_id());
-		
-		//set config
-		config.setUri(uriBuilder.build());
-		config.setParallelMode(parallelMode);
-		config.setType(object.getClass());
-		
-		
-		//set request
-		request.setConfig(config);
-		request.setListener(listener);
-		request.setObject(object);
-		
-		//execute
-		SynergyKIT.synergylize(request, parallelMode);
-		
-	}
-
-	/* Record deleter */
-	@Override
-	public void deleteRecord(String collectionUrl, String recordId,	DeleteResponseListener listener, boolean parallelMode) {
+	public void deleteUser(String userId, DeleteResponseListener listener,	boolean parallelMode) {
 		SynergyKITConfig config = new SynergyKITConfig();
 		RequestDelete request = new RequestDelete();
 		
 		//Object check
-		if(collectionUrl==null || recordId == null){
+		if(userId == null){
 			//Log
 			if(SynergyKIT.isDebugModeEnabled())
 				Log.e(SynergyKITSdk.TAG,Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);		
@@ -198,9 +189,8 @@ public class Records implements IRecords {
 		
 		//Uri builder
 		UriBuilder uriBuilder = new UriBuilder()
-								.setResource(Resource.RESOURCE_DATA)
-								.setCollection(collectionUrl)
-								.setRecordId(recordId);
+								.setResource(Resource.RESOURCE_USERS)
+								.setRecordId(userId);
 		
 		//set config
 		config.setUri(uriBuilder.build());
@@ -211,8 +201,7 @@ public class Records implements IRecords {
 		request.setListener(listener);
 		
 		//execute
-		SynergyKIT.synergylize(request, parallelMode);
-		
+		SynergyKIT.synergylize(request, parallelMode);		
 	}
-
+	
 }

@@ -1,17 +1,16 @@
 package com.letsgood.synergykit.requestmethods;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-
-import com.letsgood.synergykit.SynergyKIT;
-import com.letsgood.synergykit.SynergyKITSdk;
-import com.letsgood.synergykit.resources.SynergyKITUri;
 
 import android.util.Base64;
 import android.util.Log;
+
+import com.letsgood.synergykit.SynergyKIT;
+import com.letsgood.synergykit.SynergyKITSdk;
+import com.letsgood.synergykit.builders.errors.Errors;
+import com.letsgood.synergykit.resources.SynergyKITUri;
 
 public class Get extends RequestMethod {
 
@@ -22,24 +21,35 @@ public class Get extends RequestMethod {
 	/* Constructor */
 	public Get(SynergyKITUri uri) {
 		super();
-		
+			
 		setUri(uri);
 	}
 	
 	/* Execute */
 	@Override
 	public BufferedReader execute() {
-	
+		String uri = null;
+		
 		//init check
 		if(!SynergyKIT.isInit()){
-			Log.e(SynergyKITSdk.TAG,"SynergyKIT is not initialized");
-			statusCode = -1;
+			//Log
+			if(SynergyKIT.isDebugModeEnabled())
+				Log.e(SynergyKITSdk.TAG,Errors.MSG_SK_NOT_INITIALIZED);
+			
+			statusCode = Errors.SC_SK_NOT_INITIALIZED;
 			return null;
 		}
 		
+		//URI check
+		uri = getUri().toString();
+		
+		if(uri==null){
+			statusCode = Errors.SC_URI_NOT_VALID;
+			return null;
+		}
 		
 		try {
-			url = new URL(getUri().getUri()); // init url
+			url = new URL(uri); // init url
 			
 			httpURLConnection = (HttpURLConnection) url.openConnection(); //open connection
 			httpURLConnection.setConnectTimeout(CONNECT_TIMEOUT); //set connect timeout
@@ -64,8 +74,6 @@ public class Get extends RequestMethod {
 			}
 			
 		} catch (Exception e) {
-			// TODO Exception
-			statusCode = RequestMethod.INTERNAL_STATUS_CODE;
 			e.printStackTrace();
 			return null;
 		}

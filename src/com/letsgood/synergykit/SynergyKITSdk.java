@@ -3,27 +3,35 @@ package com.letsgood.synergykit;
 import java.lang.reflect.Type;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
+import com.letsgood.synergykit.builders.errors.Errors;
 import com.letsgood.synergykit.interfaces.IRecords;
 import com.letsgood.synergykit.interfaces.ISynergyKITSdk;
-import com.letsgood.synergykit.listeners.DeleteListener;
+import com.letsgood.synergykit.interfaces.IUsers;
+import com.letsgood.synergykit.listeners.DeleteResponseListener;
 import com.letsgood.synergykit.listeners.RecordsResponseListener;
 import com.letsgood.synergykit.listeners.ResponseListener;
+import com.letsgood.synergykit.listeners.UserResponseListener;
+import com.letsgood.synergykit.listeners.UsersResponseListener;
 import com.letsgood.synergykit.request.SynergyKITRequest;
 import com.letsgood.synergykit.resources.SynergyKITAuthConfig;
 import com.letsgood.synergykit.resources.SynergyKITConfig;
 import com.letsgood.synergykit.resources.SynergyKITObject;
+import com.letsgood.synergykit.resources.SynergyKITUser;
 
-public class SynergyKITSdk implements ISynergyKITSdk, IRecords{
+public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers{
 
 	/* Constants */
 	public static final String TAG = "SynergyKIT";
 	
 	/* Attributes */
 	private static SynergyKITSdk instance = null;
+	private boolean debugModeEnabled = false;
 	private SynergyKITAuthConfig authConfig = new SynergyKITAuthConfig();
 	private SynergyKITConfig config = new SynergyKITConfig();
-	private Records records = new Records();
+	private IRecords records = new Records();
+	private IUsers users = new Users();
 	
 	//---------------------------------------------------------------------------------------
 	/* Instance static getter */
@@ -53,8 +61,6 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords{
 	/* Tenant setter */
 	@Override
 	public void setTenant(String tenant) {
-		// TODO Exception
-		
 		authConfig.setTenant(tenant);
 	}
 
@@ -66,9 +72,7 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords{
 
 	/* Application key setter */
 	@Override
-	public void setApplicationKey(String applicationKey) {
-		// TODO Exception
-		
+	public void setApplicationKey(String applicationKey) {		
 		authConfig.setApplicationKey(applicationKey);
 		
 	}
@@ -96,15 +100,21 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords{
 	
 	/*Config setter */ 
 	@Override
-	public void setConfig(SynergyKITConfig config) {
-		// TODO Exception
-		
+	public void setConfig(SynergyKITConfig config) {		
 		this.config = config;
 	}
 
 	/* Config getter */
 	@Override
-	public SynergyKITConfig getConfig() {
+	public SynergyKITConfig getConfig() {		
+		
+		if(config==null){
+			//Log
+			if(SynergyKIT.isDebugModeEnabled()){
+				Log.e(SynergyKITSdk.TAG,Errors.MSG_NO_CONFIG);
+			}
+		}
+		
 		return config;
 	}
 	
@@ -113,7 +123,11 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords{
 	public void synergylize(SynergyKITRequest request, boolean parallelMode) {
 		
 		if(request==null){
-			//TODO Exception
+
+			//Log
+			if(SynergyKIT.isDebugModeEnabled())
+				Log.e(SynergyKITSdk.TAG,Errors.MSG_NO_REQUEST);
+			
 			return;
 		}
 		
@@ -126,54 +140,102 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords{
 		
 	}
 	
+	/* Debug mode enabled getter */
+	@Override
+	public boolean isDebugModeEnabled(){
+		return debugModeEnabled;
+	}
+	
+	/* Debug mode enabled setter */ 
+	@Override
+	public void setDebugModeEnabled(boolean debugModeEnabled){
+		this.debugModeEnabled = debugModeEnabled;
+	}
+	
 	//---------------------------------------------------------------------------------------
 	/* Get record */
 	@Override
 	public void getRecord(SynergyKITConfig config, ResponseListener listener) {
-		records.getRecord(config, listener);
-		
+		records.getRecord(config, listener);		
 	}
 
 	/* Get record */
 	@Override
 	public void getRecord(String collectionUrl, String recordId, Type type,	ResponseListener listener, boolean parallelMode) {
-		records.getRecord(collectionUrl, recordId, type, listener, parallelMode);
-		
+		records.getRecord(collectionUrl, recordId, type, listener, parallelMode);		
 	}
 	
 	/* Get records */
 	@Override
 	public void getRecords(SynergyKITConfig config,	RecordsResponseListener listener) {
-		records.getRecords(config, listener);
-		
+		records.getRecords(config, listener);		
 	}
 
 	/* Get records */
 	@Override
 	public void getRecords(String collectionUrl, Type type,	RecordsResponseListener listener, boolean parallelMode) {
 		records.getRecords(collectionUrl, type, listener, parallelMode);
-		
 	}
 
 	/* Create record */
 	@Override
 	public void createRecord(String collectionUrl, SynergyKITObject object,	ResponseListener listener, boolean parallelMode) {
-		records.createRecord(collectionUrl, object, listener, parallelMode);
-		
+		records.createRecord(collectionUrl, object, listener, parallelMode);	
 	}
 
 	/* Update record */
 	@Override
-	public void updateRecord(String collectionUrl, String recordId, SynergyKITObject object, ResponseListener listener,	boolean parallelMode) {
-		records.updateRecord(collectionUrl, recordId, object, listener, parallelMode);
-		
+	public void updateRecord(String collectionUrl,SynergyKITObject object, ResponseListener listener,	boolean parallelMode) {
+		records.updateRecord(collectionUrl,  object, listener, parallelMode);
 	}
 
 	/* Delete record */
 	@Override
-	public void deleteRecord(String collectionUrl, String recordId,	DeleteListener listener, boolean parallelMode) {
-		// TODO Auto-generated method stub
+	public void deleteRecord(String collectionUrl, String recordId,	DeleteResponseListener listener, boolean parallelMode) {
+		records.deleteRecord(collectionUrl, recordId, listener, parallelMode);
+	}
 		
+	//-------------------------------------------------------------------------------------------------------------------
+	/* Get user */
+	@Override
+	public void getUser(SynergyKITConfig config, UserResponseListener listener) {
+		users.getUser(config, listener);		
+	}
+	
+	/* Get user */
+	@Override
+	public void getUser(String userId, Type type, UserResponseListener listener, boolean parallelMode) {
+		users.getUser(userId, type, listener, parallelMode);		
+	}
+
+	/* Get users */
+	@Override
+	public void getUsers(SynergyKITConfig config, UsersResponseListener listener) {
+		users.getUsers(config, listener);		
+	}
+
+	/* Get users */
+	@Override
+	public void getUsers(Type type, UsersResponseListener listener,	boolean parallelMode) {
+		users.getUsers(type, listener, parallelMode);		
+	}
+
+	/* Create user */
+	@Override
+	public void createUser(SynergyKITUser user, UserResponseListener listener, boolean parallelMode) {
+		users.createUser(user, listener, parallelMode);		
+	}
+	
+	/* Update user */
+	@Override
+	public void updateUser(SynergyKITUser user, UserResponseListener listener, boolean parallelMode) {
+		users.updateUser(user, listener, parallelMode);
+	}
+
+	/* Delete user */
+	@Override
+	public void deleteUser(String userId, DeleteResponseListener listener,	boolean parallelMode) {
+		users.deleteUser(userId, listener, parallelMode);		
 	}
 
 }

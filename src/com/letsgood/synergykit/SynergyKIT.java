@@ -2,12 +2,15 @@ package com.letsgood.synergykit;
 
 import java.lang.reflect.Type;
 
-import com.letsgood.synergykit.listeners.DeleteListener;
+import com.letsgood.synergykit.listeners.DeleteResponseListener;
 import com.letsgood.synergykit.listeners.RecordsResponseListener;
 import com.letsgood.synergykit.listeners.ResponseListener;
+import com.letsgood.synergykit.listeners.UserResponseListener;
+import com.letsgood.synergykit.listeners.UsersResponseListener;
 import com.letsgood.synergykit.request.SynergyKITRequest;
 import com.letsgood.synergykit.resources.SynergyKITConfig;
 import com.letsgood.synergykit.resources.SynergyKITObject;
+import com.letsgood.synergykit.resources.SynergyKITUser;
 
 public class SynergyKIT {
 
@@ -62,6 +65,16 @@ public class SynergyKIT {
 	public static SynergyKITConfig getConfig() {
 		return SynergyKITSdk.getInstance().getConfig();
 	}
+	
+	/* Debug mode enabled getter */
+	public static boolean isDebugModeEnabled(){
+		return SynergyKITSdk.getInstance().isDebugModeEnabled();
+	}
+	
+	/* Debug mode enabled setter */ 
+	public static void setDebugModeEnabled(boolean debugModeEnabled){
+		SynergyKITSdk.getInstance().setDebugModeEnabled(debugModeEnabled);
+	}
 	//------------------------------------------------------------------------------
 	/* Get record */
 	public static void getRecord(SynergyKITConfig config, ResponseListener listener) {
@@ -93,13 +106,49 @@ public class SynergyKIT {
 	}
 
 	/* Update record */
-	public static void updateRecord(String collectionUrl, String recordId,	SynergyKITObject object, ResponseListener listener,	boolean parallelMode) {
-		SynergyKITSdk.getInstance().updateRecord(collectionUrl, recordId, object, listener, parallelMode);
+	public static void updateRecord(String collectionUrl,SynergyKITObject object, ResponseListener listener,	boolean parallelMode) {
+		SynergyKITSdk.getInstance().updateRecord(collectionUrl, object, listener, parallelMode);
 		
 	}
 
 	/* Delete record */
-	public static void deleteRecord(String collectionUrl, String recordId,	DeleteListener listener, boolean parallelMode) {
+	public static void deleteRecord(String collectionUrl, String recordId,	DeleteResponseListener listener, boolean parallelMode) {
 		SynergyKITSdk.getInstance().deleteRecord(collectionUrl, recordId, listener, parallelMode);		
+	}
+	
+	//-------------------------------------------------------------------------------------------------------------------
+	/* Get user */
+	public static void getUser(SynergyKITConfig config, UserResponseListener listener) {
+		SynergyKITSdk.getInstance().getUser(config, listener);		
+	}
+	
+	/* Get user */
+	public static void getUser(String userId, Type type, UserResponseListener listener, boolean parallelMode) {
+		SynergyKITSdk.getInstance().getUser(userId, type, listener, parallelMode);		
+	}
+
+	/* Get users */
+	public static void getUsers(SynergyKITConfig config, UsersResponseListener listener) {
+		SynergyKITSdk.getInstance().getUsers(config, listener);		
+	}
+
+	/* Get users */
+	public static void getUsers(Type type, UsersResponseListener listener,	boolean parallelMode) {
+		SynergyKITSdk.getInstance().getUsers(type, listener, parallelMode);		
+	}
+
+	/* Create user */
+	public static void createUser(SynergyKITUser user, UserResponseListener listener, boolean parallelMode) {
+		SynergyKITSdk.getInstance().createUser(user, listener, parallelMode);		
+	}
+	
+	/* Update user */
+	public static void updateUser(SynergyKITUser user, UserResponseListener listener, boolean parallelMode) {
+		SynergyKITSdk.getInstance().updateUser(user, listener, parallelMode);	
+	}
+
+	/* Delete user */
+	public static void deleteUser(String userId, DeleteResponseListener listener,	boolean parallelMode) {
+		SynergyKITSdk.getInstance().deleteUser(userId, listener, parallelMode);		
 	}
 }

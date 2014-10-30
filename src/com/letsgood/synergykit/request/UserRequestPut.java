@@ -7,16 +7,16 @@ import android.util.Log;
 import com.letsgood.synergykit.SynergyKIT;
 import com.letsgood.synergykit.SynergyKITSdk;
 import com.letsgood.synergykit.builders.errors.Errors;
-import com.letsgood.synergykit.listeners.RecordsResponseListener;
+import com.letsgood.synergykit.listeners.UserResponseListener;
 import com.letsgood.synergykit.resources.SynergyKITConfig;
 import com.letsgood.synergykit.resources.SynergyKITResponse;
+import com.letsgood.synergykit.resources.SynergyKITUser;
 
-
-public class RecordsRequestGet extends SynergyKITRequest{
-
+public class UserRequestPut extends SynergyKITRequest{
 	/* Attributes */
-	private SynergyKITConfig config;
-	private RecordsResponseListener listener;
+	private SynergyKITConfig config = null;
+	private UserResponseListener listener = null;
+	private Object object = null;;
 	
 	/* Config setter */
 	public void setConfig(SynergyKITConfig config){
@@ -24,11 +24,20 @@ public class RecordsRequestGet extends SynergyKITRequest{
 	}
 	
 	/* Listener setter */
-	public void setListener(RecordsResponseListener listener){
+	public void setListener(UserResponseListener listener){
 		this.listener =listener;
 	}
 	
 
+	/* Object getter */
+	public Object getObject() {
+		return object;
+	}
+
+	/* Object setter */
+	public void setObject(Object object) {
+		this.object = object;
+	}
 	
 	@Override
 	protected Object doInBackground(Void... params) {
@@ -36,10 +45,12 @@ public class RecordsRequestGet extends SynergyKITRequest{
 		SynergyKITResponse response = null;
 		
 		//do request
-		response = get(config.getUri());
+		response = SynergyKITRequest.put(config.getUri(), object);
 		
 		//manage response
-		dataHolder = manageResponseToObjects(response, config.getType());		
+		dataHolder = manageResponseToObject(response, config.getType());
+		
+		
 		
 		return dataHolder;
 	}
@@ -59,10 +70,10 @@ public class RecordsRequestGet extends SynergyKITRequest{
 		}	
 		
 		if(dataHolder.statusCode>= HttpStatus.SC_OK && dataHolder.statusCode < HttpStatus.SC_MULTIPLE_CHOICES){
-			listener.doneCallback(dataHolder.statusCode, dataHolder.objects);
+			listener.doneCallback(dataHolder.statusCode,(SynergyKITUser) dataHolder.object);
 		}else{
 			listener.errorCallback(dataHolder.statusCode, dataHolder.errorObject);
 		}
+		
 	}
-
-}
+}	

@@ -1,5 +1,11 @@
 package com.letsgood.synergykit.builders.uri;
 
+import android.util.Log;
+
+import com.letsgood.synergykit.SynergyKIT;
+import com.letsgood.synergykit.SynergyKITSdk;
+import com.letsgood.synergykit.builders.errors.Errors;
+
 
 public class Filter {
 
@@ -15,40 +21,46 @@ public class Filter {
 	public static final String OPERATOR_AND  = "and";
 	public static final String OPERATOR_OR  = "or";
 	public static final String OPERATOR_NOT  = "and+not";
-	private static final String EXCEPTION_MESSAGE = "Attribute, operator and parameter must not be null and must not be empty";
 	
 	/* Attributes */
-	private String mFilter = null; 
+	private String filter = null; 
 	
 	/* Filter setter */
 	public void setFilter(String attribute, String operator, String parametr){
 		
-		if(attribute == null || attribute.length()==0 || operator==null || operator.length()==0|| parametr==null || parametr.length() ==0)
-			throw new IllegalArgumentException(EXCEPTION_MESSAGE);
-		
+		if(attribute == null || attribute.length()==0 || operator==null || operator.length()==0|| parametr==null || parametr.length() ==0){
+			if(SynergyKIT.isDebugModeEnabled())
+				Log.e(SynergyKITSdk.TAG,Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
+		}
 	
 		
-		mFilter=new String(attribute + "+" + operator + "+"  + parametr);
+		filter=new String(attribute + "+" + operator + "+"  + parametr);
 	}
 	
 	/* Filter setter */
 	public void setFilter(String attribute, String operator, int parameter){
 		
-		if(attribute == null || attribute.length()==0 || operator==null || operator.length()==0)
-			throw new IllegalArgumentException(EXCEPTION_MESSAGE);
+		if(attribute == null || attribute.length()==0 || operator==null || operator.length()==0){
+			if(SynergyKIT.isDebugModeEnabled())
+				Log.e(SynergyKITSdk.TAG,Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
+		}
+			
 		
 		
-		mFilter=new String(attribute + "+" + operator + "+" + Integer.toString(parameter));
+		filter=new String(attribute + "+" + operator + "+" + Integer.toString(parameter));
 	}
 	
 	
 	/* Filter setter */
 	public void setFilter(String filter){
-		if(filter == null || filter.length()==0)
-			throw new IllegalArgumentException(EXCEPTION_MESSAGE);
+		if(filter == null || filter.length()==0){
+			if(SynergyKIT.isDebugModeEnabled())
+				Log.e(SynergyKITSdk.TAG,Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
+		}
+			
 		
 		
-		mFilter=new String(filter);
+		this.filter=new String(filter);
 	}
 	
 	/* Filter getter */
@@ -57,11 +69,11 @@ public class Filter {
 		String fullFilter = null;
 		
 		//not filter
-		if(mFilter==null)
+		if(filter==null)
 			return fullFilter;
 		
 		
-		fullFilter = new String("&$filter=" + mFilter);
+		fullFilter = new String("&$filter=" + filter);
 		
 		
 		
@@ -70,18 +82,20 @@ public class Filter {
 	
 	/* Attribute  builder*/
 	public static String buildAttribute(String attribute){
-		if(attribute == null || attribute.length()==0)
-			throw new IllegalArgumentException(EXCEPTION_MESSAGE);
-		
+		if(attribute == null || attribute.length()==0){
+			if(SynergyKIT.isDebugModeEnabled())
+				Log.e(SynergyKITSdk.TAG,Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
+		}		
 		
 		return "'" + attribute + "'"; 
 	}
 	
 	/* Parameter builder*/
 	public static String buildParametr(String parameter){
-		if(parameter == null || parameter.length()==0)
-			throw new IllegalArgumentException(EXCEPTION_MESSAGE);
-		
+		if(parameter == null || parameter.length()==0){
+			if(SynergyKIT.isDebugModeEnabled())
+				Log.e(SynergyKITSdk.TAG,Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
+		}
 		
 		return "'" + parameter	 + "'";
 	}
@@ -90,8 +104,10 @@ public class Filter {
 	public static String buildArrayParameter(String[] arrayParameter){
 		String parameter = new String();
 		
-		if(arrayParameter == null || arrayParameter.length==0)
-			throw new IllegalArgumentException(EXCEPTION_MESSAGE);
+		if(arrayParameter == null || arrayParameter.length==0){
+			if(SynergyKIT.isDebugModeEnabled())
+				Log.e(SynergyKITSdk.TAG,Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
+		}
 		
 		
 		for(int i=0; i<arrayParameter.length; i++){

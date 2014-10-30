@@ -7,16 +7,17 @@ import android.util.Log;
 import com.letsgood.synergykit.SynergyKIT;
 import com.letsgood.synergykit.SynergyKITSdk;
 import com.letsgood.synergykit.builders.errors.Errors;
-import com.letsgood.synergykit.listeners.RecordsResponseListener;
+import com.letsgood.synergykit.listeners.UserResponseListener;
 import com.letsgood.synergykit.resources.SynergyKITConfig;
 import com.letsgood.synergykit.resources.SynergyKITResponse;
+import com.letsgood.synergykit.resources.SynergyKITUser;
 
 
-public class RecordsRequestGet extends SynergyKITRequest{
+public class UserRequestGet extends SynergyKITRequest{
 
 	/* Attributes */
 	private SynergyKITConfig config;
-	private RecordsResponseListener listener;
+	private UserResponseListener listener;
 	
 	/* Config setter */
 	public void setConfig(SynergyKITConfig config){
@@ -24,7 +25,7 @@ public class RecordsRequestGet extends SynergyKITRequest{
 	}
 	
 	/* Listener setter */
-	public void setListener(RecordsResponseListener listener){
+	public void setListener(UserResponseListener listener){
 		this.listener =listener;
 	}
 	
@@ -39,7 +40,9 @@ public class RecordsRequestGet extends SynergyKITRequest{
 		response = get(config.getUri());
 		
 		//manage response
-		dataHolder = manageResponseToObjects(response, config.getType());		
+		dataHolder = manageResponseToObject(response, config.getType());
+		
+		
 		
 		return dataHolder;
 	}
@@ -49,8 +52,7 @@ public class RecordsRequestGet extends SynergyKITRequest{
 		ResponseDataHolder dataHolder = (ResponseDataHolder) object;
 		
 		//null listener 
-		if(listener==null){
-			
+		if(listener==null){			
 			//Log
 			if(SynergyKIT.isDebugModeEnabled())
 				Log.e(SynergyKITSdk.TAG,Errors.MSG_NO_CALLBACK_LISTENER);
@@ -59,10 +61,11 @@ public class RecordsRequestGet extends SynergyKITRequest{
 		}	
 		
 		if(dataHolder.statusCode>= HttpStatus.SC_OK && dataHolder.statusCode < HttpStatus.SC_MULTIPLE_CHOICES){
-			listener.doneCallback(dataHolder.statusCode, dataHolder.objects);
+			listener.doneCallback(dataHolder.statusCode,(SynergyKITUser) dataHolder.object);
 		}else{
 			listener.errorCallback(dataHolder.statusCode, dataHolder.errorObject);
 		}
+		
 	}
-
+	
 }

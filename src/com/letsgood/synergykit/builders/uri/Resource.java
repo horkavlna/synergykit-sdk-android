@@ -1,5 +1,11 @@
 package com.letsgood.synergykit.builders.uri;
 
+import com.letsgood.synergykit.SynergyKIT;
+import com.letsgood.synergykit.SynergyKITSdk;
+import com.letsgood.synergykit.builders.errors.Errors;
+
+import android.util.Log;
+
 public class Resource {
 	
 	/* Constructor */
@@ -11,32 +17,27 @@ public class Resource {
 	public static final String RESOURCE_USER_LOGIN = "users/login";
 	public static final String RESOURCE_EMAIL = "mail";
 	
-	private static final String EXCEPTION_MESSAGE = "Resource must be set and must not be empty";
-	
 	
 	/* Attributes */
-	private String mResource = null;
+	private String resource = null;
 	
 	/* Resource setter */
-	public void setResource(String resource){
-		
-		//null check
-		if(resource==null || resource.length()==0){
-			throw new IllegalArgumentException(EXCEPTION_MESSAGE);
-		}
-		
-		mResource = resource;		
+	public void setResource(String resource){	
+		this.resource = resource;		
 	}
 	
 	
 	/* Resource getter */
 	public String getResource(){
 		
-		if(mResource==null){
-			throw new NullPointerException(EXCEPTION_MESSAGE);
+		//null check
+		if(resource==null || resource.length()==0){
+			//Log
+			if(SynergyKIT.isDebugModeEnabled())
+				Log.e(SynergyKITSdk.TAG,Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
 		}
 		
-		return mResource;
+		return resource;
 	}
 }
 

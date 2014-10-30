@@ -2,19 +2,20 @@ package com.letsgood.synergykit.requestmethods;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import android.util.Base64;
+import android.util.Log;
 
 import com.letsgood.synergykit.SynergyKIT;
+import com.letsgood.synergykit.SynergyKITSdk;
 import com.letsgood.synergykit.addons.GsonWrapper;
+import com.letsgood.synergykit.builders.errors.Errors;
 import com.letsgood.synergykit.resources.SynergyKITUri;
 
 public class Put extends RequestMethod{
-
+	
 	/* Constants */
 	protected static final String REQUEST_METHOD = "PUT";
 	
@@ -35,9 +36,28 @@ public class Put extends RequestMethod{
 	@Override
 	public BufferedReader execute() {
 		String jSon = null;
+		String uri = null;
 		
+		//init check
+		if(!SynergyKIT.isInit()){
+			//Log
+			if(SynergyKIT.isDebugModeEnabled())
+				Log.e(SynergyKITSdk.TAG,Errors.MSG_SK_NOT_INITIALIZED);
+			
+			statusCode = Errors.SC_SK_NOT_INITIALIZED;
+			return null;
+		}
+		
+		//URI check
+		uri = getUri().toString();
+		
+		if(uri==null){
+			statusCode = Errors.SC_URI_NOT_VALID;
+			return null;
+		}
+			
 		try {
-			url = new URL(getUri().getUri()); // init url
+			url = new URL(uri); // init url
 			
 			httpURLConnection = (HttpURLConnection) url.openConnection(); //open connection
 			httpURLConnection.setConnectTimeout(CONNECT_TIMEOUT); //set connect timeout
@@ -79,12 +99,8 @@ public class Put extends RequestMethod{
 				return readStream(httpURLConnection.getErrorStream());
 			}
 			
-		} catch (MalformedURLException e) {
-			// TODO Exception
-			e.printStackTrace();
-			return null;
-		} catch (IOException e) {
-			// TODO Exception
+		} catch (Exception e) {
+			statusCode = Errors.SC_UNSPECIFIED_ERROR;
 			e.printStackTrace();
 			return null;
 		}

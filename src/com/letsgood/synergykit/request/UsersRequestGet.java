@@ -7,16 +7,17 @@ import android.util.Log;
 import com.letsgood.synergykit.SynergyKIT;
 import com.letsgood.synergykit.SynergyKITSdk;
 import com.letsgood.synergykit.builders.errors.Errors;
-import com.letsgood.synergykit.listeners.RecordsResponseListener;
+import com.letsgood.synergykit.listeners.UsersResponseListener;
 import com.letsgood.synergykit.resources.SynergyKITConfig;
 import com.letsgood.synergykit.resources.SynergyKITResponse;
+import com.letsgood.synergykit.resources.SynergyKITUser;
 
 
-public class RecordsRequestGet extends SynergyKITRequest{
+public class UsersRequestGet extends SynergyKITRequest{
 
 	/* Attributes */
 	private SynergyKITConfig config;
-	private RecordsResponseListener listener;
+	private UsersResponseListener listener;
 	
 	/* Config setter */
 	public void setConfig(SynergyKITConfig config){
@@ -24,7 +25,7 @@ public class RecordsRequestGet extends SynergyKITRequest{
 	}
 	
 	/* Listener setter */
-	public void setListener(RecordsResponseListener listener){
+	public void setListener(UsersResponseListener listener){
 		this.listener =listener;
 	}
 	
@@ -59,10 +60,10 @@ public class RecordsRequestGet extends SynergyKITRequest{
 		}	
 		
 		if(dataHolder.statusCode>= HttpStatus.SC_OK && dataHolder.statusCode < HttpStatus.SC_MULTIPLE_CHOICES){
-			listener.doneCallback(dataHolder.statusCode, dataHolder.objects);
+			listener.doneCallback(dataHolder.statusCode,(SynergyKITUser[]) dataHolder.objects);
 		}else{
 			listener.errorCallback(dataHolder.statusCode, dataHolder.errorObject);
 		}
 	}
-
+	
 }

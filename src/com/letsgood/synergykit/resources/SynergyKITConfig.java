@@ -32,7 +32,7 @@ public class SynergyKITConfig {
 	public boolean isValid(){
 		
 		//Uri
-		if(synergyKITUri==null || synergyKITUri.getUri().length()==0)
+		if(synergyKITUri==null || synergyKITUri.toString().length()==0)
 			return false;
 		
 		return true;

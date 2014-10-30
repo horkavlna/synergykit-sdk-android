@@ -14,4 +14,6 @@ public interface ISynergyKITSdk {
 	public void setConfig(SynergyKITConfig config);
 	public SynergyKITConfig getConfig();
 	public void synergylize(SynergyKITRequest request, boolean parallelMode);
+	public boolean isDebugModeEnabled();
+	public void setDebugModeEnabled(boolean debugModeEnabled);
 }

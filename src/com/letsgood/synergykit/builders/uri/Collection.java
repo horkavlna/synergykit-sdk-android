@@ -1,28 +1,31 @@
 package com.letsgood.synergykit.builders.uri;
 
+import com.letsgood.synergykit.SynergyKIT;
+import com.letsgood.synergykit.SynergyKITSdk;
+import com.letsgood.synergykit.builders.errors.Errors;
+
+import android.util.Log;
+
 public class Collection {
 
-	/* Constructor */
-	private static final String EXCEPTION_MESSAGE = "Collection must be set and must not be empty";
-	
 	/* Attributes */
 	private String collection = null;
-	
-	
+
 	/* Resource setter */
-	public void setCollection(String collection){
+	public void setCollection(String collection) {
 		
-		//null check
-		if(collection==null || collection.length()==0){
-			throw new IllegalArgumentException(EXCEPTION_MESSAGE);
+		// null check
+		if (collection == null || collection.length() == 0) {
+
+			if (SynergyKIT.isDebugModeEnabled())
+				Log.e(SynergyKITSdk.TAG, Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
 		}
 		
-		this.collection = collection;		
+		this.collection = collection;
 	}
-	
-	
+
 	/* Resource getter */
-	public String getCollection(){
+	public String getCollection() {
 		return collection;
 	}
 }

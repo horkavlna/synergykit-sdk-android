@@ -1,28 +1,35 @@
 package com.letsgood.synergykit.builders.uri;
 
+import android.util.Log;
+
+import com.letsgood.synergykit.SynergyKIT;
+import com.letsgood.synergykit.SynergyKITSdk;
+import com.letsgood.synergykit.builders.errors.Errors;
+
 public class RecordId {
 
 	/* Constructor */
-	private static final String EXCEPTION_MESSAGE = "Database must not be null and must not be empty";
+
 	
 	/* Attributes */
-	private String mRecordId = null;
+	private String recordId = null;
 	
 	
 	/* Resource setter */
-	public void setRecordId(String recordId){
+	public void setRecordId(String recordId){	
 		
 		//null check
 		if(recordId==null || recordId.length()==0){
-			throw new IllegalArgumentException(EXCEPTION_MESSAGE);
-		}
+			if(SynergyKIT.isDebugModeEnabled())
+				Log.e(SynergyKITSdk.TAG,Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
+		}	
 		
-		mRecordId = recordId;		
+		this.recordId = recordId;		
 	}
 	
 	
 	/* Resource getter */
-	public String getRecordId(){
-		return mRecordId;
+	public String getRecordId(){		
+		return recordId;
 	}
 }

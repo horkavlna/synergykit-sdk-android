@@ -3,18 +3,23 @@ package com.letsgood.synergykit.builders.uri;
 import java.util.LinkedList;
 import java.util.List;
 
+import android.util.Log;
+
+import com.letsgood.synergykit.SynergyKIT;
+import com.letsgood.synergykit.SynergyKITSdk;
+import com.letsgood.synergykit.builders.errors.Errors;
+
 public class OrderBy{
 
 	/* Constants */
 	private static final String DIRECTION_DESCENDING = "desc";
 	private static final String DIRECTION_ASCENDING = "asc";
 	private static final int MAX_SIZE = 12;
-	private static final String EXCEPTION_MESSAGE_NULL_EMPTY = "Parameter must not be null and must not be empty";
-	private static final String EXCEPTION_MESSAGE_FULL = "Maximum size of orderby is 12";
+
 	
 	
 	/* Attributes */
-	private List<String> mOrderByList = new LinkedList<String>();
+	private List<String> orderByList = new LinkedList<String>();
 	
 	/* Order by desc */
 	public void setOrderByAsc(String parameter){
@@ -33,16 +38,20 @@ public class OrderBy{
 	private void setOrderBy(String parameter, String direction){
 		//parameter check
 		if(parameter==null || parameter.length()==0){
-			throw new IllegalAccessError(EXCEPTION_MESSAGE_NULL_EMPTY);
+			if(SynergyKIT.isDebugModeEnabled())
+				Log.e(SynergyKITSdk.TAG,Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
 		}
 		
 		//size check
-		if(mOrderByList.size()>=MAX_SIZE)
-			throw new IllegalAccessError(EXCEPTION_MESSAGE_FULL);
+		if(orderByList.size()>=MAX_SIZE){
+			if(SynergyKIT.isDebugModeEnabled())
+				Log.e(SynergyKITSdk.TAG,Errors.MSG_ORDRER_BY_OVERFLOW);
+		}
+			
 		
 		
 		//add order by
-		mOrderByList.add(parameter + "+" + direction);
+		orderByList.add(parameter + "+" + direction);
 	}
 	
 	
@@ -51,17 +60,17 @@ public class OrderBy{
 		String fullOrderBy = null;
 		
 		//no filter	
-		if(mOrderByList.isEmpty())
+		if(orderByList.isEmpty())
 			return fullOrderBy;
 		
 
 		//set order by
-		for(int i=0; i<mOrderByList.size(); i++){
+		for(int i=0; i<orderByList.size(); i++){
 			
 			if(i==0)
-				fullOrderBy = new String( "&$orderby=" + mOrderByList.get(i));
+				fullOrderBy = new String( "&$orderby=" + orderByList.get(i));
 			else
-				fullOrderBy += "," + mOrderByList.get(i);
+				fullOrderBy += "," + orderByList.get(i);
 		}
 	
 		

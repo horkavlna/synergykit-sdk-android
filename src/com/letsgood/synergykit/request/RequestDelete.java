@@ -2,15 +2,19 @@ package com.letsgood.synergykit.request;
 
 import org.apache.http.HttpStatus;
 
-import com.letsgood.synergykit.listeners.DeleteListener;
-import com.letsgood.synergykit.listeners.ResponseListener;
+import android.util.Log;
+
+import com.letsgood.synergykit.SynergyKIT;
+import com.letsgood.synergykit.SynergyKITSdk;
+import com.letsgood.synergykit.builders.errors.Errors;
+import com.letsgood.synergykit.listeners.DeleteResponseListener;
 import com.letsgood.synergykit.resources.SynergyKITConfig;
 import com.letsgood.synergykit.resources.SynergyKITResponse;
 
-public class RecordRequestDelete extends SynergyKITRequest{
+public class RequestDelete extends SynergyKITRequest{
 	/* Attributes */
 	private SynergyKITConfig config;
-	private DeleteListener listener;
+	private DeleteResponseListener listener;
 	
 	/* Config setter */
 	public void setConfig(SynergyKITConfig config){
@@ -18,7 +22,7 @@ public class RecordRequestDelete extends SynergyKITRequest{
 	}
 	
 	/* Listener setter */
-	public void setListener(DeleteListener listener){
+	public void setListener(DeleteResponseListener listener){
 		this.listener =listener;
 	}
 	
@@ -30,7 +34,7 @@ public class RecordRequestDelete extends SynergyKITRequest{
 		SynergyKITResponse response = null;
 		
 		//do request
-		response = get(config.getUri());
+		response = delete(config.getUri());
 		
 		//manage response
 		dataHolder = manageResponseToObject(response, config.getType());
@@ -43,6 +47,14 @@ public class RecordRequestDelete extends SynergyKITRequest{
 	@Override
 	protected void onPostExecute(Object object) {
 		ResponseDataHolder dataHolder = (ResponseDataHolder) object;
+		
+		//null listener 
+		if(listener==null){
+			if(SynergyKIT.isDebugModeEnabled())
+				Log.e(SynergyKITSdk.TAG,Errors.MSG_NO_CALLBACK_LISTENER);
+			return;
+		}
+			
 		
 		if(dataHolder.statusCode>= HttpStatus.SC_OK && dataHolder.statusCode < HttpStatus.SC_MULTIPLE_CHOICES){
 			listener.doneCallback(dataHolder.statusCode);
