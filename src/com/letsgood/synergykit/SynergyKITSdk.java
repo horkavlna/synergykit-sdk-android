@@ -2,14 +2,19 @@ package com.letsgood.synergykit;
 
 import java.lang.reflect.Type;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
 import com.letsgood.synergykit.builders.errors.Errors;
+import com.letsgood.synergykit.cache.Cache;
+import com.letsgood.synergykit.interfaces.ICache;
+import com.letsgood.synergykit.interfaces.INotification;
 import com.letsgood.synergykit.interfaces.IRecords;
 import com.letsgood.synergykit.interfaces.ISynergyKITSdk;
 import com.letsgood.synergykit.interfaces.IUsers;
 import com.letsgood.synergykit.listeners.DeleteResponseListener;
+import com.letsgood.synergykit.listeners.EmailResponseListener;
 import com.letsgood.synergykit.listeners.RecordsResponseListener;
 import com.letsgood.synergykit.listeners.ResponseListener;
 import com.letsgood.synergykit.listeners.UserResponseListener;
@@ -17,10 +22,11 @@ import com.letsgood.synergykit.listeners.UsersResponseListener;
 import com.letsgood.synergykit.request.SynergyKITRequest;
 import com.letsgood.synergykit.resources.SynergyKITAuthConfig;
 import com.letsgood.synergykit.resources.SynergyKITConfig;
+import com.letsgood.synergykit.resources.SynergyKITEmail;
 import com.letsgood.synergykit.resources.SynergyKITObject;
 import com.letsgood.synergykit.resources.SynergyKITUser;
 
-public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers{
+public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotification, ICache{
 
 	/* Constants */
 	public static final String TAG = "SynergyKIT";
@@ -32,6 +38,8 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers{
 	private SynergyKITConfig config = new SynergyKITConfig();
 	private IRecords records = new Records();
 	private IUsers users = new Users();
+	private INotification notifications = new Notifications();
+	private ICache cache = new Cache();
 	
 	//---------------------------------------------------------------------------------------
 	/* Instance static getter */
@@ -236,6 +244,20 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers{
 	@Override
 	public void deleteUser(String userId, DeleteResponseListener listener,	boolean parallelMode) {
 		users.deleteUser(userId, listener, parallelMode);		
+	}
+
+	//-------------------------------------------------------------------------------------------------------------------
+	/* Send email */
+	@Override
+	public void sendEmail(SynergyKITEmail email, EmailResponseListener listener, boolean parallelMode) {
+		notifications.sendEmail(email, listener, parallelMode);		
+	}
+	//-------------------------------------------------------------------------------------------------------------------
+	/* Install cache */
+	@Override
+	public void installCache(Context context) {
+		cache.installCache(context);
+		
 	}
 
 }

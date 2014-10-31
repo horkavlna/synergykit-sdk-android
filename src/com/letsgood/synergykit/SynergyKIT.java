@@ -2,13 +2,17 @@ package com.letsgood.synergykit;
 
 import java.lang.reflect.Type;
 
+import android.content.Context;
+
 import com.letsgood.synergykit.listeners.DeleteResponseListener;
+import com.letsgood.synergykit.listeners.EmailResponseListener;
 import com.letsgood.synergykit.listeners.RecordsResponseListener;
 import com.letsgood.synergykit.listeners.ResponseListener;
 import com.letsgood.synergykit.listeners.UserResponseListener;
 import com.letsgood.synergykit.listeners.UsersResponseListener;
 import com.letsgood.synergykit.request.SynergyKITRequest;
 import com.letsgood.synergykit.resources.SynergyKITConfig;
+import com.letsgood.synergykit.resources.SynergyKITEmail;
 import com.letsgood.synergykit.resources.SynergyKITObject;
 import com.letsgood.synergykit.resources.SynergyKITUser;
 
@@ -75,6 +79,13 @@ public class SynergyKIT {
 	public static void setDebugModeEnabled(boolean debugModeEnabled){
 		SynergyKITSdk.getInstance().setDebugModeEnabled(debugModeEnabled);
 	}
+	
+	//-------------------------------------------------------------------------------------------------------------------	
+	/* Install cache */
+	public static void installCache(Context context) {
+		SynergyKITSdk.getInstance().installCache(context);		
+	}
+	
 	//------------------------------------------------------------------------------
 	/* Get record */
 	public static void getRecord(SynergyKITConfig config, ResponseListener listener) {
@@ -150,5 +161,11 @@ public class SynergyKIT {
 	/* Delete user */
 	public static void deleteUser(String userId, DeleteResponseListener listener,	boolean parallelMode) {
 		SynergyKITSdk.getInstance().deleteUser(userId, listener, parallelMode);		
+	}
+	
+	//-------------------------------------------------------------------------------------------------------------------	
+	/* Send email */
+	public static void sendEmail(SynergyKITEmail email, EmailResponseListener listener, boolean parallelMode){
+		SynergyKITSdk.getInstance().sendEmail(email, listener, parallelMode);
 	}
 }
