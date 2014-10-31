@@ -27,6 +27,8 @@ public class Cache implements ICache{
 				 .getMethod("install", File.class, long.class)      
 				 .invoke(null, httpCacheDir, DEFAULT_CACHE_SIZE);
 			
+			Log.i(SynergyKITSdk.TAG, "HTTP response cache installed");
+			
 		} catch (Exception e) {
 			Log.i(SynergyKITSdk.TAG, "HTTP response cache installation failed:" + e);
 		}

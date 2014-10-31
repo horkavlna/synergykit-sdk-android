@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import android.net.http.HttpResponseCache;
 import android.util.Base64;
 import android.util.Log;
 
@@ -56,7 +57,10 @@ public class Get extends RequestMethod {
 			httpURLConnection.setReadTimeout(READ_TIMEOUT); //set read timeout
 			httpURLConnection.setRequestMethod(REQUEST_METHOD); //set method
 			httpURLConnection.addRequestProperty(PROPERTY_USER_AGENT, PROPERTY_USER_AGENT_VALUE); //set property
+			httpURLConnection.addRequestProperty("Cache-Control", "max-stale=120");
 			httpURLConnection.setDoInput(true);
+			httpURLConnection.setUseCaches(true);
+			httpURLConnection.setDefaultUseCaches(true);
 			
 			httpURLConnection.addRequestProperty(PROPERTY_AUTHORIZATION, "Basic " 
 												 + Base64.encodeToString(

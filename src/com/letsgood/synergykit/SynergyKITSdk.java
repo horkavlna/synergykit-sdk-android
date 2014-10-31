@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.letsgood.synergykit.builders.errors.Errors;
 import com.letsgood.synergykit.cache.Cache;
+import com.letsgood.synergykit.interfaces.IAuthorization;
 import com.letsgood.synergykit.interfaces.ICache;
 import com.letsgood.synergykit.interfaces.INotification;
 import com.letsgood.synergykit.interfaces.IRecords;
@@ -26,7 +27,7 @@ import com.letsgood.synergykit.resources.SynergyKITEmail;
 import com.letsgood.synergykit.resources.SynergyKITObject;
 import com.letsgood.synergykit.resources.SynergyKITUser;
 
-public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotification, ICache{
+public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotification, ICache, IAuthorization{
 
 	/* Constants */
 	public static final String TAG = "SynergyKIT";
@@ -39,6 +40,7 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotific
 	private IRecords records = new Records();
 	private IUsers users = new Users();
 	private INotification notifications = new Notifications();
+	private IAuthorization authorization = new Authorization();
 	private ICache cache = new Cache();
 	
 	//---------------------------------------------------------------------------------------
@@ -252,12 +254,25 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotific
 	public void sendEmail(SynergyKITEmail email, EmailResponseListener listener, boolean parallelMode) {
 		notifications.sendEmail(email, listener, parallelMode);		
 	}
+	
 	//-------------------------------------------------------------------------------------------------------------------
 	/* Install cache */
 	@Override
 	public void installCache(Context context) {
-		cache.installCache(context);
-		
+		cache.installCache(context);		
+	}
+	
+	//-------------------------------------------------------------------------------------------------------------------
+	/* Register user */
+	@Override
+	public void registerUser(SynergyKITUser user, UserResponseListener listener) {
+		authorization.registerUser(user, listener);		
+	}
+
+	/* Login user */
+	@Override
+	public void loginUser(SynergyKITUser user, UserResponseListener listener) {
+		authorization.loginUser(user, listener);		
 	}
 
 }

@@ -168,4 +168,15 @@ public class SynergyKIT {
 	public static void sendEmail(SynergyKITEmail email, EmailResponseListener listener, boolean parallelMode){
 		SynergyKITSdk.getInstance().sendEmail(email, listener, parallelMode);
 	}
+	
+	//-------------------------------------------------------------------------------------------------------------------	
+	/* Register user */
+	public static void registerUser(SynergyKITUser user, UserResponseListener listener){
+		SynergyKITSdk.getInstance().registerUser(user, listener);
+	}
+	
+	/* Login user */
+	public static void loginUser(SynergyKITUser user, UserResponseListener listener){
+		SynergyKITSdk.getInstance().registerUser(user, listener);
+	}
 }
