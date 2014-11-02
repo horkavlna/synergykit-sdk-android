@@ -6,6 +6,7 @@ import android.content.Context;
 
 import com.letsgood.synergykit.listeners.DeleteResponseListener;
 import com.letsgood.synergykit.listeners.EmailResponseListener;
+import com.letsgood.synergykit.listeners.NotificationResponseListener;
 import com.letsgood.synergykit.listeners.RecordsResponseListener;
 import com.letsgood.synergykit.listeners.ResponseListener;
 import com.letsgood.synergykit.listeners.UserResponseListener;
@@ -13,6 +14,7 @@ import com.letsgood.synergykit.listeners.UsersResponseListener;
 import com.letsgood.synergykit.request.SynergyKITRequest;
 import com.letsgood.synergykit.resources.SynergyKITConfig;
 import com.letsgood.synergykit.resources.SynergyKITEmail;
+import com.letsgood.synergykit.resources.SynergyKITNotification;
 import com.letsgood.synergykit.resources.SynergyKITObject;
 import com.letsgood.synergykit.resources.SynergyKITUser;
 
@@ -167,6 +169,11 @@ public class SynergyKIT {
 	/* Send email */
 	public static void sendEmail(SynergyKITEmail email, EmailResponseListener listener, boolean parallelMode){
 		SynergyKITSdk.getInstance().sendEmail(email, listener, parallelMode);
+	}
+	
+	/* Send notification */
+	public static void sendNotification(SynergyKITNotification notification, NotificationResponseListener listener, boolean parralelMode){
+		SynergyKITSdk.getInstance().sendNotification(notification, listener, parralelMode);
 	}
 	
 	//-------------------------------------------------------------------------------------------------------------------	

@@ -16,6 +16,7 @@ import com.letsgood.synergykit.interfaces.ISynergyKITSdk;
 import com.letsgood.synergykit.interfaces.IUsers;
 import com.letsgood.synergykit.listeners.DeleteResponseListener;
 import com.letsgood.synergykit.listeners.EmailResponseListener;
+import com.letsgood.synergykit.listeners.NotificationResponseListener;
 import com.letsgood.synergykit.listeners.RecordsResponseListener;
 import com.letsgood.synergykit.listeners.ResponseListener;
 import com.letsgood.synergykit.listeners.UserResponseListener;
@@ -24,6 +25,7 @@ import com.letsgood.synergykit.request.SynergyKITRequest;
 import com.letsgood.synergykit.resources.SynergyKITAuthConfig;
 import com.letsgood.synergykit.resources.SynergyKITConfig;
 import com.letsgood.synergykit.resources.SynergyKITEmail;
+import com.letsgood.synergykit.resources.SynergyKITNotification;
 import com.letsgood.synergykit.resources.SynergyKITObject;
 import com.letsgood.synergykit.resources.SynergyKITUser;
 
@@ -255,6 +257,12 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotific
 		notifications.sendEmail(email, listener, parallelMode);		
 	}
 	
+	/* Send notification */
+	@Override
+	public void sendNotification(SynergyKITNotification notification, NotificationResponseListener listener, boolean parralelMode) {
+		notifications.sendNotification(notification, listener, parralelMode);		
+	}
+	
 	//-------------------------------------------------------------------------------------------------------------------
 	/* Install cache */
 	@Override
@@ -274,5 +282,6 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotific
 	public void loginUser(SynergyKITUser user, UserResponseListener listener) {
 		authorization.loginUser(user, listener);		
 	}
+
 
 }

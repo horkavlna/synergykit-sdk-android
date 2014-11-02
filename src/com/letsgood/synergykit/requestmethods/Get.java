@@ -3,8 +3,6 @@ package com.letsgood.synergykit.requestmethods;
 import java.io.BufferedReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-import android.net.http.HttpResponseCache;
 import android.util.Base64;
 import android.util.Log;
 

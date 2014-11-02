@@ -1,8 +1,6 @@
 package com.letsgood.synergykit.cache;
 
 import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 
 import com.letsgood.synergykit.SynergyKITSdk;
 import com.letsgood.synergykit.interfaces.ICache;
