@@ -2,8 +2,6 @@ package com.letsgood.synergykit;
 
 import java.lang.reflect.Type;
 
-import android.util.Log;
-
 import com.letsgood.synergykit.builders.UriBuilder;
 import com.letsgood.synergykit.builders.errors.Errors;
 import com.letsgood.synergykit.builders.uri.Resource;
@@ -11,11 +9,12 @@ import com.letsgood.synergykit.interfaces.IRecords;
 import com.letsgood.synergykit.listeners.DeleteResponseListener;
 import com.letsgood.synergykit.listeners.RecordsResponseListener;
 import com.letsgood.synergykit.listeners.ResponseListener;
-import com.letsgood.synergykit.request.RequestDelete;
+import com.letsgood.synergykit.log.SynergyKITLog;
 import com.letsgood.synergykit.request.RecordRequestGet;
 import com.letsgood.synergykit.request.RecordRequestPost;
 import com.letsgood.synergykit.request.RecordRequestPut;
 import com.letsgood.synergykit.request.RecordsRequestGet;
+import com.letsgood.synergykit.request.RequestDelete;
 import com.letsgood.synergykit.resources.SynergyKITConfig;
 import com.letsgood.synergykit.resources.SynergyKITError;
 import com.letsgood.synergykit.resources.SynergyKITObject;
@@ -29,7 +28,7 @@ public class Records implements IRecords {
 	public void getRecord(SynergyKITConfig config, ResponseListener listener) {
 		RecordRequestGet request = new RecordRequestGet();		
 		request.setConfig(config);
-		request.setListener(listener);
+		request.setListener(listener); 
 		SynergyKIT.synergylize(request, config.isParallelMode());
 	}
 	
@@ -97,14 +96,13 @@ public class Records implements IRecords {
 		//Object check
 		if(object == null){
 			//Log
-			if(SynergyKIT.isDebugModeEnabled())
-				Log.e(SynergyKITSdk.TAG,Errors.MSG_NO_OBJECT);		
+			SynergyKITLog.print(Errors.MSG_NO_OBJECT);	
 			
 			//error callback
 			if(listener!=null)
 				listener.errorCallback(Errors.SC_NO_OBJECT, new SynergyKITError(Errors.SC_NO_OBJECT, Errors.MSG_NO_OBJECT));
 			else if(SynergyKIT.isDebugModeEnabled())
-				Log.e(SynergyKITSdk.TAG,Errors.MSG_NO_CALLBACK_LISTENER);
+				SynergyKITLog.print(Errors.MSG_NO_CALLBACK_LISTENER);
 			
 			return;
 		}
@@ -141,14 +139,13 @@ public class Records implements IRecords {
 		//Object check
 		if(object == null){
 			//Log
-			if(SynergyKIT.isDebugModeEnabled())
-				Log.e(SynergyKITSdk.TAG,Errors.MSG_NO_OBJECT);		
+			SynergyKITLog.print(Errors.MSG_NO_OBJECT);	
 			
 			//error callback
 			if(listener!=null)
 				listener.errorCallback(Errors.SC_NO_OBJECT, new SynergyKITError(Errors.SC_NO_OBJECT, Errors.MSG_NO_OBJECT));
 			else if(SynergyKIT.isDebugModeEnabled())
-				Log.e(SynergyKITSdk.TAG,Errors.MSG_NO_CALLBACK_LISTENER);
+				SynergyKITLog.print(Errors.MSG_NO_CALLBACK_LISTENER);
 			
 			return;
 		}
@@ -184,14 +181,13 @@ public class Records implements IRecords {
 		//Object check
 		if(collectionUrl==null || recordId == null){
 			//Log
-			if(SynergyKIT.isDebugModeEnabled())
-				Log.e(SynergyKITSdk.TAG,Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);		
+			SynergyKITLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);	
 			
 			//error callback
 			if(listener!=null)
 				listener.errorCallback(Errors.SC_NULL_ARGUMENTS_OR_EMPTY, new SynergyKITError(Errors.SC_NULL_ARGUMENTS_OR_EMPTY, Errors.MSG_NULL_ARGUMENTS_OR_EMPTY));
 			else if(SynergyKIT.isDebugModeEnabled())
-				Log.e(SynergyKITSdk.TAG,Errors.MSG_NO_CALLBACK_LISTENER);
+				SynergyKITLog.print(Errors.MSG_NO_CALLBACK_LISTENER);
 			
 			return;
 		}

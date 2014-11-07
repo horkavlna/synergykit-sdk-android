@@ -2,15 +2,10 @@ package com.letsgood.synergykit.request;
 
 import org.apache.http.HttpStatus;
 
-import android.util.Log;
-
-import com.letsgood.synergykit.SynergyKIT;
-import com.letsgood.synergykit.SynergyKITSdk;
 import com.letsgood.synergykit.builders.errors.Errors;
-import com.letsgood.synergykit.listeners.EmailResponseListener;
 import com.letsgood.synergykit.listeners.NotificationResponseListener;
+import com.letsgood.synergykit.log.SynergyKITLog;
 import com.letsgood.synergykit.resources.SynergyKITConfig;
-import com.letsgood.synergykit.resources.SynergyKITEmail;
 import com.letsgood.synergykit.resources.SynergyKITNotification;
 import com.letsgood.synergykit.resources.SynergyKITResponse;
 
@@ -23,7 +18,7 @@ public class NotificationRequestPost extends SynergyKITRequest{
 	
 	/* Config setter */
 	public void setConfig(SynergyKITConfig config){
-		this.config = config;
+		this.config = config; 
 	}
 	
 	/* Listener setter */
@@ -64,10 +59,7 @@ public class NotificationRequestPost extends SynergyKITRequest{
 		
 		//null listener 
 		if(listener==null){
-			
-			//Log
-			if(SynergyKIT.isDebugModeEnabled())
-				Log.e(SynergyKITSdk.TAG,Errors.MSG_NO_CALLBACK_LISTENER);
+			SynergyKITLog.print(Errors.MSG_NO_CALLBACK_LISTENER);
 			
 			return;
 		}	

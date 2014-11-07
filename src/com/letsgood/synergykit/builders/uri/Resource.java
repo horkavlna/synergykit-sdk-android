@@ -1,10 +1,7 @@
 package com.letsgood.synergykit.builders.uri;
 
-import com.letsgood.synergykit.SynergyKIT;
-import com.letsgood.synergykit.SynergyKITSdk;
 import com.letsgood.synergykit.builders.errors.Errors;
-
-import android.util.Log;
+import com.letsgood.synergykit.log.SynergyKITLog;
 
 public class Resource {
 	
@@ -18,7 +15,7 @@ public class Resource {
 	public static final String RESOURCE_EMAIL = "mail";
 	public static final String RESOURCE_NOTIFICATION = "users/notification";
 	
-	
+
 	/* Attributes */
 	private String resource = null;
 	
@@ -33,9 +30,7 @@ public class Resource {
 		
 		//null check
 		if(resource==null || resource.length()==0){
-			//Log
-			if(SynergyKIT.isDebugModeEnabled())
-				Log.e(SynergyKITSdk.TAG,Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
+			SynergyKITLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
 		}
 		
 		return resource;

@@ -2,12 +2,9 @@ package com.letsgood.synergykit.request;
 
 import org.apache.http.HttpStatus;
 
-import android.util.Log;
-
-import com.letsgood.synergykit.SynergyKIT;
-import com.letsgood.synergykit.SynergyKITSdk;
 import com.letsgood.synergykit.builders.errors.Errors;
 import com.letsgood.synergykit.listeners.ResponseListener;
+import com.letsgood.synergykit.log.SynergyKITLog;
 import com.letsgood.synergykit.resources.SynergyKITConfig;
 import com.letsgood.synergykit.resources.SynergyKITResponse;
 
@@ -17,7 +14,7 @@ public class RecordRequestGet extends SynergyKITRequest{
 	/* Attributes */
 	private SynergyKITConfig config;
 	private ResponseListener listener;
-	
+	 
 	/* Config setter */
 	public void setConfig(SynergyKITConfig config){
 		this.config = config;
@@ -52,10 +49,7 @@ public class RecordRequestGet extends SynergyKITRequest{
 		
 		//null listener 
 		if(listener==null){
-			
-			//Log
-			if(SynergyKIT.isDebugModeEnabled())
-				Log.e(SynergyKITSdk.TAG,Errors.MSG_NO_CALLBACK_LISTENER);
+			SynergyKITLog.print(Errors.MSG_NO_CALLBACK_LISTENER);
 			
 			return;
 		}	

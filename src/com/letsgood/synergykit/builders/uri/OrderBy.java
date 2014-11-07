@@ -3,11 +3,8 @@ package com.letsgood.synergykit.builders.uri;
 import java.util.LinkedList;
 import java.util.List;
 
-import android.util.Log;
-
-import com.letsgood.synergykit.SynergyKIT;
-import com.letsgood.synergykit.SynergyKITSdk;
 import com.letsgood.synergykit.builders.errors.Errors;
+import com.letsgood.synergykit.log.SynergyKITLog;
 
 public class OrderBy{
 
@@ -16,7 +13,6 @@ public class OrderBy{
 	private static final String DIRECTION_ASCENDING = "asc";
 	private static final int MAX_SIZE = 12;
 
-	
 	
 	/* Attributes */
 	private List<String> orderByList = new LinkedList<String>();
@@ -38,14 +34,12 @@ public class OrderBy{
 	private void setOrderBy(String parameter, String direction){
 		//parameter check
 		if(parameter==null || parameter.length()==0){
-			if(SynergyKIT.isDebugModeEnabled())
-				Log.e(SynergyKITSdk.TAG,Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
+			SynergyKITLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
 		}
 		
 		//size check
 		if(orderByList.size()>=MAX_SIZE){
-			if(SynergyKIT.isDebugModeEnabled())
-				Log.e(SynergyKITSdk.TAG,Errors.MSG_ORDRER_BY_OVERFLOW);
+			SynergyKITLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
 		}
 			
 		

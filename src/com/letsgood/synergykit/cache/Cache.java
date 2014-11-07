@@ -2,11 +2,11 @@ package com.letsgood.synergykit.cache;
 
 import java.io.File;
 
-import com.letsgood.synergykit.SynergyKITSdk;
-import com.letsgood.synergykit.interfaces.ICache;
-
 import android.content.Context;
-import android.util.Log;
+
+import com.letsgood.synergykit.builders.errors.Errors;
+import com.letsgood.synergykit.interfaces.ICache;
+import com.letsgood.synergykit.log.SynergyKITLog;
 
 public class Cache implements ICache{
 	/* Constants */
@@ -25,10 +25,9 @@ public class Cache implements ICache{
 				 .getMethod("install", File.class, long.class)      
 				 .invoke(null, httpCacheDir, DEFAULT_CACHE_SIZE);
 			
-			Log.i(SynergyKITSdk.TAG, "HTTP response cache installed");
-			
 		} catch (Exception e) {
-			Log.i(SynergyKITSdk.TAG, "HTTP response cache installation failed:" + e);
+			SynergyKITLog.print(Errors.MSG_CACHE_INIT_FAILED + ": " + e);
 		}
+		
 	}
 }

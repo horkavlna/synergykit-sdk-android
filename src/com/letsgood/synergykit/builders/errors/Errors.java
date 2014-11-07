@@ -39,5 +39,8 @@ public class Errors {
 	
 	// No request
 	public static final String MSG_NO_REQUEST = "SynergyKITRequest WAS NOT set.";
+	
+	// Cache init failed
+	public static final String MSG_CACHE_INIT_FAILED = "HTTP response cache installation failed";
 
 }

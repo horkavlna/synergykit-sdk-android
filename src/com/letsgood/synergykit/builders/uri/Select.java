@@ -3,15 +3,10 @@ package com.letsgood.synergykit.builders.uri;
 import java.util.LinkedList;
 import java.util.List;
 
-import android.util.Log;
-
-import com.letsgood.synergykit.SynergyKIT;
-import com.letsgood.synergykit.SynergyKITSdk;
 import com.letsgood.synergykit.builders.errors.Errors;
+import com.letsgood.synergykit.log.SynergyKITLog;
 
 public class Select {
-
-	/* Constants */
 
 	/* Attributes */
 	private List<String> selectList = new LinkedList<String>();
@@ -19,11 +14,7 @@ public class Select {
 	/* Select setter */
 	public void setSelect(String attribute) {
 		if (attribute == null || attribute.length() == 0) {
-			
-			//Log
-			if (SynergyKIT.isDebugModeEnabled())
-				Log.e(SynergyKITSdk.TAG, Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
-
+			SynergyKITLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
 		}
 
 		selectList.add(attribute);

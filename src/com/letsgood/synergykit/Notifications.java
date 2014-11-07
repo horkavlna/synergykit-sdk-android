@@ -1,13 +1,12 @@
 package com.letsgood.synergykit;
 
-import android.util.Log;
-
 import com.letsgood.synergykit.builders.UriBuilder;
 import com.letsgood.synergykit.builders.errors.Errors;
 import com.letsgood.synergykit.builders.uri.Resource;
 import com.letsgood.synergykit.interfaces.INotification;
 import com.letsgood.synergykit.listeners.EmailResponseListener;
 import com.letsgood.synergykit.listeners.NotificationResponseListener;
+import com.letsgood.synergykit.log.SynergyKITLog;
 import com.letsgood.synergykit.request.EmailRequestPost;
 import com.letsgood.synergykit.request.NotificationRequestPost;
 import com.letsgood.synergykit.resources.SynergyKITConfig;
@@ -25,15 +24,14 @@ public class Notifications implements INotification{
 
 		//Email check
 		if(email == null){
-			//Log
-			if(SynergyKIT.isDebugModeEnabled())
-				Log.e(SynergyKITSdk.TAG,Errors.MSG_NO_OBJECT);		
+			SynergyKITLog.print(Errors.MSG_NO_OBJECT);
+			
 			
 			//error callback
 			if(listener!=null)
 				listener.errorCallback(Errors.SC_NO_OBJECT, new SynergyKITError(Errors.SC_NO_OBJECT, Errors.MSG_NO_OBJECT));
 			else if(SynergyKIT.isDebugModeEnabled())
-				Log.e(SynergyKITSdk.TAG,Errors.MSG_NO_CALLBACK_LISTENER);
+				SynergyKITLog.print(Errors.MSG_NO_CALLBACK_LISTENER);
 			
 			return;
 		}
@@ -68,15 +66,13 @@ public class Notifications implements INotification{
 
 		//Email check
 		if(notification == null){
-			//Log
-			if(SynergyKIT.isDebugModeEnabled())
-				Log.e(SynergyKITSdk.TAG,Errors.MSG_NO_OBJECT);		
+			SynergyKITLog.print(Errors.MSG_NO_OBJECT);		
 			
 			//error callback
 			if(listener!=null)
 				listener.errorCallback(Errors.SC_NO_OBJECT, new SynergyKITError(Errors.SC_NO_OBJECT, Errors.MSG_NO_OBJECT));
 			else if(SynergyKIT.isDebugModeEnabled())
-				Log.e(SynergyKITSdk.TAG,Errors.MSG_NO_CALLBACK_LISTENER);
+				SynergyKITLog.print(Errors.MSG_NO_CALLBACK_LISTENER);
 			
 			return;
 		}

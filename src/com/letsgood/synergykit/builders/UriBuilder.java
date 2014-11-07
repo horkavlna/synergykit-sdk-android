@@ -18,7 +18,7 @@ import com.letsgood.synergykit.resources.SynergyKITUri;
  */
 public class UriBuilder {
 	/* Constants */
-	private static final String BASE_SYNERGYKIT_URL = "https://%s.api.synergykit.com/v2";		
+	private static final String BASE_SYNERGYKIT_URL = "https://production.api.synergykit.com/v2";		
 	
 	/* Attributes */
 	private Resource resource = new Resource();

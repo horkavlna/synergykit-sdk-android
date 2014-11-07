@@ -6,12 +6,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import android.util.Base64;
-import android.util.Log;
 
 import com.letsgood.synergykit.SynergyKIT;
-import com.letsgood.synergykit.SynergyKITSdk;
 import com.letsgood.synergykit.addons.GsonWrapper;
 import com.letsgood.synergykit.builders.errors.Errors;
+import com.letsgood.synergykit.log.SynergyKITLog;
 import com.letsgood.synergykit.resources.SynergyKITUri;
 
 public class Post extends RequestMethod {
@@ -29,7 +28,6 @@ public class Post extends RequestMethod {
 		
 		setUri(uri);
 		this.object = object;
-		
 	}
 
 	/* Execute */
@@ -40,9 +38,7 @@ public class Post extends RequestMethod {
 		
 		//init check
 		if(!SynergyKIT.isInit()){
-			//Log
-			if(SynergyKIT.isDebugModeEnabled())
-				Log.e(SynergyKITSdk.TAG,Errors.MSG_SK_NOT_INITIALIZED);
+			SynergyKITLog.print(Errors.MSG_SK_NOT_INITIALIZED);
 			
 			statusCode = Errors.SC_SK_NOT_INITIALIZED;
 			return null;
@@ -86,9 +82,7 @@ public class Post extends RequestMethod {
 				dataOutputStream = new DataOutputStream( httpURLConnection.getOutputStream());
 				dataOutputStream.write(jSon.getBytes(CHARSET));
 				dataOutputStream.flush();
-				dataOutputStream.close();
-				
-				
+				dataOutputStream.close();				
 			}
 			
 			statusCode = httpURLConnection.getResponseCode(); //get status code

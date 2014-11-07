@@ -3,12 +3,12 @@ package com.letsgood.synergykit.requestmethods;
 import java.io.BufferedReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
 import android.util.Base64;
-import android.util.Log;
 
 import com.letsgood.synergykit.SynergyKIT;
-import com.letsgood.synergykit.SynergyKITSdk;
 import com.letsgood.synergykit.builders.errors.Errors;
+import com.letsgood.synergykit.log.SynergyKITLog;
 import com.letsgood.synergykit.resources.SynergyKITUri;
 
 public class Get extends RequestMethod {
@@ -23,7 +23,7 @@ public class Get extends RequestMethod {
 			
 		setUri(uri);
 	}
-	
+	 
 	/* Execute */
 	@Override
 	public BufferedReader execute() {
@@ -31,9 +31,7 @@ public class Get extends RequestMethod {
 		
 		//init check
 		if(!SynergyKIT.isInit()){
-			//Log
-			if(SynergyKIT.isDebugModeEnabled())
-				Log.e(SynergyKITSdk.TAG,Errors.MSG_SK_NOT_INITIALIZED);
+			SynergyKITLog.print(Errors.MSG_SK_NOT_INITIALIZED);
 			
 			statusCode = Errors.SC_SK_NOT_INITIALIZED;
 			return null;

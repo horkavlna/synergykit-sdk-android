@@ -1,10 +1,7 @@
 package com.letsgood.synergykit.builders.uri;
 
-import android.util.Log;
-
-import com.letsgood.synergykit.SynergyKIT;
-import com.letsgood.synergykit.SynergyKITSdk;
 import com.letsgood.synergykit.builders.errors.Errors;
+import com.letsgood.synergykit.log.SynergyKITLog;
 
 
 public class Filter {
@@ -17,7 +14,7 @@ public class Filter {
 	public static final String OPERATOR_LESS_THAN  = "lt";
 	public static final String OPERATOR_LESS_THAN_OR_EQUAL  = "le";
 	public static final String OPERATOR_IN = "in";
-	public static final String OPERATOR_NOT_IN = "nin";
+	public static final String OPERATOR_NOT_IN = "nin"; 
 	public static final String OPERATOR_AND  = "and";
 	public static final String OPERATOR_OR  = "or";
 	public static final String OPERATOR_NOT  = "and+not";
@@ -29,8 +26,7 @@ public class Filter {
 	public void setFilter(String attribute, String operator, String parametr){
 		
 		if(attribute == null || attribute.length()==0 || operator==null || operator.length()==0|| parametr==null || parametr.length() ==0){
-			if(SynergyKIT.isDebugModeEnabled())
-				Log.e(SynergyKITSdk.TAG,Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
+			SynergyKITLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
 		}
 	
 		
@@ -41,8 +37,7 @@ public class Filter {
 	public void setFilter(String attribute, String operator, int parameter){
 		
 		if(attribute == null || attribute.length()==0 || operator==null || operator.length()==0){
-			if(SynergyKIT.isDebugModeEnabled())
-				Log.e(SynergyKITSdk.TAG,Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
+			SynergyKITLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
 		}
 			
 		
@@ -54,8 +49,7 @@ public class Filter {
 	/* Filter setter */
 	public void setFilter(String filter){
 		if(filter == null || filter.length()==0){
-			if(SynergyKIT.isDebugModeEnabled())
-				Log.e(SynergyKITSdk.TAG,Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
+			SynergyKITLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
 		}
 			
 		
@@ -83,8 +77,7 @@ public class Filter {
 	/* Attribute  builder*/
 	public static String buildAttribute(String attribute){
 		if(attribute == null || attribute.length()==0){
-			if(SynergyKIT.isDebugModeEnabled())
-				Log.e(SynergyKITSdk.TAG,Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
+			SynergyKITLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
 		}		
 		
 		return "'" + attribute + "'"; 
@@ -93,8 +86,7 @@ public class Filter {
 	/* Parameter builder*/
 	public static String buildParametr(String parameter){
 		if(parameter == null || parameter.length()==0){
-			if(SynergyKIT.isDebugModeEnabled())
-				Log.e(SynergyKITSdk.TAG,Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
+			SynergyKITLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
 		}
 		
 		return "'" + parameter	 + "'";
@@ -105,8 +97,7 @@ public class Filter {
 		String parameter = new String();
 		
 		if(arrayParameter == null || arrayParameter.length==0){
-			if(SynergyKIT.isDebugModeEnabled())
-				Log.e(SynergyKITSdk.TAG,Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
+			SynergyKITLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
 		}
 		
 		

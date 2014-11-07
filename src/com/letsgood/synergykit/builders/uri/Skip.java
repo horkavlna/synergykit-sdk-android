@@ -1,10 +1,7 @@
 package com.letsgood.synergykit.builders.uri;
 
-import android.util.Log;
-
-import com.letsgood.synergykit.SynergyKIT;
-import com.letsgood.synergykit.SynergyKITSdk;
 import com.letsgood.synergykit.builders.errors.Errors;
+import com.letsgood.synergykit.log.SynergyKITLog;
 
 public class Skip {
 	/* Constants */
@@ -14,14 +11,11 @@ public class Skip {
 	private String skip;
 	
 	
-	
 	/* Top setter */
 	public void setSkip(int skip){
 		
 		if(skip<MIN_VALUE){
-			//Log
-			if(SynergyKIT.isDebugModeEnabled())
-				Log.e(SynergyKITSdk.TAG,Errors.MSG_SKIP_NEGATIVE);
+			SynergyKITLog.print(Errors.MSG_SKIP_NEGATIVE);
 		}
 			
 		

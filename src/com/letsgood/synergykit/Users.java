@@ -2,8 +2,6 @@ package com.letsgood.synergykit;
 
 import java.lang.reflect.Type;
 
-import android.util.Log;
-
 import com.letsgood.synergykit.builders.UriBuilder;
 import com.letsgood.synergykit.builders.errors.Errors;
 import com.letsgood.synergykit.builders.uri.Resource;
@@ -11,6 +9,7 @@ import com.letsgood.synergykit.interfaces.IUsers;
 import com.letsgood.synergykit.listeners.DeleteResponseListener;
 import com.letsgood.synergykit.listeners.UserResponseListener;
 import com.letsgood.synergykit.listeners.UsersResponseListener;
+import com.letsgood.synergykit.log.SynergyKITLog;
 import com.letsgood.synergykit.request.RequestDelete;
 import com.letsgood.synergykit.request.UserRequestGet;
 import com.letsgood.synergykit.request.UserRequestPost;
@@ -38,6 +37,7 @@ public class Users implements IUsers{
 	public void getUser(String userId, Type type, UserResponseListener listener, boolean parallelMode) {
 		SynergyKITConfig config = SynergyKIT.getConfig();
 
+		
 		//Uri builder
 		UriBuilder uriBuilder = new UriBuilder()
 								.setResource(Resource.RESOURCE_USERS)
@@ -92,14 +92,14 @@ public class Users implements IUsers{
 		//User check
 		if(user == null){
 			//Log
-			if(SynergyKIT.isDebugModeEnabled())
-				Log.e(SynergyKITSdk.TAG,Errors.MSG_NO_OBJECT);		
+			SynergyKITLog.print(Errors.MSG_NO_OBJECT);
+	
 			
 			//error callback
 			if(listener!=null)
 				listener.errorCallback(Errors.SC_NO_OBJECT, new SynergyKITError(Errors.SC_NO_OBJECT, Errors.MSG_NO_OBJECT));
 			else if(SynergyKIT.isDebugModeEnabled())
-				Log.e(SynergyKITSdk.TAG,Errors.MSG_NO_CALLBACK_LISTENER);	
+				SynergyKITLog.print(Errors.MSG_NO_CALLBACK_LISTENER);	
 			
 			return;
 		}
@@ -134,14 +134,13 @@ public class Users implements IUsers{
 		//User check
 		if(user == null){
 			//Log
-			if(SynergyKIT.isDebugModeEnabled())
-				Log.e(SynergyKITSdk.TAG,Errors.MSG_NO_OBJECT);		
+			SynergyKITLog.print(Errors.MSG_NO_OBJECT);	
 			
 			//error callback
 			if(listener!=null)
 				listener.errorCallback(Errors.SC_NO_OBJECT, new SynergyKITError(Errors.SC_NO_OBJECT, Errors.MSG_NO_OBJECT));
 			else if(SynergyKIT.isDebugModeEnabled())
-				Log.e(SynergyKITSdk.TAG,Errors.MSG_NO_CALLBACK_LISTENER);
+				SynergyKITLog.print(Errors.MSG_NO_CALLBACK_LISTENER);
 			
 			return;
 		}
@@ -175,14 +174,13 @@ public class Users implements IUsers{
 		//Object check
 		if(userId == null){
 			//Log
-			if(SynergyKIT.isDebugModeEnabled())
-				Log.e(SynergyKITSdk.TAG,Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);		
+			SynergyKITLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);		
 			
 			//error callback
 			if(listener!=null)
 				listener.errorCallback(Errors.SC_NULL_ARGUMENTS_OR_EMPTY, new SynergyKITError(Errors.SC_NULL_ARGUMENTS_OR_EMPTY, Errors.MSG_NULL_ARGUMENTS_OR_EMPTY));
 			else if(SynergyKIT.isDebugModeEnabled())
-				Log.e(SynergyKITSdk.TAG,Errors.MSG_NO_CALLBACK_LISTENER);
+				SynergyKITLog.print(Errors.MSG_NO_CALLBACK_LISTENER);
 			
 			return;
 		}

@@ -1,10 +1,7 @@
 package com.letsgood.synergykit.builders.uri;
 
-import com.letsgood.synergykit.SynergyKIT;
-import com.letsgood.synergykit.SynergyKITSdk;
 import com.letsgood.synergykit.builders.errors.Errors;
-
-import android.util.Log;
+import com.letsgood.synergykit.log.SynergyKITLog;
 
 public class Collection {
 
@@ -15,10 +12,8 @@ public class Collection {
 	public void setCollection(String collection) {
 		
 		// null check
-		if (collection == null || collection.length() == 0) {
-
-			if (SynergyKIT.isDebugModeEnabled())
-				Log.e(SynergyKITSdk.TAG, Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
+		if (collection == null || collection.length() == 0) {			
+			SynergyKITLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);		
 		}
 		
 		this.collection = collection;

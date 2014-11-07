@@ -4,7 +4,6 @@ import java.lang.reflect.Type;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.letsgood.synergykit.builders.errors.Errors;
 import com.letsgood.synergykit.cache.Cache;
@@ -21,6 +20,7 @@ import com.letsgood.synergykit.listeners.RecordsResponseListener;
 import com.letsgood.synergykit.listeners.ResponseListener;
 import com.letsgood.synergykit.listeners.UserResponseListener;
 import com.letsgood.synergykit.listeners.UsersResponseListener;
+import com.letsgood.synergykit.log.SynergyKITLog;
 import com.letsgood.synergykit.request.SynergyKITRequest;
 import com.letsgood.synergykit.resources.SynergyKITAuthConfig;
 import com.letsgood.synergykit.resources.SynergyKITConfig;
@@ -30,13 +30,9 @@ import com.letsgood.synergykit.resources.SynergyKITObject;
 import com.letsgood.synergykit.resources.SynergyKITUser;
 
 public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotification, ICache, IAuthorization{
-
-	/* Constants */
-	public static final String TAG = "SynergyKIT";
 	
 	/* Attributes */
 	private static SynergyKITSdk instance = null;
-	private boolean debugModeEnabled = false;
 	private SynergyKITAuthConfig authConfig = new SynergyKITAuthConfig();
 	private SynergyKITConfig config = new SynergyKITConfig();
 	private IRecords records = new Records();
@@ -122,9 +118,7 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotific
 		
 		if(config==null){
 			//Log
-			if(SynergyKIT.isDebugModeEnabled()){
-				Log.e(SynergyKITSdk.TAG,Errors.MSG_NO_CONFIG);
-			}
+			SynergyKITLog.print(Errors.MSG_NO_CONFIG);
 		}
 		
 		return config;
@@ -137,8 +131,7 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotific
 		if(request==null){
 
 			//Log
-			if(SynergyKIT.isDebugModeEnabled())
-				Log.e(SynergyKITSdk.TAG,Errors.MSG_NO_REQUEST);
+			SynergyKITLog.print(Errors.MSG_NO_REQUEST);
 			
 			return;
 		}
@@ -154,14 +147,14 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotific
 	
 	/* Debug mode enabled getter */
 	@Override
-	public boolean isDebugModeEnabled(){
-		return debugModeEnabled;
+	public boolean isDebugModeEnabled(){ 
+		return SynergyKITLog.isEnabled();
 	}
 	
 	/* Debug mode enabled setter */ 
 	@Override
 	public void setDebugModeEnabled(boolean debugModeEnabled){
-		this.debugModeEnabled = debugModeEnabled;
+		SynergyKITLog.setEnabled(debugModeEnabled);
 	}
 	
 	//---------------------------------------------------------------------------------------
