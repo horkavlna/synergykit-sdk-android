@@ -184,6 +184,6 @@ public class SynergyKIT {
 	
 	/* Login user */
 	public static void loginUser(SynergyKITUser user, UserResponseListener listener){
-		SynergyKITSdk.getInstance().registerUser(user, listener);
+		SynergyKITSdk.getInstance().loginUser(user, listener);
 	}
 }
