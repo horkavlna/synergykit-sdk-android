@@ -27,6 +27,7 @@ public class Filter {
 		
 		if(attribute == null || attribute.length()==0 || operator==null || operator.length()==0|| parametr==null || parametr.length() ==0){
 			SynergyKITLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
+			return;
 		}
 	
 		
@@ -38,6 +39,7 @@ public class Filter {
 		
 		if(attribute == null || attribute.length()==0 || operator==null || operator.length()==0){
 			SynergyKITLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
+			return;
 		}
 			
 		
@@ -50,6 +52,7 @@ public class Filter {
 	public void setFilter(String filter){
 		if(filter == null || filter.length()==0){
 			SynergyKITLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
+			return;
 		}
 			
 		
@@ -87,6 +90,7 @@ public class Filter {
 	public static String buildParametr(String parameter){
 		if(parameter == null || parameter.length()==0){
 			SynergyKITLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
+			return "''";
 		}
 		
 		return "'" + parameter	 + "'";
@@ -98,6 +102,7 @@ public class Filter {
 		
 		if(arrayParameter == null || arrayParameter.length==0){
 			SynergyKITLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
+			return "''";
 		}
 		
 		
