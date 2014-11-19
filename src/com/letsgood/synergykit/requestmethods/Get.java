@@ -28,9 +28,9 @@ public class Get extends RequestMethod {
 	/* Execute */
 	@Override
 	public BufferedReader execute() {
-		InputStream inputStream = doRequest();
+		InputStream inputStream = halfExecute();
 
-		if(doRequest()==null){
+		if(halfExecute()==null){
 			return null;
 		}
 		
@@ -38,7 +38,7 @@ public class Get extends RequestMethod {
 	}
 	
 	/* Get method */
-	public InputStream doRequest(){
+	public InputStream halfExecute(){
 			String uri = null;
 		
 		//init check

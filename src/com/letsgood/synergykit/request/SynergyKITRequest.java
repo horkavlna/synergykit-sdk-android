@@ -44,7 +44,7 @@ public abstract class SynergyKITRequest extends AsyncTask<Void, Void, Object> {
 		SynergyKITResponse response = new SynergyKITResponse();
 		Get get = new Get(uri); // request method get
 
-		response.setInputStream(get.doRequest());
+		response.setInputStream(get.halfExecute());
 		response.setStatusCode(get.getStatusCode());
 
 		return response;
