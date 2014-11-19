@@ -15,9 +15,11 @@ import com.letsgood.synergykit.interfaces.INotification;
 import com.letsgood.synergykit.interfaces.IRecords;
 import com.letsgood.synergykit.interfaces.ISynergyKITSdk;
 import com.letsgood.synergykit.interfaces.IUsers;
+import com.letsgood.synergykit.listeners.BitmapResponseListener;
+import com.letsgood.synergykit.listeners.BytesResponseListener;
 import com.letsgood.synergykit.listeners.DeleteResponseListener;
 import com.letsgood.synergykit.listeners.EmailResponseListener;
-import com.letsgood.synergykit.listeners.FileResponseListener;
+import com.letsgood.synergykit.listeners.FileDataResponseListener;
 import com.letsgood.synergykit.listeners.NotificationResponseListener;
 import com.letsgood.synergykit.listeners.RecordsResponseListener;
 import com.letsgood.synergykit.listeners.ResponseListener;
@@ -283,22 +285,29 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotific
 	//-------------------------------------------------------------------------------------------------------------------
 	/* Upload file */
 	@Override
-	public void uploadFile(byte[] data, FileResponseListener listener) {
+	public void uploadFile(byte[] data, FileDataResponseListener listener) {
 		files.uploadFile(data, listener);
 		
 	}
 	
 	/* Upload bitmap */
 	@Override
-	public void uploadBitmap(Bitmap bitmap, FileResponseListener listener) {
+	public void uploadBitmap(Bitmap bitmap, FileDataResponseListener listener) {
 		files.uploadBitmap(bitmap, listener);
 		
 	}
 
 	/* Download bitmap */
 	@Override
-	public void downloadBitmap() {
-		// TODO Auto-generated method stub
+	public void downloadBitmap(String bitmapId, BitmapResponseListener listener) {
+		files.downloadBitmap(bitmapId, listener);
+		
+	}
+
+	/* Download file */
+	@Override
+	public void downloadFile(String fileId, BytesResponseListener listener) {
+		files.downloadFile(fileId, listener);
 		
 	}
 

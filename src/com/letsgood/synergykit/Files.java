@@ -3,23 +3,29 @@ package com.letsgood.synergykit;
 import java.io.ByteArrayOutputStream;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
 
 import com.letsgood.synergykit.builders.UriBuilder;
 import com.letsgood.synergykit.builders.errors.Errors;
 import com.letsgood.synergykit.builders.uri.Resource;
 import com.letsgood.synergykit.interfaces.IFiles;
-import com.letsgood.synergykit.listeners.FileResponseListener;
+import com.letsgood.synergykit.listeners.BitmapResponseListener;
+import com.letsgood.synergykit.listeners.BytesResponseListener;
+import com.letsgood.synergykit.listeners.FileDataResponseListener;
 import com.letsgood.synergykit.log.SynergyKITLog;
+import com.letsgood.synergykit.request.FileRequestGet;
 import com.letsgood.synergykit.request.FileRequestPost;
 import com.letsgood.synergykit.resources.SynergyKITConfig;
 import com.letsgood.synergykit.resources.SynergyKITError;
 import com.letsgood.synergykit.resources.SynergyKITFileData;
+import com.letsgood.synergykit.resources.SynergyKITUri;
 
 public class Files implements IFiles{
 
 	/* Create file */
 	@Override
-	public void uploadFile(byte[] data, FileResponseListener listener) {
+	public void uploadFile(byte[] data, FileDataResponseListener listener) {
 		SynergyKITConfig config = new SynergyKITConfig();
 		FileRequestPost request = new FileRequestPost();
 
@@ -62,7 +68,7 @@ public class Files implements IFiles{
 
 	/* Upload bitmap */
 	@Override
-	public void uploadBitmap(Bitmap bitmap, FileResponseListener listener) {
+	public void uploadBitmap(Bitmap bitmap, FileDataResponseListener listener) {
 		byte[] data = null; 
 		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 		
@@ -90,9 +96,52 @@ public class Files implements IFiles{
 	
 	/* Dowload Bitmap */
 	@Override
-	public void downloadBitmap() {
-		// TODO Auto-generated method stub
+	public void downloadBitmap(String uri, final BitmapResponseListener listener) {
 		
+		//Download file
+		SynergyKIT.downloadFile(uri, new BytesResponseListener() {
+			
+			//Error callback
+			@Override
+			public void errorCallback(int statusCode, SynergyKITError errorObject) {
+				listener.errorCallback(statusCode, errorObject);				
+			}
+			
+			//Done callback
+			@Override
+			public void doneCallback(int statusCode, byte[] data) {
+				Bitmap bitmap = null;
+				
+				//build bitmap
+				if(data!=null){
+					Log.e("FootballTime",Integer.toString(data.hashCode()) + " " + Integer.toString(data.length));
+					bitmap = BitmapFactory.decodeByteArray(data , 0, data .length);
+				}
+				
+				
+				listener.doneCallback(statusCode, bitmap);
+			}
+		});
+		
+	}
+
+	/* Download file */
+	@Override
+	public void downloadFile(String uri, BytesResponseListener listener) {
+		FileRequestGet request = new FileRequestGet();
+		SynergyKITConfig config = SynergyKIT.getConfig();		
+				
+		
+		//Uri builder
+		SynergyKITUri synergyKITUri = new SynergyKITUri(uri);
+		
+		//set config
+		config.setUri(synergyKITUri);
+		config.setParallelMode(true);
+
+		request.setConfig(config);
+		request.setListener(listener); 
+		SynergyKIT.synergylize(request, config.isParallelMode());	
 	}
 
 

@@ -5,9 +5,11 @@ import java.lang.reflect.Type;
 import android.content.Context;
 import android.graphics.Bitmap;
 
+import com.letsgood.synergykit.listeners.BitmapResponseListener;
+import com.letsgood.synergykit.listeners.BytesResponseListener;
 import com.letsgood.synergykit.listeners.DeleteResponseListener;
 import com.letsgood.synergykit.listeners.EmailResponseListener;
-import com.letsgood.synergykit.listeners.FileResponseListener;
+import com.letsgood.synergykit.listeners.FileDataResponseListener;
 import com.letsgood.synergykit.listeners.NotificationResponseListener;
 import com.letsgood.synergykit.listeners.RecordsResponseListener;
 import com.letsgood.synergykit.listeners.ResponseListener;
@@ -191,14 +193,26 @@ public class SynergyKIT {
 	
 	//-------------------------------------------------------------------------------------------------------------------
 	/* Upload file */
-	public static void uploadFile(byte[] data, FileResponseListener listener) {
+	public static void uploadFile(byte[] data, FileDataResponseListener listener) {
 		SynergyKITSdk.getInstance().uploadFile(data, listener);
 		
 	}
 	
 	/* Upload bitmap */
-	public static void uploadBitmap(Bitmap bitmap, FileResponseListener listener) {
+	public static void uploadBitmap(Bitmap bitmap, FileDataResponseListener listener) {
 		SynergyKITSdk.getInstance().uploadBitmap(bitmap, listener);
+		
+	}
+
+	/* Download bitmap */
+	public static void downloadBitmap(String uri, BitmapResponseListener listener) {
+		SynergyKITSdk.getInstance().downloadBitmap(uri, listener);
+		
+	}
+
+	/* Download file */
+	public static void downloadFile(String uri, BytesResponseListener listener) {
+		SynergyKITSdk.getInstance().downloadFile(uri, listener);
 		
 	}
 }

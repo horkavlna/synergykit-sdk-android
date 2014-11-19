@@ -1,6 +1,7 @@
 package com.letsgood.synergykit.requestmethods;
 
 import java.io.BufferedReader;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -27,7 +28,18 @@ public class Get extends RequestMethod {
 	/* Execute */
 	@Override
 	public BufferedReader execute() {
-		String uri = null;
+		InputStream inputStream = doRequest();
+
+		if(doRequest()==null){
+			return null;
+		}
+		
+		return readStream(inputStream);
+	}
+	
+	/* Get method */
+	public InputStream doRequest(){
+			String uri = null;
 		
 		//init check
 		if(!SynergyKIT.isInit()){
@@ -68,16 +80,16 @@ public class Get extends RequestMethod {
 
 			//read stream
 			if(statusCode>=HttpURLConnection.HTTP_OK && statusCode<HttpURLConnection.HTTP_MULT_CHOICE){
-				return readStream(httpURLConnection.getInputStream());
+				return httpURLConnection.getInputStream();
 			}else{
-				return readStream(httpURLConnection.getErrorStream());
+				return httpURLConnection.getErrorStream();
 			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
-		
 	}
+
 
 }

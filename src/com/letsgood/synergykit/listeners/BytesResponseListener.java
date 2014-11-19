@@ -1,9 +1,8 @@
 package com.letsgood.synergykit.listeners;
 
 import com.letsgood.synergykit.resources.SynergyKITError;
-import com.letsgood.synergykit.resources.SynergyKITFileData;
 
-public interface FileResponseListener {
-	public void doneCallback(int statusCode,SynergyKITFileData object);
+public interface BytesResponseListener {
+	public void doneCallback(int statusCode,byte[] data);
 	public void errorCallback(int statusCode, SynergyKITError errorObject);
 }

@@ -39,6 +39,17 @@ public abstract class SynergyKITRequest extends AsyncTask<Void, Void, Object> {
 		return response;
 	}
 
+	/* Request method GET */
+	protected static SynergyKITResponse getFile(SynergyKITUri uri) {
+		SynergyKITResponse response = new SynergyKITResponse();
+		Get get = new Get(uri); // request method get
+
+		response.setInputStream(get.doRequest());
+		response.setStatusCode(get.getStatusCode());
+
+		return response;
+	}
+	
 	/* Request method POST */
 	protected static SynergyKITResponse post(SynergyKITUri uri, Object object) {
 		SynergyKITResponse response = new SynergyKITResponse();
@@ -124,6 +135,7 @@ public abstract class SynergyKITRequest extends AsyncTask<Void, Void, Object> {
 	protected ResponseDataHolder manageResponseToObjects(
 			SynergyKITResponse response, Type type) {
 		ResponseDataHolder dataHolder = new ResponseDataHolder();
+		
 
 		if (response == null
 				|| response.getStatusCode() >= HttpStatus.SC_INTERNAL_SERVER_ERROR
@@ -160,6 +172,7 @@ public abstract class SynergyKITRequest extends AsyncTask<Void, Void, Object> {
 		public SynergyKITError errorObject;
 		public SynergyKITObject object;
 		public SynergyKITObject[] objects;
+		public byte[] data;
 		public int statusCode;
 
 		/* Constructor */
@@ -168,6 +181,7 @@ public abstract class SynergyKITRequest extends AsyncTask<Void, Void, Object> {
 			errorObject = null;
 			object = null;
 			objects = null;
+			data = null;
 		}
 	}
 }

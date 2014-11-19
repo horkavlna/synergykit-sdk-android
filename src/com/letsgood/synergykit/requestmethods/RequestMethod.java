@@ -49,6 +49,7 @@ public abstract class RequestMethod implements IRequestMethod {
 	protected BufferedReader readStream(InputStream inputStream){
 		InputStreamReader inputStreamReader = null;
 		BufferedReader bufferedReader = null;
+			
 		
 		if(inputStream==null)
 			return bufferedReader;
