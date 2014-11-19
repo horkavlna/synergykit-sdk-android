@@ -3,18 +3,21 @@ package com.letsgood.synergykit;
 import java.lang.reflect.Type;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 
 import com.letsgood.synergykit.builders.errors.Errors;
 import com.letsgood.synergykit.cache.Cache;
 import com.letsgood.synergykit.interfaces.IAuthorization;
 import com.letsgood.synergykit.interfaces.ICache;
+import com.letsgood.synergykit.interfaces.IFiles;
 import com.letsgood.synergykit.interfaces.INotification;
 import com.letsgood.synergykit.interfaces.IRecords;
 import com.letsgood.synergykit.interfaces.ISynergyKITSdk;
 import com.letsgood.synergykit.interfaces.IUsers;
 import com.letsgood.synergykit.listeners.DeleteResponseListener;
 import com.letsgood.synergykit.listeners.EmailResponseListener;
+import com.letsgood.synergykit.listeners.FileResponseListener;
 import com.letsgood.synergykit.listeners.NotificationResponseListener;
 import com.letsgood.synergykit.listeners.RecordsResponseListener;
 import com.letsgood.synergykit.listeners.ResponseListener;
@@ -29,7 +32,7 @@ import com.letsgood.synergykit.resources.SynergyKITNotification;
 import com.letsgood.synergykit.resources.SynergyKITObject;
 import com.letsgood.synergykit.resources.SynergyKITUser;
 
-public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotification, ICache, IAuthorization{
+public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotification, ICache, IAuthorization, IFiles{
 	
 	/* Attributes */
 	private static SynergyKITSdk instance = null;
@@ -40,6 +43,7 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotific
 	private INotification notifications = new Notifications();
 	private IAuthorization authorization = new Authorization();
 	private ICache cache = new Cache();
+	private IFiles files = new Files();
 	
 	//---------------------------------------------------------------------------------------
 	/* Instance static getter */
@@ -274,6 +278,28 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotific
 	@Override
 	public void loginUser(SynergyKITUser user, UserResponseListener listener) {
 		authorization.loginUser(user, listener);		
+	}
+
+	//-------------------------------------------------------------------------------------------------------------------
+	/* Upload file */
+	@Override
+	public void uploadFile(byte[] data, FileResponseListener listener) {
+		files.uploadFile(data, listener);
+		
+	}
+	
+	/* Upload bitmap */
+	@Override
+	public void uploadBitmap(Bitmap bitmap, FileResponseListener listener) {
+		files.uploadBitmap(bitmap, listener);
+		
+	}
+
+	/* Download bitmap */
+	@Override
+	public void downloadBitmap() {
+		// TODO Auto-generated method stub
+		
 	}
 
 

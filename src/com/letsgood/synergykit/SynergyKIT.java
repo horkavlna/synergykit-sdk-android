@@ -3,9 +3,11 @@ package com.letsgood.synergykit;
 import java.lang.reflect.Type;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 
 import com.letsgood.synergykit.listeners.DeleteResponseListener;
 import com.letsgood.synergykit.listeners.EmailResponseListener;
+import com.letsgood.synergykit.listeners.FileResponseListener;
 import com.letsgood.synergykit.listeners.NotificationResponseListener;
 import com.letsgood.synergykit.listeners.RecordsResponseListener;
 import com.letsgood.synergykit.listeners.ResponseListener;
@@ -185,5 +187,18 @@ public class SynergyKIT {
 	/* Login user */
 	public static void loginUser(SynergyKITUser user, UserResponseListener listener){
 		SynergyKITSdk.getInstance().loginUser(user, listener);
+	}
+	
+	//-------------------------------------------------------------------------------------------------------------------
+	/* Upload file */
+	public static void uploadFile(byte[] data, FileResponseListener listener) {
+		SynergyKITSdk.getInstance().uploadFile(data, listener);
+		
+	}
+	
+	/* Upload bitmap */
+	public static void uploadBitmap(Bitmap bitmap, FileResponseListener listener) {
+		SynergyKITSdk.getInstance().uploadBitmap(bitmap, listener);
+		
 	}
 }

@@ -19,7 +19,9 @@ public abstract class RequestMethod implements IRequestMethod {
 	protected static final String PROPERTY_USER_AGENT_VALUE = "Android";
 	protected static final String PROPERTY_AUTHORIZATION = "Authorization";
 	protected static final String PROPERTY_ACCEPT = "Accept";
-	protected static final String PROPERTY_ACCEPT_VALUE = "application/json";
+	protected static final String ACCEPT_APPLICATION_VALUE = "application/json";
+	protected static final String PROPERTY_CONTENTY_TYPE = "Content-Type";
+	protected static final String CONTENT_TYPE_APPLICATION_JSON = "application/json";
 	
 	
 	/* Attributes */

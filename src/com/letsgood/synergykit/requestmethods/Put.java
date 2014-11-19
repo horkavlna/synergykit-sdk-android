@@ -60,7 +60,7 @@ public class Put extends RequestMethod{
 			httpURLConnection.setReadTimeout(READ_TIMEOUT); //set read timeout
 			httpURLConnection.setRequestMethod(REQUEST_METHOD); //set method
 			httpURLConnection.addRequestProperty(PROPERTY_USER_AGENT, PROPERTY_USER_AGENT_VALUE); //set property accept
-			httpURLConnection.addRequestProperty(PROPERTY_ACCEPT, PROPERTY_ACCEPT_VALUE); //set property accept
+			httpURLConnection.addRequestProperty(PROPERTY_ACCEPT, ACCEPT_APPLICATION_VALUE); //set property accept
 			httpURLConnection.addRequestProperty("Content-Type","application/json");
 			httpURLConnection.setDoInput(true);
 			httpURLConnection.setDoOutput(true);

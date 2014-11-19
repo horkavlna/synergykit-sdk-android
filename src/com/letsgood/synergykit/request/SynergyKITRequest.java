@@ -4,18 +4,19 @@ import java.lang.reflect.Type;
 
 import org.apache.http.HttpStatus;
 
+import android.os.AsyncTask;
+
 import com.letsgood.synergykit.builders.ResultObjectBuilder;
 import com.letsgood.synergykit.builders.errors.Errors;
 import com.letsgood.synergykit.requestmethods.Delete;
 import com.letsgood.synergykit.requestmethods.Get;
 import com.letsgood.synergykit.requestmethods.Post;
+import com.letsgood.synergykit.requestmethods.PostFile;
 import com.letsgood.synergykit.requestmethods.Put;
 import com.letsgood.synergykit.resources.SynergyKITError;
 import com.letsgood.synergykit.resources.SynergyKITObject;
 import com.letsgood.synergykit.resources.SynergyKITResponse;
 import com.letsgood.synergykit.resources.SynergyKITUri;
-
-import android.os.AsyncTask;
 
 public abstract class SynergyKITRequest extends AsyncTask<Void, Void, Object> {
 
@@ -48,6 +49,17 @@ public abstract class SynergyKITRequest extends AsyncTask<Void, Void, Object> {
 
 		return response;
 	}
+	
+	/* Request method POST */
+	protected static SynergyKITResponse postFile(SynergyKITUri uri, byte[] data) {
+		SynergyKITResponse response = new SynergyKITResponse();
+		PostFile postFile = new PostFile(uri, data);
+
+		response.setBufferedReader(postFile.execute());
+		response.setStatusCode(postFile.getStatusCode());
+
+		return response;
+	}
 
 	/* Request method PUT */
 	protected static SynergyKITResponse put(SynergyKITUri uri, Object object) {
@@ -62,17 +74,6 @@ public abstract class SynergyKITRequest extends AsyncTask<Void, Void, Object> {
 
 	/* Request method PUT */
 	protected static SynergyKITResponse delete(SynergyKITUri uri) {
-		SynergyKITResponse response = new SynergyKITResponse();
-		Delete delete = new Delete(uri);
-
-		response.setBufferedReader(delete.execute());
-		response.setStatusCode(delete.getStatusCode());
-
-		return response;
-	}
-
-	/* Request method DELETE */
-	protected static SynergyKITResponse put(SynergyKITUri uri) {
 		SynergyKITResponse response = new SynergyKITResponse();
 		Delete delete = new Delete(uri);
 

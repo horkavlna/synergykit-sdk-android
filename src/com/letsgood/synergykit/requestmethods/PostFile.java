@@ -8,32 +8,34 @@ import java.net.URL;
 import android.util.Base64;
 
 import com.letsgood.synergykit.SynergyKIT;
-import com.letsgood.synergykit.addons.GsonWrapper;
 import com.letsgood.synergykit.builders.errors.Errors;
 import com.letsgood.synergykit.log.SynergyKITLog;
 import com.letsgood.synergykit.resources.SynergyKITUri;
 
-public class Post extends RequestMethod {
-
+public class PostFile extends RequestMethod {
 	/* Constants */
 	protected static final String REQUEST_METHOD = "POST";
+	protected static final String ATTACHMENT_NAME = "file";
+	protected static final String ATTACHMENT_FILE_NAME = "file.jpg";
+	protected static final String CRLF = "\r\n";
+	protected static final String TWO_HYPHENS = "--";
+	protected static final String BOUNDARY =  "*****";
 		
 	/* Attributes */
-	private Object object = null;
+	private byte[] data = null;
 	private DataOutputStream dataOutputStream = null;
 	
 	/* Constructor */
-	public Post(SynergyKITUri uri, Object object) {
+	public PostFile(SynergyKITUri uri, byte[] data) {
 		super();
 		
 		setUri(uri);
-		this.object = object;
+		this.data = data;
 	}
 
 	/* Execute */
 	@Override
 	public BufferedReader execute() {
-		String jSon = null;
 		String uri = null;
 		
 		//init check
@@ -62,7 +64,8 @@ public class Post extends RequestMethod {
 			httpURLConnection.setRequestMethod(REQUEST_METHOD); //set method
 			httpURLConnection.addRequestProperty(PROPERTY_USER_AGENT, PROPERTY_USER_AGENT_VALUE); //set property accept
 			httpURLConnection.addRequestProperty(PROPERTY_ACCEPT, ACCEPT_APPLICATION_VALUE); //set property accept
-			httpURLConnection.addRequestProperty("Content-Type","application/json");
+			httpURLConnection.addRequestProperty("Content-Type","multipart/form-data;boundary=" + BOUNDARY);
+			httpURLConnection.addRequestProperty("Connection", "Keep-Alive");
 			httpURLConnection.setDoInput(true);
 			httpURLConnection.setDoOutput(true);
 			
@@ -77,16 +80,22 @@ public class Post extends RequestMethod {
 			
 			
 			//write data
-			if(object!=null){
-				jSon = GsonWrapper.getGson().toJson(object);
+			if(data!=null){
 				dataOutputStream = new DataOutputStream( httpURLConnection.getOutputStream());
-				dataOutputStream.write(jSon.getBytes(CHARSET));
+
+				dataOutputStream.writeBytes(TWO_HYPHENS + BOUNDARY + CRLF);
+				dataOutputStream.writeBytes("Content-Disposition: form-data; name=\"" + ATTACHMENT_NAME + "\";filename=\"" + ATTACHMENT_FILE_NAME + "\"" + CRLF);
+				dataOutputStream.writeBytes(CRLF);
+				dataOutputStream.write(data);
+				dataOutputStream.writeBytes(CRLF);
+				dataOutputStream.writeBytes(TWO_HYPHENS + BOUNDARY + TWO_HYPHENS + CRLF);
 				dataOutputStream.flush();
 				dataOutputStream.close();				
 			}
 			
 			statusCode = httpURLConnection.getResponseCode(); //get status code
-
+			SynergyKITLog.print(Integer.toString(statusCode));
+			
 			//read stream
 			if(statusCode>=HttpURLConnection.HTTP_OK && statusCode<HttpURLConnection.HTTP_MULT_CHOICE){
 				return readStream(httpURLConnection.getInputStream());
@@ -101,5 +110,4 @@ public class Post extends RequestMethod {
 		}
 		
 	}
-
 }
