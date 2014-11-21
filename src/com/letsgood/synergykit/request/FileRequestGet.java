@@ -10,6 +10,7 @@ import com.letsgood.synergykit.builders.errors.Errors;
 import com.letsgood.synergykit.listeners.BytesResponseListener;
 import com.letsgood.synergykit.log.SynergyKITLog;
 import com.letsgood.synergykit.resources.SynergyKITConfig;
+import com.letsgood.synergykit.resources.SynergyKITError;
 import com.letsgood.synergykit.resources.SynergyKITResponse;
 
 
@@ -49,8 +50,10 @@ public class FileRequestGet extends SynergyKITRequest{
 			byteArrayOutputStream = new ByteArrayOutputStream(); //init output stream
 			buffer = new byte[1000];
 			
-			//convert to bytes
+			
 			try {
+				
+				//convert to bytes
 				while(response.getInputStream()!=null && (readInt = response.getInputStream().read(buffer)) != -1){
 					byteArrayOutputStream.write(buffer,0,readInt);
 				}
@@ -60,10 +63,11 @@ public class FileRequestGet extends SynergyKITRequest{
 				dataHolder.statusCode = response.getStatusCode(); //set status code
 				dataHolder.data = byteArrayOutputStream.toByteArray(); //convert to byte array
 				
-				SynergyKITLog.print(dataHolder.data.hashCode() + " " + dataHolder.data.length);
-				
 			} catch (IOException e) {
 				e.printStackTrace();
+				dataHolder = new ResponseDataHolder(); //init
+				dataHolder.statusCode = Errors.SC_UNSPECIFIED_ERROR; //set status code
+				dataHolder.errorObject = new SynergyKITError(Errors.SC_UNSPECIFIED_ERROR, Errors.MSG_UNSPECIFIED_ERROR);
 			}
 			
 		}else{
