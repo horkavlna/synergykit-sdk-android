@@ -4,7 +4,6 @@ import java.io.ByteArrayOutputStream;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 
 import com.letsgood.synergykit.builders.UriBuilder;
 import com.letsgood.synergykit.builders.errors.Errors;
@@ -69,7 +68,6 @@ public class Files implements IFiles{
 	/* Upload bitmap */
 	@Override
 	public void uploadBitmap(Bitmap bitmap, FileDataResponseListener listener) {
-		byte[] data = null; 
 		ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
 		
 		//Object check
@@ -114,7 +112,6 @@ public class Files implements IFiles{
 				
 				//build bitmap
 				if(data!=null){
-					Log.e("FootballTime",Integer.toString(data.hashCode()) + " " + Integer.toString(data.length));
 					bitmap = BitmapFactory.decodeByteArray(data , 0, data .length);
 				}
 				
