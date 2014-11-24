@@ -6,7 +6,7 @@
 
 ### SynergyKIT inicialization
 ```java
-SynergyKIT.init(demo,114a5371-59c6-484f-a5de-5c810ee417dd);
+SynergyKIT.init("demo","114a5371-59c6-484f-a5de-5c810ee417dd");
 ```
 
 
