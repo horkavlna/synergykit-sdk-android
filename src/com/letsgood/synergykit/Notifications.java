@@ -14,6 +14,11 @@ import com.letsgood.synergykit.resources.SynergyKITEmail;
 import com.letsgood.synergykit.resources.SynergyKITError;
 import com.letsgood.synergykit.resources.SynergyKITNotification;
 
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
+ *
+ */
+
 public class Notifications implements INotification{
 
 	/* Send email */
@@ -27,7 +32,7 @@ public class Notifications implements INotification{
 			SynergyKITLog.print(Errors.MSG_NO_OBJECT);
 			
 			
-			//error callback
+			//Error callback
 			if(listener!=null)
 				listener.errorCallback(Errors.SC_NO_OBJECT, new SynergyKITError(Errors.SC_NO_OBJECT, Errors.MSG_NO_OBJECT));
 			else if(SynergyKIT.isDebugModeEnabled())

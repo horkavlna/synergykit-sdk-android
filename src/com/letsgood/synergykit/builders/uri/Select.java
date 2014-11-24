@@ -6,6 +6,11 @@ import java.util.List;
 import com.letsgood.synergykit.builders.errors.Errors;
 import com.letsgood.synergykit.log.SynergyKITLog;
 
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
+ *
+ */
+
 public class Select {
 
 	/* Attributes */

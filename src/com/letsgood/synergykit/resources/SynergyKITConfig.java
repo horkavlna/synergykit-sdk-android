@@ -2,6 +2,11 @@ package com.letsgood.synergykit.resources;
 
 import java.lang.reflect.Type;
 
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
+ *
+ */
+
 public class SynergyKITConfig {
 	/* Attributes */
 	private boolean parallelMode = false;

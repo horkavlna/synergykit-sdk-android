@@ -16,6 +16,7 @@ import com.letsgood.synergykit.resources.SynergyKITUri;
  * Copyright 2014 Letsgood.com s.r.o.
  *
  */
+
 public class UriBuilder {
 	/* Constants */
 	private static final String BASE_SYNERGYKIT_URL = "https://production.api.synergykit.com/v2";		
@@ -32,9 +33,6 @@ public class UriBuilder {
 	private InLineCount inLineCount = new InLineCount();
 
 	
-
-	
-		
 	/* Resource setter */
 	public UriBuilder setResource(String resource){
 		this.resource.setResource(resource);

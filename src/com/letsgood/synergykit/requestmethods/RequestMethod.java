@@ -10,6 +10,11 @@ import java.net.URL;
 import com.letsgood.synergykit.interfaces.IRequestMethod;
 import com.letsgood.synergykit.resources.SynergyKITUri;
 
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
+ *
+ */
+
 public abstract class RequestMethod implements IRequestMethod {
 	/* Constants */
 	protected static final String CHARSET = "UTF-8";

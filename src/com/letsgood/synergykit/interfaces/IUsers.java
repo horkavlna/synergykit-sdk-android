@@ -8,6 +8,11 @@ import com.letsgood.synergykit.listeners.UsersResponseListener;
 import com.letsgood.synergykit.resources.SynergyKITConfig;
 import com.letsgood.synergykit.resources.SynergyKITUser;
 
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
+ *
+ */
+
 public interface IUsers{
 	public void getUser(SynergyKITConfig config, UserResponseListener listener);
 	public void getUser(String userId, Type type, UserResponseListener listener, boolean parallelMode );

@@ -3,6 +3,11 @@ package com.letsgood.synergykit.resources;
 import java.io.BufferedReader;
 import java.io.InputStream;
 
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
+ *
+ */
+
 public class SynergyKITResponse {
 	
 	/* Attributes */

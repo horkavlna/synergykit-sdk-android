@@ -1,5 +1,10 @@
 package com.letsgood.synergykit.builders.errors;
 
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
+ *
+ */
+
 public class Errors {
 	
 	//Unspecified error 

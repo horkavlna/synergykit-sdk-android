@@ -1,5 +1,10 @@
 package com.letsgood.synergykit.resources;
 
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
+ *
+ */
+
 public class SynergyKITFileData extends SynergyKITObject{
 	
 	/* Attributes */

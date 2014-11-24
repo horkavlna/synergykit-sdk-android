@@ -8,6 +8,11 @@ import com.letsgood.synergykit.log.SynergyKITLog;
 import com.letsgood.synergykit.resources.SynergyKITConfig;
 import com.letsgood.synergykit.resources.SynergyKITResponse;
 
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
+ *
+ */
+
 
 public class RecordsRequestGet extends SynergyKITRequest{
 

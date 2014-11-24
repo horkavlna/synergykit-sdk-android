@@ -18,6 +18,11 @@ import com.letsgood.synergykit.resources.SynergyKITObject;
 import com.letsgood.synergykit.resources.SynergyKITResponse;
 import com.letsgood.synergykit.resources.SynergyKITUri;
 
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
+ *
+ */
+
 public abstract class SynergyKITRequest extends AsyncTask<Void, Void, Object> {
 
 	/* Do in background */

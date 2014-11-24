@@ -8,6 +8,11 @@ import com.letsgood.synergykit.listeners.ResponseListener;
 import com.letsgood.synergykit.resources.SynergyKITConfig;
 import com.letsgood.synergykit.resources.SynergyKITObject;
 
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
+ *
+ */
+
 public interface IRecords {
 	public void getRecord(SynergyKITConfig config, ResponseListener listener);
 	public void getRecord(String collectionUrl, String recordId, Type type, ResponseListener listener, boolean parallelMode );

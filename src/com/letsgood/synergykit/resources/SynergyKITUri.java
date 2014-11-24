@@ -2,8 +2,12 @@ package com.letsgood.synergykit.resources;
 
 import android.webkit.URLUtil;
 
-import com.letsgood.synergykit.builders.errors.Errors;
 import com.letsgood.synergykit.log.SynergyKITLog;
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
+ *
+ */
+import com.letsgood.synergykit.builders.errors.Errors;
 
 public class SynergyKITUri {
 	

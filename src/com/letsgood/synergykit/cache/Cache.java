@@ -8,7 +8,13 @@ import com.letsgood.synergykit.builders.errors.Errors;
 import com.letsgood.synergykit.interfaces.ICache;
 import com.letsgood.synergykit.log.SynergyKITLog;
 
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
+ *
+ */
+
 public class Cache implements ICache{
+	
 	/* Constants */
 	private final static String CACHE_DIR_NAME = "http";
 	private final static int DEFAULT_CACHE_SIZE = 10 * 1024 * 1024;

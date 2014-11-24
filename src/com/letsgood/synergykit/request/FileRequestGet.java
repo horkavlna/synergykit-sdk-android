@@ -1,5 +1,10 @@
 package com.letsgood.synergykit.request;
 
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
+ *
+ */
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;

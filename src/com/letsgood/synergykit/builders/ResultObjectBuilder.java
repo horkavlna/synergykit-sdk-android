@@ -25,6 +25,7 @@ public class ResultObjectBuilder {
 			return null;
 		
 		
+		// Build object
 		try {	
 			return (SynergyKITObject) GsonWrapper.getGson().fromJson(data, type);
 		} catch (ParseException e) {
@@ -43,6 +44,7 @@ public class ResultObjectBuilder {
 		if(data == null || statusCode!=HttpStatus.SC_OK)
 			return null;
 		
+		// Build objects
 		try {
 			baseObjects = (SynergyKITObject[]) GsonWrapper.getGson().fromJson(data, type);																					
 			
@@ -64,6 +66,7 @@ public class ResultObjectBuilder {
 			return null;
 		
 		
+		// Build error
 		try {
 			errorObject =  (SynergyKITError) GsonWrapper.getGson().fromJson(data, SynergyKITError.class);
 			errorObject.setStatusCode(statusCode);

@@ -18,8 +18,14 @@ import com.letsgood.synergykit.request.RequestDelete;
 import com.letsgood.synergykit.resources.SynergyKITConfig;
 import com.letsgood.synergykit.resources.SynergyKITError;
 import com.letsgood.synergykit.resources.SynergyKITObject;
-	
+
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
+ *
+ */
+
 public class Records implements IRecords {
+	
 	/* Constants */
 	private static final int TOP = 100;
 

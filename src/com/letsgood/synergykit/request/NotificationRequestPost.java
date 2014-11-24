@@ -9,6 +9,11 @@ import com.letsgood.synergykit.resources.SynergyKITConfig;
 import com.letsgood.synergykit.resources.SynergyKITNotification;
 import com.letsgood.synergykit.resources.SynergyKITResponse;
 
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
+ *
+ */
+
 public class NotificationRequestPost extends SynergyKITRequest{
 
 	/* Attributes */

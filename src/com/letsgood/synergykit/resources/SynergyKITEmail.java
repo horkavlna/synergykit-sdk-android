@@ -1,6 +1,12 @@
 package com.letsgood.synergykit.resources;
 
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
+ *
+ */
+
 public class SynergyKITEmail extends SynergyKITObject {
+	
 	/* Attributes */
 	protected String url;
 	protected String email;

@@ -34,6 +34,11 @@ import com.letsgood.synergykit.resources.SynergyKITNotification;
 import com.letsgood.synergykit.resources.SynergyKITObject;
 import com.letsgood.synergykit.resources.SynergyKITUser;
 
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
+ *
+ */
+
 public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotification, ICache, IAuthorization, IFiles{
 	
 	/* Attributes */

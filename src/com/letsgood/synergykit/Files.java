@@ -20,6 +20,11 @@ import com.letsgood.synergykit.resources.SynergyKITError;
 import com.letsgood.synergykit.resources.SynergyKITFileData;
 import com.letsgood.synergykit.resources.SynergyKITUri;
 
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
+ *
+ */
+
 public class Files implements IFiles{
 
 	/* Create file */

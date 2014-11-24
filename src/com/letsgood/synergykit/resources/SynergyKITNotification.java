@@ -2,6 +2,11 @@ package com.letsgood.synergykit.resources;
 
 import java.util.LinkedList;
 
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
+ *
+ */
+
 public class SynergyKITNotification extends SynergyKITObject{
 
 	/* Attributes */

@@ -3,6 +3,11 @@ package com.letsgood.synergykit.interfaces;
 import com.letsgood.synergykit.request.SynergyKITRequest;
 import com.letsgood.synergykit.resources.SynergyKITConfig;
 
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
+ *
+ */
+
 public interface ISynergyKITSdk {
 	public void init(String tenant, String applicationKey);
 	public void reset();

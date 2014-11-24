@@ -3,6 +3,11 @@ package com.letsgood.synergykit.builders.uri;
 import com.letsgood.synergykit.builders.errors.Errors;
 import com.letsgood.synergykit.log.SynergyKITLog;
 
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
+ *
+ */
+
 public class Collection {
 
 	/* Attributes */

@@ -10,6 +10,11 @@ import com.letsgood.synergykit.resources.SynergyKITResponse;
 import com.letsgood.synergykit.resources.SynergyKITUser;
 
 
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
+ *
+ */
+
 public class UserRequestGet extends SynergyKITRequest{
 
 	/* Attributes */

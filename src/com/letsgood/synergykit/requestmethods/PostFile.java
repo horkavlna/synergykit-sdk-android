@@ -12,6 +12,11 @@ import com.letsgood.synergykit.builders.errors.Errors;
 import com.letsgood.synergykit.log.SynergyKITLog;
 import com.letsgood.synergykit.resources.SynergyKITUri;
 
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
+ *
+ */
+
 public class PostFile extends RequestMethod {
 	/* Constants */
 	protected static final String REQUEST_METHOD = "POST";

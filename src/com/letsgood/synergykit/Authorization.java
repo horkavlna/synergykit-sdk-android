@@ -11,10 +11,15 @@ import com.letsgood.synergykit.resources.SynergyKITConfig;
 import com.letsgood.synergykit.resources.SynergyKITError;
 import com.letsgood.synergykit.resources.SynergyKITUser;
 
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
+ *
+ */
+
 public class Authorization implements IAuthorization{
 
 	/* Register user */
-	//ONLY FOR BETTER VIEW
+	//ONLY FOR BETTER VIEW - Same method as createUser
 	@Override
 	public void registerUser(SynergyKITUser user, UserResponseListener listener) {
 		SynergyKIT.createUser(user, listener, true);	

@@ -9,6 +9,11 @@ import com.letsgood.synergykit.resources.SynergyKITConfig;
 import com.letsgood.synergykit.resources.SynergyKITFileData;
 import com.letsgood.synergykit.resources.SynergyKITResponse;
 
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
+ *
+ */
+
 public class FileRequestPost extends SynergyKITRequest{
 
 	/* Attributes */

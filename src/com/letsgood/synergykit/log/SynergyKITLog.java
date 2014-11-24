@@ -2,7 +2,13 @@ package com.letsgood.synergykit.log;
 
 import android.util.Log;
 
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
+ *
+ */
+
 public class SynergyKITLog {
+	
 	/* Constants */
 	private static final String TAG = "SynergyKIT";
 

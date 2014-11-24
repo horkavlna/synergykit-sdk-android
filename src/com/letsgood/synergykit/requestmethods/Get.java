@@ -12,6 +12,11 @@ import com.letsgood.synergykit.builders.errors.Errors;
 import com.letsgood.synergykit.log.SynergyKITLog;
 import com.letsgood.synergykit.resources.SynergyKITUri;
 
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
+ *
+ */
+
 public class Get extends RequestMethod {
 
 	/* Constants */
@@ -77,7 +82,7 @@ public class Get extends RequestMethod {
 
 			
 			statusCode = httpURLConnection.getResponseCode(); //get status code
-
+			
 			//read stream
 			if(statusCode>=HttpURLConnection.HTTP_OK && statusCode<HttpURLConnection.HTTP_MULT_CHOICE){
 				return httpURLConnection.getInputStream();

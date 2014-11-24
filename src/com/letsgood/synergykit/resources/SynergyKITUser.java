@@ -3,6 +3,11 @@ package com.letsgood.synergykit.resources;
 import java.util.LinkedList;
 import java.util.List;
 
+/*
+ * Copyright 2014 Letsgood.com s.r.o.
+ *
+ */
+
 public class SynergyKITUser extends SynergyKITObject {
 	/* Constants */
 	protected static final String PLATFORM = "android";
