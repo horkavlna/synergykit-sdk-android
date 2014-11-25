@@ -108,6 +108,62 @@ SynergyKIT.deleteRecord("demo_collection", "494991d3-ecb8-4472-9c2a-1a4a1ed10946
 
 ### Users management
 
+#### `POST` Register new user
+```java
+SynergyKIT.registerUser(demoUser, new UserResponseListener() {
+		
+	@Override
+	public void errorCallback(int statusCode, SynergyKITError errorObject) {
+		// Error callback
+		
+	}
+	
+	@Override
+	public void doneCallback(int statusCode, SynergyKITUser user) {
+		// Done callback
+		
+		DemoUser demoUser = (DemoUser) user;
+	}
+}, true);
+```
+
+#### `POST` Register new user
+```java
+SynergyKIT.registerUser(demoUser, new UserResponseListener() {
+		
+	@Override
+	public void errorCallback(int statusCode, SynergyKITError errorObject) {
+		// Error callback
+		
+	}
+	
+	@Override
+	public void doneCallback(int statusCode, SynergyKITUser user) {
+		// Done callback
+		
+		DemoUser demoUser = (DemoUser) user;
+	}
+}, true);
+```
+#### `POST` Login user
+```java
+SynergyKIT.loginUser(demoUser, new UserResponseListener() {
+		
+	@Override
+	public void errorCallback(int statusCode, SynergyKITError errorObject) {
+		// Error callback
+		
+	}
+	
+	@Override
+	public void doneCallback(int statusCode, SynergyKITUser user) {
+		// Done callback
+		
+		DemoUser demoUser = (DemoUser) user;
+	}
+});
+```
+
 #### `GET` Read user from collection
 ```java
 SynergyKIT.getUser("494991d3-ecb8-4472-9c2a-1a4a1ed10946", DemoUser.class,new UserResponseListener() {
