@@ -23,9 +23,9 @@ SynergyKIT.getRecord("demo_collection","494991d3-ecb8-4472-9c2a-1a4a1ed10946",De
 	
 	@Override
 	public void doneCallback(int statusCode, SynergyKITObject object) {
-		DemoObject object = (DemoObject) object;
-		
 		//Done callback
+		
+		DemoObject object = (DemoObject) object;
 		
 	}
 }, true);
@@ -42,9 +42,67 @@ SynergyKIT.getRecords("demo_collection", DemoObject[].class, new RecordsResponse
 	
 	@Override
 	public void doneCallback(int statusCode, SynergyKITObject[] objects) {
+		//Done callback
+		
 		DemoObject[] demoObjects = (DemoObject[]) objects;
 		
-		//Done callback
 	}
 }, true);
 ```
+
+#### `POST` Create new record
+```java
+SynergyKIT.createRecord("demo_collection", demoObject ,new ResponseListener() {
+	
+	@Override
+	public void errorCallback(int statusCode, SynergyKITError errorObject) {
+		// Error callback
+		
+	}
+	
+	@Override
+	public void doneCallback(int statusCode, SynergyKITObject object) {
+		// Done callback
+		
+		DemoObject demoObject = (DemoObject) object;
+	}
+}, true);
+```
+
+#### `PUT` Update existing record
+```java
+SynergyKIT.updateRecord("demo_collection", demoObject ,new ResponseListener() {
+	
+	@Override
+	public void errorCallback(int statusCode, SynergyKITError errorObject) {
+		// Error callback
+		
+	}
+	
+	@Override
+	public void doneCallback(int statusCode, SynergyKITObject object) {
+		// Done callback
+		
+		DemoObject demoObject = (DemoObject) object;
+	}
+}, true);
+```
+
+#### `DELETE` Delete record
+```java
+SynergyKIT.deleteRecord("demo_collection", "494991d3-ecb8-4472-9c2a-1a4a1ed10946", new DeleteResponseListener() {
+	
+	@Override
+	public void errorCallback(int statusCode, SynergyKITError errorObject) {
+		// Error callback
+		
+	}
+	
+	@Override
+	public void doneCallback(int statusCode) {
+		// Done callback
+		
+	}
+}, true);
+```
+
