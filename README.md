@@ -106,3 +106,99 @@ SynergyKIT.deleteRecord("demo_collection", "494991d3-ecb8-4472-9c2a-1a4a1ed10946
 }, true);
 ```
 
+### Users management
+
+#### `GET` Read user from collection
+```java
+SynergyKIT.getUser("494991d3-ecb8-4472-9c2a-1a4a1ed10946", DemoUser.class,new UserResponseListener() {
+			
+	@Override
+	public void errorCallback(int statusCode, SynergyKITError errorObject) {
+		// Error callback
+		
+	}
+	
+	@Override
+	public void doneCallback(int statusCode, SynergyKITUser user) {
+		// Done callback
+		
+		DemoUser demoUser = (DemoUser) user;
+		
+	}
+}, true);
+```
+#### `GET` Read users from collection
+```java
+SynergyKIT.getUsers(DemoUser[].class, new UsersResponseListener() {
+	
+	@Override
+	public void errorCallback(int statusCode, SynergyKITError errorObject) {
+		// Error callback
+		
+	}
+	
+	@Override
+	public void doneCallback(int statusCode, SynergyKITUser[] users) {
+		// Done callback
+		
+		DemoUser[] demoUsers = (DemoUser[]) users;
+		
+	}
+}, true);
+```
+
+#### `POST` Create new user
+```java
+SynergyKIT.createUser(demoUser, new UserResponseListener() {
+		
+	@Override
+	public void errorCallback(int statusCode, SynergyKITError errorObject) {
+		// Error callback
+		
+	}
+	
+	@Override
+	public void doneCallback(int statusCode, SynergyKITUser user) {
+		// Done callback
+		
+		DemoUser demoUser = (DemoUser) user;
+	}
+}, true);
+```
+
+#### `PUT` Update existing user
+```java
+SynergyKIT.updateUser(demoUser, new UserResponseListener() {
+		
+	@Override
+	public void errorCallback(int statusCode, SynergyKITError errorObject) {
+		// Error callback
+		
+	}
+	
+	@Override
+	public void doneCallback(int statusCode, SynergyKITUser user) {
+		// Done callback
+		
+		DemoUser demoUser = (DemoUser) user;
+	}
+}, true);
+```
+
+#### `DELETE` Delete user
+```java
+SynergyKIT.deleteUser("494991d3-ecb8-4472-9c2a-1a4a1ed10946", new DeleteResponseListener() {
+		
+	@Override
+	public void errorCallback(int statusCode, SynergyKITError errorObject) {
+		// Error callback
+		
+	}
+	
+	@Override
+	public void doneCallback(int statusCode) {
+		// Done callback
+		
+	}
+}, true);
+```
