@@ -108,44 +108,6 @@ SynergyKIT.deleteRecord("demo_collection", "494991d3-ecb8-4472-9c2a-1a4a1ed10946
 
 ### Users management
 
-#### `POST` Register new user
-```java
-SynergyKIT.registerUser(demoUser, new UserResponseListener() {
-		
-	@Override
-	public void errorCallback(int statusCode, SynergyKITError errorObject) {
-		// Error callback
-		
-	}
-	
-	@Override
-	public void doneCallback(int statusCode, SynergyKITUser user) {
-		// Done callback
-		
-		DemoUser demoUser = (DemoUser) user;
-	}
-}, true);
-```
-
-#### `POST` Login user
-```java
-SynergyKIT.loginUser(demoUser, new UserResponseListener() {
-		
-	@Override
-	public void errorCallback(int statusCode, SynergyKITError errorObject) {
-		// Error callback
-		
-	}
-	
-	@Override
-	public void doneCallback(int statusCode, SynergyKITUser user) {
-		// Done callback
-		
-		DemoUser demoUser = (DemoUser) user;
-	}
-});
-```
-
 #### `GET` Read user from collection
 ```java
 SynergyKIT.getUser("494991d3-ecb8-4472-9c2a-1a4a1ed10946", DemoUser.class,new UserResponseListener() {
@@ -239,4 +201,89 @@ SynergyKIT.deleteUser("494991d3-ecb8-4472-9c2a-1a4a1ed10946", new DeleteResponse
 		
 	}
 }, true);
+```
+### User authorization
+
+#### `POST` Register new user
+```java
+SynergyKIT.registerUser(demoUser, new UserResponseListener() {
+		
+	@Override
+	public void errorCallback(int statusCode, SynergyKITError errorObject) {
+		// Error callback
+		
+	}
+	
+	@Override
+	public void doneCallback(int statusCode, SynergyKITUser user) {
+		// Done callback
+		
+		DemoUser demoUser = (DemoUser) user;
+	}
+}, true);
+```
+
+#### `POST` Login user
+```java
+SynergyKIT.loginUser(demoUser, new UserResponseListener() {
+		
+	@Override
+	public void errorCallback(int statusCode, SynergyKITError errorObject) {
+		// Error callback
+		
+	}
+	
+	@Override
+	public void doneCallback(int statusCode, SynergyKITUser user) {
+		// Done callback
+		
+		DemoUser demoUser = (DemoUser) user;
+	}
+});
+```
+### Making request with own URI (with OData filtering)
+```java
+/*
+ * Build your own URI 
+ * 
+ * Example:  Top 20 records from collection demo_collection where attribute age equals 18
+ */
+SynergyKITUri uri =  new UriBuilder()
+				.setResource(Resource.RESOURCE_DATA)
+				.setCollection("demo_collection")
+				.setFilter(Filter.buildAttribute("age"), Filter.OPERATOR_EQUAL, 18)
+				.setTop(20)
+				.build();
+
+/*
+ * Set configuration object
+ * 
+ */
+
+SynergyKITConfig config = new SynergyKITConfig();
+config.setUri(uri);
+config.setType(DemoObject[].class);
+config.setParallelMode(false);
+
+
+/*
+ * Make request
+ */
+
+SynergyKIT.getRecord(config, new ResponseListener() {
+	
+	@Override
+	public void errorCallback(int statusCode, SynergyKITError errorObject) {
+		// Error callback
+		
+	}
+	
+	@Override
+	public void doneCallback(int statusCode, SynergyKITObject object) {
+		// Done callback
+		
+		DemoObject demoObjects[] = (DemoObject[]) objects;
+		
+	}
+});
 ```
