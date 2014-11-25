@@ -127,24 +127,6 @@ SynergyKIT.registerUser(demoUser, new UserResponseListener() {
 }, true);
 ```
 
-#### `POST` Register new user
-```java
-SynergyKIT.registerUser(demoUser, new UserResponseListener() {
-		
-	@Override
-	public void errorCallback(int statusCode, SynergyKITError errorObject) {
-		// Error callback
-		
-	}
-	
-	@Override
-	public void doneCallback(int statusCode, SynergyKITUser user) {
-		// Done callback
-		
-		DemoUser demoUser = (DemoUser) user;
-	}
-}, true);
-```
 #### `POST` Login user
 ```java
 SynergyKIT.loginUser(demoUser, new UserResponseListener() {
