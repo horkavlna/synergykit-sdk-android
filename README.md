@@ -4,9 +4,14 @@
 
 ## Usage
 
-### SynergyKIT inicialization
+### SynergyKIT initialization
 ```java
 SynergyKIT.init("demo","114a5371-59c6-484f-a5de-5c810ee417dd");
+```
+
+### Cache installation
+```java
+SynergyKIT.installCache(getApplicationContext());
 ```
 
 ### Records management
@@ -297,7 +302,8 @@ SynergyKIT.synergylize(new SynergyKITRequest() {
 	protected void onPostExecute(Object object) {
 		ResponseDataHolder responseDataHolder = (ResponseDataHolder) object;
 		
-		//
+		//Manage result stored in responseDataHolder
+		
 		
 		
 	}
@@ -330,3 +336,16 @@ SynergyKIT.synergylize(new SynergyKITRequest() {
 	}
 }, true);
 ```
+### Other
+
+You can also use SynergyKIT for:
+- [ ] Uploading and downloading files and pictures
+- [ ] Sending emails and notifications
+
+## Author
+
+Letsgood.com s.r.o., development@letsgood.com
+
+## License
+
+SynergyKIT Android SDK is available under the Apache License, Version 2.0
