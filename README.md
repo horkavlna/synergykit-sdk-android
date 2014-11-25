@@ -1,224 +1,351 @@
-synergykit-sdk-android
-==================
+<p align="center" >
+<img src="https://synergykit.com/images/logo-synergykit.png" alt="SynergyKIT" title="SynergyKIT">
+</p>
 
-###SynergyKIT examples:
+## Usage
 
+### SynergyKIT initialization
+```java
+SynergyKIT.init("demo","114a5371-59c6-484f-a5de-5c810ee417dd");
+```
 
-  **Attributes:**
-  
-  ```
-	static final String TENANT = "example-tenant";	//Registered tenant on www.synergykit.com
-	static final String APPLICATION_KEY = "01234567-890a-bcde-fghi-jklmnopqrstu";	//Unique key genereted on www.synergykit.com
+### Cache installation
+```java
+SynergyKIT.installCache(getApplicationContext());
+```
+
+### Records management
+
+#### `GET` Read record from collection
+```java
+SynergyKIT.getRecord("demo_collection","494991d3-ecb8-4472-9c2a-1a4a1ed10946",DemoObject.class , new ResponseListener() {
 	
-	String collectionUrl = "example-collection"; //Unique collection URL 
-	String recordId = "0123456789abcdefghijklmn"; //Unique record ID
-	MyObject myObecjt = new MyObject(); //Some object to store/unstore
-	Type type = MyObject.class; //Object type
-	Type arrayType = MyObject[].class //Object type
-  ```
+	@Override
+	public void errorCallback(int statusCode, SynergyKITError errorObject) {
+		// Error callback
+		
+	}
 	
-**Initialization:**
-  
-  ```
-  Synergykit.init(TENANT, APPLICATION_KEY);
-  ```
-  
-  **Create Record:**
-  
-  ```
-  Synergykit.createRecord(collectionUrl, myObecjt, new BaseResponseListener() {
-  	
-  	//Error callback is called when record WAS NOT created
-  	//statusCode - HTTP response status code
-  	//errorObject - contains error code and error message
-  	@Override
-  	public void errorCallback(int statusCode, SynergykitErrorObject errorObject) {
-  		
-  		
-  	}
-  	
-  	//Done callback is called when record was successfully created
-  	//statusCode - HTTP response status code
-  	//baseObject - object which was created on SynergyKIT (! SynergykitBaseObject type !)
-  	@Override
-  	public void doneCallback(int statusCode, SynergykitBaseObject baseObject) {
-  		MyObject object = (MyObject)baseObject; //Change data type
-  		
-  	}
-  }, type);
-  ```
-  
-  **Get record:**
-  ```
-  Synergykit.getRecord(collectionUrl, recordId, new BaseResponseListener() {
-  	
-  	//Error callback is called when record WAS NOT returned
-  	//statusCode - HTTP response status code
-  	//errorObject - contains error code and error message
-  	@Override
-  	public void errorCallback(int statusCode, SynergykitErrorObject errorObject) {
-  		
-  		
-  	}
-  	
-  	//Done callback is called when record was successfully returned
-  	//statusCode - HTTP response status code
-  	//baseObject - object which was returned from SynergyKIT (! SynergykitBaseObject type !)
-  	@Override
-  	public void doneCallback(int statusCode, SynergykitBaseObject baseObject) {
-  		MyObject object = (MyObject)baseObject; //Change data type
-  		
-  	}
-  }, type);
-  ```
-  
-  **Get all records:**
-  ```
-  Synergykit.getRecords(collectionUrl, new GetRecordsResponseListener() {
-  	
-  	//Error callback is called when records WERE NOT returned
-  	//statusCode - HTTP response status code
-  	//errorObject - contains error code and error message
-  	@Override
-  	public void errorCallback(int statusCode, SynergykitErrorObject errorObject) {
-  		
-  		
-  	}
-  	
-  	//Done callback is called when records were successfully returned
-  	//statusCode - HTTP response status code
-  	//baseObject - array of objects which were created on SynergyKIT (! SynergykitBaseObject[] type !)
-  	@Override
-  	public void doneCallback(int statusCode, SynergykitBaseObject[] baseObject) {
-  		MyObject object = (MyObject)baseObject[0]; //Change data type of first object
-  		
-  	}
-  }, arrayType);
-  ```
-  
-  **Update record:**
-  ```
-  Synergykit.updateRecord(collectionUrl, recordId, myObecjt, new BaseResponseListener() {
-  	
-  	//Error callback is called when record WAS NOT updated
-  	//statusCode - HTTP response status code
-  	//errorObject - contains error code and error message
-  	@Override
-  	public void errorCallback(int statusCode, SynergykitErrorObject errorObject) {
-  		
-  		
-  	}
-  	
-  	//Done callback is called when record was successfully updated
-  	//statusCode - HTTP response status code
-  	//baseObject - objects which was updated on SynergyKIT (! SynergykitBaseObject type !)
-  	@Override
-  	public void doneCallback(int statusCode, SynergykitBaseObject baseObject) {
-  		MyObject object = (MyObject)baseObject; //Change data type 
-  		
-  	}
-  }, type);
-  ```
-  
-  **Delete record:**
-  ```
-  Synergykit.deleteRecord(collectionUrl, recordId, new DeleteResponseListener() {
-  	
-  	//Error callback is called when record WAS NOT deleted
-  	//statusCode - HTTP response status code
-  	//errorObject - contains error code and error message
-  	@Override
-  	public void errorCallback(int statusCode, SynergykitErrorObject errorObject) {
-  		
-  		
-  	}
-  	
-  	//Done callback is called when record was successfully deleted
-  	//statusCode - HTTP response status code
-  	@Override
-  	public void doneCallback(int statusCode) {
-  	
-  		
-  	}
-  });
-  ```
-  
-  **Customize request:**
-  ```
-  Synergykit.synergylize(new SynergylizeRequestAsyncTask() {
-  	
-  	//AsyncTask method which can be used for print results
-  	@Override
-  	protected void onPostExecute(Object object) {
-  		
-  		
-  	}
-  	
-  	//AsyncTask method which can be used for multiple request
-  	@Override
-  	protected Object doInBackground(Void... params) {
-  		
-  		//Build own SynergyKIT URL
-  		UrlBuilder urlBuilder = new UrlBuilder();
-  		urlBuilder.setResource(UrlBuilder.RESOURCE_DATA)
-  				   .setResourceUrl(collectionUrl);
-  		
-  		Url url = urlBuilder.build();
-  		
-  		//POST request
-  		post(url, myObecjt, new BaseResponseListener() {
-  			
-  			//Error callback is called when record WAS NOT created
-  			//statusCode - HTTP response status code
-  			//errorObject - contains error code and error message
-  			@Override
-  			public void errorCallback(int statusCode, SynergykitErrorObject errorObject) {
-  				
-  				
-  			}
-  			
-  			//Done callback is called when record was successfully created
-  			//statusCode - HTTP response status code
-  			//baseObject - object which was created on SynergyKIT (! SynergykitBaseObject type !)
-  			@Override
-  			public void doneCallback(int statusCode, SynergykitBaseObject baseObject) {
-  				MyObject object = (MyObject)baseObject; //Change data type
-  				
-  			}
-  		}, type);
-  		
-  		
-  		//Build new own Synergykit Url
-  		urlBuilder = new UrlBuilder();
-  		urlBuilder.setResource(UrlBuilder.RESOURCE_DATA)
-  				   .setResourceUrl(collectionUrl)
-  				   .setResourceId(recordId);
-  		
-  		url = urlBuilder.build();
-  		
-  						
-  		//DELETE request
-  		delete(url,new DeleteResponseListener() {
-  			
-  			//Error callback is called when record WAS NOT deleted
-  			//statusCode - HTTP response status code
-  			//errorObject - contains error code and error message
-  			@Override
-  			public void errorCallback(int statusCode, SynergykitErrorObject errorObject) {
-  				
-  				
-  			}
-  			
-  			//Done callback is called when record was successfully deleted
-  			//statusCode - HTTP response status code
-  			@Override
-  			public void doneCallback(int statusCode) {
-  			
-  				
-  			}});
-  		
-  		
-  		return null;
-  	}
-  });
-  ```
+	@Override
+	public void doneCallback(int statusCode, SynergyKITObject object) {
+		//Done callback
+		
+		DemoObject object = (DemoObject) object;
+		
+	}
+}, true);
+```
+#### `GET` Read records from collection
+```java
+SynergyKIT.getRecords("demo_collection", DemoObject[].class, new RecordsResponseListener() {
+	
+	@Override
+	public void errorCallback(int statusCode, SynergyKITError errorObject) {
+		// Error callback
+		
+	}
+	
+	@Override
+	public void doneCallback(int statusCode, SynergyKITObject[] objects) {
+		//Done callback
+		
+		DemoObject[] demoObjects = (DemoObject[]) objects;
+		
+	}
+}, true);
+```
+
+#### `POST` Create new record
+```java
+SynergyKIT.createRecord("demo_collection", demoObject ,new ResponseListener() {
+	
+	@Override
+	public void errorCallback(int statusCode, SynergyKITError errorObject) {
+		// Error callback
+		
+	}
+	
+	@Override
+	public void doneCallback(int statusCode, SynergyKITObject object) {
+		// Done callback
+		
+		DemoObject demoObject = (DemoObject) object;
+	}
+}, true);
+```
+
+#### `PUT` Update existing record
+```java
+SynergyKIT.updateRecord("demo_collection", demoObject ,new ResponseListener() {
+	
+	@Override
+	public void errorCallback(int statusCode, SynergyKITError errorObject) {
+		// Error callback
+		
+	}
+	
+	@Override
+	public void doneCallback(int statusCode, SynergyKITObject object) {
+		// Done callback
+		
+		DemoObject demoObject = (DemoObject) object;
+	}
+}, true);
+```
+
+#### `DELETE` Delete record
+```java
+SynergyKIT.deleteRecord("demo_collection", "494991d3-ecb8-4472-9c2a-1a4a1ed10946", new DeleteResponseListener() {
+	
+	@Override
+	public void errorCallback(int statusCode, SynergyKITError errorObject) {
+		// Error callback
+		
+	}
+	
+	@Override
+	public void doneCallback(int statusCode) {
+		// Done callback
+		
+	}
+}, true);
+```
+
+### Users management
+
+#### `GET` Read user from collection
+```java
+SynergyKIT.getUser("494991d3-ecb8-4472-9c2a-1a4a1ed10946", DemoUser.class,new UserResponseListener() {
+			
+	@Override
+	public void errorCallback(int statusCode, SynergyKITError errorObject) {
+		// Error callback
+		
+	}
+	
+	@Override
+	public void doneCallback(int statusCode, SynergyKITUser user) {
+		// Done callback
+		
+		DemoUser demoUser = (DemoUser) user;
+		
+	}
+}, true);
+```
+#### `GET` Read users from collection
+```java
+SynergyKIT.getUsers(DemoUser[].class, new UsersResponseListener() {
+	
+	@Override
+	public void errorCallback(int statusCode, SynergyKITError errorObject) {
+		// Error callback
+		
+	}
+	
+	@Override
+	public void doneCallback(int statusCode, SynergyKITUser[] users) {
+		// Done callback
+		
+		DemoUser[] demoUsers = (DemoUser[]) users;
+		
+	}
+}, true);
+```
+
+#### `POST` Create new user
+```java
+SynergyKIT.createUser(demoUser, new UserResponseListener() {
+		
+	@Override
+	public void errorCallback(int statusCode, SynergyKITError errorObject) {
+		// Error callback
+		
+	}
+	
+	@Override
+	public void doneCallback(int statusCode, SynergyKITUser user) {
+		// Done callback
+		
+		DemoUser demoUser = (DemoUser) user;
+	}
+}, true);
+```
+
+#### `PUT` Update existing user
+```java
+SynergyKIT.updateUser(demoUser, new UserResponseListener() {
+		
+	@Override
+	public void errorCallback(int statusCode, SynergyKITError errorObject) {
+		// Error callback
+		
+	}
+	
+	@Override
+	public void doneCallback(int statusCode, SynergyKITUser user) {
+		// Done callback
+		
+		DemoUser demoUser = (DemoUser) user;
+	}
+}, true);
+```
+
+#### `DELETE` Delete user
+```java
+SynergyKIT.deleteUser("494991d3-ecb8-4472-9c2a-1a4a1ed10946", new DeleteResponseListener() {
+		
+	@Override
+	public void errorCallback(int statusCode, SynergyKITError errorObject) {
+		// Error callback
+		
+	}
+	
+	@Override
+	public void doneCallback(int statusCode) {
+		// Done callback
+		
+	}
+}, true);
+```
+### User authorization
+
+#### `POST` Register new user
+```java
+SynergyKIT.registerUser(demoUser, new UserResponseListener() {
+		
+	@Override
+	public void errorCallback(int statusCode, SynergyKITError errorObject) {
+		// Error callback
+		
+	}
+	
+	@Override
+	public void doneCallback(int statusCode, SynergyKITUser user) {
+		// Done callback
+		
+		DemoUser demoUser = (DemoUser) user;
+	}
+}, true);
+```
+
+#### `POST` Login user
+```java
+SynergyKIT.loginUser(demoUser, new UserResponseListener() {
+		
+	@Override
+	public void errorCallback(int statusCode, SynergyKITError errorObject) {
+		// Error callback
+		
+	}
+	
+	@Override
+	public void doneCallback(int statusCode, SynergyKITUser user) {
+		// Done callback
+		
+		DemoUser demoUser = (DemoUser) user;
+	}
+});
+```
+### Making requests with own URI (with OData filtering)
+```java
+/*
+ * Build your own URI 
+ * 
+ * Example:  Top 20 records from collection demo_collection where attribute age equals 18
+ */
+SynergyKITUri uri =  new UriBuilder()
+				.setResource(Resource.RESOURCE_DATA)
+				.setCollection("demo_collection")
+				.setFilter(Filter.buildAttribute("age"), Filter.OPERATOR_EQUAL, 18)
+				.setTop(20)
+				.build();
+
+/*
+ * Set configuration object
+ * 
+ */
+
+SynergyKITConfig config = new SynergyKITConfig();
+config.setUri(uri);
+config.setType(DemoObject[].class);
+config.setParallelMode(false);
+
+
+/*
+ * Make request
+ */
+
+SynergyKIT.getRecord(config, new ResponseListener() {
+	
+	@Override
+	public void errorCallback(int statusCode, SynergyKITError errorObject) {
+		// Error callback
+		
+	}
+	
+	@Override
+	public void doneCallback(int statusCode, SynergyKITObject object) {
+		// Done callback
+		
+		DemoObject demoObjects[] = (DemoObject[]) objects;
+		
+	}
+});
+```
+
+### Making own requests
+
+```java
+SynergyKIT.synergylize(new SynergyKITRequest() {
+	
+	@Override
+	protected void onPostExecute(Object object) {
+		ResponseDataHolder responseDataHolder = (ResponseDataHolder) object;
+		
+		//Manage result stored in responseDataHolder
+		
+		
+		
+	}
+	
+	@Override
+	protected Object doInBackground(Void... params) {
+
+		/*
+		 * Build own uri
+		 */
+		SynergyKITUri uri = new UriBuilder()
+					.setResource(Resource.RESOURCE_DATA)
+					.setCollection("demo_collection")
+					.build();
+		
+		/*
+		 * Make request
+		 */
+		SynergyKITResponse response = SynergyKITRequest.get(uri);
+		
+		/*
+		 * Manage response to objects and store in response data holder
+		 * ResponseDataHolder is a storage for errors & objects & status code, ...
+		 */
+		
+		ResponseDataHolder responseDataHolder = manageResponseToObjects(response, DemoObject[].class);
+		
+		
+		return responseDataHolder;
+	}
+}, true);
+```
+### Other
+
+You can also use SynergyKIT Android SDK for:
+- [ ] Uploading and downloading files and pictures
+- [ ] Sending emails and notifications
+
+## Author
+
+Letsgood.com s.r.o., development@letsgood.com
+
+## License
+
+SynergyKIT Android SDK is available under the Apache License, Version 2.0
