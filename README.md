@@ -241,7 +241,7 @@ SynergyKIT.loginUser(demoUser, new UserResponseListener() {
 	}
 });
 ```
-### Making request with own URI (with OData filtering)
+### Making requests with own URI (with OData filtering)
 ```java
 /*
  * Build your own URI 
@@ -286,4 +286,47 @@ SynergyKIT.getRecord(config, new ResponseListener() {
 		
 	}
 });
+```
+
+### Making own requests
+
+```java
+SynergyKIT.synergylize(new SynergyKITRequest() {
+	
+	@Override
+	protected void onPostExecute(Object object) {
+		ResponseDataHolder responseDataHolder = (ResponseDataHolder) object;
+		
+		//
+		
+		
+	}
+	
+	@Override
+	protected Object doInBackground(Void... params) {
+
+		/*
+		 * Build own uri
+		 */
+		SynergyKITUri uri = new UriBuilder()
+					.setResource(Resource.RESOURCE_DATA)
+					.setCollection("demo_collection")
+					.build();
+		
+		/*
+		 * Make request
+		 */
+		SynergyKITResponse response = SynergyKITRequest.get(uri);
+		
+		/*
+		 * Manage response to objects and store in response data holder
+		 * ResponseDataHolder is a storage for errors & objects & status code, ...
+		 */
+		
+		ResponseDataHolder responseDataHolder = manageResponseToObjects(response, DemoObject[].class);
+		
+		
+		return responseDataHolder;
+	}
+}, true);
 ```
