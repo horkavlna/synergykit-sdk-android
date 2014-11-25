@@ -338,7 +338,7 @@ SynergyKIT.synergylize(new SynergyKITRequest() {
 ```
 ### Other
 
-You can also use SynergyKIT for:
+You can also use SynergyKIT Android SDK for:
 - [ ] Uploading and downloading files and pictures
 - [ ] Sending emails and notifications
 
