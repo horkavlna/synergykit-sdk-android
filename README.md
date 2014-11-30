@@ -10,6 +10,8 @@ SynergyKIT.init("demo","114a5371-59c6-484f-a5de-5c810ee417dd");
 ```
 
 ### Cache installation
+SynergyKIT uses [HttpResponseCache](http://developer.android.com/reference/android/net/http/HttpResponseCache.html) for caching requests. By default cache IS NOT installed.
+
 ```java
 SynergyKIT.installCache(getApplicationContext());
 ```
