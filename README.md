@@ -10,7 +10,7 @@ SynergyKIT.init("demo","114a5371-59c6-484f-a5de-5c810ee417dd");
 ```
 
 ### Cache installation
-SynergyKIT uses [HttpResponseCache](http://developer.android.com/reference/android/net/http/HttpResponseCache.html) for caching requests. By default cache IS NOT installed.
+SynergyKIT Android SDK uses [HttpResponseCache](http://developer.android.com/reference/android/net/http/HttpResponseCache.html) for caching requests. By default cache IS NOT installed.
 
 ```java
 SynergyKIT.installCache(getApplicationContext());
@@ -249,6 +249,9 @@ SynergyKIT.loginUser(demoUser, new UserResponseListener() {
 });
 ```
 ### Making requests with own URI (with OData filtering)
+
+SynergyKIT Android SDK uses [OData URI Convention](http://www.odata.org/documentation/odata-version-2-0/uri-conventions/) for filtering data. For more information click [here](http://www.odata.org/documentation/odata-version-2-0/uri-conventions/). 
+
 ```java
 /*
  * Build your own URI 
