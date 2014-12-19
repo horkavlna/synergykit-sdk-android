@@ -1,5 +1,6 @@
 package com.letsgood.synergykit.builders;
 
+import com.letsgood.synergykit.SynergyKIT;
 import com.letsgood.synergykit.builders.uri.Collection;
 import com.letsgood.synergykit.builders.uri.Filter;
 import com.letsgood.synergykit.builders.uri.InLineCount;
@@ -19,7 +20,7 @@ import com.letsgood.synergykit.resources.SynergyKITUri;
 
 public class UriBuilder {
 	/* Constants */
-	private static final String BASE_SYNERGYKIT_URL = "https://production.api.synergykit.com/v2";		
+	private static final String BASE_SYNERGYKIT_URL = "https://%s.api.synergykit.com/v2";		
 	
 	/* Attributes */
 	private Resource resource = new Resource();
@@ -186,6 +187,10 @@ public class UriBuilder {
 			uri+=inLineCount.getInLineCount();
 		}
 		
+		
+		
+		//set tenant
+		uri = String.format(uri, SynergyKIT.getTenant());
 		
 		
 		return new SynergyKITUri(uri);	

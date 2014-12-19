@@ -10,8 +10,8 @@ public class SynergyKITObject {
 	/* Attributes */
 	protected String _id; 
     protected String __v; 
-    protected long createdAt; 
-    protected long updatedAt;
+    protected Long createdAt; 
+    protected Long updatedAt;
 
     /* Id getter */
     public String get_id() {

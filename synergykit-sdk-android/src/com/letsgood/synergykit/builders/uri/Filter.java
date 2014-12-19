@@ -64,6 +64,9 @@ public class Filter {
 		this.filter=new String(filter);
 	}
 	
+
+	
+	
 	/* Filter getter */
 	public String getFilter(){
 		
@@ -127,5 +130,20 @@ public class Filter {
 			parameter = "'" + parameter + "'";
 			
 		return parameter;
+	}
+	
+	
+	/* SubString Of Filter */
+	public static String buildSubStringOfFilter(String attribute, String parameter){
+		String filter = null;
+		
+		if(attribute == null || attribute.length()==0 || parameter==null || parameter.length()==0){
+			SynergyKITLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
+			return "''";
+		}
+		
+		filter =  new String("substringof("+attribute+ ",'" + parameter +"')");
+		
+		return filter.replaceAll(" +", "+"); //replace all spaces by 1 + char
 	}
 }

@@ -17,18 +17,14 @@ public class SynergyKITUser extends SynergyKITObject {
 	protected String password;	
 	protected String email;
 	private String registrationId;
+	protected String activationHash;
 
 	protected String platform = PLATFORM;
-
 	protected List<SynergyKITPlatform> platforms;
 
 	/* Constructor */
     public SynergyKITUser(String registrationId) {
-    	
-    	if(registrationId == null){
-    		//TODO Exception
-    		throw new IllegalArgumentException();
-    	}
+   
        	
     	//list of platforms
     	platforms = new LinkedList<SynergyKITPlatform>();
@@ -37,7 +33,11 @@ public class SynergyKITUser extends SynergyKITObject {
     	//add platforms to list
     	SynergyKITPlatform pl = new SynergyKITPlatform();
     	pl.setName(PLATFORM);
-    	pl.setRegistrationId(registrationId);
+    	
+    	//set registration id
+    	if(registrationId!=null)
+    		pl.setRegistrationId(registrationId);
+    	
     	platforms.add(pl);
     	
     	// SPECIAL DATA FOR SYNERGYKIT
@@ -71,6 +71,17 @@ public class SynergyKITUser extends SynergyKITObject {
 	/* Registration id getter */
 	public String getRegistrationId(){
 		return registrationId;
+	}
+	
+	/* Activation hash getter */
+	public String getActivationHash() {
+		return activationHash;
+	}
+
+
+	/* Activation hash setter */
+	public void setActivationHash(String activationHash) {
+		this.activationHash = activationHash;
 	}
 
 	/* To String */
