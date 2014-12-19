@@ -2,345 +2,139 @@
 <img src="https://synergykit.com/images/logo-synergykit.png" alt="SynergyKIT" title="SynergyKIT">
 </p>
 
+[![Version](https://img.shields.io/cocoapods/v/SynergyKIT-SDK-iOS.svg?style=flat)](http://cocoadocs.org/docsets/SynergyKIT-SDK-iOS)
+[![License](https://img.shields.io/cocoapods/l/SynergyKIT-SDK-iOS.svg?style=flat)](http://cocoadocs.org/docsets/SynergyKIT-SDK-iOS)
+[![Platform](https://img.shields.io/cocoapods/p/SynergyKIT-SDK-iOS.svg?style=flat)](http://cocoadocs.org/docsets/SynergyKIT-SDK-iOS)
+
+## Installation
+
+SynergyKIT-SDK-iOS is available through [CocoaPods](http://cocoapods.org). To install
+it, simply add the following line to your Podfile:
+
+    pod "SynergyKIT-SDK-iOS"
+
 ## Usage
 
-### SynergyKIT initialization
-```java
-SynergyKIT.init("demo","114a5371-59c6-484f-a5de-5c810ee417dd");
-```
+To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
-### Cache installation
-```java
-SynergyKIT.installCache(getApplicationContext());
+### SynergyKIT inicialization
+```objective-c
+SKSynergy *synergyKIT = [SKSynergy sharedInstance];
+synergyKIT.tenant = @"demo";
+synergyKIT.applicationKey = @"114a5371-59c6-484f-a5de-5c810ee417dd";
+synergyKIT.logUrlCall = YES;
+synergyKIT.logRequestResponse = YES;
 ```
 
 ### Records management
 
 #### `GET` Read record from collection
-```java
-SynergyKIT.getRecord("demo_collection","494991d3-ecb8-4472-9c2a-1a4a1ed10946",DemoObject.class , new ResponseListener() {
-	
-	@Override
-	public void errorCallback(int statusCode, SynergyKITError errorObject) {
-		// Error callback
-		
-	}
-	
-	@Override
-	public void doneCallback(int statusCode, SynergyKITObject object) {
-		//Done callback
-		
-		DemoObject object = (DemoObject) object;
-		
-	}
-}, true);
+```objective-c
+SKSynergy *synergyKIT = [SKSynergy sharedInstance];
+[synergyKIT recordIn:@"collection-name" recordId:@"record-id" resultType:[DemoObject class] completion:^(BaseObject *result, NSError *error) {
+    if (!error && result)
+    {
+        DemoObject *object = (DemoObject *)result;
+    }
+    else if (!error && !result)
+    {
+        // No result – no data read
+    }
+    else
+    {
+        // Error
+    }
+}];
 ```
-#### `GET` Read records from collection
-```java
-SynergyKIT.getRecords("demo_collection", DemoObject[].class, new RecordsResponseListener() {
-	
-	@Override
-	public void errorCallback(int statusCode, SynergyKITError errorObject) {
-		// Error callback
-		
-	}
-	
-	@Override
-	public void doneCallback(int statusCode, SynergyKITObject[] objects) {
-		//Done callback
-		
-		DemoObject[] demoObjects = (DemoObject[]) objects;
-		
-	}
-}, true);
+
+#### `UPDATE` Update existing record
+```objective-c
+SKSynergy *synergyKIT = [SKSynergy sharedInstance];
+[synergyKIT updateRecordIn:@"collection-name" record:@"record-id" resultType:[DemoObject class] completion:^(BaseObject *result, NSError *error) {
+    if (!error && result)
+    {
+        DemoObject *object = (DemoObject *)result;
+    }
+    else
+    {
+        // Error
+    }
+}];
 ```
 
 #### `POST` Create new record
-```java
-SynergyKIT.createRecord("demo_collection", demoObject ,new ResponseListener() {
-	
-	@Override
-	public void errorCallback(int statusCode, SynergyKITError errorObject) {
-		// Error callback
-		
-	}
-	
-	@Override
-	public void doneCallback(int statusCode, SynergyKITObject object) {
-		// Done callback
-		
-		DemoObject demoObject = (DemoObject) object;
-	}
-}, true);
-```
-
-#### `PUT` Update existing record
-```java
-SynergyKIT.updateRecord("demo_collection", demoObject ,new ResponseListener() {
-	
-	@Override
-	public void errorCallback(int statusCode, SynergyKITError errorObject) {
-		// Error callback
-		
-	}
-	
-	@Override
-	public void doneCallback(int statusCode, SynergyKITObject object) {
-		// Done callback
-		
-		DemoObject demoObject = (DemoObject) object;
-	}
-}, true);
+```objective-c
+SKSynergy *synergyKIT = [SKSynergy sharedInstance];
+DemoObject *record = [DemoObject new];
+record.text = @"String";
+[synergyKIT createRecordIn:@"collection-name" record:record resultType:[DemoObject class] completion:^(BaseObject *result, NSError *error) {
+    if (!error && result)
+    {
+        DemoObject *object = (DemoObject *)result;
+    }
+    else
+    {
+        // Error
+    }
+}];
 ```
 
 #### `DELETE` Delete record
-```java
-SynergyKIT.deleteRecord("demo_collection", "494991d3-ecb8-4472-9c2a-1a4a1ed10946", new DeleteResponseListener() {
-	
-	@Override
-	public void errorCallback(int statusCode, SynergyKITError errorObject) {
-		// Error callback
-		
-	}
-	
-	@Override
-	public void doneCallback(int statusCode) {
-		// Done callback
-		
-	}
-}, true);
+```objective-c
+SKSynergy *synergyKIT = [SKSynergy sharedInstance];
+[synergyKIT deleteRecordIn:@"collection-name" recordId:@"record-id" resultType:[BaseObject class] completion:^(id result, NSError *error) {
+    if (!error)
+    {
+        // Success
+    }
+}];
 ```
 
-### Users management
+### OData filtering
+SynergyKIT uses OData protocol for content filtering. With `SKODataExpression` advanced filters can be easilly builded.
+```objective-c
+// Records with name equal to John and salary >= 5000
+NSString *filter = [[[[[SKODataExpression new] filterField:@"name" operator:@"==" value:@"John"] filterAnd] filterField:@"salary" operator:@">=" value:[NSNumber numberWithInt:5000]] urlExtension];
 
-#### `GET` Read user from collection
-```java
-SynergyKIT.getUser("494991d3-ecb8-4472-9c2a-1a4a1ed10946", DemoUser.class,new UserResponseListener() {
-			
-	@Override
-	public void errorCallback(int statusCode, SynergyKITError errorObject) {
-		// Error callback
-		
-	}
-	
-	@Override
-	public void doneCallback(int statusCode, SynergyKITUser user) {
-		// Done callback
-		
-		DemoUser demoUser = (DemoUser) user;
-		
-	}
-}, true);
-```
-#### `GET` Read users from collection
-```java
-SynergyKIT.getUsers(DemoUser[].class, new UsersResponseListener() {
-	
-	@Override
-	public void errorCallback(int statusCode, SynergyKITError errorObject) {
-		// Error callback
-		
-	}
-	
-	@Override
-	public void doneCallback(int statusCode, SynergyKITUser[] users) {
-		// Done callback
-		
-		DemoUser[] demoUsers = (DemoUser[]) users;
-		
-	}
-}, true);
+// Five oldest records starting with Mo in field day.
+NSString *filter = [[[[[SKODataExpression new] filterStartsWith:@"Mo" inField:@"day"] orderBy:@"date" direction:OrderByDirectionAsc] top:5] urlExtension];
 ```
 
-#### `POST` Create new user
-```java
-SynergyKIT.createUser(demoUser, new UserResponseListener() {
-		
-	@Override
-	public void errorCallback(int statusCode, SynergyKITError errorObject) {
-		// Error callback
-		
-	}
-	
-	@Override
-	public void doneCallback(int statusCode, SynergyKITUser user) {
-		// Done callback
-		
-		DemoUser demoUser = (DemoUser) user;
-	}
-}, true);
+
+### Advanced Cache Policy
+`SynegyKIT-SDK-iOS` implements new advanced cache policy however `NSURLRequestCachePolicy` is supported too.
+
+#### CacheElseLoad
+Returns cached data if exists.
+```objective-c
+SKCache *cache = [[SKCache alloc] initWithType:SKCacheTypeCacheElseLoad];
+[SKSynergy sharedInstance] recordIn:@"collection-name" recordId:@"record-id" resultType:[BaseObject class] cache:cache completion:^(BaseObject *result, NSError *error) {
+…
 ```
 
-#### `PUT` Update existing user
-```java
-SynergyKIT.updateUser(demoUser, new UserResponseListener() {
-		
-	@Override
-	public void errorCallback(int statusCode, SynergyKITError errorObject) {
-		// Error callback
-		
-	}
-	
-	@Override
-	public void doneCallback(int statusCode, SynergyKITUser user) {
-		// Done callback
-		
-		DemoUser demoUser = (DemoUser) user;
-	}
-}, true);
+#### CacheElseLoad with Expiration
+Returns cached data if exists and is valid. Cached data will be invalidate after expiration.
+```objective-c
+SKCache *cache = [[SKCache alloc] initWithType:SKCacheTypeCacheElseLoad andExpiration:5*60];
+[SKSynergy sharedInstance] recordIn:@"collection-name" recordId:@"record-id" resultType:[BaseObject class] cache:cache completion:^(BaseObject *result, NSError *error) {
+…
 ```
 
-#### `DELETE` Delete user
-```java
-SynergyKIT.deleteUser("494991d3-ecb8-4472-9c2a-1a4a1ed10946", new DeleteResponseListener() {
-		
-	@Override
-	public void errorCallback(int statusCode, SynergyKITError errorObject) {
-		// Error callback
-		
-	}
-	
-	@Override
-	public void doneCallback(int statusCode) {
-		// Done callback
-		
-	}
-}, true);
-```
-### User authorization
-
-#### `POST` Register new user
-```java
-SynergyKIT.registerUser(demoUser, new UserResponseListener() {
-		
-	@Override
-	public void errorCallback(int statusCode, SynergyKITError errorObject) {
-		// Error callback
-		
-	}
-	
-	@Override
-	public void doneCallback(int statusCode, SynergyKITUser user) {
-		// Done callback
-		
-		DemoUser demoUser = (DemoUser) user;
-	}
-}, true);
+#### LoadElseCache
+Returns cached data if exists and internet connection is not available.
+```objective-c
+SKCache *cache = [[SKCache alloc] initWithType:SKCacheTypeLoadElseCache];
+[SKSynergy sharedInstance] recordIn:@"collection-name" recordId:@"record-id" resultType:[BaseObject class] cache:cache completion:^(BaseObject *result, NSError *error) {
+…
 ```
 
-#### `POST` Login user
-```java
-SynergyKIT.loginUser(demoUser, new UserResponseListener() {
-		
-	@Override
-	public void errorCallback(int statusCode, SynergyKITError errorObject) {
-		// Error callback
-		
-	}
-	
-	@Override
-	public void doneCallback(int statusCode, SynergyKITUser user) {
-		// Done callback
-		
-		DemoUser demoUser = (DemoUser) user;
-	}
-});
+#### LoadElseCache with Expiration
+Returns cached data if exists and internet connection is not available. Cached data will be invalidate after expiration.
+```objective-c
+SKCache *cache = [[SKCache alloc] initWithType:SKCacheTypeLoadElseCache andExpiration:5*60];
+[SKSynergy sharedInstance] recordIn:@"collection-name" recordId:@"record-id" resultType:[BaseObject class] cache:cache completion:^(BaseObject *result, NSError *error) {
+…
 ```
-### Making requests with own URI (with OData filtering)
-```java
-/*
- * Build your own URI 
- * 
- * Example:  Top 20 records from collection demo_collection where attribute age equals 18
- */
-SynergyKITUri uri =  new UriBuilder()
-				.setResource(Resource.RESOURCE_DATA)
-				.setCollection("demo_collection")
-				.setFilter(Filter.buildAttribute("age"), Filter.OPERATOR_EQUAL, 18)
-				.setTop(20)
-				.build();
-
-/*
- * Set configuration object
- * 
- */
-
-SynergyKITConfig config = new SynergyKITConfig();
-config.setUri(uri);
-config.setType(DemoObject[].class);
-config.setParallelMode(false);
-
-
-/*
- * Make request
- */
-
-SynergyKIT.getRecord(config, new ResponseListener() {
-	
-	@Override
-	public void errorCallback(int statusCode, SynergyKITError errorObject) {
-		// Error callback
-		
-	}
-	
-	@Override
-	public void doneCallback(int statusCode, SynergyKITObject object) {
-		// Done callback
-		
-		DemoObject demoObjects[] = (DemoObject[]) objects;
-		
-	}
-});
-```
-
-### Making own requests
-
-```java
-SynergyKIT.synergylize(new SynergyKITRequest() {
-	
-	@Override
-	protected void onPostExecute(Object object) {
-		ResponseDataHolder responseDataHolder = (ResponseDataHolder) object;
-		
-		//Manage result stored in responseDataHolder
-		
-		
-		
-	}
-	
-	@Override
-	protected Object doInBackground(Void... params) {
-
-		/*
-		 * Build own uri
-		 */
-		SynergyKITUri uri = new UriBuilder()
-					.setResource(Resource.RESOURCE_DATA)
-					.setCollection("demo_collection")
-					.build();
-		
-		/*
-		 * Make request
-		 */
-		SynergyKITResponse response = SynergyKITRequest.get(uri);
-		
-		/*
-		 * Manage response to objects and store in response data holder
-		 * ResponseDataHolder is a storage for errors & objects & status code, ...
-		 */
-		
-		ResponseDataHolder responseDataHolder = manageResponseToObjects(response, DemoObject[].class);
-		
-		
-		return responseDataHolder;
-	}
-}, true);
-```
-### Other
-
-You can also use SynergyKIT Android SDK for:
-- [ ] Uploading and downloading files and pictures
-- [ ] Sending emails and notifications
 
 ## Author
 
@@ -348,4 +142,4 @@ Letsgood.com s.r.o., development@letsgood.com
 
 ## License
 
-SynergyKIT Android SDK is available under the Apache License, Version 2.0
+SynergyKIT-SDK-iOS is available under the MIT license. See the LICENSE file for more info.
