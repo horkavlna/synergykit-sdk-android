@@ -1,5 +1,5 @@
 <p align="center" >
-<img src="https://github.com/Letsgood/synergykit-sdk-android/blob/develop/logo-synergykit-basic.png" alt="SynergyKIT" title="SynergyKIT">
+<img src="https://github.com/Letsgood/synergykit-sdk-android/blob/develop/logo-synergykit-basic.png" alt="SynergyKIT" title="SynergyKIT" width="50%">
 </p>
 
 ## Usage
