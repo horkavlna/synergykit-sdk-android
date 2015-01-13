@@ -9,7 +9,7 @@ We know how hard can be to work with untried API, so we prepared SDKs for mostly
 
 //TODO PICTURE
 
-## Android Sample App using SynergyKIT SDK for Android Studio
+## Android Sample App uses SynergyKIT SDK
 Version 0.0.1:
 - GET/POST requests examples
 
