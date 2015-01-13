@@ -9,7 +9,7 @@ We know how hard can be to work with untried API, so we prepared SDKs for mostly
 
 //TODO PICTURE
 
-## Android Sample App using SynergyKIT SDK
+## Android Sample App using SynergyKIT SDK for Android Studio
 Version 0.0.1:
 - GET/POST requests examples
 
@@ -17,6 +17,11 @@ Roadmap 0.0.2:
 - Notifications
 - Sign In
 - Sign Up support for integration third party applications (Facebook, Google, Twitter, Github, LinkedIn, etc.)
+
+How to use it?
+1. Open Android Studio
+2. Import project with destination folder SampleApp
+3. That's all. Project uses Gradle.
 
 ## SynergyKIT Android SDK
 Version 0.0.2:
@@ -29,6 +34,23 @@ Version 0.0.2:
 
 Roadmap 0.0.3
 - Cloud code support
+- jCenter / Maven dependencies
+
+How to use it?
+1. Open Android Studio
+2. Create new project/module
+3. Copy folder sdk to you project and add compile dependencies to your build.gradle script (Module: app)
+
+```java
+dependencies {
+    compile 'com.facebook.android:facebook-android-sdk:+'
+    compile 'com.android.support:support-v4:21.0.3'
+    compile 'com.google.android.gms:play-services:+'
+    compile 'com.google.code.gson:gson:2.3.1' //necessary
+    compile 'com.android.support:appcompat-v7:21.0.3'
+}
+```
+4. Next version will be available via jCenter / Maven dependencies
 
 ### SynergyKIT initialization (onCreate in Application class)
 ```java
