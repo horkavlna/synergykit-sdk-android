@@ -6,9 +6,9 @@ Letsgood.com run Backend as a Service SynergyKIT for fast and simple mobile/web/
 We know how hard can be to work with untried API, so we prepared SDKs for mostly used platforms. If you are looking for iOS SDK, you probably want https://github.com/Letsgood/synergykit-sdk-ios.
 
 ## High level Architecture
-
-//TODO PICTURE
-
+<p align="center" >
+<img src="https://github.com/Letsgood/synergykit-sdk-ios/blob/master/high-level-architecture.png" alt="SynergyKIT" title="SynergyKIT" width="33%">
+</p>
 ## Android Sample App uses SynergyKIT SDK
 Version 0.0.2:
 - GET/POST requests examples
