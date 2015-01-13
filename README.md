@@ -19,9 +19,9 @@ Roadmap 0.0.2:
 - Sign Up support for integration third party applications (Facebook, Google, Twitter, Github, LinkedIn, etc.)
 
 How to use it?
-1) Open Android Studio
-2) Import project with destination folder SampleApp
-3) That's all. Project uses Gradle.
+- Open Android Studio
+- Import project with destination folder SampleApp
+- That's all. Project uses Gradle.
 
 ## SynergyKIT Android SDK
 Version 0.0.2:
@@ -37,9 +37,9 @@ Roadmap 0.0.3
 - jCenter / Maven dependencies
 
 How to use it?
-1) Open Android Studio
-2) Create new project/module
-3) Copy folder sdk to you project and add compile dependencies to your build.gradle script (Module: app)
+- Open Android Studio
+- Create new project/module
+- Copy folder sdk to you project and add compile dependencies to your build.gradle script (Module: app)
 
 ```java
 dependencies {
@@ -50,7 +50,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:21.0.3'
 }
 ```
-4) Next version will be available via jCenter / Maven dependencies
+- Next version will be available via jCenter / Maven dependencies
 
 ### SynergyKIT initialization (onCreate in Application class)
 ```java
