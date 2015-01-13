@@ -2,11 +2,25 @@
 <img src="https://github.com/Letsgood/synergykit-sdk-android/blob/develop/logo-synergykit-basic.png" alt="SynergyKIT" title="SynergyKIT" width="50%">
 </p>
 
-## Usage
+## Usage Sample App
+Version 0.0.1:
+- GET/POST requests examples
 
-### SynergyKIT initialization
+Roadmap 0.0.2:
+- Notifications
+- Sign In
+- Sign Up via Facebook, G+, Twitter
+
+## Usage SDK
+Version 0.0.2
+
+### SynergyKIT initialization (onCreate in Application class)
 ```java
-SynergyKIT.init("demo","114a5371-59c6-484f-a5de-5c810ee417dd");
+if(!SynergyKIT.isInit()) {
+    SynergyKIT.init("synergykit-sample-app", "7cbb9eed-17dd-4f75-a7bd-c92f2f6faef9");
+    SynergyKIT.setDebugModeEnabled(true); //TODO set FALSE !!
+    SynergyKITLog.getInstance().setEnabled(true);
+}
 ```
 
 ### Cache installation
