@@ -10,10 +10,10 @@ We know how hard can be to work with untried API, so we prepared SDKs for mostly
 //TODO PICTURE
 
 ## Android Sample App using SynergyKIT SDK for Android Studio
-Version 0.0.1:
+Version 0.0.2:
 - GET/POST requests examples
 
-Roadmap 0.0.2:
+Roadmap 0.0.3:
 - Notifications
 - Sign In
 - Sign Up support for integration third party applications (Facebook, Google, Twitter, Github, LinkedIn, etc.)
