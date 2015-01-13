@@ -39,7 +39,7 @@ Roadmap 0.0.3
 How to use it?
 - Open Android Studio
 - Create new project/module
-- Copy folder sdk to you project and add compile dependencies to your build.gradle script (Module: app)
+- Copy folder sdk/com to you project and add compile dependencies to your build.gradle script (Module: app)
 
 ```java
 dependencies {
