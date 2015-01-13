@@ -2,7 +2,7 @@
 <img src="https://github.com/Letsgood/synergykit-sdk-android/blob/develop/logo-synergykit-basic.png" alt="SynergyKIT" title="SynergyKIT" width="50%">
 </p>
 
-## Usage Sample App
+## Sample App
 Version 0.0.1:
 - GET/POST requests examples
 
@@ -11,7 +11,7 @@ Roadmap 0.0.2:
 - Sign In
 - Sign Up via Facebook, G+, Twitter
 
-## Usage SDK
+## SDK
 Version 0.0.2
 
 ### SynergyKIT initialization (onCreate in Application class)
