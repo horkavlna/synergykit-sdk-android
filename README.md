@@ -9,7 +9,7 @@ We know how hard can be to work with untried API, so we prepared SDKs for mostly
 
 //TODO PICTURE
 
-## Android Sample App
+## Android Sample App using SynergyKIT SDK
 Version 0.0.1:
 - GET/POST requests examples
 
@@ -18,7 +18,7 @@ Roadmap 0.0.2:
 - Sign In
 - Sign Up support for integration third party applications (Facebook, Google, Twitter, Github, LinkedIn, etc.)
 
-## Android SDK
+## SynergyKIT Android SDK
 Version 0.0.2:
 - REST API wrapper (CRUD operations POST, PUT, GET, DELETE)
 - OData filtering
