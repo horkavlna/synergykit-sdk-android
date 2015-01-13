@@ -6,10 +6,6 @@ Letsgood.com run Backend as a Service SynergyKIT for fast and simple mobile/web/
 We know how hard can be to work with untried API, so we prepared SDKs for mostly used platforms.
 
 ## High level Architecture
-- CoreOS
-- Node.js
-- Redis
-- MongoDB
 
 //TODO PICTURE
 
