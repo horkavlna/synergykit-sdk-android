@@ -388,7 +388,9 @@ SynergyKIT.synergylize(new SynergyKITRequest() {
 
 ## Author
 
-<img src="http://letsgood.com/src/img/logo-letsgood.png" alt="SynergyKIT" title="SynergyKIT" width="10%"> Letsgood.com s.r.o., Prague, Heart of Europe
+<img src="http://letsgood.com/src/img/logo-letsgood.png" alt="SynergyKIT" title="SynergyKIT" width="10%"> 
+
+Letsgood.com s.r.o., Prague, Heart of Europe
 
 development@letsgood.com, http://letsgood.com/en
 
