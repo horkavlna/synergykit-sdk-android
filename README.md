@@ -1,18 +1,38 @@
 <p align="center" >
 <img src="https://github.com/Letsgood/synergykit-sdk-android/blob/develop/logo-synergykit-basic.png" alt="SynergyKIT" title="SynergyKIT" width="50%">
 </p>
+Letsgood.com run Backend as a Service SynergyKIT for fast and simple mobile/web/desktop applications products deployment. SynergyKIT allows enterpreneurs implement an idea to project fast and low cost like Lean Startup, validates and runs product.
 
-## Sample App
+We know how hard can be to work with untried API, so we prepared SDKs for mostly used platforms.
+
+## High level Architecture
+- CoreOS
+- Node.js
+- Redis
+- MongoDB
+
+//TODO PICTURE
+
+## Android Sample App
 Version 0.0.1:
 - GET/POST requests examples
 
 Roadmap 0.0.2:
 - Notifications
 - Sign In
-- Sign Up via Facebook, G+, Twitter
+- Sign Up support for integration third party applications (Facebook, Google, Twitter, Github, LinkedIn, etc.)
 
-## SDK
-Version 0.0.2
+## Android SDK
+Version 0.0.2:
+- REST API wrapper (CRUD operations POST, PUT, GET, DELETE)
+- OData filtering
+- Uploading and downloading files and pictures from global CDN network
+- Sending e-mails and push notifications via GCM
+- Strong hashed passwords
+- HTTPs security
+
+Roadmap 0.0.3
+- Cloud code support
 
 ### SynergyKIT initialization (onCreate in Application class)
 ```java
@@ -261,6 +281,25 @@ SynergyKIT.loginUser(demoUser, new UserResponseListener() {
 });
 ```
 ### Making requests with own URI (with OData filtering)
+With OData you can filter, order and select data with REST Api endpoints. Web API supports the following OData query options:
+
+#### $expand
+Expands related entities inline.
+#### $filter
+Filters the results, based on a Boolean condition.
+#### $inlinecount
+Tells the server to include the total count of matching entities in the response. (Useful for server-side paging.)
+#### $orderby
+Sorts the results.
+#### $select
+Selects which properties to include in the response.
+#### $skip
+Skips the first n results.
+#### $top
+Returns only the first n the results.
+
+More informations you can get on http://odata.org
+
 ```java
 /*
  * Build your own URI 
@@ -350,15 +389,10 @@ SynergyKIT.synergylize(new SynergyKITRequest() {
 	}
 }, true);
 ```
-### Other
-
-You can also use SynergyKIT Android SDK for:
-- [ ] Uploading and downloading files and pictures
-- [ ] Sending emails and notifications
 
 ## Author
 
-Letsgood.com s.r.o., development@letsgood.com
+Letsgood.com s.r.o., development@letsgood.com, letsgo
 
 ## License
 
