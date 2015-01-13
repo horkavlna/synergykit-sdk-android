@@ -3,7 +3,7 @@
 </p>
 Letsgood.com run Backend as a Service SynergyKIT for fast and simple mobile/web/desktop applications products deployment. SynergyKIT allows enterpreneurs implement an idea to project fast and low cost like Lean Startup, validates and runs product.
 
-We know how hard can be to work with untried API, so we prepared SDKs for mostly used platforms.
+We know how hard can be to work with untried API, so we prepared SDKs for mostly used platforms. If you are looking for iOS SDK, you probably want https://github.com/Letsgood/synergykit-sdk-ios.
 
 ## High level Architecture
 
