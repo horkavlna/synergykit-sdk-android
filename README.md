@@ -9,13 +9,8 @@ We know how hard can be to work with untried API, so we prepared SDKs for mostly
 
 //TODO PICTURE
 
-<<<<<<< HEAD
 ## Android Sample App uses SynergyKIT SDK
-Version 0.0.1:
-=======
-## Android Sample App using SynergyKIT SDK for Android Studio
 Version 0.0.2:
->>>>>>> origin
 - GET/POST requests examples
 
 Roadmap 0.0.3:
