@@ -1,13 +1,14 @@
 <p align="center" >
-<img src="https://github.com/Letsgood/synergykit-sdk-android/blob/develop/logo-synergykit-basic.png" alt="SynergyKIT" title="SynergyKIT" width="33%">
+<img src="https://github.com/Letsgood/synergykit-sdk-android/blob/master/logo-synergykit-basic.png" alt="SynergyKIT" title="SynergyKIT" width="33%">
 </p>
 Letsgood.com run Backend as a Service SynergyKIT for fast and simple mobile/web/desktop applications products deployment. SynergyKIT allows enterpreneurs implement an idea to project fast and low cost like Lean Startup, validates and runs product.
 
 We know how hard can be to work with untried API, so we prepared SDKs for mostly used platforms. If you are looking for iOS SDK, you probably want https://github.com/Letsgood/synergykit-sdk-ios.
 
 ## High level Architecture
-
-//TODO PICTURE
+<p align="center" >
+<img src="https://github.com/Letsgood/synergykit-sdk-ios/blob/master/high-level-architecture.png" alt="SynergyKIT" title="SynergyKIT">
+</p>
 
 ## Android Sample App uses SynergyKIT SDK
 Version 0.0.2:
