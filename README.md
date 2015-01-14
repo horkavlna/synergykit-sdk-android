@@ -13,6 +13,7 @@ We know how hard can be to work with untried API, so we prepared SDKs for mostly
 ## Android Sample App uses SynergyKIT SDK
 Version 0.0.2:
 - GET/POST requests examples
+- Cloud code integration with Face++
 
 Roadmap 0.0.3:
 - Notifications
@@ -33,8 +34,10 @@ Version 0.0.2:
 - Strong hashed passwords
 - HTTPs security
 
-Roadmap 0.0.3
+Version 0.0.3:
 - Cloud code support
+
+Roadmap 0.0.4:
 - jCenter / Maven dependencies
 
 How to use it?
