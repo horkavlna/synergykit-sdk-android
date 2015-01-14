@@ -53,6 +53,11 @@
 
         </activity>
         <activity
+            android:name="com.synergykit.sampleapp.CloudCodeActivity"
+            android:label="Cloud code" >
+
+        </activity>
+        <activity
             android:name="com.synergykit.sampleapp.SignUpActivity"
             android:label="Sign up" >
 

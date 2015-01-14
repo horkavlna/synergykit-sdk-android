@@ -16,6 +16,7 @@ public class MainActivity extends ActionBarActivity {
     private Button signInButton;
     private Button signUpButton;
     private Button requestsButton;
+    private Button buttonCloudCode;
 
 
     @Override
@@ -35,6 +36,15 @@ public class MainActivity extends ActionBarActivity {
         signInButton = (Button) findViewById(R.id.buttonSignIn);
         signUpButton = (Button) findViewById(R.id.buttonSignUp);
         requestsButton = (Button) findViewById(R.id.buttonRequests);
+        buttonCloudCode = (Button) findViewById(R.id.buttonCloudCode);
+
+        buttonCloudCode.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, CloudCodeActivity.class);
+                startActivity(intent);
+            }
+        });
 
         notificationsButton.setOnClickListener(new View.OnClickListener(){
             @Override

@@ -8,6 +8,7 @@ import com.synergykit.sdk.builders.errors.Errors;
 import com.synergykit.sdk.cache.Cache;
 import com.synergykit.sdk.interfaces.IAuthorization;
 import com.synergykit.sdk.interfaces.ICache;
+import com.synergykit.sdk.interfaces.ICloudCode;
 import com.synergykit.sdk.interfaces.IFiles;
 import com.synergykit.sdk.interfaces.INotification;
 import com.synergykit.sdk.interfaces.IRecords;
@@ -39,7 +40,7 @@ import java.lang.reflect.Type;
  *
  */
 
-public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotification, ICache, IAuthorization, IFiles{
+public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotification, ICache, IAuthorization, IFiles, ICloudCode{
 	
 	/* Attributes */
 	private static SynergyKITSdk instance = null;
@@ -51,6 +52,7 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotific
 	private IAuthorization authorization = new Authorization();
 	private ICache cache = new Cache();
 	private IFiles files = new Files();
+    private ICloudCode cloudCode = new CloudCode();
 	
 	//---------------------------------------------------------------------------------------
 	/* Instance static getter */
@@ -169,6 +171,12 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotific
 	}
 	
 	//---------------------------------------------------------------------------------------
+	/* Get record */
+    @Override
+    public void invokeCloudCode(SynergyKITConfig config,SynergyKITObject object,  ResponseListener listener) {
+        cloudCode.invokeCloudCode(config, object, listener);
+    }
+
 	/* Get record */
 	@Override
 	public void getRecord(SynergyKITConfig config, ResponseListener listener) {

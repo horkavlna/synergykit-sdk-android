@@ -103,6 +103,12 @@ public class SynergyKIT {
 		SynergyKITSdk.getInstance().getRecord(config, listener);
 	}
 
+    /* Invoke cloud code*/
+    public static void invokeCloudCode(SynergyKITConfig config,SynergyKITObject object,  ResponseListener listener) {
+        SynergyKITSdk.getInstance().invokeCloudCode(config, object,  listener);
+    }
+
+
 	/* Get record */
 	public static void getRecord(String collectionUrl, String recordId, Type type,	ResponseListener listener, boolean parallelMode) {
 		SynergyKITSdk.getInstance().getRecord(collectionUrl, recordId, type, listener, parallelMode);
