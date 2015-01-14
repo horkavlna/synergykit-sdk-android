@@ -1,5 +1,5 @@
 <p align="center" >
-<img src="https://synergykit.blob.core.windows.net/synergykit/56a5f0b93ad04ca42265cfab4e1810fb.png" alt="SynergyKIT" title="SynergyKIT" width="33%">
+<img src="https://synergykit.blob.core.windows.net/synergykit/fbf107a82dceb49843f8de1fda4d9ea9.png" alt="SynergyKIT" title="SynergyKIT" width="33%">
 </p>
 Letsgood.com run Backend as a Service SynergyKIT for fast and simple mobile/web/desktop applications products deployment. SynergyKIT allows enterpreneurs implement an idea to project fast and low cost like Lean Startup, validates and runs product.
 
