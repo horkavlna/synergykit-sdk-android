@@ -17,6 +17,15 @@ public class CloudCodeDemo extends SynergyKITObject {
     private float smiling;
     private String glass;
     private float glassConfidence;
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getPath() {
         return path;

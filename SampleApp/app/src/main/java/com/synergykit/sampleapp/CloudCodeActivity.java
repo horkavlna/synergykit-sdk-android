@@ -2,12 +2,15 @@ package com.synergykit.sampleapp;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +34,10 @@ public class CloudCodeActivity extends ActionBarActivity {
     private String fileUrl;
     private TextView resultCloudCode;
     private Button buttonPicker;
+    private EditText name;
+    private ImageView image;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +45,8 @@ public class CloudCodeActivity extends ActionBarActivity {
         setContentView(R.layout.activity_cloud_code);
         buttonPicker = (Button) findViewById(R.id.buttonPicker);
         resultCloudCode = (TextView) findViewById(R.id.resultCloudCode);
+        image = (ImageView) findViewById(R.id.image);
+        name = (EditText) findViewById(R.id.name);
 
         buttonPicker.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -89,8 +98,10 @@ public class CloudCodeActivity extends ActionBarActivity {
                 config.setParallelMode(false);
                 config.setType(CloudCodeDemo.class);
 
+
                 CloudCodeDemo ccd = new CloudCodeDemo();
                 ccd.setPath(object.getPath());
+                ccd.setName(name.getText().toString());
 
                 SynergyKIT.invokeCloudCode(config,ccd,new ResponseListener() {
                     @Override
@@ -128,6 +139,7 @@ public class CloudCodeActivity extends ActionBarActivity {
         if (requestCode == 111 && data != null && data.getData() != null) {
             Bitmap logo;
             logo = PicturePicker.getInstance().getBitmap(data.getData(), CloudCodeActivity.this);
+            image.setImageDrawable(new BitmapDrawable(getResources(),logo));
             upload(logo);
         }
     }
