@@ -7,7 +7,7 @@ We know how hard can be to work with untried API, so we prepared SDKs for mostly
 
 ## High level Architecture
 <p align="center" >
-<img src="https://github.com/Letsgood/synergykit-sdk-ios/blob/master/high-level-architecture.png" alt="SynergyKIT" title="SynergyKIT">
+<img src="https://synergykit.blob.core.windows.net/synergykit/56a5f0b93ad04ca42265cfab4e1810fb.png" alt="SynergyKIT" title="SynergyKIT">
 </p>
 
 ## Android Sample App uses SynergyKIT SDK
