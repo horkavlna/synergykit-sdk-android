@@ -122,6 +122,11 @@ public class Filter {
     public static String buildParametr(short parameter){
         return "" + parameter + "";
     }
+
+    /* Parameter builder*/
+    public static String buildParametr(String parameter){
+        return "'" + parameter + "'";
+    }
 	
 	/* Array parameter builder */
 	public static String buildArrayParameter(String[] arrayParameter){
