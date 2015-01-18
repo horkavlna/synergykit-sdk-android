@@ -9,6 +9,8 @@ import com.synergykit.sdk.listeners.DeleteResponseListener;
 import com.synergykit.sdk.listeners.EmailResponseListener;
 import com.synergykit.sdk.listeners.FileDataResponseListener;
 import com.synergykit.sdk.listeners.NotificationResponseListener;
+import com.synergykit.sdk.listeners.PlatformResponseListener;
+import com.synergykit.sdk.listeners.PlatformsResponseListener;
 import com.synergykit.sdk.listeners.RecordsResponseListener;
 import com.synergykit.sdk.listeners.ResponseListener;
 import com.synergykit.sdk.listeners.UserResponseListener;
@@ -18,6 +20,7 @@ import com.synergykit.sdk.resources.SynergyKITConfig;
 import com.synergykit.sdk.resources.SynergyKITEmail;
 import com.synergykit.sdk.resources.SynergyKITNotification;
 import com.synergykit.sdk.resources.SynergyKITObject;
+import com.synergykit.sdk.resources.SynergyKITPlatform;
 import com.synergykit.sdk.resources.SynergyKITUser;
 
 import java.lang.reflect.Type;
@@ -141,7 +144,7 @@ public class SynergyKIT {
 	public static void deleteRecord(String collectionUrl, String recordId,	DeleteResponseListener listener, boolean parallelMode) {
 		SynergyKITSdk.getInstance().deleteRecord(collectionUrl, recordId, listener, parallelMode);		
 	}
-	
+
 	//-------------------------------------------------------------------------------------------------------------------
 	/* Get user */
 	public static void getUser(SynergyKITConfig config, UserResponseListener listener) {
@@ -174,14 +177,39 @@ public class SynergyKIT {
 	}
 
 	/* Delete user */
-	public static void deleteUser(String userId, DeleteResponseListener listener,	boolean parallelMode) {
-		SynergyKITSdk.getInstance().deleteUser(userId, listener, parallelMode);		
+	public static void deleteUser(SynergyKITUser user, DeleteResponseListener listener,	boolean parallelMode) {
+		SynergyKITSdk.getInstance().deleteUser(user, listener, parallelMode);
 	}
+
+    /* Add platform (GCM) */
+    public static void addPlatformToUser(SynergyKITUser user, SynergyKITPlatform platform, PlatformResponseListener listener, boolean parallelMode) {
+        SynergyKITSdk.getInstance().addPlatformToUser(user, platform, listener, parallelMode);
+    }
+
+    /* Update platform by _id */
+    public static void updatePlatformInUser(SynergyKITUser user, SynergyKITPlatform platform, PlatformResponseListener listener, boolean parallelMode) {
+        SynergyKITSdk.getInstance().updatePlatformInUser(user, platform, listener, parallelMode);
+    }
+
+    /* Delete platform by _id */
+    public static void deletePlatform(SynergyKITUser user, SynergyKITPlatform platform, DeleteResponseListener listener,	boolean parallelMode) {
+        SynergyKITSdk.getInstance().deletePlatform(user, platform, listener, parallelMode);
+    }
+
+    /* Get platform by user and platformId */
+    public void getPlatform(SynergyKITUser user, String platformId, PlatformResponseListener listener, boolean parallelMode) {
+        SynergyKITSdk.getInstance().getPlatform(user, platformId, listener, parallelMode);
+    }
+
+    /* Get platforms[] by user */
+    public void getPlatforms(SynergyKITUser user, PlatformsResponseListener listener, boolean parallelMode) {
+        SynergyKITSdk.getInstance().getPlatforms(user, listener, parallelMode);
+    }
 	
 	//-------------------------------------------------------------------------------------------------------------------	
 	/* Send email */
-	public static void sendEmail(SynergyKITEmail email, EmailResponseListener listener, boolean parallelMode){
-		SynergyKITSdk.getInstance().sendEmail(email, listener, parallelMode);
+	public static void sendEmail(String mailId, SynergyKITEmail email, EmailResponseListener listener, boolean parallelMode){
+		SynergyKITSdk.getInstance().sendEmail(mailId, email, listener, parallelMode);
 	}
 	
 	/* Send notification */

@@ -23,7 +23,7 @@ public class Notifications implements INotification{
 
 	/* Send email */
 	@Override
-	public void sendEmail(SynergyKITEmail email, EmailResponseListener listener,	boolean parallelMode) {		
+	public void sendEmail(String mailId, SynergyKITEmail email, EmailResponseListener listener,	boolean parallelMode) {
 		SynergyKITConfig config = new SynergyKITConfig();
 		EmailRequestPost request = new EmailRequestPost();
 
@@ -40,14 +40,13 @@ public class Notifications implements INotification{
 			
 			return;
 		}
-		
-		//Uri builder
-		UriBuilder uriBuilder = new UriBuilder()
-								.setResource(Resource.RESOURCE_EMAIL);
+
 
 		
 		//set config
-		config.setUri(uriBuilder.build());
+		config.setUri(new UriBuilder()
+                .setResource(Resource.RESOURCE_EMAIL).setMail(mailId).build());
+
 		config.setParallelMode(parallelMode);
 		config.setType(email.getClass());
 				
