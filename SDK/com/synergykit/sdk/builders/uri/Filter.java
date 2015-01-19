@@ -94,14 +94,39 @@ public class Filter {
 	}
 	
 	/* Parameter builder*/
-	public static String buildParametr(String parameter){
-		if(parameter == null || parameter.length()==0){
-			SynergyKITLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
-			return "''";
-		}
-		
-		return "'" + parameter	 + "'";
+	public static String buildParametr(int parameter){
+		return "" + parameter + "";
 	}
+
+    /* Parameter builder*/
+    public static String buildParametr(boolean parameter){
+        return (parameter ?  "true" : "false");
+    }
+
+    /* Parameter builder*/
+    public static String buildParametr(double parameter){
+        return "" + parameter + "d";
+    }
+
+    /* Parameter builder*/
+    public static String buildParametr(float parameter){
+        return "" + parameter + "d";
+    }
+
+    /* Parameter builder*/
+    public static String buildParametr(long parameter){
+        return "" + parameter + "";
+    }
+
+    /* Parameter builder*/
+    public static String buildParametr(short parameter){
+        return "" + parameter + "";
+    }
+
+    /* Parameter builder*/
+    public static String buildParametr(String parameter){
+        return "'" + parameter + "'";
+    }
 	
 	/* Array parameter builder */
 	public static String buildArrayParameter(String[] arrayParameter){

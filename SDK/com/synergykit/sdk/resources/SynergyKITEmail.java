@@ -8,19 +8,10 @@ package com.synergykit.sdk.resources;
 public class SynergyKITEmail extends SynergyKITObject {
 	
 	/* Attributes */
-	protected String url;
 	protected String email;
 	protected String subject;
+    protected String from;
 
-	/* Template getter */
-	public String getTemplateUrl() {
-		return url;
-	}
-
-	/* Template setter */
-	public void setTemplateUrl(String templateUrl) {
-		this.url = templateUrl;
-	}
 
 	/* Email getter */
 	public String getEmail() {
@@ -41,4 +32,12 @@ public class SynergyKITEmail extends SynergyKITObject {
 	public void setSubject(String subject) {
 		this.subject = subject;
 	}
+
+    public String getFrom() {
+        return from;
+    }
+
+    public void setFrom(String from) {
+        this.from = from;
+    }
 }

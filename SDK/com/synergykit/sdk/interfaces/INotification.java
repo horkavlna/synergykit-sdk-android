@@ -11,7 +11,7 @@ import com.synergykit.sdk.resources.SynergyKITNotification;
  */
 
 public interface INotification {
-	public void sendEmail(SynergyKITEmail email, EmailResponseListener listener, boolean parallelMode);
+	public void sendEmail(String mailId, SynergyKITEmail email, EmailResponseListener listener, boolean parallelMode);
 	public void sendNotification(SynergyKITNotification notification, NotificationResponseListener listener, boolean parralelMode);
 }
 	

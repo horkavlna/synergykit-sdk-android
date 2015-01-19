@@ -5,34 +5,27 @@ package com.synergykit.sdk.resources;
  *
  */
 
-public class SynergyKITPlatform {
+public class SynergyKITPlatform extends SynergyKITObject {
 
-	/* Attributes */
-	private String name;
-	private String applicationUrl;
+    /* Constants */
+    protected static final String PLATFORM = "android";
+
+
+    /* Attributes */
+	private String platformName = PLATFORM;
 	private String registrationId;
 	private boolean development;
 
 	/* Name getter */
-	public String getName() {
-		return name;
+	public String getPlatformName() {
+		return platformName;
 	}
 
 	/* Name setter */
-	public void setName(String name) {
-		this.name = name;
+	public void setPlatformName(String platformName) {
+		this.platformName = platformName;
 	}
 
-	/* Application URL getter */
-	public String getApplicationUrl() {
-		return applicationUrl;
-	}
-
-	/* Application URL setter */
-	public void setApplicationUrl(String applicationUrl) {
-		this.applicationUrl = applicationUrl;
-	}
-	
 	/* Registration ID getter */
 	public String getRegistrationId() {
 		return registrationId;

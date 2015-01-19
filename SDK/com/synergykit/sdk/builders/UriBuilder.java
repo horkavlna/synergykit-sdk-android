@@ -10,6 +10,7 @@ import com.synergykit.sdk.SynergyKIT;
 import com.synergykit.sdk.builders.uri.Collection;
 import com.synergykit.sdk.builders.uri.Filter;
 import com.synergykit.sdk.builders.uri.InLineCount;
+import com.synergykit.sdk.builders.uri.MailId;
 import com.synergykit.sdk.builders.uri.OrderBy;
 import com.synergykit.sdk.builders.uri.RecordId;
 import com.synergykit.sdk.builders.uri.Resource;
@@ -32,6 +33,8 @@ public class UriBuilder {
 	private Top top = new Top();
 	private Skip skip = new Skip();
 	private Select select = new Select();
+    private MailId mail = new MailId();
+
 	private InLineCount inLineCount = new InLineCount();
 
 	
@@ -40,8 +43,15 @@ public class UriBuilder {
 		this.resource.setResource(resource);
 		return this;
 	}
-	
-	/* Resource URL setter */
+
+    /* Mail id URL setter */
+    public UriBuilder setMail(String mailId){
+        this.mail.setMailId(mailId);
+        return this;
+    }
+
+
+    /* Resource URL setter */
 	public UriBuilder setCollection(String collection){
 		this.collection.setCollection(collection);
 		return this;
@@ -113,7 +123,10 @@ public class UriBuilder {
 		
 		
 		uri += "/" + resource.getResource();  //set resource	
-		
+
+        if(mail.getMailId()!=null)
+            uri += "/" + mail.getMailId();  //set collection
+
 		if(collection.getCollection()!=null)
 			uri += "/" + collection.getCollection();  //set collection
 		

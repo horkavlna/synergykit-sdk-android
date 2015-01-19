@@ -16,7 +16,8 @@ public class Resource {
 	public static final String RESOURCE_FILES = "files";
 	public static final String RESOURCE_LOGS = "logs";
 	public static final String RESOURCE_USERS = "users";
-	public static final String RESOURCE_USER_LOGIN = "users/login";
+    public static final String RESOURCE_USERS_PLATFORMS = "users/%s/platforms";
+    public static final String RESOURCE_USER_LOGIN = "users/login";
 	public static final String RESOURCE_EMAIL = "mail";
 	public static final String RESOURCE_NOTIFICATION = "users/notification";
 	
