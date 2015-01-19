@@ -11,11 +11,11 @@ We know how hard can be to work with untried API, so we prepared SDKs for mostly
 </p>
 
 ## Android Sample App uses SynergyKIT SDK
-Version 0.0.2:
+Version 0.0.4:
 - GET/POST requests examples
 - Cloud code integration with Face++
 
-Roadmap 0.0.3:
+Roadmap 0.0.5:
 - Notifications
 - Sign In
 - Sign Up support for integration third party applications (Facebook, Google, Twitter, Github, LinkedIn, etc.)
@@ -26,18 +26,17 @@ How to use it?
 - That's all. Project uses Gradle.
 
 ## SynergyKIT Android SDK
-Version 0.0.2:
+Version 0.0.4:
 - REST API wrapper (CRUD operations POST, PUT, GET, DELETE)
 - OData filtering
 - Uploading and downloading files and pictures from global CDN network
 - Sending e-mails and push notifications via GCM
 - Strong hashed passwords
 - HTTPs security
-
-Version 0.0.3:
+- New REST API (2.0.6) interface supported
 - Cloud code support
 
-Roadmap 0.0.4:
+Roadmap 0.0.5:
 - jCenter / Maven dependencies
 
 How to use it?
