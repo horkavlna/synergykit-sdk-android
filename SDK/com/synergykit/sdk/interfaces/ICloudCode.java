@@ -11,6 +11,7 @@ import com.synergykit.sdk.resources.SynergyKITObject;
 
 public interface ICloudCode {
 	public void invokeCloudCode(SynergyKITConfig config,SynergyKITObject object,  ResponseListener listener);
+
 }
 
 

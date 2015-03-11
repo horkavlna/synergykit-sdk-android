@@ -1,5 +1,6 @@
 package com.synergykit.sdk.resources;
 
+import java.io.Serializable;
 import java.lang.reflect.Type;
 
 /*
@@ -7,7 +8,7 @@ import java.lang.reflect.Type;
  *
  */
 
-public class SynergyKITConfig {
+public class SynergyKITConfig  implements Serializable {
 	/* Attributes */
 	private boolean parallelMode = false;
 	private SynergyKITUri synergyKITUri = null;

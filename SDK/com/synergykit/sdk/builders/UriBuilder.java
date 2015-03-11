@@ -22,7 +22,7 @@ import com.synergykit.sdk.resources.SynergyKITUri;
 
 public class UriBuilder {
 	/* Constants */
-	private static final String BASE_SYNERGYKIT_URL = "https://%s.api.synergykit.com/v2";		
+	private static final String BASE_SYNERGYKIT_URL = "https://%s.api.synergykit.com/v2";
 	
 	/* Attributes */
 	private Resource resource = new Resource();

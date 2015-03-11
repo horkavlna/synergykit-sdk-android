@@ -1,5 +1,6 @@
 package com.synergykit.sdk.resources;
 
+import java.io.Serializable;
 import java.util.List;
 
 /*
@@ -7,7 +8,7 @@ import java.util.List;
  *
  */
 
-public class SynergyKITUser extends SynergyKITObject {
+public class SynergyKITUser extends SynergyKITObject  implements Serializable {
 	
 	/* Attributes */
 	protected String password;	

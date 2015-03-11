@@ -5,7 +5,9 @@ package com.synergykit.sdk.resources;
  *
  */
 
-public class SynergyKITPlatform extends SynergyKITObject {
+import java.io.Serializable;
+
+public class SynergyKITPlatform extends SynergyKITObject implements Serializable {
 
     /* Constants */
     protected static final String PLATFORM = "android";
@@ -19,11 +21,6 @@ public class SynergyKITPlatform extends SynergyKITObject {
 	/* Name getter */
 	public String getPlatformName() {
 		return platformName;
-	}
-
-	/* Name setter */
-	public void setPlatformName(String platformName) {
-		this.platformName = platformName;
 	}
 
 	/* Registration ID getter */

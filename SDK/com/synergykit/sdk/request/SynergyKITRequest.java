@@ -138,8 +138,7 @@ public abstract class SynergyKITRequest extends AsyncTask<Void, Void, Object> {
 	}
 
 	/* Manage response */
-	protected ResponseDataHolder manageResponseToObjects(
-			SynergyKITResponse response, Type type) {
+	protected ResponseDataHolder manageResponseToObjects(SynergyKITResponse response, Type type) {
 		ResponseDataHolder dataHolder = new ResponseDataHolder();
 		
 

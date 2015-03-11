@@ -27,7 +27,7 @@ public class GsonWrapper {
 	public static Gson getGson(){
 		if(mGson == null)
 			GsonWrapper.mGson = new Gson();
-		
+
 		return GsonWrapper.mGson;
 	}
 }

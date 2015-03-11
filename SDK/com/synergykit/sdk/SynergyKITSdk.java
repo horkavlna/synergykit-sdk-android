@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import com.synergykit.sdk.builders.errors.Errors;
 import com.synergykit.sdk.cache.Cache;
 import com.synergykit.sdk.interfaces.IAuthorization;
+import com.synergykit.sdk.interfaces.IBatches;
 import com.synergykit.sdk.interfaces.ICache;
 import com.synergykit.sdk.interfaces.ICloudCode;
 import com.synergykit.sdk.interfaces.IFiles;
@@ -14,6 +15,7 @@ import com.synergykit.sdk.interfaces.INotification;
 import com.synergykit.sdk.interfaces.IRecords;
 import com.synergykit.sdk.interfaces.ISynergyKITSdk;
 import com.synergykit.sdk.interfaces.IUsers;
+import com.synergykit.sdk.listeners.BatchResponseListener;
 import com.synergykit.sdk.listeners.BitmapResponseListener;
 import com.synergykit.sdk.listeners.BytesResponseListener;
 import com.synergykit.sdk.listeners.DeleteResponseListener;
@@ -29,6 +31,7 @@ import com.synergykit.sdk.listeners.UsersResponseListener;
 import com.synergykit.sdk.log.SynergyKITLog;
 import com.synergykit.sdk.request.SynergyKITRequest;
 import com.synergykit.sdk.resources.SynergyKITAuthConfig;
+import com.synergykit.sdk.resources.SynergyKITBatchItem;
 import com.synergykit.sdk.resources.SynergyKITConfig;
 import com.synergykit.sdk.resources.SynergyKITEmail;
 import com.synergykit.sdk.resources.SynergyKITNotification;
@@ -37,13 +40,14 @@ import com.synergykit.sdk.resources.SynergyKITPlatform;
 import com.synergykit.sdk.resources.SynergyKITUser;
 
 import java.lang.reflect.Type;
+import java.util.LinkedList;
 
 /*
  * Copyright 2014 Letsgood.com s.r.o.
  *
  */
 
-public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotification, ICache, IAuthorization, IFiles, ICloudCode{
+public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotification, ICache, IAuthorization, IFiles, ICloudCode, IBatches{
 	
 	/* Attributes */
 	private static SynergyKITSdk instance = null;
@@ -56,6 +60,7 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotific
 	private ICache cache = new Cache();
 	private IFiles files = new Files();
     private ICloudCode cloudCode = new CloudCode();
+    private IBatches batches = new Batches();
 	
 	//---------------------------------------------------------------------------------------
 	/* Instance static getter */
@@ -352,5 +357,34 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotific
 		
 	}
 
+    //-------------------------------------------------------------------------------------------------------------------
+    /* Init batch */
+    @Override
+    public void initBatch(String batchId) {
+        batches.initBatch(batchId);
+    }
 
+    /* Remove batch */
+    @Override
+    public void removeBatch(String batchId) {
+        batches.removeBatch(batchId);
+    }
+
+    /* Remove all batches */
+    @Override
+    public void removeAllBatches() {
+       batches.removeAllBatches();
+    }
+
+    /* Send batch */
+    @Override
+    public void sendBatch(String batchId, BatchResponseListener listener, boolean parallelMode) {
+        batches.sendBatch(batchId, listener, parallelMode);
+    }
+
+    /*Batch getter*/
+    @Override
+    public LinkedList<SynergyKITBatchItem> getBatch(String batchId) {
+        return batches.getBatch(batchId);
+    }
 }

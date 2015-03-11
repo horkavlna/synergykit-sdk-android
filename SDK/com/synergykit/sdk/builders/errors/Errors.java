@@ -26,6 +26,10 @@ public class Errors {
 	//Arguments must me set
 	public static final int SC_NULL_ARGUMENTS_OR_EMPTY= -5;
 	public static final String MSG_NULL_ARGUMENTS_OR_EMPTY= "Some of arguments is NULL or EMPTY.";
+
+    //No batch found me set
+    public static final int SC_BATCH_NOT_FOUND= -6;
+    public static final String MSG_BATCH_NOT_FOUND= "Batch was not found.";
 	
 	//Order by overflow
 	public static final String MSG_ORDRER_BY_OVERFLOW = "Maximum size of ORDER BY arguments is 12. You are over.";
@@ -47,5 +51,7 @@ public class Errors {
 	
 	// Cache init failed
 	public static final String MSG_CACHE_INIT_FAILED = "HTTP response cache installation failed";
+
+
 
 }
