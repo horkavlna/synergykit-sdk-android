@@ -60,7 +60,7 @@ public class Delete extends RequestMethod {
 			httpURLConnection.setReadTimeout(READ_TIMEOUT); //set read timeout
 			httpURLConnection.setRequestMethod(REQUEST_METHOD); //set method
 			httpURLConnection.addRequestProperty(PROPERTY_USER_AGENT, PROPERTY_USER_AGENT_VALUE); //set property
-			
+            httpURLConnection.addRequestProperty("Content-Type","application/json");
 			httpURLConnection.addRequestProperty(PROPERTY_AUTHORIZATION, "Basic " 
 												 + Base64.encodeToString(
 												(SynergyKIT.getTenant() + ":" + SynergyKIT.getApplicationKey()).getBytes(),

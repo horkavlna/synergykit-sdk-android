@@ -80,6 +80,7 @@ public class Get extends RequestMethod {
 			httpURLConnection.setRequestMethod(REQUEST_METHOD); //set method
 			httpURLConnection.addRequestProperty(PROPERTY_USER_AGENT, PROPERTY_USER_AGENT_VALUE); //set property
 			httpURLConnection.addRequestProperty("Cache-Control", "max-stale=120");
+            httpURLConnection.addRequestProperty("Content-Type","application/json");
 			httpURLConnection.setDoInput(true);
 			httpURLConnection.setUseCaches(true);
 			httpURLConnection.setDefaultUseCaches(true);

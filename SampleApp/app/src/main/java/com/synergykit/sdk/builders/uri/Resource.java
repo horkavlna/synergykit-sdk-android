@@ -13,6 +13,7 @@ public class Resource {
 	/* Constructor */
 	public static final String RESOURCE_COLLECTIONS = "collections";
 	public static final String RESOURCE_DATA = "data";
+    public static final String RESOURCE_BATCH = "batch";
 	public static final String RESOURCE_FILES = "files";
 	public static final String RESOURCE_LOGS = "logs";
 	public static final String RESOURCE_USERS = "users";
@@ -20,6 +21,7 @@ public class Resource {
     public static final String RESOURCE_USER_LOGIN = "users/login";
 	public static final String RESOURCE_EMAIL = "mail";
 	public static final String RESOURCE_NOTIFICATION = "users/notification";
+    public static final String RESOURCE_FUNCTIONS = "functions";
 	
 
 	/* Attributes */

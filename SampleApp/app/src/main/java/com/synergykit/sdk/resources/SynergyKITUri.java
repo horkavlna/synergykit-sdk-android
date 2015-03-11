@@ -9,7 +9,9 @@ import android.webkit.URLUtil;
 import com.synergykit.sdk.builders.errors.Errors;
 import com.synergykit.sdk.log.SynergyKITLog;
 
-public class SynergyKITUri {
+import java.io.Serializable;
+
+public class SynergyKITUri  implements Serializable {
 	
 	/* Constants */
 	private static final String URI = "URI: ";

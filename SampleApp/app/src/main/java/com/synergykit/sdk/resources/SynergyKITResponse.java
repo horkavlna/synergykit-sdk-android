@@ -2,13 +2,14 @@ package com.synergykit.sdk.resources;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
+import java.io.Serializable;
 
 /*
  * Copyright 2014 Letsgood.com s.r.o.
  *
  */
 
-public class SynergyKITResponse {
+public class SynergyKITResponse  implements Serializable {
 	
 	/* Attributes */
 	private int statusCode = 0;

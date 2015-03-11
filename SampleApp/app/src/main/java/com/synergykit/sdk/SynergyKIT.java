@@ -3,6 +3,7 @@ package com.synergykit.sdk;
 import android.content.Context;
 import android.graphics.Bitmap;
 
+import com.synergykit.sdk.listeners.BatchResponseListener;
 import com.synergykit.sdk.listeners.BitmapResponseListener;
 import com.synergykit.sdk.listeners.BytesResponseListener;
 import com.synergykit.sdk.listeners.DeleteResponseListener;
@@ -16,6 +17,7 @@ import com.synergykit.sdk.listeners.ResponseListener;
 import com.synergykit.sdk.listeners.UserResponseListener;
 import com.synergykit.sdk.listeners.UsersResponseListener;
 import com.synergykit.sdk.request.SynergyKITRequest;
+import com.synergykit.sdk.resources.SynergyKITBatchItem;
 import com.synergykit.sdk.resources.SynergyKITConfig;
 import com.synergykit.sdk.resources.SynergyKITEmail;
 import com.synergykit.sdk.resources.SynergyKITNotification;
@@ -24,6 +26,7 @@ import com.synergykit.sdk.resources.SynergyKITPlatform;
 import com.synergykit.sdk.resources.SynergyKITUser;
 
 import java.lang.reflect.Type;
+import java.util.LinkedList;
 
 /*
  * Copyright 2014 Letsgood.com s.r.o.
@@ -252,4 +255,30 @@ public class SynergyKIT {
 		SynergyKITSdk.getInstance().downloadFile(uri, listener);
 		
 	}
+    //-------------------------------------------------------------------------------------------------------------------
+    /* Init batch */
+    public static void initBatch(String batchId) {
+        SynergyKITSdk.getInstance().initBatch(batchId);
+    }
+
+    /* Remove batch */
+    public static void removeBatch(String batchId) {
+        SynergyKITSdk.getInstance().removeBatch(batchId);
+    }
+
+    /* Remove all batches */
+
+    public static void removeAllBatches() {
+        SynergyKITSdk.getInstance().removeAllBatches();
+    }
+
+    /* Send batch */
+    public static void sendBatch(String batchId, BatchResponseListener listener, boolean parallelMode) {
+        SynergyKITSdk.getInstance().sendBatch(batchId, listener, parallelMode);
+    }
+
+    /*Batch getter*/
+    public static LinkedList<SynergyKITBatchItem> getBatch(String batchId) {
+        return SynergyKITSdk.getInstance().getBatch(batchId);
+    }
 }

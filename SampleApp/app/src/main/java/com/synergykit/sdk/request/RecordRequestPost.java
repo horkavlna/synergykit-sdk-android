@@ -15,6 +15,7 @@ import org.apache.http.HttpStatus;
  */
 
 public class RecordRequestPost extends SynergyKITRequest{
+
 	/* Attributes */
 	private SynergyKITConfig config = null;
 	private ResponseListener listener = null;

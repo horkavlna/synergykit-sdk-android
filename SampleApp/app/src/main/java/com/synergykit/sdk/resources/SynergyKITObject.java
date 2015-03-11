@@ -5,7 +5,9 @@ package com.synergykit.sdk.resources;
  *
  */
 
-public class SynergyKITObject {
+import java.io.Serializable;
+
+public class SynergyKITObject implements Serializable {
 	
 	/* Attributes */
 	protected String _id; 
@@ -13,6 +15,7 @@ public class SynergyKITObject {
     protected Long createdAt; 
     protected Long updatedAt;
 
+    
     /* Id getter */
     public String get_id() {
         return _id;

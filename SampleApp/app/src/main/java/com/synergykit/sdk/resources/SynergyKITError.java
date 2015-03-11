@@ -5,7 +5,9 @@ package com.synergykit.sdk.resources;
  *
  */
 
-public class SynergyKITError {
+import java.io.Serializable;
+
+public class SynergyKITError  implements Serializable {
 	
 	/* Attributes */
 	private int statusCode;

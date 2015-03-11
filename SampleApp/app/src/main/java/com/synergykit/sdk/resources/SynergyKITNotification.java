@@ -1,5 +1,7 @@
 package com.synergykit.sdk.resources;
 
+import java.io.Serializable;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 /*
@@ -7,11 +9,17 @@ import java.util.LinkedList;
  *
  */
 
-public class SynergyKITNotification extends SynergyKITObject{
+public class SynergyKITNotification extends SynergyKITObject  implements Serializable {
+
+    /* Constants */
+    public static final String PAYLOAD_TYPE_PLAYER_PROFILE_ID = "player_profile_id";
+    public static final String PAYLOAD_TYPE_TEAM_ID = "team_id";
+
 
 	/* Attributes */
-	private LinkedList<String> userIds = null;
+	private LinkedList<String> userIds = new LinkedList<String>();
 	private String alert = null;
+    private String payload = null;
 
 	/* Constructor */
 	public SynergyKITNotification(String alert) {
@@ -54,4 +62,12 @@ public class SynergyKITNotification extends SynergyKITObject{
 		if(userId!=null)
 			this.userIds.remove(userId);
 	}
+
+    public String getPayload() {
+        return payload;
+    }
+
+    public void setPayload(String payload) {
+        this.payload = payload;
+    }
 }
