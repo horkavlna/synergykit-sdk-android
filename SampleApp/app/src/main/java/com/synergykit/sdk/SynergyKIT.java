@@ -3,6 +3,8 @@ package com.synergykit.sdk;
 import android.content.Context;
 import android.graphics.Bitmap;
 
+import com.github.nkzawa.emitter.Emitter;
+import com.github.nkzawa.socketio.client.Ack;
 import com.synergykit.sdk.listeners.BatchResponseListener;
 import com.synergykit.sdk.listeners.BitmapResponseListener;
 import com.synergykit.sdk.listeners.BytesResponseListener;
@@ -281,4 +283,50 @@ public class SynergyKIT {
     public static LinkedList<SynergyKITBatchItem> getBatch(String batchId) {
         return SynergyKITSdk.getInstance().getBatch(batchId);
     }
+
+    //-------------------------------------------------------------------------------------------------------------------
+    /* Init socket */
+    public static boolean initSocket() {
+        return SynergyKITSdk.getInstance().initSocket();
+    }
+
+    /* Is socket inited*/
+    public static boolean isSocketInited() {
+        return SynergyKITSdk.getInstance().isSocketInited();
+    }
+
+    /* Is socket connected*/
+    public static boolean isSocketConnected() { return SynergyKITSdk.getInstance().isSocketConnected();  }
+
+    /* Connect socket */
+    public static void connectSocket(String message, String collection) {
+        SynergyKITSdk.getInstance().connectSocket(message, collection);
+    }
+
+    /* Emit via socket */
+    public static void emitViaSocket(String event, Object... args) {
+        SynergyKITSdk.getInstance().emitViaSocket(event,args);
+    }
+
+    /* Emit via socket */
+    public static void emitViaSocket(String event, Object[] args, Ack ack) {
+        SynergyKITSdk.getInstance().emitViaSocket(event,args,ack);
+    }
+
+    /* On socket */
+    public static void onSocket(String event, Emitter.Listener listener) {
+        SynergyKITSdk.getInstance().onSocket(event,listener);
+    }
+
+    /* Off socket */
+    public static void offSocket(String event, Emitter.Listener listener) {
+        SynergyKITSdk.getInstance().offSocket(event,listener);
+    }
+
+    /* Disconnect socket */
+    public static void disconnectSocket(String message, String collection) {
+        SynergyKITSdk.getInstance().disconnectSocket(message,collection);
+    }
+
+
 }

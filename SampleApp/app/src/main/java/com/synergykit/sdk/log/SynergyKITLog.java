@@ -10,7 +10,7 @@ import android.util.Log;
 public class SynergyKITLog {
 	
 	/* Constants */
-	private static final String TAG = "SynergyKIT";
+	private static final String TAG = "SynergyKITDebug";
 
 	/* Attributes */
 	private static SynergyKITLog instance = null;

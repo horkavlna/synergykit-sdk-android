@@ -50,7 +50,16 @@ public class Errors {
 	public static final String MSG_NO_REQUEST = "SynergyKITRequest WAS NOT set.";
 	
 	// Cache init failed
-	public static final String MSG_CACHE_INIT_FAILED = "HTTP response cache installation failed";
+	public static final String MSG_CACHE_INIT_FAILED = "HTTP response cache installation failed.";
+
+    // Socket init failed
+    public static final String MSG_SOCKET_INIT_FAILED = "Socket initialization failed.";
+
+    // Socket connect failed
+    public static final String MSG_SOCKET_CONNECT_FAILED = "Socket connect failed.";
+
+    // Socket not inited
+    public static final String MSG_SOCKET_NOT_INITED = "Socket is not inited.";
 
 
 

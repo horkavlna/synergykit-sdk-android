@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 
+import com.github.nkzawa.emitter.Emitter;
+import com.github.nkzawa.socketio.client.Ack;
 import com.synergykit.sdk.builders.errors.Errors;
 import com.synergykit.sdk.cache.Cache;
 import com.synergykit.sdk.interfaces.IAuthorization;
@@ -13,6 +15,7 @@ import com.synergykit.sdk.interfaces.ICloudCode;
 import com.synergykit.sdk.interfaces.IFiles;
 import com.synergykit.sdk.interfaces.INotification;
 import com.synergykit.sdk.interfaces.IRecords;
+import com.synergykit.sdk.interfaces.ISocket;
 import com.synergykit.sdk.interfaces.ISynergyKITSdk;
 import com.synergykit.sdk.interfaces.IUsers;
 import com.synergykit.sdk.listeners.BatchResponseListener;
@@ -47,7 +50,7 @@ import java.util.LinkedList;
  *
  */
 
-public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotification, ICache, IAuthorization, IFiles, ICloudCode, IBatches{
+public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotification, ICache, IAuthorization, IFiles, ICloudCode, IBatches,ISocket{
 	
 	/* Attributes */
 	private static SynergyKITSdk instance = null;
@@ -61,7 +64,8 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotific
 	private IFiles files = new Files();
     private ICloudCode cloudCode = new CloudCode();
     private IBatches batches = new Batches();
-	
+	private ISocket socket = new Socket();
+
 	//---------------------------------------------------------------------------------------
 	/* Instance static getter */
 	public static SynergyKITSdk getInstance(){
@@ -387,4 +391,57 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotific
     public LinkedList<SynergyKITBatchItem> getBatch(String batchId) {
         return batches.getBatch(batchId);
     }
+
+    //-------------------------------------------------------------------------------------------------------------------
+
+    @Override
+    public boolean initSocket() {
+        return socket.initSocket();
+    }
+
+    @Override
+    public boolean isSocketInited() {
+        return socket.isSocketInited();
+    }
+
+    @Override
+    public boolean isSocketConnected() {
+        return socket.isSocketConnected();
+    }
+
+    @Override
+    public void connectSocket(String message, String collection) {
+        socket.connectSocket(message,collection);
+    }
+
+    @Override
+    public void disconnectSocket(String message, String collection) {
+        socket.disconnectSocket(message,collection);
+    }
+
+    @Override
+    public void emitViaSocket(String event, Object... args) {
+        socket.emitViaSocket(event,args);
+    }
+
+    @Override
+    public void emitViaSocket(String event, Object[] args, Ack ack) {
+        socket.emitViaSocket(event,args,ack);
+    }
+
+    @Override
+    public void onSocket(String event, Emitter.Listener listener) {
+        socket.emitViaSocket(event,listener);
+    }
+
+    @Override
+    public void offSocket(String event, Emitter.Listener listener) {
+        socket.offSocket(event,listener);
+    }
+
+
+
+
+
+
 }

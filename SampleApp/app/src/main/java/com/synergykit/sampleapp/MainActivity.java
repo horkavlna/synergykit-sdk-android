@@ -17,6 +17,7 @@ public class MainActivity extends ActionBarActivity {
     private Button signUpButton;
     private Button requestsButton;
     private Button buttonCloudCode;
+    private Button buttonSocket;
 
 
     @Override
@@ -37,14 +38,8 @@ public class MainActivity extends ActionBarActivity {
         signUpButton = (Button) findViewById(R.id.buttonSignUp);
         requestsButton = (Button) findViewById(R.id.buttonRequests);
         buttonCloudCode = (Button) findViewById(R.id.buttonCloudCode);
+        buttonSocket = (Button) findViewById(R.id.buttonSocket);
 
-        buttonCloudCode.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, CloudCodeActivity.class);
-                startActivity(intent);
-            }
-        });
 
         notificationsButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -76,6 +71,22 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, RequestsActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        buttonCloudCode.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, CloudCodeActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        buttonSocket.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SocketActivity.class);
                 startActivity(intent);
             }
         });
