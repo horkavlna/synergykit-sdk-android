@@ -12,10 +12,10 @@ public interface ISocket {
     public boolean initSocket();
     public boolean isSocketInited();
     public boolean isSocketConnected();
-    public void connectSocket(String message, String collection);
-    public void disconnectSocket(String message, String collection);
+    public void connectSocket();
+    public void disconnectSocket();
     public void emitViaSocket(String event, Object... args);
     public void emitViaSocket(String event, Object[] args,Ack ack);
-    public void onSocket(String event, Emitter.Listener listener);
-    public void offSocket(String event, Emitter.Listener listener);
+    public void onSocket(String event, String message, String collection, Emitter.Listener listener);
+    public void offSocket(String event,String message, String collection, Emitter.Listener listener);
 }

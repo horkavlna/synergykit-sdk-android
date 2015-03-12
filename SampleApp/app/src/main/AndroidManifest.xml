@@ -70,7 +70,7 @@
 
         <activity
             android:name="com.synergykit.sampleapp.SocketActivity"
-            android:label="Socket" >
+            android:label="Socket" android:windowSoftInputMode="adjustResize" >
 
         </activity>
 

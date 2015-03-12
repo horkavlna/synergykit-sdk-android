@@ -42,4 +42,7 @@ public class SynergyKITSocketAuth {
     public void setMessage(String message) {
         this.message = message;
     }
+
+
+
 }

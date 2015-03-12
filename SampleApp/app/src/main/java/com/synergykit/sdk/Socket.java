@@ -3,6 +3,7 @@ package com.synergykit.sdk;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.Ack;
 import com.github.nkzawa.socketio.client.IO;
+import com.synergykit.sdk.addons.GsonWrapper;
 import com.synergykit.sdk.builders.UriBuilder;
 import com.synergykit.sdk.builders.errors.Errors;
 import com.synergykit.sdk.interfaces.ISocket;
@@ -10,6 +11,8 @@ import com.synergykit.sdk.log.SynergyKITLog;
 import com.synergykit.sdk.resources.SynergyKITSocketAuth;
 
 import java.net.URISyntaxException;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by Letsgood.com - Pavel Stambrecht on 11. 3. 2015.
@@ -31,59 +34,62 @@ public class Socket implements ISocket{
     private static final String COLLECTION_OFF = "off";
 
     /* Attributes */
-    private com.github.nkzawa.socketio.client.Socket socket;
-    private int subscribedCount = 0;
-    private Object lock = new Object();
+    private com.github.nkzawa.socketio.client.Socket socket = null;
+    private List<AuthItem> authItems = null;
 
-    private Emitter.Listener connectedListener;
+    /* Connected listener */
+    private Emitter.Listener connectedListener = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+            for(int i=0; authItems!=null && i < authItems.size(); i++){
+                emitViaSocket(COLLECTION_ON,GsonWrapper.getGson().toJson(authItems.get(i).getSocketAuth()));
+            }
 
-    private final Emitter.Listener disconnectedListener = new Emitter.Listener() {
+            SynergyKITLog.print(STATE_CONNECTED);
+        }
+    };
+
+    /* Disconnected listener */
+    private Emitter.Listener disconnectedListener = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
             SynergyKITLog.print(STATE_DISCONNECTED);
         }
     };
 
-    private final Emitter.Listener reconnectedListener = new Emitter.Listener() {
+    /* Reconnected listener */
+    private Emitter.Listener reconnectedListener = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
             SynergyKITLog.print(STATE_RECONNECTED);
         }
     };
 
-    private final Emitter.Listener subscribedListener = new Emitter.Listener() {
+    /* Subscribed listener */
+    private Emitter.Listener subscribedListener = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-
-            synchronized (lock)
-            {
-                subscribedCount++;
-            }
             SynergyKITLog.print(STATE_SUBSCRIBED);
         }
     };
 
-    private final Emitter.Listener unsubscribedListener = new Emitter.Listener() {
+    /* Unsubscribed listener */
+    private Emitter.Listener unsubscribedListener = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
-
-            synchronized (lock)
-            {
-                subscribedCount--;
-            }
-
-
             SynergyKITLog.print(STATE_UNSUBSCRIBED);
         }
     };
 
-    /* Init socket */
+
+    /* Init socket*/
     @Override
     public boolean initSocket() {
         UriBuilder uriBuilder = new UriBuilder();
 
         try {
             socket = IO.socket(uriBuilder.getSocketUrl().toString());
+            authItems = new LinkedList<>();
             return true;
         } catch (URISyntaxException e) {
             e.printStackTrace();
@@ -92,17 +98,16 @@ public class Socket implements ISocket{
         }
     }
 
-    /* Is socket inited*/
+    /* In socket inited*/
     @Override
     public boolean isSocketInited() {
-
         if(socket!=null)
             return true;
 
         return false;
     }
 
-    /* Is socket connected*/
+    /* Is socket connected */
     @Override
     public boolean isSocketConnected() {
 
@@ -112,136 +117,156 @@ public class Socket implements ISocket{
         return false;
     }
 
-    /* Connect socket*/
+
     @Override
-    public void connectSocket(final String message, final String collection){
+    public void connectSocket() {
 
-         if(socket!=null && subscribedCount==0) {
+        //init check
+        if(!SynergyKIT.isInit()){
+            SynergyKITLog.print(Errors.MSG_SK_NOT_INITIALIZED);
+            return;
+        }
 
-             //init connected listener
-             connectedListener = new Emitter.Listener() {
-                                     @Override
-                                     public void call(Object... args) {
-                                         SynergyKITLog.print(STATE_CONNECTED);
-                                         subscribeSocket(message,collection);
-                                     }
-                                 };
-
-
-
-
-             socket.on(EVENT_CONNECTED, connectedListener);
-             socket.on(EVENT_DISCONNECTED, disconnectedListener);
-             socket.on(EVENT_RECONNECTED, reconnectedListener);
-             socket.on(EVENT_SUBSCRIBED,subscribedListener);
-             socket.on(EVENT_UNSUBSCRIBED,unsubscribedListener);
-             socket.connect();
-
-         }else if(subscribedCount>0){
-             subscribeSocket(message,collection);
-         }
-         else
-             SynergyKITLog.print(Errors.MSG_SOCKET_CONNECT_FAILED);
-    }
-
-    /* Disconnect socket*/
-    @Override
-    public void disconnectSocket(final String message,final String collection) {
-
-        if(socket==null){
+        //init check
+        if(!isSocketInited()){
             SynergyKITLog.print(Errors.MSG_SOCKET_NOT_INITED);
             return;
         }
 
-        if(socket!=null && subscribedCount>0){
-            unsubscribeSocket(message,collection);
-        }else if(socket!=null){
-            socket.disconnect();
-            socket.off(EVENT_CONNECTED, connectedListener);
-            socket.off(EVENT_DISCONNECTED, disconnectedListener);
-            socket.off(EVENT_RECONNECTED, reconnectedListener);
-            socket.off(EVENT_SUBSCRIBED,subscribedListener);
-            socket.off(EVENT_UNSUBSCRIBED,unsubscribedListener);
-        }
+        for(int i=0; authItems!=null && i <authItems.size();i++ )
+            socket.on(authItems.get(i).getEvent(), authItems.get(i).getListener());
+
+        socket.on(EVENT_CONNECTED,connectedListener);
+        socket.on(EVENT_RECONNECTED,reconnectedListener);
+        socket.on(EVENT_DISCONNECTED,disconnectedListener);
+        socket.on(EVENT_SUBSCRIBED,subscribedListener);
+        socket.on(EVENT_UNSUBSCRIBED,unsubscribedListener);
+        socket.connect();
     }
 
+    @Override
+    public void disconnectSocket() {
+        socket.disconnect(); //
 
-    /*Emit via socket*/
+    }
+
     @Override
     public void emitViaSocket(String event, Object... args) {
-
-        if(socket==null){
-            SynergyKITLog.print(Errors.MSG_SOCKET_NOT_INITED);
-            return;
-        }
-
         socket.emit(event,args);
     }
 
-    /* Emit via socket */
     @Override
-    public void emitViaSocket(String event, Object[] args,Ack ack) {
-
-        if(socket==null){
-            SynergyKITLog.print(Errors.MSG_SOCKET_NOT_INITED);
-            return;
-        }
-
+    public void emitViaSocket(String event, Object[] args, Ack ack) {
         socket.emit(event,args,ack);
     }
 
-    /*On socket*/
+
     @Override
-    public void onSocket(String event, Emitter.Listener listener) {
+    public void onSocket(String event, String message, String collection, Emitter.Listener listener) {
 
-        if(socket==null){
+
+        //init check
+        if(!SynergyKIT.isInit()){
+            SynergyKITLog.print(Errors.MSG_SK_NOT_INITIALIZED);
+            return;
+        }
+
+        //init check
+        if(!isSocketInited()){
             SynergyKITLog.print(Errors.MSG_SOCKET_NOT_INITED);
             return;
         }
 
-        socket.on(event, listener);
+
+          AuthItem authItem = new AuthItem(event,message,collection,listener);
+          authItems.add(authItem);
     }
 
-    /* Off socket*/
     @Override
-    public void offSocket(String event, Emitter.Listener listener) {
+    public void offSocket(String event, String message, String collection, Emitter.Listener listener) {
 
-        if(socket==null){
-            SynergyKITLog.print(Errors.MSG_SOCKET_NOT_INITED);
-            return;
-        }
+            //init check
+            if(!SynergyKIT.isInit()){
+                SynergyKITLog.print(Errors.MSG_SK_NOT_INITIALIZED);
+                return;
+            }
 
-        socket.off(event, listener);
-    }
+            //init check
+            if(!isSocketInited()){
+                SynergyKITLog.print(Errors.MSG_SOCKET_NOT_INITED);
+                return;
+            }
 
-    /* Subscribe socket*/
-    public void subscribeSocket(String message, String collection) {
-        SynergyKITSocketAuth socketAuth = new SynergyKITSocketAuth();
-        socketAuth.setCollection(collection);
-        socketAuth.setMessage(message);
-
-        if(socket==null){
-            SynergyKITLog.print(Errors.MSG_SOCKET_NOT_INITED);
-            return;
-        }
-
-        socket.emit(COLLECTION_ON, socketAuth);
-
-    }
-
-    /* Unsubscribe socket*/
-    private void unsubscribeSocket(String message, String collection) {
-        SynergyKITSocketAuth socketAuth = new SynergyKITSocketAuth();
-        socketAuth.setCollection(collection);
-        socketAuth.setMessage(message);
-
-        if(socket==null){
-            SynergyKITLog.print(Errors.MSG_SOCKET_NOT_INITED);
-            return;
-        }
-
-        socket.emit(COLLECTION_OFF,socketAuth);
+           AuthItem authItem = new AuthItem(event,message,collection,listener);
+           authItems.remove(authItem);
+           socket.off(event);
     }
 
 
+
+    private class AuthItem{
+
+        /* Attributes */
+        private SynergyKITSocketAuth socketAuth;
+        private Emitter.Listener listener;
+        private String event;
+
+        /* Constructor */
+        public AuthItem(String event,String message, String collection, Emitter.Listener listener){
+            this.socketAuth = new SynergyKITSocketAuth();
+            this.socketAuth.setMessage(message);
+            this.socketAuth.setCollection(collection);
+            this.event = event;
+            this.listener = listener;
+        }
+
+        /* Socket auth getter */
+        public SynergyKITSocketAuth getSocketAuth() {
+            return socketAuth;
+        }
+
+        /* Socket auth setter */
+        public void setSocketAuth(SynergyKITSocketAuth socketAuth) {
+            this.socketAuth = socketAuth;
+        }
+
+        /* Socket listener getter */
+        public Emitter.Listener getListener() {
+            return listener;
+        }
+
+        /* Socket listener setter */
+        public void setListener(Emitter.Listener listener) {
+            this.listener = listener;
+        }
+
+        public String getEvent() {
+            return event;
+        }
+
+        public void setEvent(String event) {
+            this.event = event;
+        }
+
+        /* Equal */
+        @Override
+        public boolean equals(Object o) {
+            AuthItem authItem;
+
+
+            if(o==null || !(o instanceof AuthItem))
+                return false;
+
+            authItem = (AuthItem) o;
+
+            if(socketAuth!=null)
+                return this.getSocketAuth().equals(authItem.getSocketAuth());
+
+
+            if(this.getSocketAuth()==null && ((AuthItem) o).getSocketAuth()==null)
+                return true;
+
+            return false;
+        }
+    }
 }

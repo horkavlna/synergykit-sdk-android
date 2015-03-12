@@ -285,6 +285,7 @@ public class SynergyKIT {
     }
 
     //-------------------------------------------------------------------------------------------------------------------
+
     /* Init socket */
     public static boolean initSocket() {
         return SynergyKITSdk.getInstance().initSocket();
@@ -296,37 +297,38 @@ public class SynergyKIT {
     }
 
     /* Is socket connected*/
-    public static boolean isSocketConnected() { return SynergyKITSdk.getInstance().isSocketConnected();  }
-
-    /* Connect socket */
-    public static void connectSocket(String message, String collection) {
-        SynergyKITSdk.getInstance().connectSocket(message, collection);
+    public static boolean isSocketConnected() {
+        return SynergyKITSdk.getInstance().isSocketConnected();
     }
 
-    /* Emit via socket */
+    /* Connect socket*/
+    public static void connectSocket() {
+        SynergyKITSdk.getInstance().connectSocket();
+    }
+
+    /* Disconnect socket*/
+    public static void disconnectSocket() {
+        SynergyKITSdk.getInstance().disconnectSocket();
+    }
+
+    /* Emit via socket*/
     public static void emitViaSocket(String event, Object... args) {
         SynergyKITSdk.getInstance().emitViaSocket(event,args);
     }
 
-    /* Emit via socket */
+    /* Emit via socket*/
     public static void emitViaSocket(String event, Object[] args, Ack ack) {
         SynergyKITSdk.getInstance().emitViaSocket(event,args,ack);
     }
 
     /* On socket */
-    public static void onSocket(String event, Emitter.Listener listener) {
-        SynergyKITSdk.getInstance().onSocket(event,listener);
+    public static void onSocket(String event, String message, String collection, Emitter.Listener listener) {
+        SynergyKITSdk.getInstance().onSocket(event,message,collection,listener);
     }
 
     /* Off socket */
-    public static void offSocket(String event, Emitter.Listener listener) {
-        SynergyKITSdk.getInstance().offSocket(event,listener);
+    public static void offSocket(String event, String message, String collection, Emitter.Listener listener) {
+        SynergyKITSdk.getInstance().offSocket(event,message,collection,listener);
     }
-
-    /* Disconnect socket */
-    public static void disconnectSocket(String message, String collection) {
-        SynergyKITSdk.getInstance().disconnectSocket(message,collection);
-    }
-
 
 }

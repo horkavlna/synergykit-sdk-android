@@ -393,51 +393,61 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotific
     }
 
     //-------------------------------------------------------------------------------------------------------------------
-
+    /* Init socket */
     @Override
     public boolean initSocket() {
         return socket.initSocket();
     }
 
+    /* Is socket inited*/
     @Override
     public boolean isSocketInited() {
         return socket.isSocketInited();
     }
 
+    /* Is socket connected*/
     @Override
     public boolean isSocketConnected() {
         return socket.isSocketConnected();
     }
 
+    /* Connect socket*/
     @Override
-    public void connectSocket(String message, String collection) {
-        socket.connectSocket(message,collection);
+    public void connectSocket() {
+        socket.connectSocket();
     }
 
+    /* Disconnect socket*/
     @Override
-    public void disconnectSocket(String message, String collection) {
-        socket.disconnectSocket(message,collection);
+    public void disconnectSocket() {
+        socket.disconnectSocket();
     }
 
+    /* Emit via socket*/
     @Override
     public void emitViaSocket(String event, Object... args) {
         socket.emitViaSocket(event,args);
     }
 
+    /* Emit via socket*/
     @Override
     public void emitViaSocket(String event, Object[] args, Ack ack) {
         socket.emitViaSocket(event,args,ack);
     }
 
+    /* On socket */
     @Override
-    public void onSocket(String event, Emitter.Listener listener) {
-        socket.emitViaSocket(event,listener);
+    public void onSocket(String event, String message, String collection, Emitter.Listener listener) {
+        socket.onSocket(event,message,collection,listener);
     }
 
+    /* Off socket */
     @Override
-    public void offSocket(String event, Emitter.Listener listener) {
-        socket.offSocket(event,listener);
+    public void offSocket(String event, String message, String collection, Emitter.Listener listener) {
+        socket.offSocket(event,message,collection,listener);
     }
+
+
 
 
 
