@@ -45,7 +45,7 @@ public class Notifications implements INotification{
 		
 		//set config
 		config.setUri(new UriBuilder()
-                .setResource(Resource.RESOURCE_EMAIL).setMail(mailId).build());
+                .setResource(Resource.RESOURCE_EMAIL).setMailId(mailId).build());
 
 		config.setParallelMode(parallelMode);
 		config.setType(email.getClass());

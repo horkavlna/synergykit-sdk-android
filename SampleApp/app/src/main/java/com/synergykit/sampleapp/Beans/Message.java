@@ -1,4 +1,4 @@
-package com.synergykit.sampleapp.Beans;
+package com.synergykit.sampleapp.beans;
 
 import com.synergykit.sdk.resources.SynergyKITObject;
 

@@ -417,19 +417,19 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotific
         socket.connectSocket();
     }
 
-    /* Disconnect socket*/
+    /* Disconnect socket */
     @Override
     public void disconnectSocket() {
         socket.disconnectSocket();
     }
 
-    /* Emit via socket*/
+    /* Emit via socket */
     @Override
     public void emitViaSocket(String event, Object... args) {
         socket.emitViaSocket(event,args);
     }
 
-    /* Emit via socket*/
+    /* Emit via socket */
     @Override
     public void emitViaSocket(String event, Object[] args, Ack ack) {
         socket.emitViaSocket(event,args,ack);
@@ -437,21 +437,39 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotific
 
     /* On socket */
     @Override
-    public void onSocket(String event, String message, String collection, Emitter.Listener listener) {
-        socket.onSocket(event,message,collection,listener);
+    public void onSocket(String message, String collection, String filterName, String filter, Emitter.Listener listener) {
+        socket.onSocket(message,collection,filterName,filter,listener);
+    }
+
+    /* On socket */
+    @Override
+    public void onSocket(String message, String collection, Emitter.Listener listener) {
+        socket.onSocket(message,collection,listener);
     }
 
     /* Off socket */
     @Override
-    public void offSocket(String event, String message, String collection, Emitter.Listener listener) {
-        socket.offSocket(event,message,collection,listener);
+    public void offSocket(String message, String collection, String filterName, String filter, Emitter.Listener listener) {
+        socket.offSocket(message,collection,filterName,filter,listener);
     }
 
+    /* Off socket */
+    @Override
+    public void offSocket(String message, String collection, Emitter.Listener listener) {
+        socket.offSocket(message,collection,listener);
+    }
 
+    /* Off socket */
+    @Override
+    public void offSocket(String message, String collection, String filterName) {
+        socket.offSocket(message,collection,filterName);
+    }
 
-
-
-
+    /* Off socket */
+    @Override
+    public void offSocket(String message, String collection) {
+        socket.offSocket(message,collection);
+    }
 
 
 }

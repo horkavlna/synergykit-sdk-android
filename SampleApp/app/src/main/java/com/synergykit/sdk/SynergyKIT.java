@@ -321,14 +321,5 @@ public class SynergyKIT {
         SynergyKITSdk.getInstance().emitViaSocket(event,args,ack);
     }
 
-    /* On socket */
-    public static void onSocket(String event, String message, String collection, Emitter.Listener listener) {
-        SynergyKITSdk.getInstance().onSocket(event,message,collection,listener);
-    }
-
-    /* Off socket */
-    public static void offSocket(String event, String message, String collection, Emitter.Listener listener) {
-        SynergyKITSdk.getInstance().offSocket(event,message,collection,listener);
-    }
 
 }

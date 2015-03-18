@@ -3,6 +3,7 @@ package com.synergykit.sampleapp;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.nkzawa.emitter.Emitter;
-import com.synergykit.sampleapp.Beans.Message;
+import com.synergykit.sampleapp.beans.Message;
 import com.synergykit.sdk.SynergyKIT;
 import com.synergykit.sdk.SynergyKITSdk;
 import com.synergykit.sdk.addons.GsonWrapper;
@@ -31,9 +32,11 @@ import org.json.JSONObject;
 public class SocketActivity extends ActionBarActivity implements View.OnClickListener{
 
     private Button sendButton = null;
+    private Button copyButton = null;
     private LinearLayout messageLinearLayout = null;
     private EditText messageEditText = null;
     SynergyKITSdk sdk = new SynergyKITSdk();
+    private boolean copyEnabled = false;
 
 
     @Override
@@ -50,42 +53,29 @@ public class SocketActivity extends ActionBarActivity implements View.OnClickLis
         messageEditText = (EditText)findViewById(R.id.messageEditText);
         sendButton.setOnClickListener(this);
 
+
+        copyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sdk.onSocket("created","messages",new Emitter.Listener() {
+                    @Override
+                    public void call(Object... args) {
+                        runOnUiThread();
+                    }
+                });
+            }
+        });
+
+
+
+
+
+
         sdk.initSocket();
-
-        sdk.onSocket("created_messages","created","messages", new Emitter.Listener() {
-
+        sdk.onSocket("created","messages",new Emitter.Listener() {
             @Override
             public void call(Object... args) {
-                SynergyKITLog.print("Incomming message");
-
-                JSONObject jsonObject = (JSONObject) args[0];
-                String data = null;
-                try {
-
-                    data = jsonObject.get("data").toString();
-                    final Message message = GsonWrapper.getGson().fromJson(data,Message.class);
-
-
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            TextView textView = new TextView(SocketActivity.this);
-                            textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT));
-                            textView.setText(message.getText());
-                            messageLinearLayout.addView(textView,0);
-                        }
-                    });
-
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-
-
-
-
+                SynergyKITLog.print("First");
             }
         });
 

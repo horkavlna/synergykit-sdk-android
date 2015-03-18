@@ -10,7 +10,6 @@ import com.synergykit.sdk.SynergyKIT;
 import com.synergykit.sdk.builders.uri.Collection;
 import com.synergykit.sdk.builders.uri.Filter;
 import com.synergykit.sdk.builders.uri.InLineCount;
-import com.synergykit.sdk.builders.uri.MailId;
 import com.synergykit.sdk.builders.uri.OrderBy;
 import com.synergykit.sdk.builders.uri.RecordId;
 import com.synergykit.sdk.builders.uri.Resource;
@@ -29,94 +28,96 @@ public class UriBuilder {
 	private Resource resource = new Resource();
 	private Collection collection = new Collection();
 	private RecordId recordId = new RecordId();
-	private Filter filter = new Filter();
-	private OrderBy orderBy = new OrderBy();
-	private Top top = new Top();
-	private Skip skip = new Skip();
-	private Select select = new Select();
-    private MailId mail = new MailId();
+    private ODataBuilder oDataBuilder = ODataBuilder.newInstance();
 
-	private InLineCount inLineCount = new InLineCount();
+    /* New instance */
+    public static UriBuilder newInstance(){
+        return new UriBuilder();
 
-	
+    }
+
 	/* Resource setter */
 	public UriBuilder setResource(String resource){
 		this.resource.setResource(resource);
 		return this;
 	}
 
-    /* Mail id URL setter */
-    public UriBuilder setMail(String mailId){
-        this.mail.setMailId(mailId);
-        return this;
-    }
-
-
-    /* Resource URL setter */
+    /* Resource collection setter */
 	public UriBuilder setCollection(String collection){
 		this.collection.setCollection(collection);
 		return this;
 	}
-	
+
 	/* Resource Id setter */
 	public UriBuilder setRecordId(String recordId){
 		this.recordId.setRecordId(recordId);
 		return this;
 	}
+
+    /* Mail Id setter */
+    public UriBuilder setMailId(String mailId){
+        return this.setRecordId(mailId);
+    }
+
+    /* Funcion Id setter */
+    public UriBuilder setFunctionId(String functionId){
+        return this.setRecordId(functionId);
+    }
 	
 	/* Filter setter */
 	public UriBuilder setFilter(String attribute, String operator, String parametr){
-		this.filter.setFilter(attribute, operator, parametr);;
+		oDataBuilder.setFilter(attribute, operator, parametr);;
 		return this;
 	}
 	
 	/* Filter setter */
 	public UriBuilder setFilter(String attribute, String operator, int parametr){
-		this.filter.setFilter(attribute, operator, parametr);
+        oDataBuilder.setFilter(attribute, operator, parametr);
 		return this;
 	}
 	
 	/* Filter setter */
 	public UriBuilder setFilter(String filter){
-		this.filter.setFilter(filter);
+        oDataBuilder.setFilter(filter);
 		return this;
 	}
 	
 	/* Select setter */
 	public UriBuilder setSelect(String attribute){
-		this.select.setSelect(attribute);
+        oDataBuilder.setSelect(attribute);
 		return this;
 	}
 	
 	/* Order by desc setter */
 	public UriBuilder setOrderByDesc(String parameter){
-		this.orderBy.setOrderByDesc(parameter);
+        oDataBuilder.setOrderByDesc(parameter);
 		return this;
 	}
 
 	/* Order by asc setter */
 	public UriBuilder setOrderByAsc(String parameter){
-		this.orderBy.setOrderByAsc(parameter);
+        oDataBuilder.setOrderByAsc(parameter);
 		return this;
 	}
 	
 	/* Top setter */
 	public UriBuilder setTop(int top){
-		this.top.setTop(top);
+        oDataBuilder.setTop(top);
 		return this;
 	}
 	
 	/* Top setter */
 	public UriBuilder setSkip(int skip){
-		this.skip.setSkip(skip);
+        oDataBuilder.setSkip(skip);
 		return this;
 	}
-	
+
+    /* Inline count setter */
 	public UriBuilder setInLineCountEnabled(boolean enabled){
-		this.inLineCount.setEnabled(enabled);
+		oDataBuilder.setInLineCountEnabled(enabled);
 		return this;
 	}
-	
+
 	/* Build */
 	public SynergyKITUri build(){
 		String uri = new String(BASE_SYNERGYKIT_URL);
@@ -125,9 +126,6 @@ public class UriBuilder {
 		
 		uri += "/" + resource.getResource();  //set resource	
 
-        if(mail.getMailId()!=null)
-            uri += "/" + mail.getMailId();  //set collection
-
 		if(collection.getCollection()!=null)
 			uri += "/" + collection.getCollection();  //set collection
 		
@@ -135,76 +133,12 @@ public class UriBuilder {
 		if(recordId.getRecordId()!=null)
 			uri += "/" + recordId.getRecordId();	//set resource id 
 		
-		
-		if(select.getSelect()!=null){
-			
-			if(hasFilters==false){
-				uri+="?";
-				hasFilters=true;
-			}
-			
-			uri += select.getSelect();
-		}
-		
-		//set filter
-		if(filter.getFilter()!=null){
-			
-			if(hasFilters==false){
-				uri+="?";
-				hasFilters=true;
-			}
-			
-			uri+=filter.getFilter();
-		}
-		
-		//set order by
-		if(orderBy.getOrderBy()!=null){
-			
-			if(hasFilters==false){
-				uri+="?";
-				hasFilters=true;
-			}
-			
-			uri+=orderBy.getOrderBy();
-		}
-			
-		
-		//set top
-		if(top.getTop() != null){
-			
-			if(hasFilters==false){
-				uri+="?";
-				hasFilters=true;
-			}
-			
-			uri+=top.getTop();
-		}
-		
-		//set skip
-		if(skip.getSkip()!=null){
-			
-			if(hasFilters==false){
-				uri+="?";
-				hasFilters=true;
-			}
-			
-			uri+=skip.getSkip();
-		}
-		
-		//set inline count
-		if(inLineCount.isEnabled()){
-		
-			if(hasFilters==false){
-				uri+="?";
-				hasFilters=true;
-			}
-			
-			uri+=inLineCount.getInLineCount();
-		}
-		
-		
-		
-		//set tenant
+
+        if(oDataBuilder.build()!=null)
+            uri += oDataBuilder.build();            // set OData
+
+
+	    //set tenant
 		uri = String.format(uri, SynergyKIT.getTenant());
 		
 		

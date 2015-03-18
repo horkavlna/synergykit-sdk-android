@@ -16,6 +16,10 @@ public interface ISocket {
     public void disconnectSocket();
     public void emitViaSocket(String event, Object... args);
     public void emitViaSocket(String event, Object[] args,Ack ack);
-    public void onSocket(String event, String message, String collection, Emitter.Listener listener);
-    public void offSocket(String event,String message, String collection, Emitter.Listener listener);
+    public void onSocket(String message, String collection, String filterName, String oDataFilter, Emitter.Listener listener);
+    public void onSocket(String message, String collection, Emitter.Listener listener);
+    public void offSocket(String message, String collection, String filterName, String oDataFilter, Emitter.Listener listener);
+    public void offSocket(String message, String collection, Emitter.Listener listener);
+    public void offSocket(String message, String collection, String filterName);
+    public void offSocket(String message, String collection);
 }
