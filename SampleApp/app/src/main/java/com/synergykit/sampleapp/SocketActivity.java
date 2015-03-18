@@ -49,6 +49,7 @@ public class SocketActivity extends ActionBarActivity implements View.OnClickLis
         actionBar.setHomeButtonEnabled(true);
 
         sendButton = (Button) findViewById(R.id.buttonSend);
+        copyButton = (Button) findViewById(R.id.buttonCopy);
         messageLinearLayout = (LinearLayout)findViewById(R.id.messageLinearLayout);
         messageEditText = (EditText)findViewById(R.id.messageEditText);
         sendButton.setOnClickListener(this);
@@ -60,7 +61,30 @@ public class SocketActivity extends ActionBarActivity implements View.OnClickLis
                 sdk.onSocket("created","messages",new Emitter.Listener() {
                     @Override
                     public void call(Object... args) {
-                        runOnUiThread();
+
+                        JSONObject jsonObject = (JSONObject) args[0];
+                        String data = null;
+                        try {
+
+                            data = jsonObject.get("data").toString();
+                            final Message message = GsonWrapper.getGson().fromJson(data,Message.class);
+
+
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    TextView textView = new TextView(SocketActivity.this);
+                                    textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT));
+                                    textView.setText("Kopie: " + message.getText());
+                                    messageLinearLayout.addView(textView,0);
+                                }
+                            });
+
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
             }
@@ -75,7 +99,29 @@ public class SocketActivity extends ActionBarActivity implements View.OnClickLis
         sdk.onSocket("created","messages",new Emitter.Listener() {
             @Override
             public void call(Object... args) {
-                SynergyKITLog.print("First");
+                JSONObject jsonObject = (JSONObject) args[0];
+                String data = null;
+                try {
+
+                    data = jsonObject.get("data").toString();
+                    final Message message = GsonWrapper.getGson().fromJson(data,Message.class);
+
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            TextView textView = new TextView(SocketActivity.this);
+                            textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT));
+                            textView.setText(message.getText());
+                            messageLinearLayout.addView(textView,0);
+                        }
+                    });
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
 

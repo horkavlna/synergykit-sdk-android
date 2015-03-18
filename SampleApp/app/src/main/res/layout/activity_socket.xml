@@ -34,7 +34,7 @@
         android:id="@+id/buttonSend"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/buttonCopy"
+        android:layout_above="@+id/buttonCopy"
         android:layout_marginBottom="10dp"
         android:text="Send" />
 
