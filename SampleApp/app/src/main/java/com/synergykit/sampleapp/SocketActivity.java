@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.nkzawa.emitter.Emitter;
 import com.synergykit.sampleapp.beans.Message;
@@ -18,6 +19,7 @@ import com.synergykit.sdk.SynergyKIT;
 import com.synergykit.sdk.SynergyKITSdk;
 import com.synergykit.sdk.addons.GsonWrapper;
 import com.synergykit.sdk.listeners.ResponseListener;
+import com.synergykit.sdk.listeners.SocketListener;
 import com.synergykit.sdk.log.SynergyKITLog;
 import com.synergykit.sdk.resources.SynergyKITError;
 import com.synergykit.sdk.resources.SynergyKITObject;
@@ -52,7 +54,56 @@ public class SocketActivity extends ActionBarActivity implements View.OnClickLis
         copyButton = (Button) findViewById(R.id.buttonCopy);
         messageLinearLayout = (LinearLayout)findViewById(R.id.messageLinearLayout);
         messageEditText = (EditText)findViewById(R.id.messageEditText);
-        sendButton.setOnClickListener(this);
+
+        //send button listener
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Message message = new Message();
+                message.setName("Pavel");
+                message.setText(messageEditText.getText().toString());
+
+                if(message.getText()==null || message.getText().isEmpty())
+                    return;
+
+                messageEditText.setText("");
+
+                SynergyKIT.createRecord("messages",message,new ResponseListener() {
+                    @Override
+                    public void doneCallback(int statusCode, SynergyKITObject object) {
+
+                    }
+
+                    @Override
+                    public void errorCallback(int statusCode, SynergyKITError errorObject) {
+
+                    }
+                },false);
+            }}
+            );
+
+        copyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sdk.onSocket("created","messages",new SocketListener() {
+                    @Override
+                    public void call(Object... args) {
+                        
+                    }
+
+                    @Override
+                    public void subscribed() {
+                        sendButton.setEnabled(true);
+                        Toast.makeText(getApplicationContext(),"Next listener subscribed",Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void unsubscribed() {
+                        Toast.makeText(getApplicationContext(),"Next listener unsubscribed",Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        });
 
 
 
@@ -96,27 +147,3 @@ public class SocketActivity extends ActionBarActivity implements View.OnClickLis
         super.onDestroy();
     }
 
-    @Override
-    public void onClick(View v) {
-        Message message = new Message();
-        message.setName("Pavel");
-        message.setText(messageEditText.getText().toString());
-
-        if(message.getText()==null || message.getText().isEmpty())
-            return;
-
-        messageEditText.setText("");
-
-        SynergyKIT.createRecord("messages",message,new ResponseListener() {
-            @Override
-            public void doneCallback(int statusCode, SynergyKITObject object) {
-
-            }
-
-            @Override
-            public void errorCallback(int statusCode, SynergyKITError errorObject) {
-
-            }
-        },false);
-    }
-}

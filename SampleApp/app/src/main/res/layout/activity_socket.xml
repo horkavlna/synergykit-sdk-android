@@ -8,22 +8,27 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".LoginActivity">
 
-
-    <LinearLayout
-        android:id="@+id/messageLinearLayout"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/messageEditText"
         android:layout_marginBottom="20dp"
-        android:background="@color/white"
-        android:orientation="vertical" />
+        android:background="@color/white">
+
+        <LinearLayout
+            android:id="@+id/messageLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+
 
 
     <EditText
         android:id="@+id/messageEditText"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_above="@+id/buttonSend"
+        android:layout_above="@+id/buttonCopy"
         android:layout_marginBottom="10dp"
         android:background="@color/white"
         android:gravity="top|left"
@@ -34,14 +39,19 @@
         android:id="@+id/buttonSend"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/buttonCopy"
-        android:layout_marginBottom="10dp"
-        android:text="Send" />
+        android:layout_marginRight="10dp"
+        android:text="Send"
+        android:layout_toLeftOf="@id/buttonCopy"
+        android:layout_alignParentBottom="true"
+        android:enabled="false"/>
 
     <Button
         android:id="@+id/buttonCopy"
-        android:layout_width="match_parent"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="Copy" />
+        android:layout_alignParentRight="true"
+        android:text="+"
+        android:enabled="false"
+        />
 </RelativeLayout>
