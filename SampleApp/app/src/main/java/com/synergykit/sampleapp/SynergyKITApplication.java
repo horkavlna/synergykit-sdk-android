@@ -15,6 +15,7 @@ public class SynergyKITApplication extends Application {
         super.onCreate();
         if(!SynergyKIT.isInit()) {
             SynergyKIT.init("synergykit-sample-app", "7cbb9eed-17dd-4f75-a7bd-c92f2f6faef9");
+            SynergyKIT.initSocket();
             SynergyKIT.setDebugModeEnabled(true);
             SynergyKITLog.getInstance().setEnabled(true);
         }

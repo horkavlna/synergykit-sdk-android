@@ -16,6 +16,8 @@ import com.synergykit.sdk.listeners.PlatformResponseListener;
 import com.synergykit.sdk.listeners.PlatformsResponseListener;
 import com.synergykit.sdk.listeners.RecordsResponseListener;
 import com.synergykit.sdk.listeners.ResponseListener;
+import com.synergykit.sdk.listeners.SocketEventListener;
+import com.synergykit.sdk.listeners.SocketStateListener;
 import com.synergykit.sdk.listeners.UserResponseListener;
 import com.synergykit.sdk.listeners.UsersResponseListener;
 import com.synergykit.sdk.request.SynergyKITRequest;
@@ -302,23 +304,61 @@ public class SynergyKIT {
     }
 
     /* Connect socket*/
+
+    public static void connectSocket(SocketStateListener listener) {
+        SynergyKITSdk.getInstance().connectSocket(listener);
+    }
+
+    /* Connect socket*/
+
     public static void connectSocket() {
         SynergyKITSdk.getInstance().connectSocket();
     }
 
-    /* Disconnect socket*/
+    /* Disconnect socket */
+
     public static void disconnectSocket() {
         SynergyKITSdk.getInstance().disconnectSocket();
     }
 
-    /* Emit via socket*/
+    /* Emit via socket */
+
     public static void emitViaSocket(String event, Object... args) {
-        SynergyKITSdk.getInstance().emitViaSocket(event,args);
+        SynergyKITSdk.getInstance().emitViaSocket(event, args);
     }
 
-    /* Emit via socket*/
+    /* Emit via socket */
+
     public static void emitViaSocket(String event, Object[] args, Ack ack) {
         SynergyKITSdk.getInstance().emitViaSocket(event,args,ack);
+    }
+
+
+    public static void onSocket(String message, String collection, String filterName, String filter, SocketEventListener listener) {
+        SynergyKITSdk.getInstance().onSocket(message,collection, filterName, filter,listener);
+
+    }
+
+
+    public static void onSocket(String message, String collection, SocketEventListener listener) {
+        SynergyKITSdk.getInstance().onSocket(message, collection, listener);
+    }
+
+    public static void onSocket(String event, Emitter.Listener listener){
+        SynergyKITSdk.getInstance().onSocket(event,listener);
+    }
+
+    public static void offSocket(String message, String collection, String filterName, String filter, SocketEventListener listener) {
+        SynergyKITSdk.getInstance().offSocket(message,collection,filterName,filter,listener);
+    }
+
+
+    public static void offSocket(String message, String collection, SocketEventListener listener) {
+        SynergyKITSdk.getInstance().offSocket(message,collection,listener);
+    }
+
+    public static void offSocket(String event, Emitter.Listener listener){
+        SynergyKITSdk.getInstance().offSocket(event,listener);
     }
 
 

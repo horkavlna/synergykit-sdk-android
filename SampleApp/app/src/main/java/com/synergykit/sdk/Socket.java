@@ -7,7 +7,8 @@ import com.synergykit.sdk.addons.GsonWrapper;
 import com.synergykit.sdk.builders.UriBuilder;
 import com.synergykit.sdk.builders.errors.Errors;
 import com.synergykit.sdk.interfaces.ISocket;
-import com.synergykit.sdk.listeners.SocketListener;
+import com.synergykit.sdk.listeners.SocketEventListener;
+import com.synergykit.sdk.listeners.SocketStateListener;
 import com.synergykit.sdk.log.SynergyKITLog;
 import com.synergykit.sdk.resources.SynergyKITSocketAuth;
 
@@ -37,6 +38,7 @@ public class Socket implements ISocket{
     /* Attributes */
     private com.github.nkzawa.socketio.client.Socket socket = null;
     private List<SocketItem> socketItemBuffer = null;
+    private static SocketStateListener socketStateListener = null;
 
     /* Connected listener */
     private Emitter.Listener connectedListener = new Emitter.Listener() {
@@ -47,6 +49,10 @@ public class Socket implements ISocket{
             }
 
             SynergyKITLog.print(STATE_CONNECTED);
+
+            if(socketStateListener!=null)
+                socketStateListener.connected();
+
         }
     };
 
@@ -55,10 +61,14 @@ public class Socket implements ISocket{
         @Override
         public void call(Object... args) {
 
+
+
             unsetBufferedListeners(); //unset buffered listeners
-            unsetBaseListeners(); //unset base listeners
 
             SynergyKITLog.print(STATE_DISCONNECTED);
+
+            if(socketStateListener!=null)
+                socketStateListener.disconnected();
         }
     };
 
@@ -66,7 +76,13 @@ public class Socket implements ISocket{
     private Emitter.Listener reconnectedListener = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
+
+            setBufferedListeners(); //set buffured listeners
+
             SynergyKITLog.print(STATE_RECONNECTED);
+
+            if(socketStateListener!=null)
+                socketStateListener.reconnected();
         }
     };
 
@@ -111,7 +127,11 @@ public class Socket implements ISocket{
     /* Connect socket */
     @Override
     public void connectSocket() {
+        this.connectSocket(null);
+    }
 
+    @Override
+    public void connectSocket(SocketStateListener listener) {
         //SynergyKit init check
         if(!SynergyKIT.isInit()){
             SynergyKITLog.print(Errors.MSG_SK_NOT_INITIALIZED);
@@ -124,8 +144,11 @@ public class Socket implements ISocket{
             return;
         }
 
-        this.setBufferedListeners(); //set buffered listeners
+
+        socketStateListener = listener; //set socket state listener
+
         this.setBaseListeners(); //set base listeners
+        this.setBufferedListeners(); //set buffered listeners
 
         socket.connect();
     }
@@ -138,16 +161,29 @@ public class Socket implements ISocket{
             emitViaSocket(EMIT_OFF,GsonWrapper.getGson().toJson(socketItemBuffer.get(i).getSocketAuth()));
         }
 
-        socketItemBuffer.clear();
 
-        socket.disconnect(); //
+        unsetBufferedListeners();
+
+        if(socketItemBuffer!=null)
+            socketItemBuffer.clear();
+
+        unsetBaseListeners();
+
+
+        if(socket!=null)
+          socket.disconnect();
+
+        SynergyKITLog.print(STATE_DISCONNECTED); //state disconnected
+
+        if(socketStateListener!=null)
+            socketStateListener.disconnected();
 
     }
 
     /* Emit via socket */
     @Override
     public void emitViaSocket(String event, Object... args) {
-        socket.emit(event,args);
+        socket.emit(event, args);
     }
 
     /* Emit via socket */
@@ -158,7 +194,7 @@ public class Socket implements ISocket{
 
     /* On socket */
     @Override
-    public void onSocket(String message, String collection, String filterName, String filter, SocketListener listener) {
+    public void onSocket(String message, String collection, String filterName, String filter, SocketEventListener listener) {
         SocketItem socketItem = null;
 
 
@@ -183,7 +219,7 @@ public class Socket implements ISocket{
 
         //on or buffer
         if(isSocketConnected()){
-            socket.on(EVENT_SUBSCRIBED,socketItem.getSubscribedListener());
+            socket.on(EVENT_SUBSCRIBED, socketItem.getSubscribedListener());
             socket.on(EVENT_UNSUBSCRIBED,socketItem.getUnsubscribedListener());
             socket.emit(EMIT_ON,GsonWrapper.getGson().toJson(socketItem.getSocketAuth()));
         }
@@ -193,15 +229,31 @@ public class Socket implements ISocket{
 
     /* On socket */
     @Override
-    public void onSocket(String message, String collection, SocketListener listener) {
+    public void onSocket(String message, String collection, SocketEventListener listener) {
         this.onSocket(message, collection, null, null, listener);
     }
 
+    @Override
+    public void onSocket(String event, Emitter.Listener listener) {
+        //init check
+        if(!SynergyKIT.isInit()){
+            SynergyKITLog.print(Errors.MSG_SK_NOT_INITIALIZED);
+            return;
+        }
+
+        //init check
+        if(!isSocketInited()){
+            SynergyKITLog.print(Errors.MSG_SOCKET_NOT_INITED);
+            return;
+        }
+
+        socket.on(event,listener);
+    }
 
 
     /* Off socket */
     @Override
-    public void offSocket(String message, String collection, String filterName, String filter, SocketListener listener) {
+    public void offSocket(String message, String collection, String filterName, String filter, SocketEventListener listener) {
         SocketItem socketItem = null;
         SocketItem selectedSocketItem = null;
 
@@ -242,8 +294,25 @@ public class Socket implements ISocket{
 
     /* Off socket */
     @Override
-    public void offSocket(String message, String collection, SocketListener listener) {
+    public void offSocket(String message, String collection, SocketEventListener listener) {
        this.onSocket(message, collection, null, null, listener);
+    }
+
+    @Override
+    public void offSocket(String event, Emitter.Listener listener) {
+        //init check
+        if(!SynergyKIT.isInit()){
+            SynergyKITLog.print(Errors.MSG_SK_NOT_INITIALIZED);
+            return;
+        }
+
+        //init check
+        if(!isSocketInited()){
+            SynergyKITLog.print(Errors.MSG_SOCKET_NOT_INITED);
+            return;
+        }
+
+        socket.off(event,listener);
     }
 
     /* Base listeners setter */
@@ -263,9 +332,10 @@ public class Socket implements ISocket{
     /* Buffered listeners setter */
     private void setBufferedListeners(){
 
+        int a = 0;
+
         /* Set buffered listeners */
         for(int i=0; socketItemBuffer !=null && i < socketItemBuffer.size();i++ ) {
-
             socket.on(socketItemBuffer.get(i).getEvent(),socketItemBuffer.get(i).getCallListener());
             socket.on(EVENT_SUBSCRIBED, socketItemBuffer.get(i).subscribedListener); //TODO must have unique subscribed listener
             socket.on(EVENT_UNSUBSCRIBED, socketItemBuffer.get(i).unsubscribedListener); //TODO must have unique unsubscribed listener
@@ -293,19 +363,19 @@ public class Socket implements ISocket{
 
         /* Attributes */
         private SynergyKITSocketAuth socketAuth;
-        private SocketListener   socketListener = null;
+        private SocketEventListener socketListener = null;
         private Emitter.Listener callListener;
         private Emitter.Listener subscribedListener;
         private Emitter.Listener unsubscribedListener;
         private String event;
 
         /* Constructor */
-        public SocketItem(String message, String collection, SocketListener listener){
+        public SocketItem(String message, String collection, SocketEventListener listener){
             this(message,collection,null,null,listener);
         }
 
         /* Constructor */
-        public SocketItem(String message, String collection, String filterName, String filter,SocketListener listener){
+        public SocketItem(String message, String collection, String filterName, String filter,SocketEventListener listener){
 
             this.socketAuth = new SynergyKITSocketAuth();
             this.socketAuth.setMessage(message);
@@ -356,7 +426,7 @@ public class Socket implements ISocket{
 
 
         /* Init call listener */
-        private Emitter.Listener initCallListener(final SocketListener listener){
+        private Emitter.Listener initCallListener(final SocketEventListener listener){
             return new Emitter.Listener() {
                 @Override
                 public void call(Object... args) {
@@ -372,14 +442,10 @@ public class Socket implements ISocket{
 
 
         /* Init subscribed listener */
-        private Emitter.Listener initSubscribedListener(final SocketListener listener){
+        private Emitter.Listener initSubscribedListener(final SocketEventListener listener){
             return new Emitter.Listener() {
                 @Override
                 public void call(Object... args) {
-
-                    //on listener
-                    if(callListener!=null)
-                        socket.on(getEvent(), callListener);
 
                     SynergyKITLog.print(getEvent() + ": " + STATE_SUBSCRIBED); //print state
 
@@ -394,7 +460,7 @@ public class Socket implements ISocket{
 
 
         /* Init subscribed listener */
-        private Emitter.Listener initUnsubscribedListener(final SocketListener listener){
+        private Emitter.Listener initUnsubscribedListener(final SocketEventListener listener){
             return new Emitter.Listener() {
                 @Override
                 public void call(Object... args) {

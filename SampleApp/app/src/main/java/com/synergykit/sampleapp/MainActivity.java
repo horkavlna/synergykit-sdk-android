@@ -1,13 +1,18 @@
 package com.synergykit.sampleapp;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -86,14 +91,49 @@ public class MainActivity extends ActionBarActivity {
         buttonSocket.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SocketActivity.class);
-                startActivity(intent);
+            openSocketActivity();
             }
         });
 
 
     }
 
+
+    private void openSocketActivity(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Enter your name:");
+
+        // Set up the input
+        final EditText input = new EditText(this);
+        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+        input.setInputType(InputType.TYPE_TEXT_FLAG_CAP_WORDS);
+        builder.setView(input);
+
+        // Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                if(input.getText().toString().isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Name must be set. Set it first", Toast.LENGTH_LONG).show();
+                }else{
+                    Intent intent = new Intent(MainActivity.this, SocketActivity.class);
+                    intent.putExtra("name",input.getText().toString());
+                    dialog.cancel();
+                    startActivity(intent);
+                }
+
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+
+        builder.show();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
