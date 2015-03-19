@@ -55,77 +55,17 @@ public class SocketActivity extends ActionBarActivity implements View.OnClickLis
         sendButton.setOnClickListener(this);
 
 
-        copyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sdk.onSocket("created","messages",new Emitter.Listener() {
-                    @Override
-                    public void call(Object... args) {
-
-                        JSONObject jsonObject = (JSONObject) args[0];
-                        String data = null;
-                        try {
-
-                            data = jsonObject.get("data").toString();
-                            final Message message = GsonWrapper.getGson().fromJson(data,Message.class);
-
-
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    TextView textView = new TextView(SocketActivity.this);
-                                    textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT));
-                                    textView.setText("Kopie: " + message.getText());
-                                    messageLinearLayout.addView(textView,0);
-                                }
-                            });
-
-
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-            }
-        });
 
 
 
 
 
 
-        sdk.initSocket();
-        sdk.onSocket("created","messages",new Emitter.Listener() {
-            @Override
-            public void call(Object... args) {
-                JSONObject jsonObject = (JSONObject) args[0];
-                String data = null;
-                try {
-
-                    data = jsonObject.get("data").toString();
-                    final Message message = GsonWrapper.getGson().fromJson(data,Message.class);
-
-
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            TextView textView = new TextView(SocketActivity.this);
-                            textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT));
-                            textView.setText(message.getText());
-                            messageLinearLayout.addView(textView,0);
-                        }
-                    });
 
 
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
 
-        sdk.connectSocket();
+
 
 
 

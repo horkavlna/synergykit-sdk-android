@@ -301,11 +301,11 @@ disconnectSocket();</panel_attributes>
     <coordinates>
       <x>250</x>
       <y>970</y>
-      <w>160</w>
+      <w>170</w>
       <h>240</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
-subscribeListeners();</panel_attributes>
+unsubscribeListeners();</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;220.0</additional_attributes>
   </element>
   <element>

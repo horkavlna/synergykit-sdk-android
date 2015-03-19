@@ -29,6 +29,7 @@ import com.synergykit.sdk.listeners.PlatformResponseListener;
 import com.synergykit.sdk.listeners.PlatformsResponseListener;
 import com.synergykit.sdk.listeners.RecordsResponseListener;
 import com.synergykit.sdk.listeners.ResponseListener;
+import com.synergykit.sdk.listeners.SocketListener;
 import com.synergykit.sdk.listeners.UserResponseListener;
 import com.synergykit.sdk.listeners.UsersResponseListener;
 import com.synergykit.sdk.log.SynergyKITLog;
@@ -435,40 +436,25 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotific
         socket.emitViaSocket(event,args,ack);
     }
 
-    /* On socket */
     @Override
-    public void onSocket(String message, String collection, String filterName, String filter, Emitter.Listener listener) {
-        socket.onSocket(message,collection,filterName,filter,listener);
-    }
+    public void onSocket(String message, String collection, String filterName, String filter, SocketListener listener) {
+        socket.onSocket(message,collection, filterName, filter,listener);
 
-    /* On socket */
+     }
+
     @Override
-    public void onSocket(String message, String collection, Emitter.Listener listener) {
+    public void onSocket(String message, String collection, SocketListener listener) {
         socket.onSocket(message,collection,listener);
     }
 
-    /* Off socket */
     @Override
-    public void offSocket(String message, String collection, String filterName, String filter, Emitter.Listener listener) {
-        socket.offSocket(message,collection,filterName,filter,listener);
+    public void offSocket(String message, String collection, String filterName, String filter, SocketListener listener) {
+        socket.onSocket(message,collection,filterName,filter,listener);
     }
 
-    /* Off socket */
     @Override
-    public void offSocket(String message, String collection, Emitter.Listener listener) {
-        socket.offSocket(message,collection,listener);
-    }
-
-    /* Off socket */
-    @Override
-    public void offSocket(String message, String collection, String filterName) {
-        socket.offSocket(message,collection,filterName);
-    }
-
-    /* Off socket */
-    @Override
-    public void offSocket(String message, String collection) {
-        socket.offSocket(message,collection);
+    public void offSocket(String message, String collection, SocketListener listener) {
+        socket.onSocket(message,collection,listener);
     }
 
 
