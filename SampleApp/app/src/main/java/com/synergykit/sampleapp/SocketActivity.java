@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.github.nkzawa.emitter.Emitter;
 import com.synergykit.sampleapp.beans.Message;
+import com.synergykit.sdk.Socket;
 import com.synergykit.sdk.SynergyKIT;
 import com.synergykit.sdk.SynergyKITSdk;
 import com.synergykit.sdk.addons.GsonWrapper;
@@ -151,48 +152,6 @@ public class SocketActivity extends ActionBarActivity {
                         sendButton.setBackgroundResource(R.color.gray_brightness77);
                     }
                 });
-            }
-        });
-
-
-
-
-        SynergyKIT.onSocket("joined","user",new SocketEventListener() {
-            @Override
-            public void call(Object... args) {
-                JSONObject jsonObject = (JSONObject) args[0];
-                String data = null;
-                try {
-
-                    data = jsonObject.get("data").toString();
-                    final Message message = GsonWrapper.getGson().fromJson(data, Message.class);
-
-
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            TextView textView = new TextView(SocketActivity.this);
-                            textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                            textView.setText(message.getName() + ": " + message.getText());
-                            textView.setGravity(Gravity.CENTER_HORIZONTAL);
-                            messageLinearLayout.addView(textView);
-                        }
-                    });
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void subscribed() {
-
-            }
-
-            @Override
-            public void unsubscribed() {
-
             }
         });
 
