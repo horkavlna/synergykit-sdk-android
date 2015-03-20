@@ -23,11 +23,13 @@ import com.synergykit.sdk.addons.GsonWrapper;
 import com.synergykit.sdk.listeners.ResponseListener;
 import com.synergykit.sdk.listeners.SocketEventListener;
 import com.synergykit.sdk.listeners.SocketStateListener;
+import com.synergykit.sdk.log.SynergyKITLog;
 import com.synergykit.sdk.resources.SynergyKITError;
 import com.synergykit.sdk.resources.SynergyKITObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 
 /**
@@ -39,6 +41,7 @@ public class SocketActivity extends ActionBarActivity {
     private Button sendButton = null;
     private LinearLayout messageLinearLayout = null;
     private EditText messageEditText = null;
+    private TextView stateTextView = null;
     RelativeLayout loadingLayout;
     SynergyKITSdk sdk = new SynergyKITSdk();
 
@@ -56,6 +59,7 @@ public class SocketActivity extends ActionBarActivity {
         messageLinearLayout = (LinearLayout) findViewById(R.id.messageLinearLayout);
         messageEditText = (EditText) findViewById(R.id.messageEditText);
         loadingLayout = (RelativeLayout) findViewById(R.id.loadingLayout);
+        stateTextView = (TextView )findViewById(R.id.stateTextView);
 
 
 
@@ -75,6 +79,19 @@ public class SocketActivity extends ActionBarActivity {
                       return;
 
                   messageEditText.setText("");
+
+                  JSONObject jsonObject = new JSONObject();
+
+                  try {
+                      jsonObject.put("data",GsonWrapper.getGson().toJson(message));
+                      SynergyKIT.emitViaSocket("created_messages",jsonObject);
+                  } catch (JSONException e) {
+                      e.printStackTrace();
+                  }
+
+                  message.setText(message.getText() + " [SAVED]");
+
+                  SynergyKIT.emitViaSocket("created_user",new String("lol"));
 
                   SynergyKIT.createRecord("messages", message, new ResponseListener() {
                       @Override
@@ -125,20 +142,9 @@ public class SocketActivity extends ActionBarActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-
                         loadingLayout.setVisibility(View.GONE);
-
-                        TextView textView = new TextView(SocketActivity.this);
-                        textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                        textView.setText(name + " subscribed");
-                        textView.setGravity(Gravity.CENTER_HORIZONTAL);
-                        messageLinearLayout.addView(textView);
-
                         sendButton.setEnabled(true);
                         sendButton.setBackgroundResource(R.color.white);
-
-
-
                     }
                 });
             }
@@ -155,34 +161,14 @@ public class SocketActivity extends ActionBarActivity {
             }
         });
 
-
-
-
-
-
         SynergyKIT.connectSocket(new SocketStateListener() {
             @Override
             public void connected() {
-
-                try {
-                    Thread.sleep(300);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-
-
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-
-                        loadingLayout.setVisibility(View.GONE);
-
-                        TextView textView = new TextView(SocketActivity.this);
-                        textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                        textView.setText(name + " connected");
-                        textView.setGravity(Gravity.CENTER_HORIZONTAL);
-                        messageLinearLayout.addView(textView);
-
+                        stateTextView.setText("Connected");
+                        stateTextView.setBackgroundResource(R.color.green);
                     }
                 });
             }
@@ -193,16 +179,10 @@ public class SocketActivity extends ActionBarActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-
-
-                        TextView textView = new TextView(SocketActivity.this);
-                        textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                        textView.setText(name + " disconnected");
-                        textView.setGravity(Gravity.CENTER_HORIZONTAL);
-
-                        messageLinearLayout.addView(textView);
-                        sendButton.setEnabled(false);
-                        sendButton.setBackgroundResource(R.color.gray_brightness77);
+                         stateTextView.setText("Disconnected");
+                         stateTextView.setBackgroundResource(R.color.red);
+                         sendButton.setEnabled(false);
+                         sendButton.setBackgroundResource(R.color.gray_brightness77);
                     }
                 });
 
@@ -210,19 +190,7 @@ public class SocketActivity extends ActionBarActivity {
 
             @Override
             public void reconnected() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        TextView textView = new TextView(SocketActivity.this);
-                        textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                        textView.setText(name + " reconnected");
-                        textView.setGravity(Gravity.CENTER_HORIZONTAL);
-
-                        messageLinearLayout.addView(textView);
-
-                    }
-                });
+               //empty
             }
         });
 

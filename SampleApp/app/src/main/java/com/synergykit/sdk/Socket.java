@@ -95,6 +95,7 @@ public class Socket implements ISocket{
 
         try {
             socket = IO.socket(uriBuilder.getSocketUrl().toString());
+           //socket= IO.socket("http://172.16.0.240:5078");
 
             socketItemBuffer = new LinkedList<>();
             return true;
@@ -183,12 +184,38 @@ public class Socket implements ISocket{
     /* Emit via socket */
     @Override
     public void emitViaSocket(String event, Object... args) {
+
+        //init check
+        if(!SynergyKIT.isInit()){
+            SynergyKITLog.print(Errors.MSG_SK_NOT_INITIALIZED);
+            return;
+        }
+
+        //init check
+        if(!isSocketInited()){
+            SynergyKITLog.print(Errors.MSG_SOCKET_NOT_INITED);
+            return;
+        }
+
         socket.emit(event, args);
     }
 
     /* Emit via socket */
     @Override
     public void emitViaSocket(String event, Object[] args, Ack ack) {
+
+        //init check
+        if(!SynergyKIT.isInit()){
+            SynergyKITLog.print(Errors.MSG_SK_NOT_INITIALIZED);
+            return;
+        }
+
+        //init check
+        if(!isSocketInited()){
+            SynergyKITLog.print(Errors.MSG_SOCKET_NOT_INITED);
+            return;
+        }
+
         socket.emit(event,args,ack);
     }
 
