@@ -15,6 +15,8 @@ public interface ISynergyKitSdk {
 	public String getTenant();
 	public void setApplicationKey(String applicationKey);
 	public String getApplicationKey();
+    public String getToken();
+    public void setToken(String token);
 	public boolean isInit();
 	public void setConfig(SynergyKitConfig config);
 	public SynergyKitConfig getConfig();

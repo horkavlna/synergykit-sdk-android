@@ -2,9 +2,8 @@ package com.synergykit.sdk;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.support.annotation.Nullable;
 
-import com.github.nkzawa.emitter.Emitter;
-import com.github.nkzawa.socketio.client.Ack;
 import com.synergykit.sdk.listeners.BatchResponseListener;
 import com.synergykit.sdk.listeners.BitmapResponseListener;
 import com.synergykit.sdk.listeners.BytesResponseListener;
@@ -27,6 +26,7 @@ import com.synergykit.sdk.resources.SynergyKitEmail;
 import com.synergykit.sdk.resources.SynergyKitNotification;
 import com.synergykit.sdk.resources.SynergyKitObject;
 import com.synergykit.sdk.resources.SynergyKitPlatform;
+import com.synergykit.sdk.resources.SynergyKitSocketFilter;
 import com.synergykit.sdk.resources.SynergyKitUser;
 
 import java.lang.reflect.Type;
@@ -70,6 +70,16 @@ public class SynergyKit {
 	public static void setApplicationKey(String applicationKey) {
 		SynergyKitSdk.getInstance().setApplicationKey(applicationKey);
 	}
+
+    /* Token getter */
+    public static String getToken() {
+        return SynergyKitSdk.getInstance().getToken();
+    }
+
+    /* Token setter */
+    public static void setToken(String token) {
+         SynergyKitSdk.getInstance().setToken(token);
+    }
 
 	/* Application key getter */
 	public static String getApplicationKey() {
@@ -204,16 +214,16 @@ public class SynergyKit {
     }
 
     /* Get platform by user and platformId */
-    public void getPlatform(SynergyKitUser user, String platformId, PlatformResponseListener listener, boolean parallelMode) {
+    public static void getPlatform(SynergyKitUser user, String platformId, PlatformResponseListener listener, boolean parallelMode) {
         SynergyKitSdk.getInstance().getPlatform(user, platformId, listener, parallelMode);
     }
 
     /* Get platforms[] by user */
-    public void getPlatforms(SynergyKitUser user, PlatformsResponseListener listener, boolean parallelMode) {
+    public static void getPlatforms(SynergyKitUser user, PlatformsResponseListener listener, boolean parallelMode) {
         SynergyKitSdk.getInstance().getPlatforms(user, listener, parallelMode);
     }
-	
-	//-------------------------------------------------------------------------------------------------------------------	
+
+	//-------------------------------------------------------------------------------------------------------------------
 	/* Send email */
 	public static void sendEmail(String mailId, SynergyKitEmail email, EmailResponseListener listener, boolean parallelMode){
 		SynergyKitSdk.getInstance().sendEmail(mailId, email, listener, parallelMode);
@@ -288,77 +298,56 @@ public class SynergyKit {
 
     //-------------------------------------------------------------------------------------------------------------------
 
-    /* Init socket */
     public static boolean initSocket() {
         return SynergyKitSdk.getInstance().initSocket();
     }
 
-    /* Is socket inited*/
-    public static boolean isSocketInited() {
+    public static boolean isSocketInitialized() {
         return SynergyKitSdk.getInstance().isSocketInitialized();
     }
 
-    /* Is socket connected*/
     public static boolean isSocketConnected() {
         return SynergyKitSdk.getInstance().isSocketConnected();
     }
-
-    /* Connect socket*/
-
-    public static void connectSocket(SocketStateListener listener) {
-        SynergyKitSdk.getInstance().connectSocket(listener);
-    }
-
-    /* Connect socket*/
 
     public static void connectSocket() {
         SynergyKitSdk.getInstance().connectSocket();
     }
 
-    /* Disconnect socket */
+    public static void connectSocket(@Nullable SocketStateListener listener) {
+        SynergyKitSdk.getInstance().connectSocket(listener);
+    }
 
     public static void disconnectSocket() {
         SynergyKitSdk.getInstance().disconnectSocket();
     }
 
-    /* Emit via socket */
-
-    public static void emitViaSocket(String event, Object... args) {
-        SynergyKitSdk.getInstance().emitViaSocket(event, args);
+    public static void onSocket(String eventName, SocketEventListener listener) {
+        SynergyKitSdk.getInstance().onSocket(eventName, listener);
     }
 
-    /* Emit via socket */
-
-    public static void emitViaSocket(String event, Object[] args, Ack ack) {
-        SynergyKitSdk.getInstance().emitViaSocket(event,args,ack);
+    public static void onSocket(String eventName, @Nullable String collectionName, SocketEventListener listener) {
+        SynergyKitSdk.getInstance().onSocket(eventName, collectionName, listener);
     }
 
-
-    public static void onSocket(String message, String collection, String filterName, String filter, SocketEventListener listener) {
-        SynergyKitSdk.getInstance().onSocket(message,collection, filterName, filter,listener);
-
+    public static void onSocket(String eventName, @Nullable String collectionName, @Nullable SynergyKitSocketFilter filter, SocketEventListener listener) {
+        SynergyKitSdk.getInstance().onSocket(eventName, collectionName, filter, listener);
     }
 
-
-    public static void onSocket(String message, String collection, SocketEventListener listener) {
-        SynergyKitSdk.getInstance().onSocket(message, collection, listener);
+    public static void offSocket(String eventName, SocketEventListener listener) {
+        SynergyKitSdk.getInstance().offSocket(eventName, listener);
     }
 
-    public static void onSocket(String event, Emitter.Listener listener){
-        SynergyKitSdk.getInstance().onSocket(event,listener);
+    public static void offSocket(String eventName, @Nullable String collectionName, SocketEventListener listener) {
+        SynergyKitSdk.getInstance().offSocket(eventName, collectionName, listener);
     }
 
-    public static void offSocket(String message, String collection, String filterName, String filter, SocketEventListener listener) {
-        SynergyKitSdk.getInstance().offSocket(message,collection,filterName,filter,listener);
+    public static void offSocket(String eventName, @Nullable String collectionName, @Nullable SynergyKitSocketFilter filter, SocketEventListener listener) {
+        SynergyKitSdk.getInstance().offSocket(eventName, collectionName, filter, listener);
     }
 
-
-    public static void offSocket(String message, String collection, SocketEventListener listener) {
-        SynergyKitSdk.getInstance().offSocket(message,collection,listener);
-    }
-
-    public static void offSocket(String event, Emitter.Listener listener){
-        SynergyKitSdk.getInstance().offSocket(event,listener);
+    public static void emitViaSocket(String eventName, Object object) {
+        SynergyKitSdk.getInstance().emitViaSocket(eventName, object);
     }
 
 

@@ -1,5 +1,10 @@
 package com.synergykit.sdk;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import com.google.android.gms.internal.ge;
+import com.synergykit.sdk.addons.GsonWrapper;
 import com.synergykit.sdk.builders.UriBuilder;
 import com.synergykit.sdk.builders.errors.Errors;
 import com.synergykit.sdk.builders.uri.Resource;
@@ -34,7 +39,9 @@ import java.lang.reflect.Type;
 public class Users implements IUsers{
 	/* Constants */
 	private static final int TOP = 100;
-	
+
+    /* Attributes */
+
 	/* Get user */
 	@Override
 	public void getUser(SynergyKitConfig config, UserResponseListener listener) {
@@ -367,6 +374,5 @@ public class Users implements IUsers{
         request.setListener(listener);
         SynergyKit.synergylize(request, config.isParallelMode());
     }
-
 
 }

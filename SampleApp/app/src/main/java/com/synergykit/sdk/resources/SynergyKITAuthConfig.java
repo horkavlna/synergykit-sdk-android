@@ -5,6 +5,8 @@ package com.synergykit.sdk.resources;
  *
  */
 
+import com.synergykit.sdk.SynergyKit;
+
 import java.io.Serializable;
 
 public class SynergyKitAuthConfig implements Serializable {
@@ -12,6 +14,7 @@ public class SynergyKitAuthConfig implements Serializable {
 	/* Attributes */
 	private String tenant = null;
 	private String applicationKey = null;
+    private String token = null;
 	
 	/* Tenant getter */
 	public String getTenant() {
@@ -33,4 +36,13 @@ public class SynergyKitAuthConfig implements Serializable {
 		this.applicationKey = applicationKey;
 	}
 
+    /* Token getter */
+    public String getToken() {
+        return token;
+    }
+
+    /* Token setter */
+    public void setToken(String token) {
+        this.token = token;
+    }
 }

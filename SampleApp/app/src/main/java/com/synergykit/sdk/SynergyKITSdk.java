@@ -3,9 +3,8 @@ package com.synergykit.sdk;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.support.annotation.Nullable;
 
-import com.github.nkzawa.emitter.Emitter;
-import com.github.nkzawa.socketio.client.Ack;
 import com.synergykit.sdk.builders.errors.Errors;
 import com.synergykit.sdk.cache.Cache;
 import com.synergykit.sdk.interfaces.IAuthorization;
@@ -42,6 +41,7 @@ import com.synergykit.sdk.resources.SynergyKitEmail;
 import com.synergykit.sdk.resources.SynergyKitNotification;
 import com.synergykit.sdk.resources.SynergyKitObject;
 import com.synergykit.sdk.resources.SynergyKitPlatform;
+import com.synergykit.sdk.resources.SynergyKitSocketFilter;
 import com.synergykit.sdk.resources.SynergyKitUser;
 
 import java.lang.reflect.Type;
@@ -118,7 +118,19 @@ public class SynergyKitSdk implements ISynergyKitSdk, IRecords, IUsers, INotific
 		return authConfig.getApplicationKey();
 	}
 
-	/* Is init */
+    /* Token getter */
+    @Override
+    public String getToken() {
+        return authConfig.getToken();
+    }
+
+    /* Token setter */
+    @Override
+    public void setToken(String token) {
+        authConfig.setToken(token);
+    }
+
+    /* Is init */
 	@Override
 	public boolean isInit() {
 		
@@ -291,6 +303,7 @@ public class SynergyKitSdk implements ISynergyKitSdk, IRecords, IUsers, INotific
         users.deletePlatform(user, platform, listener, parallelMode);
     }
 
+    /* Platform getter */
     @Override
     public void getPlatform(SynergyKitUser user, String platformId, PlatformResponseListener listener, boolean parallelMode) {
         users.getPlatform(user, platformId, listener, parallelMode);
@@ -300,6 +313,8 @@ public class SynergyKitSdk implements ISynergyKitSdk, IRecords, IUsers, INotific
     public void getPlatforms(SynergyKitUser user, PlatformsResponseListener listener, boolean parallelMode) {
         users.getPlatforms(user, listener, parallelMode);
     }
+
+
 
     //-------------------------------------------------------------------------------------------------------------------
 	/* Send email */
@@ -395,83 +410,71 @@ public class SynergyKitSdk implements ISynergyKitSdk, IRecords, IUsers, INotific
     }
 
     //-------------------------------------------------------------------------------------------------------------------
-    /* Init socket */
+
+
     @Override
     public boolean initSocket() {
         return socket.initSocket();
     }
 
-    /* Is socket inited*/
     @Override
     public boolean isSocketInitialized() {
         return socket.isSocketInitialized();
     }
 
-    /* Is socket connected*/
     @Override
     public boolean isSocketConnected() {
         return socket.isSocketConnected();
     }
 
-    /* Connect socket*/
-    @Override
-    public void connectSocket(SocketStateListener listener) {
-        socket.connectSocket(listener);
-    }
-
-    /* Connect socket*/
     @Override
     public void connectSocket() {
         socket.connectSocket();
     }
 
-    /* Disconnect socket */
+    @Override
+    public void connectSocket(@Nullable SocketStateListener listener) {
+        socket.connectSocket(listener);
+    }
+
     @Override
     public void disconnectSocket() {
         socket.disconnectSocket();
     }
 
-    /* Emit via socket */
     @Override
-    public void emitViaSocket(String event, Object... args) {
-        socket.emitViaSocket(event,args);
-    }
-
-    /* Emit via socket */
-    @Override
-    public void emitViaSocket(String event, Object[] args, Ack ack) {
-        socket.emitViaSocket(event,args,ack);
+    public void onSocket(String eventName, SocketEventListener listener) {
+        socket.onSocket(eventName,listener);
     }
 
     @Override
-    public void onSocket(String message, String collection, String filterName, String filter, SocketEventListener listener) {
-        socket.onSocket(message,collection, filterName, filter,listener);
-
-     }
-
-    @Override
-    public void onSocket(String message, String collection, SocketEventListener listener) {
-        socket.onSocket(message, collection, listener);
+    public void onSocket(String eventName, @Nullable String collectionName, SocketEventListener listener) {
+        socket.onSocket(eventName,collectionName,listener);
     }
 
     @Override
-    public void onSocket(String event, Emitter.Listener listener) {
-        socket.onSocket(event,listener);
+    public void onSocket(String eventName, @Nullable String collectionName, @Nullable SynergyKitSocketFilter filter, SocketEventListener listener) {
+        socket.onSocket(eventName,collectionName,filter,listener);
     }
 
     @Override
-    public void offSocket(String message, String collection, String filterName, String filter, SocketEventListener listener) {
-        socket.offSocket(message,collection,filterName,filter,listener);
+    public void offSocket(String eventName, SocketEventListener listener) {
+        socket.offSocket(eventName,listener);
     }
 
     @Override
-    public void offSocket(String message, String collection, SocketEventListener listener) {
-        socket.offSocket(message,collection,listener);
+    public void offSocket(String eventName, @Nullable String collectionName, SocketEventListener listener) {
+        socket.offSocket(eventName,collectionName,listener);
     }
 
     @Override
-    public void offSocket(String event, Emitter.Listener listener) {
-        socket.offSocket(event,listener);
+    public void offSocket(String eventName, @Nullable String collectionName, @Nullable SynergyKitSocketFilter filter, SocketEventListener listener) {
+        socket.offSocket(eventName,collectionName,filter,listener);
+    }
+
+    @Override
+    public void emitViaSocket(String eventName, Object object) {
+        socket.emitViaSocket(eventName,object);
     }
 
 

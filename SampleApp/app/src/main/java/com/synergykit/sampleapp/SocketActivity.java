@@ -3,6 +3,9 @@ package com.synergykit.sampleapp;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +23,11 @@ import com.synergykit.sdk.addons.GsonWrapper;
 import com.synergykit.sdk.listeners.ResponseListener;
 import com.synergykit.sdk.listeners.SocketEventListener;
 import com.synergykit.sdk.listeners.SocketStateListener;
+import com.synergykit.sdk.listeners.UserResponseListener;
+import com.synergykit.sdk.log.SynergyKitLog;
 import com.synergykit.sdk.resources.SynergyKitError;
 import com.synergykit.sdk.resources.SynergyKitObject;
+import com.synergykit.sdk.resources.SynergyKitUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,12 +36,14 @@ import org.json.JSONObject;
 /**
  * Created by Letsgood.com - Pavel Stambrecht on 11. 3. 2015.
  */
-public class SocketActivity extends ActionBarActivity {
+public class SocketActivity extends ActionBarActivity implements TextWatcher{
 
     private String name = new String();
     private Button sendButton = null;
     private LinearLayout messageLinearLayout = null;
     private EditText messageEditText = null;
+
+    private TextView typingTextView = null;
     private TextView stateTextView = null;
     RelativeLayout loadingLayout;
     SynergyKitSdk sdk = new SynergyKitSdk();
@@ -53,8 +61,10 @@ public class SocketActivity extends ActionBarActivity {
         sendButton = (Button) findViewById(R.id.buttonSend);
         messageLinearLayout = (LinearLayout) findViewById(R.id.messageLinearLayout);
         messageEditText = (EditText) findViewById(R.id.messageEditText);
+        messageEditText.addTextChangedListener(this);
         loadingLayout = (RelativeLayout) findViewById(R.id.loadingLayout);
         stateTextView = (TextView )findViewById(R.id.stateTextView);
+        typingTextView = (TextView )findViewById(R.id.typingTextView);
 
 
 
@@ -65,9 +75,28 @@ public class SocketActivity extends ActionBarActivity {
         //send button listener
         sendButton.setOnClickListener(new SendButtonOnClickListener());
 
-        SynergyKit.onSocket("created", "messages", new CreatedMessagesListener());
-        SynergyKit.onSocket("user", "joined", new UserStateListener());
-        SynergyKit.connectSocket(new ConnectionStateListener());
+        SynergyKitUser user = new SynergyKitUser();
+        user.setPassword("test");
+        user.setEmail("test@teest.eu");
+
+        SynergyKit.loginUser(user,new UserResponseListener() {
+            @Override
+            public void doneCallback(int statusCode, SynergyKitUser user) {
+                SynergyKitLog.print("User logged");
+                SynergyKit.onSocket("created", "messages", new CreatedMessagesListener());
+                SynergyKit.onSocket("joined",new UserJoinedListener());
+                SynergyKit.onSocket("leave",new UserLeaveListener());
+                SynergyKit.onSocket("typing",new TypingListener());
+                SynergyKit.connectSocket(new ConnectionStateListener());
+
+            }
+
+            @Override
+            public void errorCallback(int statusCode, SynergyKitError errorObject) {
+
+            }
+        });
+
 
     }
 
@@ -90,9 +119,25 @@ public class SocketActivity extends ActionBarActivity {
     @Override
     protected void onDestroy() {
 
+      SynergyKit.emitViaSocket("leave",name);
 
        SynergyKit.disconnectSocket();
         super.onDestroy();
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+        SynergyKit.emitViaSocket("typing",name);
     }
 
     /** **************************************************************** */
@@ -109,23 +154,19 @@ public class SocketActivity extends ActionBarActivity {
 
             messageEditText.setText("");
 
-            JSONObject jsonObject = new JSONObject();
+            message.setText(message.getText());
 
-            SynergyKit.emitViaSocket("created_messages",message);
+            SynergyKit.createRecord("messages", message, new ResponseListener() {
+                @Override
+                public void doneCallback(int statusCode, SynergyKitObject object) {
 
-            message.setText(message.getText() + " [SAVED]");
+                }
 
-//            SynergyKit.createRecord("messages", message, new ResponseListener() {
-//                @Override
-//                public void doneCallback(int statusCode, SynergyKitObject object) {
-//
-//                }
-//
-//                @Override
-//                public void errorCallback(int statusCode, SynergyKitError errorObject) {
-//
-//                }
-//            }, false);
+                @Override
+                public void errorCallback(int statusCode, SynergyKitError errorObject) {
+
+                }
+            }, false);
         }
     }
 
@@ -168,9 +209,8 @@ public class SocketActivity extends ActionBarActivity {
         public void call(Object... args) {
             JSONObject jsonObject = (JSONObject) args[0];
             String data = null;
-            try {
 
-                data = jsonObject.get("data").toString();
+                data = jsonObject.toString();
                 final Message message = GsonWrapper.getGson().fromJson(data, Message.class);
                 final TextView textView = new TextView(SocketActivity.this);
                 textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -185,9 +225,7 @@ public class SocketActivity extends ActionBarActivity {
                 });
 
 
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+
 
         }
 
@@ -201,14 +239,10 @@ public class SocketActivity extends ActionBarActivity {
                     sendButton.setBackgroundResource(R.color.white);
 
 
+                    SynergyKit.emitViaSocket("joined",name);
 
                 }
             });
-
-            Message message = new Message();
-            message.setName(name);
-            message.setText("joined");
-            SynergyKit.emitViaSocket("user_joined", message);
         }
 
         @Override
@@ -220,40 +254,44 @@ public class SocketActivity extends ActionBarActivity {
                     sendButton.setBackgroundResource(R.color.gray_brightness77);
                 }
             });
+
+            SynergyKit.emitViaSocket("leave",name);
+        }
+
+        @Override
+        public void unauthorized() {
+
         }
     }
 
+
     /** **************************************************************** */
-    private class UserStateListener implements SocketEventListener{
+    private class UserJoinedListener implements SocketEventListener{
         @Override
         public void call(Object... args) {
-            JSONObject jsonObject = (JSONObject) args[0];
-            String data = null;
-            try {
 
-                data = jsonObject.get("data").toString();
-                final Message message = GsonWrapper.getGson().fromJson(data, Message.class);
+                String data =(String)args[0];;
+
+                final String message = GsonWrapper.getGson().fromJson(data, String.class);
                 final TextView textView = new TextView(SocketActivity.this);
                 textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-
+                textView.setText(message + "  connected" );
+                textView.setGravity(Gravity.CENTER_HORIZONTAL);
 
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        textView.setText(message.getName() + " joined this room ");
                         messageLinearLayout.addView(textView);
                     }
                 });
 
 
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
         }
 
         @Override
         public void subscribed() {
+
+
 
         }
 
@@ -261,5 +299,108 @@ public class SocketActivity extends ActionBarActivity {
         public void unsubscribed() {
 
         }
+
+        @Override
+        public void unauthorized() {
+
+        }
     }
+
+    /** **************************************************************** */
+    private class UserLeaveListener implements SocketEventListener{
+        @Override
+        public void call(Object... args) {
+
+            String data =(String)args[0];;
+
+            final String message = GsonWrapper.getGson().fromJson(data, String.class);
+            final TextView textView = new TextView(SocketActivity.this);
+            textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+            textView.setText(message + "  disconnected" );
+            textView.setGravity(Gravity.CENTER_HORIZONTAL);
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    messageLinearLayout.addView(textView);
+                }
+            });
+
+
+        }
+
+        @Override
+        public void subscribed() {
+
+
+
+        }
+
+        @Override
+        public void unsubscribed() {
+
+        }
+
+        @Override
+        public void unauthorized() {
+
+        }
+    }
+
+    /** **************************************************************** */
+    private class TypingListener implements SocketEventListener{
+        @Override
+        public void call(Object... args) {
+
+            String data =(String)args[0];;
+
+            final String message = GsonWrapper.getGson().fromJson(data, String.class);
+
+
+            if(name.equals(message))
+                return;
+
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    typingTextView.setText(message + " is typing");
+
+                }
+            });
+
+            try {
+                Thread.sleep(300);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    typingTextView.setText("");
+
+                }
+            });
+        }
+
+        @Override
+        public void subscribed() {
+
+
+
+        }
+
+        @Override
+        public void unsubscribed() {
+
+        }
+
+        @Override
+        public void unauthorized() {
+
+        }
+    }
+
 }

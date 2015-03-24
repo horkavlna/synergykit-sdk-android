@@ -14,6 +14,7 @@ public class SynergyKitUser extends SynergyKitObject implements Serializable {
 	protected String password;	
 	protected String email;
 	protected String activationHash;
+    protected String sessionToken;
 
 	protected List<SynergyKitPlatform> platforms;
 
@@ -46,5 +47,10 @@ public class SynergyKitUser extends SynergyKitObject implements Serializable {
 	public void setActivationHash(String activationHash) {
 		this.activationHash = activationHash;
 	}
+
+    /* Session token getter */
+    public String getSessionToken(){
+        return sessionToken;
+    }
 
 }

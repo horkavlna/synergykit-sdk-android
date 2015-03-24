@@ -1,5 +1,7 @@
 package com.synergykit.sdk.interfaces;
 
+import android.content.Context;
+
 import com.synergykit.sdk.listeners.DeleteResponseListener;
 import com.synergykit.sdk.listeners.PlatformResponseListener;
 import com.synergykit.sdk.listeners.PlatformsResponseListener;
@@ -30,4 +32,5 @@ public interface IUsers{
     public void deletePlatform(SynergyKitUser user, SynergyKitPlatform platform, DeleteResponseListener listener,	boolean parallelMode);
     public void getPlatform(SynergyKitUser user,String platformId, PlatformResponseListener listener, boolean parallelMode );
     public void getPlatforms(SynergyKitUser user, PlatformsResponseListener listener, boolean parallelMode);
+
 }

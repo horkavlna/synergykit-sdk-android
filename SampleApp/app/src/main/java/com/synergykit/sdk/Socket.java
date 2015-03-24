@@ -3,7 +3,6 @@ package com.synergykit.sdk;
 import android.support.annotation.Nullable;
 
 import com.github.nkzawa.emitter.Emitter;
-import com.github.nkzawa.socketio.client.Ack;
 import com.github.nkzawa.socketio.client.IO;
 import com.synergykit.sdk.addons.GsonWrapper;
 import com.synergykit.sdk.builders.UriBuilder;
@@ -12,7 +11,9 @@ import com.synergykit.sdk.interfaces.ISocket;
 import com.synergykit.sdk.listeners.SocketEventListener;
 import com.synergykit.sdk.listeners.SocketStateListener;
 import com.synergykit.sdk.log.SynergyKitLog;
-import com.synergykit.sdk.resources.SynergyKitSocketAuth;
+import com.synergykit.sdk.resources.SynergyKitSocketSubscribeObject;
+import com.synergykit.sdk.resources.SynergyKitSocketFilter;
+import com.synergykit.sdk.resources.SynergyKitUser;
 
 import java.net.URISyntaxException;
 import java.util.LinkedList;
@@ -34,13 +35,273 @@ public class Socket implements ISocket{
     private static final String EVENT_RECONNECTED = "reconnect";
     private static final String EVENT_SUBSCRIBED = "subscribed";
     private static final String EVENT_UNSUBSCRIBED = "unsubscribed";
-    private static final String EMIT_ON = "on";
-    private static final String EMIT_OFF = "off";
+    private static final String EMIT_SUBSCRIBE = "subscribe";
+    private static final String EMIT_UNSUBSCRIBE = "unsubscribe";
+    private static final String EMIT_SPEAK = "speak";
 
     /* Attributes */
     private com.github.nkzawa.socketio.client.Socket socket = null;
-    //private List<SocketItem> socketItemBuffer = null;
-    private static SocketStateListener socketStateListener = null;
+    private List<SocketListenerItem> socketListenerItems = new LinkedList<>();
+    private final StateListener stateListener = new StateListener();
+
+    /* Init socket*/
+    @Override
+    public boolean initSocket() {
+        UriBuilder uriBuilder = new UriBuilder();
+
+        try {
+              socket = IO.socket(uriBuilder.getSocketUrl().toString());
+            return true;
+        } catch (URISyntaxException e) {
+            SynergyKitLog.print(Errors.MSG_SOCKET_INIT_FAILED);
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /* In socket initialized*/
+    @Override
+    public boolean isSocketInitialized() {
+
+        if(socket!=null)
+            return true;
+
+        return false;
+    }
+
+    /* Is socket connected */
+    @Override
+    public boolean isSocketConnected() {
+
+        if(socket!=null && socket.connected())
+            return true;
+
+        return false;
+    }
+
+
+    /* Is prepared*/
+    private boolean isPrepared(){
+        //init check
+        if(!SynergyKit.isInit()){
+            SynergyKitLog.print(Errors.MSG_SK_NOT_INITIALIZED);
+            return false;
+        }
+
+        //init check
+        if(!isSocketInitialized()){
+            SynergyKitLog.print(Errors.MSG_SOCKET_NOT_INITED);
+            return false;
+        }
+
+        return true;
+    }
+
+    /* Connect socket */
+    @Override
+    public void connectSocket() {
+        this.connectSocket(null);
+    }
+    /* Connect socket */
+    @Override
+    public void connectSocket( @Nullable SocketStateListener listener) {
+
+        if(!isPrepared())
+            return;  //prepared check
+
+        stateListener.setSocketStateListener(listener); //set socket state listener
+        stateListener.setEnabled(true); //set base listeners
+        this.setBufferedListeners(); //set buffered listeners
+
+     socket.connect();
+    }
+
+    /* Disconnect socket */
+    @Override
+    public void disconnectSocket() {
+        if(!isPrepared())
+            return;  //prepared check
+
+
+        for(int i=0; socketListenerItems !=null && i < socketListenerItems.size(); i++){
+            unsubscribe(socketListenerItems.get(i));
+        } //unsubcribe
+
+         unsetBufferedListeners(); //unset buffer listener
+
+        if(socketListenerItems!=null)
+             socketListenerItems.clear(); // clear buffer
+
+        stateListener.setEnabled(false); //unset base listeners
+
+        if(socket!=null)
+          socket.disconnect(); //disconnect
+
+        SynergyKitLog.print(STATE_DISCONNECTED); //state disconnected
+
+        if(stateListener.getSocketStateListener()!=null)
+            stateListener.getSocketStateListener().disconnected();
+    }
+
+    /* On socket */
+    @Override
+    public void onSocket(String eventName, SocketEventListener listener) {
+        this.onSocket(eventName,null,null,listener);
+    }
+
+    /* On socket */
+    @Override
+    public void onSocket(String eventName, @Nullable String collectionName, SocketEventListener listener) {
+        this.onSocket(eventName,collectionName,null,listener);
+    }
+
+    /* On socket */
+    @Override
+    public void onSocket(String eventName, @Nullable String collectionName, @Nullable SynergyKitSocketFilter filter, SocketEventListener listener) {
+        SocketListenerItem socketListenerItem = null;
+
+
+       if(!isPrepared())
+            return;  //prepared check
+
+        socketListenerItem  = new SocketListenerItem(eventName, collectionName,filter, listener); //init socket item
+
+
+
+        //on and buffer
+        if(isSocketConnected()){
+            socket.on(EVENT_SUBSCRIBED, socketListenerItem.getSubscribedListener());
+            socket.on(EVENT_UNSUBSCRIBED,socketListenerItem.getUnsubscribedListener());
+            socket.emit(EMIT_SUBSCRIBE,GsonWrapper.getGson().toJson(socketListenerItem.getSubscribeObject()));
+        }
+
+        socketListenerItems.add(socketListenerItem);
+    }
+
+    /* Off Socket */
+    @Override
+    public void offSocket(String eventName, SocketEventListener listener) {
+        this.offSocket(eventName, null, null, listener);
+    }
+
+    /* Off Socket */
+    @Override
+    public void offSocket(String eventName,@Nullable String collectionName, SocketEventListener listener) {
+        this.offSocket(eventName,collectionName,null,listener);
+    }
+
+    /* Off Socket */
+    @Override
+    public void offSocket(String eventName,@Nullable String collectionName,@Nullable SynergyKitSocketFilter filter, SocketEventListener listener) {
+        SocketListenerItem socketListenerItem = null;
+        SocketListenerItem selectedSocketListenerItem=null;
+
+        if(!isPrepared())
+            return;  //prepared check
+
+        //init socketItem
+        socketListenerItem = new SocketListenerItem(eventName,collectionName,filter,listener);
+
+
+        //off listener if buffered
+        if(isSocketConnected()){
+            for(int i=0; socketListenerItems!=null && i<socketListenerItems.size(); i++){
+                selectedSocketListenerItem = socketListenerItems.get(i);
+                if(selectedSocketListenerItem!=null && selectedSocketListenerItem.equals(socketListenerItem)){
+
+                    /* off */
+                    if(selectedSocketListenerItem.getCallListener()!=null)
+                        socket.off(selectedSocketListenerItem.getEvent(),selectedSocketListenerItem.getCallListener());
+                    else
+                        socket.off(selectedSocketListenerItem.getEvent());
+
+                }
+            }
+        }
+    }
+
+    /* Subscribe listener */
+    private void subscribe(SocketListenerItem socketListenerItem){
+
+        if (socketListenerItem==null)
+            throw new IllegalArgumentException();
+
+
+        if(!isPrepared())
+            return;  //prepared check
+
+        socket.emit(EMIT_SUBSCRIBE,GsonWrapper.getGson().toJson(socketListenerItem.getSubscribeObject()));
+    }
+
+    /* Unsubscribe listener */
+    private void unsubscribe(SocketListenerItem socketListenerItem){
+
+        if (socketListenerItem==null)
+            throw new IllegalArgumentException();
+
+
+        if(!isPrepared())
+            return;  //prepared check
+
+        socket.emit(EMIT_UNSUBSCRIBE,GsonWrapper.getGson().toJson(socketListenerItem.getSubscribeObject()));
+    }
+
+
+    /* Emit via socket */
+    @Override
+    public void emitViaSocket(String event, Object object) {
+        SocketSpeakItem socketSpeakItem = null;
+
+
+        if(!isPrepared())
+            return;  //prepared check
+
+        socketSpeakItem = new SocketSpeakItem(event,object);
+
+        socket.emit(EMIT_SPEAK,GsonWrapper.getGson().toJson(socketSpeakItem));
+    }
+
+
+     /* Buffered listeners setter */
+    private void setBufferedListeners(){
+        SocketListenerItem socketListenerItem = null;
+
+
+        /* Set buffered listeners */
+        for(int i=0; socketListenerItems !=null && i < socketListenerItems.size();i++ ) {
+
+            socketListenerItem = socketListenerItems.get(i);
+
+            if(socketListenerItem==null)
+                continue;
+
+            socket.on(socketListenerItem.getEvent(), socketListenerItem.getCallListener());
+            socket.on(EVENT_SUBSCRIBED + "_" + socketListenerItem.getEvent(), socketListenerItem.subscribedListener);
+            socket.on(EVENT_UNSUBSCRIBED + "_" + socketListenerItem.getEvent(), socketListenerItem.unsubscribedListener);
+
+        }
+    }
+
+    /* Buffered listeners setter */
+    private void unsetBufferedListeners(){
+        SocketListenerItem socketListenerItem = null;
+
+
+        /* Set buffered listeners */
+        for(int i=0; socketListenerItems !=null && i < socketListenerItems.size();i++ ) {
+
+            socketListenerItem = socketListenerItems.get(i);
+
+            if(socketListenerItem==null)
+                continue;
+
+            socket.off(socketListenerItem.getEvent(), socketListenerItem.getCallListener());
+            socket.off(EVENT_SUBSCRIBED + "_" + socketListenerItem.getEvent(), socketListenerItem.subscribedListener);
+            socket.off(EVENT_UNSUBSCRIBED + "_" + socketListenerItem.getEvent(), socketListenerItem.unsubscribedListener);
+
+        }
+    }
+
 
 
 
@@ -54,9 +315,9 @@ public class Socket implements ISocket{
         private final Emitter.Listener connectedListener = new Emitter.Listener() {
             @Override
             public void call(Object... args) {
-//            for(int i=0; socketItemBuffer !=null && i < socketItemBuffer.size(); i++){
-//                emitViaSocket(EMIT_ON,GsonWrapper.getGson().toJson(socketItemBuffer.get(i).getSocketAuth()));
-//            }
+                for(int i=0; socketListenerItems !=null && i < socketListenerItems.size(); i++){
+                    subscribe(socketListenerItems.get(i));
+                }
 
                 SynergyKitLog.print(STATE_CONNECTED);
 
@@ -71,9 +332,7 @@ public class Socket implements ISocket{
             @Override
             public void call(Object... args) {
 
-
-
-                // unsetBufferedListeners(); //unset buffered listeners
+                unsetBufferedListeners(); //unset buffered listeners
 
                 SynergyKitLog.print(STATE_DISCONNECTED);
 
@@ -87,7 +346,7 @@ public class Socket implements ISocket{
             @Override
             public void call(Object... args) {
 
-                //setBufferedListeners(); //set buffured listeners
+                setBufferedListeners(); //set buffured listeners
 
                 SynergyKitLog.print(STATE_RECONNECTED);
 
@@ -99,6 +358,11 @@ public class Socket implements ISocket{
         /* Socket state listener setter*/
         public void setSocketStateListener(@Nullable SocketStateListener socketStateListener) {
             this.socketStateListener = socketStateListener;
+        }
+
+        /* Socket state listener getter */
+        public SocketStateListener getSocketStateListener(){
+            return this.socketStateListener;
         }
 
         /* Connected listener getter*/
@@ -115,423 +379,196 @@ public class Socket implements ISocket{
         public Emitter.Listener getReconnectedListener() {
             return reconnectedListener;
         }
-    }
 
+        /* Enabled setter */
+        public void setEnabled(boolean enabled){
+
+            if(!isSocketInitialized())
+                return;
+
+            if(enabled){
+                socket.on(EVENT_CONNECTED,connectedListener); //on connected
+                socket.on(EVENT_RECONNECTED,reconnectedListener); //on reconnected
+                socket.on(EVENT_DISCONNECTED,disconnectedListener); //on disconnected
+            }else{
+                socket.off(EVENT_CONNECTED,connectedListener); //on connected
+                socket.off(EVENT_RECONNECTED,reconnectedListener); //on reconnected
+                socket.off(EVENT_DISCONNECTED,disconnectedListener); //on disconnected
+            }
+
+
+        }
+    }
     //----------------------------------------------------------------------------------------------
 
-//    /* Init socket*/
-//    @Override
-//    public boolean initSocket() {
-//        UriBuilder uriBuilder = new UriBuilder();
-//
-//        try {
-//              socket = IO.socket(uriBuilder.getSocketUrl().toString());
-//
-//            socketItemBuffer = new LinkedList<>();
-//            return true;
-//        } catch (URISyntaxException e) {
-//            SynergyKitLog.print(Errors.MSG_SOCKET_INIT_FAILED);
-//            e.printStackTrace();
-//            return false;
-//        }
-//    }
-//
-//    /* In socket inited*/
-//    @Override
-//    public boolean isSocketInitialized() {
-//
-//        if(socket!=null)
-//            return true;
-//
-//        return false;
-//    }
-//
-//    /* Is socket connected */
-//    @Override
-//    public boolean isSocketConnected() {
-//
-//        if(socket!=null && socket.connected())
-//            return true;
-//
-//        return false;
-//    }
-//
-//    /* Is prepared*/
-//    private boolean isPrepared(){
-//        //init check
-//        if(!SynergyKit.isInit()){
-//            SynergyKitLog.print(Errors.MSG_SK_NOT_INITIALIZED);
-//            return false;
-//        }
-//
-//        //init check
-//        if(!isSocketInitialized()){
-//            SynergyKitLog.print(Errors.MSG_SOCKET_NOT_INITED);
-//            return false;
-//        }
-//
-//        return true;
-//    }
-//
-//    /* Connect socket */
-//    @Override
-//    public void connectSocket() {
-//        this.connectSocket(null);
-//    }
-//
-//    /* Connect socket */
-//    @Override
-//    public void connectSocket(SocketStateListener listener) {
-//
-//        if(!isPrepared())
-//            return;  //prepared check
-//
-//        socketStateListener = listener; //set socket state listener
-//
-//        this.setBaseListeners(); //set base listeners
-//        this.setBufferedListeners(); //set buffered listeners
-//
-//        socket.connect();
-//    }
-//
-//    /* Disconnect */
-//    @Override
-//    public void disconnectSocket() {
-//
-//        if(!isPrepared())
-//            return;  //prepared check
-//
-//
-//        for(int i=0; socketItemBuffer !=null && i < socketItemBuffer.size(); i++){
-//            emitViaSocket(EMIT_OFF,GsonWrapper.getGson().toJson(socketItemBuffer.get(i).getSocketAuth()));
-//        } //unsubcribe
-//
-//        unsetBufferedListeners(); //unset buffer listener
-//
-//        if(socketItemBuffer!=null)
-//            socketItemBuffer.clear(); // clear buffer
-//
-//        unsetBaseListeners(); //unset base listeners
-//
-//        if(socket!=null)
-//          socket.disconnect(); //disconnect
-//
-//        SynergyKitLog.print(STATE_DISCONNECTED); //state disconnected
-//
-//        if(socketStateListener!=null)
-//            socketStateListener.disconnected(); //
-//
-//    }
-//
-//    /* Emit via socket */
-//    @Override
-//    public void emitViaSocket(String event, Object... args) {
-//
-//        if(!isPrepared())
-//            return;  //prepared check
-//
-//        socket.emit(event, args);
-//    }
-//
-//    /* Emit via socket */
-//    @Override
-//    public void emitViaSocket(String event, Object[] args, Ack ack) {
-//
-//        if(!isPrepared())
-//            return;  //prepared check
-//
-//        socket.emit(event,args,ack);
-//    }
-//
-//    /* On socket */
-//    @Override
-//    public void onSocket(String message, String collection, String filterName, String filter, SocketEventListener listener) {
-//        SocketItem socketItem = null;
-//
-//        if(!isPrepared())
-//            return;  //prepared check
-//
-//        //init onSocketItem
-//        if(filterName!=null && !filterName.isEmpty() && filter!=null && !filter.isEmpty() )
-//            socketItem = new SocketItem(message, collection,filterName,filter, listener); //init onSocket item
-//        else
-//            socketItem = new SocketItem(message,collection,listener);
-//
-//
-//        //on and buffer
-//        if(isSocketConnected()){
-//            socket.on(EVENT_SUBSCRIBED, socketItem.getSubscribedListener());
-//            socket.on(EVENT_UNSUBSCRIBED,socketItem.getUnsubscribedListener());
-//            socket.emit(EMIT_ON,GsonWrapper.getGson().toJson(socketItem.getSocketAuth()));
-//        }
-//
-//        socketItemBuffer.add(socketItem);
-//    }
-//
-//    /* On socket */
-//    @Override
-//    public void onSocket(String message, String collection, SocketEventListener listener) {
-//        this.onSocket(message, collection, null, null, listener);
-//    }
-//
-//    @Override
-//    public void onSocket(String event, Emitter.Listener listener) {
-//
-//        //TODO DOPSAT, AZ BUDE FUNKCI NA SERVERU
-//
-////        if(!isPrepared())
-////            return;  //prepared check
-////
-////        socket.on(event,listener);
-//    }
-//
-//
-//    /* Off socket */
-//    @Override
-//    public void offSocket(String message, String collection, String filterName, String filter, SocketEventListener listener) {
-//        SocketItem socketItem = null;
-//        SocketItem selectedSocketItem;
-//
-//        if(!isPrepared())
-//            return;  //prepared check
-//
-//        //init socketItem
-//        if(filterName!=null && !filterName.isEmpty() && filter!=null && !filter.isEmpty() )
-//            socketItem = new SocketItem(message, collection,filterName,filter, listener); //init onSocket item
-//        else
-//            socketItem = new SocketItem(message,collection,listener);
-//
-//        //off listener if buffered
-//        if(isSocketConnected()){
-//            for(int i=0; socketItemBuffer!=null && i<socketItemBuffer.size(); i++){
-//                selectedSocketItem = socketItemBuffer.get(i);
-//                if(selectedSocketItem!=null && selectedSocketItem.equals(socketItem)){
-//
-//                    /* off */
-//                    if(selectedSocketItem.getCallListener()!=null)
-//                        socket.off(selectedSocketItem.getEvent(),selectedSocketItem.getCallListener());
-//                    else
-//                        socket.off(selectedSocketItem.getEvent());
-//
-//                }
-//            }
-//        }
-//    }
-//
-//    /* Off socket */
-//    @Override
-//    public void offSocket(String message, String collection, SocketEventListener listener) {
-//       this.onSocket(message, collection, null, null, listener);
-//    }
-//
-//    @Override
-//    public void offSocket(String event, Emitter.Listener listener) {
-//
-//        //TODO dopsat, az bude hotovo na serveru
-//
-////        if(!isPrepared())
-////            return;  //prepared check
-////
-////        socket.off(event,listener);
-//    }
-//
-//    /* Base listeners setter */
-//    private void setBaseListeners(){
-//        socket.on(EVENT_CONNECTED,connectedListener); //on connected
-//        socket.on(EVENT_RECONNECTED,reconnectedListener); //on reconnected
-//        socket.on(EVENT_DISCONNECTED,disconnectedListener); //on disconnected
-//    }
-//
-//    /* Base listeners unsetter */
-//    private void unsetBaseListeners(){
-//        socket.off(EVENT_CONNECTED, connectedListener); //on connected
-//        socket.off(EVENT_RECONNECTED, reconnectedListener); //on reconnected
-//        socket.off(EVENT_DISCONNECTED, disconnectedListener); //on disconnected
-//    }
-//
-//    /* Buffered listeners setter */
-//    private void setBufferedListeners(){
-//
-//        /* Set buffered listeners */
-//        for(int i=0; socketItemBuffer !=null && i < socketItemBuffer.size();i++ ) {
-//            socket.on(socketItemBuffer.get(i).getEvent(),socketItemBuffer.get(i).getCallListener());
-//            socket.on(EVENT_SUBSCRIBED, socketItemBuffer.get(i).subscribedListener); //TODO must have unique subscribed listener
-//            socket.on(EVENT_UNSUBSCRIBED, socketItemBuffer.get(i).unsubscribedListener); //TODO must have unique unsubscribed listener
-//
-//        }
-//    }
-//
-//    /* Buffered listeners setter */
-//    private void unsetBufferedListeners(){
-//
-//        /* Set buffered listeners */
-//        for(int i=0; socketItemBuffer !=null && i < socketItemBuffer.size();i++ ) {
-//            socket.off(socketItemBuffer.get(i).getEvent(), socketItemBuffer.get(i).getCallListener());
-//            socket.off(EVENT_SUBSCRIBED, socketItemBuffer.get(i).getSubscribedListener()); //TODO must have unique subscribed listener
-//            socket.off(EVENT_UNSUBSCRIBED, socketItemBuffer.get(i).getUnsubscribedListener()); //TODO must have unique unsubscribed listener
-//
-//        }
-//    }
-//
-//    //----------------------------------------------------------------------------------------------
-//
-//    /* Auth item*/
-//    private class SocketItem {
-//
-//        /* Attributes */
-//        private SynergyKitSocketAuth socketAuth;
-//        private SocketEventListener socketListener = null;
-//        private Emitter.Listener callListener;
-//        private Emitter.Listener subscribedListener;
-//        private Emitter.Listener unsubscribedListener;
-//        private String event;
-//
-//        /* Constructor */
-//        public SocketItem(String message, String collection, SocketEventListener listener){
-//            this(message,collection,null,null,listener);
-//        }
-//
-//        /* Constructor */
-//        public SocketItem(String message, String collection, String filterName, String filter,SocketEventListener listener){
-//
-//            this.socketAuth = new SynergyKitSocketAuth();
-//            this.socketAuth.setMessage(message);
-//            this.socketAuth.setCollection(collection);
-//            this.event = message + "_" + collection;
-//
-//            //filter addons
-//            if(filter!=null && !filter.isEmpty() && filterName!=null && !filterName.isEmpty()){
-//                this.socketAuth.setQuery(filterName, filter);
-//                this.event += "_" + filterName;
-//            }
-//
-//            this.socketListener = listener;
-//            this.callListener = initCallListener(listener);
-//            this.subscribedListener = initSubscribedListener(listener);
-//            this.unsubscribedListener = initUnsubscribedListener(listener);
-//        }
-//
-//        /* Socket auth getter */
-//        public SynergyKitSocketAuth getSocketAuth() {
-//            return socketAuth;
-//        }
-//
-//        /* Socket auth setter */
-//        public void setSocketAuth(SynergyKitSocketAuth socketAuth) {
-//            this.socketAuth = socketAuth;
-//        }
-//
-//        /* Call listener getter */
-//        public Emitter.Listener getCallListener() {
-//            return callListener;
-//        }
-//
-//        /* Subscribed listener getter */
-//        public Emitter.Listener getSubscribedListener() {
-//            return subscribedListener;
-//        }
-//
-//        /* Unsubscribed listener getter */
-//        public Emitter.Listener getUnsubscribedListener() {
-//            return unsubscribedListener;
-//        }
-//
-//        /* Event getter */
-//        public String getEvent() {
-//            return event;
-//        }
-//
-//
-//        /* Init call listener */
-//        private Emitter.Listener initCallListener(final SocketEventListener listener){
-//            return new Emitter.Listener() {
-//                @Override
-//                public void call(Object... args) {
-//
-//                    if(listener!=null)
-//                        listener.call(args);
-//                    else
-//                        SynergyKitLog.print(getEvent() + ": " + Errors.MSG_NO_CALLBACK_LISTENER);
-//
-//                }
-//            };
-//        }
-//
-//
-//        /* Init subscribed listener */
-//        private Emitter.Listener initSubscribedListener(final SocketEventListener listener){
-//            return new Emitter.Listener() {
-//                @Override
-//                public void call(Object... args) {
-//
-//                    SynergyKitLog.print(getEvent() + ": " + STATE_SUBSCRIBED); //print state
-//
-//                    //subscribed listener
-//                    if(listener!=null)
-//                        listener.subscribed();
-//                    else
-//                        SynergyKitLog.print(getEvent() + ": " + Errors.MSG_NO_CALLBACK_LISTENER);
-//                }
-//            };
-//        }
-//
-//
-//        /* Init subscribed listener */
-//        private Emitter.Listener initUnsubscribedListener(final SocketEventListener listener){
-//            return new Emitter.Listener() {
-//                @Override
-//                public void call(Object... args) {
-//
-//                    SynergyKitLog.print(getEvent() + ": " + STATE_UNSUBSCRIBED); //print state
-//
-//                    //unsubscribed listener
-//                    if(listener!=null)
-//                        listener.unsubscribed();
-//                    else
-//                        SynergyKitLog.print(getEvent() + ": " + Errors.MSG_NO_CALLBACK_LISTENER);
-//
-//
-//                }
-//            };
-//        }
-//
-//
-//
-//        /* Equal */
-//        @Override
-//        public boolean equals(Object o) {
-//            SocketItem socketItem;
-//
-//
-//            if(o==null || !(o instanceof SocketItem))
-//                return false;
-//
-//            socketItem = (SocketItem) o;
-//
-//            if(this.socketAuth!=null && socketItem.socketAuth==null)
-//                return false;
-//
-//            if(this.socketAuth==null && socketItem.socketAuth!=null)
-//                return false;
-//
-//            if(!this.socketAuth.equals(socketItem.socketAuth))
-//                return false;
-//
-//
-//            if(!this.event.equals(((SocketItem) o).event))
-//                return false;
-//
-//            if(this.socketListener!=null && socketItem.socketListener==null)
-//                return false;
-//
-//            if(this.socketListener==null &&  socketItem.socketListener!=null)
-//                return false;
-//
-//            if(this.socketListener != socketItem.socketListener)
-//                return false;
-//
-//
-//            return true;
-//        }
-//    }
+    private class SocketSpeakItem{
+
+        /* Attributes */
+        private Object message;
+        private String tenant =null;
+        private String token = null;
+        private String eventName = null;
+
+        /* Constructor */
+        public SocketSpeakItem(String eventName,Object message) {
+
+            this.message = message;
+            this.eventName = eventName;
+            this.tenant = SynergyKit.getTenant();
+            this.token = SynergyKit.getToken();
+
+        }
+    }
+    //----------------------------------------------------------------------------------------------
+    /* Socket listener */
+    private class SocketListenerItem{
+
+        /* Attributes */
+        protected SynergyKitSocketSubscribeObject subscribeObject;
+        private SocketEventListener socketListener = null;
+        private Emitter.Listener callListener;
+        private Emitter.Listener subscribedListener;
+        private Emitter.Listener unsubscribedListener;
+
+
+        /* Constructor */
+        public SocketListenerItem(String eventName, @Nullable String collectionName,@Nullable SynergyKitSocketFilter filter,SocketEventListener listener){
+            this.subscribeObject = new SynergyKitSocketSubscribeObject();
+            this.subscribeObject.setEventName(eventName);
+            this.subscribeObject.setCollectionName(collectionName);
+            this.subscribeObject.setFilter(filter);
+
+            this.socketListener = listener;
+            this.callListener = initCallListener(listener);
+            this.subscribedListener = initSubscribedListener(listener);
+            this.unsubscribedListener = initUnsubscribedListener(listener);
+        }
+
+
+        /* Call listener getter */
+        public Emitter.Listener getCallListener() {
+            return callListener;
+        }
+
+        /* Subscribed listener getter */
+        public Emitter.Listener getSubscribedListener() {
+            return subscribedListener;
+        }
+
+        /* Unsubscribed listener getter */
+        public Emitter.Listener getUnsubscribedListener() {
+            return unsubscribedListener;
+        }
+
+
+        /* Socket subscribe object getter */
+        public SynergyKitSocketSubscribeObject getSubscribeObject() {
+            return subscribeObject;
+        }
+
+
+
+        /* Event getter */
+        public String getEvent() {
+            String event = subscribeObject.getEventName();
+
+            if(subscribeObject.getCollectionName()!=null)
+                event+="_" + subscribeObject.getCollectionName();
+
+            if(subscribeObject.getFilter()!=null)
+                event+="_" + subscribeObject.getFilter().getName();
+
+            return event;
+        }
+
+
+        /* Init call listener */
+        private Emitter.Listener initCallListener(final SocketEventListener listener){
+            return new Emitter.Listener() {
+                @Override
+                public void call(Object... args) {
+
+                    if(listener!=null)
+                        listener.call(args);
+                    else
+                        SynergyKitLog.print(getEvent() + ": " + Errors.MSG_NO_CALLBACK_LISTENER);
+
+                }
+            };
+        }
+
+
+        /* Init subscribed listener */
+        private Emitter.Listener initSubscribedListener(final SocketEventListener listener){
+            return new Emitter.Listener() {
+                @Override
+                public void call(Object... args) {
+
+                    SynergyKitLog.print(getEvent() + ": " + STATE_SUBSCRIBED); //print state
+
+                    //subscribed listener
+                    if(listener!=null)
+                        listener.subscribed();
+                    else
+                        SynergyKitLog.print(getEvent() + ": " + Errors.MSG_NO_CALLBACK_LISTENER);
+                }
+            };
+        }
+
+
+        /* Init subscribed listener */
+        private Emitter.Listener initUnsubscribedListener(final SocketEventListener listener){
+            return new Emitter.Listener() {
+                @Override
+                public void call(Object... args) {
+
+                    SynergyKitLog.print(getEvent() + ": " + STATE_UNSUBSCRIBED); //print state
+
+                    //unsubscribed listener
+                    if(listener!=null)
+                        listener.unsubscribed();
+                    else
+                        SynergyKitLog.print(getEvent() + ": " + Errors.MSG_NO_CALLBACK_LISTENER);
+
+
+                }
+            };
+        }
+
+
+
+        /* Equal */
+        @Override
+        public boolean equals(Object o) {
+            SocketListenerItem socketListenerItem;
+
+
+            if(o==null || !(o instanceof SocketListenerItem))
+                return false;
+
+            socketListenerItem = (SocketListenerItem) o;
+
+            if(this.subscribeObject!=null && socketListenerItem.subscribeObject==null)
+                return false;
+
+            if(this.subscribeObject==null && socketListenerItem.subscribeObject!=null)
+                return false;
+
+            if(!this.subscribeObject.equals(socketListenerItem.subscribeObject))
+                return false;
+
+
+            if(this.socketListener!=null && socketListenerItem.socketListener==null)
+                return false;
+
+            if(this.socketListener==null &&  socketListenerItem.socketListener!=null)
+                return false;
+
+            if(this.socketListener != socketListenerItem.socketListener)
+                return false;
+
+
+            return true;
+        }
+    }
 }

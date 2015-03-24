@@ -59,7 +59,10 @@ public class Errors {
     public static final String MSG_SOCKET_CONNECT_FAILED = "Socket connect failed.";
 
     // Socket not inited
-    public static final String MSG_SOCKET_NOT_INITED = "Socket is not inited.";
+    public static final String MSG_SOCKET_NOT_INITED = "Socket is not initialized.";
+
+    // No user logged in
+    public static final String MSG_NO_USER_LOGGED_IN = "No user is logged in.";
 
 
 
