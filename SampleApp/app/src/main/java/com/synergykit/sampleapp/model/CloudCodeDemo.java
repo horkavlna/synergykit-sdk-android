@@ -1,11 +1,11 @@
 package com.synergykit.sampleapp.model;
 
-import com.synergykit.sdk.resources.SynergyKITObject;
+import com.synergykit.sdk.resources.SynergyKitObject;
 
 /**
  * Created by Marek on 1/14/15.
  */
-public class CloudCodeDemo extends SynergyKITObject {
+public class CloudCodeDemo extends SynergyKitObject {
     private String path;
 
     private int age;

@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.synergykit.sdk.builders.errors.Errors;
 import com.synergykit.sdk.interfaces.ICache;
-import com.synergykit.sdk.log.SynergyKITLog;
+import com.synergykit.sdk.log.SynergyKitLog;
 
 import java.io.File;
 
@@ -33,7 +33,7 @@ public class Cache implements ICache {
 				 .invoke(null, httpCacheDir, DEFAULT_CACHE_SIZE);
 			
 		} catch (Exception e) {
-			SynergyKITLog.print(Errors.MSG_CACHE_INIT_FAILED + ": " + e);
+			SynergyKitLog.print(Errors.MSG_CACHE_INIT_FAILED + ": " + e);
 		}
 		
 	}

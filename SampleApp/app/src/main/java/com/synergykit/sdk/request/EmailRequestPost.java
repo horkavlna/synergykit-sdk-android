@@ -2,10 +2,10 @@ package com.synergykit.sdk.request;
 
 import com.synergykit.sdk.builders.errors.Errors;
 import com.synergykit.sdk.listeners.EmailResponseListener;
-import com.synergykit.sdk.log.SynergyKITLog;
-import com.synergykit.sdk.resources.SynergyKITConfig;
-import com.synergykit.sdk.resources.SynergyKITEmail;
-import com.synergykit.sdk.resources.SynergyKITResponse;
+import com.synergykit.sdk.log.SynergyKitLog;
+import com.synergykit.sdk.resources.SynergyKitConfig;
+import com.synergykit.sdk.resources.SynergyKitEmail;
+import com.synergykit.sdk.resources.SynergyKitResponse;
 
 import org.apache.http.HttpStatus;
 
@@ -15,15 +15,15 @@ import org.apache.http.HttpStatus;
  *
  */
 
-public class EmailRequestPost extends SynergyKITRequest{
+public class EmailRequestPost extends SynergyKitRequest {
 
 	/* Attributes */
-	private SynergyKITConfig config = null;
+	private SynergyKitConfig config = null;
 	private EmailResponseListener listener = null;
-	private SynergyKITEmail email = null;;
+	private SynergyKitEmail email = null;;
 	
 	/* Config setter */
-	public void setConfig(SynergyKITConfig config){
+	public void setConfig(SynergyKitConfig config){
 		this.config = config; 
 	}
 	
@@ -34,22 +34,22 @@ public class EmailRequestPost extends SynergyKITRequest{
 	
 		
 	/* Email getter */
-	public SynergyKITEmail getEmail() {
+	public SynergyKitEmail getEmail() {
 		return email;
 	}
 
 	/* Object setter */
-	public void setObject(SynergyKITEmail email) {
+	public void setObject(SynergyKitEmail email) {
 		this.email = email;
 	}
 	
 	@Override
 	protected Object doInBackground(Void... params) {
 		ResponseDataHolder dataHolder = null;
-		SynergyKITResponse response = null;
+		SynergyKitResponse response = null;
 		
 		//do request
-		response = SynergyKITRequest.post(config.getUri(), email);
+		response = SynergyKitRequest.post(config.getUri(), email);
 		
 		//manage response
 		dataHolder = manageResponseToObject(response, config.getType());
@@ -65,7 +65,7 @@ public class EmailRequestPost extends SynergyKITRequest{
 		
 		//null listener 
 		if(listener==null){
-			SynergyKITLog.print(Errors.MSG_NO_CALLBACK_LISTENER);
+			SynergyKitLog.print(Errors.MSG_NO_CALLBACK_LISTENER);
 			
 			return;
 		}	

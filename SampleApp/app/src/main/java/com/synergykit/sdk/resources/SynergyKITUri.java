@@ -7,11 +7,11 @@ import android.webkit.URLUtil;
  *
  */
 import com.synergykit.sdk.builders.errors.Errors;
-import com.synergykit.sdk.log.SynergyKITLog;
+import com.synergykit.sdk.log.SynergyKitLog;
 
 import java.io.Serializable;
 
-public class SynergyKITUri  implements Serializable {
+public class SynergyKitUri implements Serializable {
 	
 	/* Constants */
 	private static final String URI = "URI: ";
@@ -20,18 +20,18 @@ public class SynergyKITUri  implements Serializable {
 	private String uri;
 	
 	/* Constructor */
-	public SynergyKITUri(String uri){
+	public SynergyKitUri(String uri){
 		this.uri = uri;
 	}	
 	
 	/* Uri getter */
 	public String toString(){
 		String uri = this.uri;
-		SynergyKITLog.print(URI + uri);
+		SynergyKitLog.print(URI + uri);
 		
 		if( URLUtil.isValidUrl(uri)==false || uri.contains(" ")){			
 			
-			SynergyKITLog.print(Errors.MSG_URI_NOT_VALID);
+			SynergyKitLog.print(Errors.MSG_URI_NOT_VALID);
 			
 			uri=null;
 		}

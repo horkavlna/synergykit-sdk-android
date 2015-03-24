@@ -9,7 +9,7 @@ import com.synergykit.sdk.listeners.PlatformResponseListener;
 import com.synergykit.sdk.listeners.PlatformsResponseListener;
 import com.synergykit.sdk.listeners.UserResponseListener;
 import com.synergykit.sdk.listeners.UsersResponseListener;
-import com.synergykit.sdk.log.SynergyKITLog;
+import com.synergykit.sdk.log.SynergyKitLog;
 import com.synergykit.sdk.request.PlatformRequestGet;
 import com.synergykit.sdk.request.PlatformRequestPost;
 import com.synergykit.sdk.request.PlatformRequestPut;
@@ -19,10 +19,10 @@ import com.synergykit.sdk.request.UserRequestGet;
 import com.synergykit.sdk.request.UserRequestPost;
 import com.synergykit.sdk.request.UserRequestPut;
 import com.synergykit.sdk.request.UsersRequestGet;
-import com.synergykit.sdk.resources.SynergyKITConfig;
-import com.synergykit.sdk.resources.SynergyKITError;
-import com.synergykit.sdk.resources.SynergyKITPlatform;
-import com.synergykit.sdk.resources.SynergyKITUser;
+import com.synergykit.sdk.resources.SynergyKitConfig;
+import com.synergykit.sdk.resources.SynergyKitError;
+import com.synergykit.sdk.resources.SynergyKitPlatform;
+import com.synergykit.sdk.resources.SynergyKitUser;
 
 import java.lang.reflect.Type;
 
@@ -37,17 +37,17 @@ public class Users implements IUsers{
 	
 	/* Get user */
 	@Override
-	public void getUser(SynergyKITConfig config, UserResponseListener listener) {
+	public void getUser(SynergyKitConfig config, UserResponseListener listener) {
 		UserRequestGet request = new UserRequestGet();		
 		request.setConfig(config);
 		request.setListener(listener);
-		SynergyKIT.synergylize(request, config.isParallelMode());	
+		SynergyKit.synergylize(request, config.isParallelMode());
 	}
 
 	/* Get user */
 	@Override
 	public void getUser(String userId, Type type, UserResponseListener listener, boolean parallelMode) {
-		SynergyKITConfig config = SynergyKIT.getConfig();
+		SynergyKitConfig config = SynergyKit.getConfig();
 
 		
 		//Uri builder
@@ -66,18 +66,18 @@ public class Users implements IUsers{
 
 	/* Get users */
 	@Override
-	public void getUsers(SynergyKITConfig config, UsersResponseListener listener) {
+	public void getUsers(SynergyKitConfig config, UsersResponseListener listener) {
 		UsersRequestGet request = new UsersRequestGet();		
 		request.setConfig(config);
 		request.setListener(listener);
-		SynergyKIT.synergylize(request, config.isParallelMode());	
+		SynergyKit.synergylize(request, config.isParallelMode());
 		
 	}
 
 	/* Get users */
 	@Override
 	public void getUsers(Type type, UsersResponseListener listener, boolean parallelMode) {
-		SynergyKITConfig config = SynergyKIT.getConfig();
+		SynergyKitConfig config = SynergyKit.getConfig();
 
 		//Uri builder
 		UriBuilder uriBuilder = new UriBuilder()
@@ -97,21 +97,21 @@ public class Users implements IUsers{
 
 	/* Create user */
 	@Override
-	public void createUser(SynergyKITUser user, UserResponseListener listener,	boolean parallelMode) {
-		SynergyKITConfig config = new SynergyKITConfig();
+	public void createUser(SynergyKitUser user, UserResponseListener listener,	boolean parallelMode) {
+		SynergyKitConfig config = new SynergyKitConfig();
 		UserRequestPost request = new UserRequestPost();
 		
 		//User check
 		if(user == null){
 			//Log
-			SynergyKITLog.print(Errors.MSG_NO_OBJECT);
+			SynergyKitLog.print(Errors.MSG_NO_OBJECT);
 	
 			
 			//error callback
 			if(listener!=null)
-				listener.errorCallback(Errors.SC_NO_OBJECT, new SynergyKITError(Errors.SC_NO_OBJECT, Errors.MSG_NO_OBJECT));
-			else if(SynergyKIT.isDebugModeEnabled())
-				SynergyKITLog.print(Errors.MSG_NO_CALLBACK_LISTENER);	
+				listener.errorCallback(Errors.SC_NO_OBJECT, new SynergyKitError(Errors.SC_NO_OBJECT, Errors.MSG_NO_OBJECT));
+			else if(SynergyKit.isDebugModeEnabled())
+				SynergyKitLog.print(Errors.MSG_NO_CALLBACK_LISTENER);
 			
 			return;
 		}
@@ -132,27 +132,27 @@ public class Users implements IUsers{
 		request.setObject(user);
 		
 		//execute
-		SynergyKIT.synergylize(request, parallelMode);
+		SynergyKit.synergylize(request, parallelMode);
 		
 		
 	}
 
 	/* Update user */
 	@Override
-	public void updateUser(SynergyKITUser user, UserResponseListener listener, boolean parallelMode) {
-		SynergyKITConfig config = new SynergyKITConfig();
+	public void updateUser(SynergyKitUser user, UserResponseListener listener, boolean parallelMode) {
+		SynergyKitConfig config = new SynergyKitConfig();
 		UserRequestPut request = new UserRequestPut();
 		
 		//User check
 		if(user == null){
 			//Log
-			SynergyKITLog.print(Errors.MSG_NO_OBJECT);	
+			SynergyKitLog.print(Errors.MSG_NO_OBJECT);
 			
 			//error callback
 			if(listener!=null)
-				listener.errorCallback(Errors.SC_NO_OBJECT, new SynergyKITError(Errors.SC_NO_OBJECT, Errors.MSG_NO_OBJECT));
-			else if(SynergyKIT.isDebugModeEnabled())
-				SynergyKITLog.print(Errors.MSG_NO_CALLBACK_LISTENER);
+				listener.errorCallback(Errors.SC_NO_OBJECT, new SynergyKitError(Errors.SC_NO_OBJECT, Errors.MSG_NO_OBJECT));
+			else if(SynergyKit.isDebugModeEnabled())
+				SynergyKitLog.print(Errors.MSG_NO_CALLBACK_LISTENER);
 			
 			return;
 		}
@@ -174,25 +174,25 @@ public class Users implements IUsers{
 		request.setObject(user);
 		
 		//execute
-		SynergyKIT.synergylize(request, parallelMode);		
+		SynergyKit.synergylize(request, parallelMode);
 	}
 
 	/* Delete user */
 	@Override
-	public void deleteUser(SynergyKITUser user, DeleteResponseListener listener,	boolean parallelMode) {
-		SynergyKITConfig config = new SynergyKITConfig();
+	public void deleteUser(SynergyKitUser user, DeleteResponseListener listener,	boolean parallelMode) {
+		SynergyKitConfig config = new SynergyKitConfig();
 		RequestDelete request = new RequestDelete();
 		
 		//Object check
 		if(user == null){
 			//Log
-			SynergyKITLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);		
+			SynergyKitLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
 			
 			//error callback
 			if(listener!=null)
-				listener.errorCallback(Errors.SC_NULL_ARGUMENTS_OR_EMPTY, new SynergyKITError(Errors.SC_NULL_ARGUMENTS_OR_EMPTY, Errors.MSG_NULL_ARGUMENTS_OR_EMPTY));
-			else if(SynergyKIT.isDebugModeEnabled())
-				SynergyKITLog.print(Errors.MSG_NO_CALLBACK_LISTENER);
+				listener.errorCallback(Errors.SC_NULL_ARGUMENTS_OR_EMPTY, new SynergyKitError(Errors.SC_NULL_ARGUMENTS_OR_EMPTY, Errors.MSG_NULL_ARGUMENTS_OR_EMPTY));
+			else if(SynergyKit.isDebugModeEnabled())
+				SynergyKitLog.print(Errors.MSG_NO_CALLBACK_LISTENER);
 			
 			return;
 		}
@@ -211,25 +211,25 @@ public class Users implements IUsers{
 		request.setListener(listener);
 		
 		//execute
-		SynergyKIT.synergylize(request, parallelMode);		
+		SynergyKit.synergylize(request, parallelMode);
 	}
 
     @Override
-    public void addPlatformToUser(SynergyKITUser user, SynergyKITPlatform platform, PlatformResponseListener listener, boolean parallelMode) {
-        SynergyKITConfig config = new SynergyKITConfig();
+    public void addPlatformToUser(SynergyKitUser user, SynergyKitPlatform platform, PlatformResponseListener listener, boolean parallelMode) {
+        SynergyKitConfig config = new SynergyKitConfig();
         PlatformRequestPost request = new PlatformRequestPost();
 
         //User check
         if(user == null || platform == null){
             //Log
-            SynergyKITLog.print(Errors.MSG_NO_OBJECT);
+            SynergyKitLog.print(Errors.MSG_NO_OBJECT);
 
 
             //error callback
             if(listener!=null)
-                listener.errorCallback(Errors.SC_NO_OBJECT, new SynergyKITError(Errors.SC_NO_OBJECT, Errors.MSG_NO_OBJECT));
-            else if(SynergyKIT.isDebugModeEnabled())
-                SynergyKITLog.print(Errors.MSG_NO_CALLBACK_LISTENER);
+                listener.errorCallback(Errors.SC_NO_OBJECT, new SynergyKitError(Errors.SC_NO_OBJECT, Errors.MSG_NO_OBJECT));
+            else if(SynergyKit.isDebugModeEnabled())
+                SynergyKitLog.print(Errors.MSG_NO_CALLBACK_LISTENER);
 
             return;
         }
@@ -250,25 +250,25 @@ public class Users implements IUsers{
         request.setObject(platform);
 
         //execute
-        SynergyKIT.synergylize(request, parallelMode);
+        SynergyKit.synergylize(request, parallelMode);
     }
 
     @Override
-    public void updatePlatformInUser(SynergyKITUser user, SynergyKITPlatform platform, PlatformResponseListener listener, boolean parallelMode) {
-        SynergyKITConfig config = new SynergyKITConfig();
+    public void updatePlatformInUser(SynergyKitUser user, SynergyKitPlatform platform, PlatformResponseListener listener, boolean parallelMode) {
+        SynergyKitConfig config = new SynergyKitConfig();
         PlatformRequestPut
                 request = new PlatformRequestPut();
 
         //User check
         if(user == null || platform == null){
             //Log
-            SynergyKITLog.print(Errors.MSG_NO_OBJECT);
+            SynergyKitLog.print(Errors.MSG_NO_OBJECT);
 
             //error callback
             if(listener!=null)
-                listener.errorCallback(Errors.SC_NO_OBJECT, new SynergyKITError(Errors.SC_NO_OBJECT, Errors.MSG_NO_OBJECT));
-            else if(SynergyKIT.isDebugModeEnabled())
-                SynergyKITLog.print(Errors.MSG_NO_CALLBACK_LISTENER);
+                listener.errorCallback(Errors.SC_NO_OBJECT, new SynergyKitError(Errors.SC_NO_OBJECT, Errors.MSG_NO_OBJECT));
+            else if(SynergyKit.isDebugModeEnabled())
+                SynergyKitLog.print(Errors.MSG_NO_CALLBACK_LISTENER);
 
             return;
         }
@@ -290,24 +290,24 @@ public class Users implements IUsers{
         request.setObject(platform);
 
         //execute
-        SynergyKIT.synergylize(request, parallelMode);
+        SynergyKit.synergylize(request, parallelMode);
     }
 
     @Override
-    public void deletePlatform(SynergyKITUser user, SynergyKITPlatform platform, DeleteResponseListener listener, boolean parallelMode) {
-        SynergyKITConfig config = new SynergyKITConfig();
+    public void deletePlatform(SynergyKitUser user, SynergyKitPlatform platform, DeleteResponseListener listener, boolean parallelMode) {
+        SynergyKitConfig config = new SynergyKitConfig();
         RequestDelete request = new RequestDelete();
 
         //Object check
         if(user == null || platform == null){
             //Log
-            SynergyKITLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
+            SynergyKitLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
 
             //error callback
             if(listener!=null)
-                listener.errorCallback(Errors.SC_NULL_ARGUMENTS_OR_EMPTY, new SynergyKITError(Errors.SC_NULL_ARGUMENTS_OR_EMPTY, Errors.MSG_NULL_ARGUMENTS_OR_EMPTY));
-            else if(SynergyKIT.isDebugModeEnabled())
-                SynergyKITLog.print(Errors.MSG_NO_CALLBACK_LISTENER);
+                listener.errorCallback(Errors.SC_NULL_ARGUMENTS_OR_EMPTY, new SynergyKitError(Errors.SC_NULL_ARGUMENTS_OR_EMPTY, Errors.MSG_NULL_ARGUMENTS_OR_EMPTY));
+            else if(SynergyKit.isDebugModeEnabled())
+                SynergyKitLog.print(Errors.MSG_NO_CALLBACK_LISTENER);
 
             return;
         }
@@ -326,11 +326,11 @@ public class Users implements IUsers{
         request.setListener(listener);
 
         //execute
-        SynergyKIT.synergylize(request, parallelMode);
+        SynergyKit.synergylize(request, parallelMode);
     }
 
     @Override
-    public void getPlatform(SynergyKITUser user, String platformId, PlatformResponseListener listener, boolean parallelMode) {
+    public void getPlatform(SynergyKitUser user, String platformId, PlatformResponseListener listener, boolean parallelMode) {
         PlatformRequestGet request = new PlatformRequestGet();
 
 
@@ -339,18 +339,18 @@ public class Users implements IUsers{
                 .setResource(String.format(Resource.RESOURCE_USERS_PLATFORMS, user.get_id()))
                 .setRecordId(platformId);
 
-        SynergyKITConfig config = new SynergyKITConfig();
-        config.setType(SynergyKITPlatform.class);
+        SynergyKitConfig config = new SynergyKitConfig();
+        config.setType(SynergyKitPlatform.class);
         config.setParallelMode(parallelMode);
         config.setUri(uriBuilder.build());
 
         request.setConfig(config);
         request.setListener(listener);
-        SynergyKIT.synergylize(request, config.isParallelMode());
+        SynergyKit.synergylize(request, config.isParallelMode());
     }
 
     @Override
-    public void getPlatforms(SynergyKITUser user, PlatformsResponseListener listener, boolean parallelMode) {
+    public void getPlatforms(SynergyKitUser user, PlatformsResponseListener listener, boolean parallelMode) {
         PlatformsRequestGet request = new PlatformsRequestGet();
 
 
@@ -358,14 +358,14 @@ public class Users implements IUsers{
         UriBuilder uriBuilder = new UriBuilder()
                 .setResource(String.format(Resource.RESOURCE_USERS_PLATFORMS, user.get_id()));
 
-        SynergyKITConfig config = new SynergyKITConfig();
-        config.setType(SynergyKITPlatform[].class);
+        SynergyKitConfig config = new SynergyKitConfig();
+        config.setType(SynergyKitPlatform[].class);
         config.setParallelMode(parallelMode);
         config.setUri(uriBuilder.build());
 
         request.setConfig(config);
         request.setListener(listener);
-        SynergyKIT.synergylize(request, config.isParallelMode());
+        SynergyKit.synergylize(request, config.isParallelMode());
     }
 
 

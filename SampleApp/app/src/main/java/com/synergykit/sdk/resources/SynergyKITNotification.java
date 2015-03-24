@@ -1,7 +1,6 @@
 package com.synergykit.sdk.resources;
 
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.LinkedList;
 
 /*
@@ -9,7 +8,7 @@ import java.util.LinkedList;
  *
  */
 
-public class SynergyKITNotification extends SynergyKITObject  implements Serializable {
+public class SynergyKitNotification extends SynergyKitObject implements Serializable {
 
     /* Constants */
     public static final String PAYLOAD_TYPE_PLAYER_PROFILE_ID = "player_profile_id";
@@ -22,7 +21,7 @@ public class SynergyKITNotification extends SynergyKITObject  implements Seriali
     private String payload = null;
 
 	/* Constructor */
-	public SynergyKITNotification(String alert) {
+	public SynergyKitNotification(String alert) {
 		this.setAlert(alert);
 	}
 

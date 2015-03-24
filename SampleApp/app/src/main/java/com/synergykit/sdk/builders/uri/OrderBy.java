@@ -1,7 +1,7 @@
 package com.synergykit.sdk.builders.uri;
 
 import com.synergykit.sdk.builders.errors.Errors;
-import com.synergykit.sdk.log.SynergyKITLog;
+import com.synergykit.sdk.log.SynergyKitLog;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -39,12 +39,12 @@ public class OrderBy{
 	private void setOrderBy(String parameter, String direction){
 		//parameter check
 		if(parameter==null || parameter.length()==0){
-			SynergyKITLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
+			SynergyKitLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
 		}
 		
 		//size check
 		if(orderByList.size()>=MAX_SIZE){
-			SynergyKITLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
+			SynergyKitLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
 		}
 			
 		

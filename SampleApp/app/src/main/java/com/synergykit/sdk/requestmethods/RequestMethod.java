@@ -8,7 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 import com.synergykit.sdk.interfaces.IRequestMethod;
-import com.synergykit.sdk.resources.SynergyKITUri;
+import com.synergykit.sdk.resources.SynergyKitUri;
 
 /*
  * Copyright 2014 Letsgood.com s.r.o.
@@ -30,7 +30,7 @@ public abstract class RequestMethod implements IRequestMethod {
 	
 	
 	/* Attributes */
-	protected SynergyKITUri uri = null;
+	protected SynergyKitUri uri = null;
 	protected URL url = null;
 	protected HttpURLConnection httpURLConnection = null;
 	protected int statusCode = 0;
@@ -41,12 +41,12 @@ public abstract class RequestMethod implements IRequestMethod {
 	}
 
 	/* Uri getter */
-	public SynergyKITUri getUri() {
+	public SynergyKitUri getUri() {
 		return uri;
 	}
 	
 	/* Uri setter */
-	public void setUri(SynergyKITUri uri) {
+	public void setUri(SynergyKitUri uri) {
 		this.uri = uri;
 	}
 	

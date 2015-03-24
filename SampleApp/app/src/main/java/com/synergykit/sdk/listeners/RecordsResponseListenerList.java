@@ -5,12 +5,12 @@ package com.synergykit.sdk.listeners;
  *
  */
 
-import com.synergykit.sdk.resources.SynergyKITError;
-import com.synergykit.sdk.resources.SynergyKITObject;
+import com.synergykit.sdk.resources.SynergyKitError;
+import com.synergykit.sdk.resources.SynergyKitObject;
 
 import java.util.List;
 
 public interface RecordsResponseListenerList {
-	public void doneCallback(int statusCode, List<SynergyKITObject> object);
-	public void errorCallback(int statusCode, SynergyKITError errorObject);
+	public void doneCallback(int statusCode, List<SynergyKitObject> object);
+	public void errorCallback(int statusCode, SynergyKitError errorObject);
 }

@@ -9,7 +9,7 @@ import java.io.Serializable;
  *
  */
 
-public class SynergyKITResponse  implements Serializable {
+public class SynergyKitResponse implements Serializable {
 	
 	/* Attributes */
 	private int statusCode = 0;

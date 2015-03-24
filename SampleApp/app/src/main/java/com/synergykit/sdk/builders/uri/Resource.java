@@ -6,7 +6,7 @@ package com.synergykit.sdk.builders.uri;
  */
 
 import com.synergykit.sdk.builders.errors.Errors;
-import com.synergykit.sdk.log.SynergyKITLog;
+import com.synergykit.sdk.log.SynergyKitLog;
 
 public class Resource {
 	
@@ -38,7 +38,7 @@ public class Resource {
 		
 		//null check
 		if(resource==null || resource.length()==0){
-			SynergyKITLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
+			SynergyKitLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
 		}
 		
 		return resource;

@@ -5,10 +5,10 @@ package com.synergykit.sdk.listeners;
  *
  */
 
-import com.synergykit.sdk.resources.SynergyKITError;
-import com.synergykit.sdk.resources.SynergyKITObject;
+import com.synergykit.sdk.resources.SynergyKitError;
+import com.synergykit.sdk.resources.SynergyKitObject;
 
 public interface ResponseListener {
-	public void doneCallback(int statusCode,SynergyKITObject object);
-	public void errorCallback(int statusCode, SynergyKITError errorObject);
+	public void doneCallback(int statusCode,SynergyKitObject object);
+	public void errorCallback(int statusCode, SynergyKitError errorObject);
 }

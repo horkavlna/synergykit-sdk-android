@@ -9,22 +9,22 @@ import android.widget.TextView;
 
 import com.synergykit.sampleapp.R;
 import com.synergykit.sampleapp.model.DemoObject;
-import com.synergykit.sdk.resources.SynergyKITObject;
+import com.synergykit.sdk.resources.SynergyKitObject;
 
 import java.util.ArrayList;
 
 /**
  * Created by Marek on 1/13/15.
  */
-public class DemoObjectAdapter extends ArrayAdapter<SynergyKITObject> {
+public class DemoObjectAdapter extends ArrayAdapter<SynergyKitObject> {
 
     private Context context;
     private LayoutInflater inflater;
     private int resource;
-    private ArrayList<SynergyKITObject> objects;
+    private ArrayList<SynergyKitObject> objects;
 
     public DemoObjectAdapter(Context context, int resource,
-                          ArrayList<SynergyKITObject> demoObjects) {
+                          ArrayList<SynergyKitObject> demoObjects) {
         super(context, resource, demoObjects);
         this.context = context;
         this.resource = resource;
@@ -39,7 +39,7 @@ public class DemoObjectAdapter extends ArrayAdapter<SynergyKITObject> {
         if (convertView == null)
             convertView = inflater.inflate(resource, parent, false);
 
-        SynergyKITObject object = objects.get(position);
+        SynergyKitObject object = objects.get(position);
 
         if (object != null) {
             if (object instanceof DemoObject){

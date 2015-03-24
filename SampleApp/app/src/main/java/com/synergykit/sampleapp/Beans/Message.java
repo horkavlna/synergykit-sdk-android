@@ -1,11 +1,11 @@
 package com.synergykit.sampleapp.beans;
 
-import com.synergykit.sdk.resources.SynergyKITObject;
+import com.synergykit.sdk.resources.SynergyKitObject;
 
 /**
  * Created by Letsgood.com - Pavel Stambrecht on 12. 3. 2015.
  */
-public class Message extends SynergyKITObject {
+public class Message extends SynergyKitObject {
 
     private String name = null;
     private String text = null;

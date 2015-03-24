@@ -9,10 +9,10 @@ import com.synergykit.sdk.requestmethods.Get;
 import com.synergykit.sdk.requestmethods.Post;
 import com.synergykit.sdk.requestmethods.PostFile;
 import com.synergykit.sdk.requestmethods.Put;
-import com.synergykit.sdk.resources.SynergyKITError;
-import com.synergykit.sdk.resources.SynergyKITObject;
-import com.synergykit.sdk.resources.SynergyKITResponse;
-import com.synergykit.sdk.resources.SynergyKITUri;
+import com.synergykit.sdk.resources.SynergyKitError;
+import com.synergykit.sdk.resources.SynergyKitObject;
+import com.synergykit.sdk.resources.SynergyKitResponse;
+import com.synergykit.sdk.resources.SynergyKitUri;
 
 import org.apache.http.HttpStatus;
 
@@ -23,7 +23,7 @@ import java.lang.reflect.Type;
  *
  */
 
-public abstract class SynergyKITRequest extends AsyncTask<Void, Void, Object> {
+public abstract class SynergyKitRequest extends AsyncTask<Void, Void, Object> {
 
 	/* Do in background */
 	@Override
@@ -34,8 +34,8 @@ public abstract class SynergyKITRequest extends AsyncTask<Void, Void, Object> {
 	protected abstract void onPostExecute(Object object);
 
 	/* Request method GET */
-	protected static SynergyKITResponse get(SynergyKITUri uri) {
-		SynergyKITResponse response = new SynergyKITResponse();
+	protected static SynergyKitResponse get(SynergyKitUri uri) {
+		SynergyKitResponse response = new SynergyKitResponse();
 		Get get = new Get(uri); // request method get
 
 		response.setBufferedReader(get.execute());
@@ -45,8 +45,8 @@ public abstract class SynergyKITRequest extends AsyncTask<Void, Void, Object> {
 	}
 
 	/* Request method GET */
-	protected static SynergyKITResponse getFile(SynergyKITUri uri) {
-		SynergyKITResponse response = new SynergyKITResponse();
+	protected static SynergyKitResponse getFile(SynergyKitUri uri) {
+		SynergyKitResponse response = new SynergyKitResponse();
 		Get get = new Get(uri); // request method get
 
         get.setAuthorizationEnabled(false);
@@ -57,8 +57,8 @@ public abstract class SynergyKITRequest extends AsyncTask<Void, Void, Object> {
 	}
 	
 	/* Request method POST */
-	protected static SynergyKITResponse post(SynergyKITUri uri, Object object) {
-		SynergyKITResponse response = new SynergyKITResponse();
+	protected static SynergyKitResponse post(SynergyKitUri uri, Object object) {
+		SynergyKitResponse response = new SynergyKitResponse();
 		Post post = new Post(uri, object);
 
 		response.setBufferedReader(post.execute());
@@ -68,8 +68,8 @@ public abstract class SynergyKITRequest extends AsyncTask<Void, Void, Object> {
 	}
 	
 	/* Request method POST */
-	protected static SynergyKITResponse postFile(SynergyKITUri uri, byte[] data) {
-		SynergyKITResponse response = new SynergyKITResponse();
+	protected static SynergyKitResponse postFile(SynergyKitUri uri, byte[] data) {
+		SynergyKitResponse response = new SynergyKitResponse();
 		PostFile postFile = new PostFile(uri, data);
 
 		response.setBufferedReader(postFile.execute());
@@ -79,8 +79,8 @@ public abstract class SynergyKITRequest extends AsyncTask<Void, Void, Object> {
 	}
 
 	/* Request method PUT */
-	protected static SynergyKITResponse put(SynergyKITUri uri, Object object) {
-		SynergyKITResponse response = new SynergyKITResponse();
+	protected static SynergyKitResponse put(SynergyKitUri uri, Object object) {
+		SynergyKitResponse response = new SynergyKitResponse();
 		Put put = new Put(uri, object);
 
 		response.setBufferedReader(put.execute());
@@ -90,8 +90,8 @@ public abstract class SynergyKITRequest extends AsyncTask<Void, Void, Object> {
 	}
 
 	/* Request method PUT */
-	protected static SynergyKITResponse delete(SynergyKITUri uri) {
-		SynergyKITResponse response = new SynergyKITResponse();
+	protected static SynergyKitResponse delete(SynergyKitUri uri) {
+		SynergyKitResponse response = new SynergyKitResponse();
 		Delete delete = new Delete(uri);
 
 		response.setBufferedReader(delete.execute());
@@ -102,7 +102,7 @@ public abstract class SynergyKITRequest extends AsyncTask<Void, Void, Object> {
 
 	/* Manage response */
 	protected ResponseDataHolder manageResponseToObject(
-			SynergyKITResponse response, Type type) {
+			SynergyKitResponse response, Type type) {
 		ResponseDataHolder dataHolder = new ResponseDataHolder();
 
 		if (response == null
@@ -138,7 +138,7 @@ public abstract class SynergyKITRequest extends AsyncTask<Void, Void, Object> {
 	}
 
 	/* Manage response */
-	protected ResponseDataHolder manageResponseToObjects(SynergyKITResponse response, Type type) {
+	protected ResponseDataHolder manageResponseToObjects(SynergyKitResponse response, Type type) {
 		ResponseDataHolder dataHolder = new ResponseDataHolder();
 		
 
@@ -174,9 +174,9 @@ public abstract class SynergyKITRequest extends AsyncTask<Void, Void, Object> {
 	// ----------------------------------------------------------------------------------
 	protected class ResponseDataHolder {
 		/* Attributes */
-		public SynergyKITError errorObject;
-		public SynergyKITObject object;
-		public SynergyKITObject[] objects;
+		public SynergyKitError errorObject;
+		public SynergyKitObject object;
+		public SynergyKitObject[] objects;
 		public byte[] data;
 		public int statusCode;
 

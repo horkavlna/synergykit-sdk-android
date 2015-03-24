@@ -7,7 +7,7 @@ package com.synergykit.sdk.resources;
 
 import java.io.Serializable;
 
-public class SynergyKITFileData extends SynergyKITObject  implements Serializable {
+public class SynergyKitFileData extends SynergyKitObject implements Serializable {
 	
 	/* Attributes */
 	protected String path;

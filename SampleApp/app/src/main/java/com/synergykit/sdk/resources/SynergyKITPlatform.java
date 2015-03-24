@@ -7,7 +7,7 @@ package com.synergykit.sdk.resources;
 
 import java.io.Serializable;
 
-public class SynergyKITPlatform extends SynergyKITObject implements Serializable {
+public class SynergyKitPlatform extends SynergyKitObject implements Serializable {
 
     /* Constants */
     protected static final String PLATFORM = "android";

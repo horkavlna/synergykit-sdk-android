@@ -2,9 +2,9 @@ package com.synergykit.sdk.request;
 
 import com.synergykit.sdk.builders.errors.Errors;
 import com.synergykit.sdk.listeners.ResponseListener;
-import com.synergykit.sdk.log.SynergyKITLog;
-import com.synergykit.sdk.resources.SynergyKITConfig;
-import com.synergykit.sdk.resources.SynergyKITResponse;
+import com.synergykit.sdk.log.SynergyKitLog;
+import com.synergykit.sdk.resources.SynergyKitConfig;
+import com.synergykit.sdk.resources.SynergyKitResponse;
 
 import org.apache.http.HttpStatus;
 
@@ -14,15 +14,15 @@ import org.apache.http.HttpStatus;
  *
  */
 
-public class RecordRequestPost extends SynergyKITRequest{
+public class RecordRequestPost extends SynergyKitRequest {
 
 	/* Attributes */
-	private SynergyKITConfig config = null;
+	private SynergyKitConfig config = null;
 	private ResponseListener listener = null;
 	private Object object = null;;
 	
 	/* Config setter */
-	public void setConfig(SynergyKITConfig config){
+	public void setConfig(SynergyKitConfig config){
 		this.config = config;
 	}
 	 
@@ -45,10 +45,10 @@ public class RecordRequestPost extends SynergyKITRequest{
 	@Override
 	protected Object doInBackground(Void... params) {
 		ResponseDataHolder dataHolder = null;
-		SynergyKITResponse response = null;
+		SynergyKitResponse response = null;
 		
 		//do request
-		response = SynergyKITRequest.post(config.getUri(), object);
+		response = SynergyKitRequest.post(config.getUri(), object);
 		
 		//manage response
 		dataHolder = manageResponseToObject(response, config.getType());
@@ -64,7 +64,7 @@ public class RecordRequestPost extends SynergyKITRequest{
 		
 		//null listener 
 		if(listener==null){
-			SynergyKITLog.print(Errors.MSG_NO_CALLBACK_LISTENER);
+			SynergyKitLog.print(Errors.MSG_NO_CALLBACK_LISTENER);
 			return;
 		}	
 		

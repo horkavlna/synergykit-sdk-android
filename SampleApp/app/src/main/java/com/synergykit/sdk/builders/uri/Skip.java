@@ -6,7 +6,7 @@ package com.synergykit.sdk.builders.uri;
  */
 
 import com.synergykit.sdk.builders.errors.Errors;
-import com.synergykit.sdk.log.SynergyKITLog;
+import com.synergykit.sdk.log.SynergyKitLog;
 
 public class Skip {
 	/* Constants */
@@ -20,7 +20,7 @@ public class Skip {
 	public void setSkip(int skip){
 		
 		if(skip<MIN_VALUE){
-			SynergyKITLog.print(Errors.MSG_SKIP_NEGATIVE);
+			SynergyKitLog.print(Errors.MSG_SKIP_NEGATIVE);
 		}
 			
 		

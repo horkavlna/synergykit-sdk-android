@@ -2,11 +2,11 @@ package com.synergykit.sdk.requestmethods;
 
 import android.util.Base64;
 
-import com.synergykit.sdk.SynergyKIT;
+import com.synergykit.sdk.SynergyKit;
 import com.synergykit.sdk.addons.GsonWrapper;
 import com.synergykit.sdk.builders.errors.Errors;
-import com.synergykit.sdk.log.SynergyKITLog;
-import com.synergykit.sdk.resources.SynergyKITUri;
+import com.synergykit.sdk.log.SynergyKitLog;
+import com.synergykit.sdk.resources.SynergyKitUri;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -28,7 +28,7 @@ public class Put extends RequestMethod{
 	private DataOutputStream dataOutputStream = null;
 	
 	/* Constructor */
-	public Put(SynergyKITUri uri, Object object) {
+	public Put(SynergyKitUri uri, Object object) {
 		super();
 		
 		setUri(uri);
@@ -42,8 +42,8 @@ public class Put extends RequestMethod{
 		String uri = null;
 		
 		//init check
-		if(!SynergyKIT.isInit()){
-			SynergyKITLog.print(Errors.MSG_SK_NOT_INITIALIZED);
+		if(!SynergyKit.isInit()){
+			SynergyKitLog.print(Errors.MSG_SK_NOT_INITIALIZED);
 			
 			statusCode = Errors.SC_SK_NOT_INITIALIZED;
 			return null;
@@ -72,7 +72,7 @@ public class Put extends RequestMethod{
 			
 			httpURLConnection.addRequestProperty(PROPERTY_AUTHORIZATION, "Basic " 
 												 + Base64.encodeToString(
-												(SynergyKIT.getTenant() + ":" + SynergyKIT.getApplicationKey()).getBytes(),
+												(SynergyKit.getTenant() + ":" + SynergyKit.getApplicationKey()).getBytes(),
 												Base64.NO_WRAP)); //set authorization
 
 

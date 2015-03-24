@@ -6,7 +6,7 @@ package com.synergykit.sdk.builders.uri;
  */
 
 import com.synergykit.sdk.builders.errors.Errors;
-import com.synergykit.sdk.log.SynergyKITLog;
+import com.synergykit.sdk.log.SynergyKitLog;
 
 public class Filter {
 
@@ -30,7 +30,7 @@ public class Filter {
 	public void setFilter(String attribute, String operator, String parametr){
 		
 		if(attribute == null || attribute.length()==0 || operator==null || operator.length()==0|| parametr==null || parametr.length() ==0){
-			SynergyKITLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
+			SynergyKitLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
 			return;
 		}
 	
@@ -42,7 +42,7 @@ public class Filter {
 	public void setFilter(String attribute, String operator, int parameter){
 		
 		if(attribute == null || attribute.length()==0 || operator==null || operator.length()==0){
-			SynergyKITLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
+			SynergyKitLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
 			return;
 		}
 			
@@ -55,7 +55,7 @@ public class Filter {
 	/* Filter setter */
 	public void setFilter(String filter){
 		if(filter == null || filter.length()==0){
-			SynergyKITLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
+			SynergyKitLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
 			return;
 		}
 			
@@ -87,7 +87,7 @@ public class Filter {
 	/* Attribute  builder*/
 	public static String buildAttribute(String attribute){
 		if(attribute == null || attribute.length()==0){
-			SynergyKITLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
+			SynergyKitLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
 		}		
 		
 		return "'" + attribute + "'"; 
@@ -133,7 +133,7 @@ public class Filter {
 		String parameter = new String();
 		
 		if(arrayParameter == null || arrayParameter.length==0){
-			SynergyKITLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
+			SynergyKitLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
 			return "''";
 		}
 		
@@ -163,7 +163,7 @@ public class Filter {
 		String filter = null;
 		
 		if(attribute == null || attribute.length()==0 || parameter==null || parameter.length()==0){
-			SynergyKITLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
+			SynergyKitLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
 			return "''";
 		}
 		

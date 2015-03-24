@@ -1,7 +1,7 @@
 package com.synergykit.sdk.builders.uri;
 
 import com.synergykit.sdk.builders.errors.Errors;
-import com.synergykit.sdk.log.SynergyKITLog;
+import com.synergykit.sdk.log.SynergyKitLog;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -19,7 +19,7 @@ public class Select {
 	/* Select setter */
 	public void setSelect(String attribute) {
 		if (attribute == null || attribute.length() == 0) {
-			SynergyKITLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
+			SynergyKitLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
 		}
 
 		selectList.add(attribute);

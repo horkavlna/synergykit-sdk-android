@@ -2,7 +2,7 @@ package com.synergykit.sdk.listeners;
 
 import android.graphics.Bitmap;
 
-import com.synergykit.sdk.resources.SynergyKITError;
+import com.synergykit.sdk.resources.SynergyKitError;
 
 /*
  * Copyright 2014 Letsgood.com s.r.o.
@@ -11,5 +11,5 @@ import com.synergykit.sdk.resources.SynergyKITError;
 
 public interface BitmapResponseListener {
 	public void doneCallback(int statusCode,Bitmap bitmap);
-	public void errorCallback(int statusCode, SynergyKITError errorObject);
+	public void errorCallback(int statusCode, SynergyKitError errorObject);
 }

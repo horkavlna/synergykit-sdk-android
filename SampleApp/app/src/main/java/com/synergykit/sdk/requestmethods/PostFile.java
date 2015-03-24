@@ -2,10 +2,10 @@ package com.synergykit.sdk.requestmethods;
 
 import android.util.Base64;
 
-import com.synergykit.sdk.SynergyKIT;
+import com.synergykit.sdk.SynergyKit;
 import com.synergykit.sdk.builders.errors.Errors;
-import com.synergykit.sdk.log.SynergyKITLog;
-import com.synergykit.sdk.resources.SynergyKITUri;
+import com.synergykit.sdk.log.SynergyKitLog;
+import com.synergykit.sdk.resources.SynergyKitUri;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -31,7 +31,7 @@ public class PostFile extends RequestMethod {
 	private DataOutputStream dataOutputStream = null;
 	
 	/* Constructor */
-	public PostFile(SynergyKITUri uri, byte[] data) {
+	public PostFile(SynergyKitUri uri, byte[] data) {
 		super();
 		
 		setUri(uri);
@@ -44,8 +44,8 @@ public class PostFile extends RequestMethod {
 		String uri = null;
 		
 		//init check
-		if(!SynergyKIT.isInit()){
-			SynergyKITLog.print(Errors.MSG_SK_NOT_INITIALIZED);
+		if(!SynergyKit.isInit()){
+			SynergyKitLog.print(Errors.MSG_SK_NOT_INITIALIZED);
 			
 			statusCode = Errors.SC_SK_NOT_INITIALIZED;
 			return null;
@@ -76,7 +76,7 @@ public class PostFile extends RequestMethod {
 			
 			httpURLConnection.addRequestProperty(PROPERTY_AUTHORIZATION, "Basic " 
 												 + Base64.encodeToString(
-												(SynergyKIT.getTenant() + ":" + SynergyKIT.getApplicationKey()).getBytes(),
+												(SynergyKit.getTenant() + ":" + SynergyKit.getApplicationKey()).getBytes(),
 												Base64.NO_WRAP)); //set authorization
 
 
@@ -99,7 +99,7 @@ public class PostFile extends RequestMethod {
 			}
 			
 			statusCode = httpURLConnection.getResponseCode(); //get status code
-			SynergyKITLog.print(Integer.toString(statusCode));
+			SynergyKitLog.print(Integer.toString(statusCode));
 			
 			//read stream
 			if(statusCode>=HttpURLConnection.HTTP_OK && statusCode<HttpURLConnection.HTTP_MULT_CHOICE){

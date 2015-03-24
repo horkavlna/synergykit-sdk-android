@@ -12,13 +12,13 @@ import com.synergykit.sdk.interfaces.IFiles;
 import com.synergykit.sdk.listeners.BitmapResponseListener;
 import com.synergykit.sdk.listeners.BytesResponseListener;
 import com.synergykit.sdk.listeners.FileDataResponseListener;
-import com.synergykit.sdk.log.SynergyKITLog;
+import com.synergykit.sdk.log.SynergyKitLog;
 import com.synergykit.sdk.request.FileRequestGet;
 import com.synergykit.sdk.request.FileRequestPost;
-import com.synergykit.sdk.resources.SynergyKITConfig;
-import com.synergykit.sdk.resources.SynergyKITError;
-import com.synergykit.sdk.resources.SynergyKITFileData;
-import com.synergykit.sdk.resources.SynergyKITUri;
+import com.synergykit.sdk.resources.SynergyKitConfig;
+import com.synergykit.sdk.resources.SynergyKitError;
+import com.synergykit.sdk.resources.SynergyKitFileData;
+import com.synergykit.sdk.resources.SynergyKitUri;
 
 /*
  * Copyright 2014 Letsgood.com s.r.o.
@@ -30,20 +30,20 @@ public class Files implements IFiles{
 	/* Create file */
 	@Override
 	public void uploadFile(byte[] data, FileDataResponseListener listener) {
-		SynergyKITConfig config = new SynergyKITConfig();
+		SynergyKitConfig config = new SynergyKitConfig();
 		FileRequestPost request = new FileRequestPost();
 
 
 		//Object check
 		if(data == null){
 			//Log
-			SynergyKITLog.print(Errors.MSG_NO_OBJECT);	
+			SynergyKitLog.print(Errors.MSG_NO_OBJECT);
 			
 			//error callback
 			if(listener!=null)
-				listener.errorCallback(Errors.SC_NO_OBJECT, new SynergyKITError(Errors.SC_NO_OBJECT, Errors.MSG_NO_OBJECT));
-			else if(SynergyKIT.isDebugModeEnabled())
-				SynergyKITLog.print(Errors.MSG_NO_CALLBACK_LISTENER);
+				listener.errorCallback(Errors.SC_NO_OBJECT, new SynergyKitError(Errors.SC_NO_OBJECT, Errors.MSG_NO_OBJECT));
+			else if(SynergyKit.isDebugModeEnabled())
+				SynergyKitLog.print(Errors.MSG_NO_CALLBACK_LISTENER);
 			
 			return;
 		}
@@ -57,7 +57,7 @@ public class Files implements IFiles{
 		//set config
 		config.setUri(uriBuilder.build());
 		config.setParallelMode(true);
-		config.setType(SynergyKITFileData.class);
+		config.setType(SynergyKitFileData.class);
 		
 		
 		//set request
@@ -66,7 +66,7 @@ public class Files implements IFiles{
 		request.setData(data);
 		
 		//execute
-		SynergyKIT.synergylize(request, true);
+		SynergyKit.synergylize(request, true);
 		
 	}
 
@@ -78,13 +78,13 @@ public class Files implements IFiles{
 		//Object check
 		if(bitmap == null){
 			//Log
-			SynergyKITLog.print(Errors.MSG_NO_OBJECT);	
+			SynergyKitLog.print(Errors.MSG_NO_OBJECT);
 			
 			//error callback
 			if(listener!=null)
-				listener.errorCallback(Errors.SC_NO_OBJECT, new SynergyKITError(Errors.SC_NO_OBJECT, Errors.MSG_NO_OBJECT));
-			else if(SynergyKIT.isDebugModeEnabled())
-				SynergyKITLog.print(Errors.MSG_NO_CALLBACK_LISTENER);
+				listener.errorCallback(Errors.SC_NO_OBJECT, new SynergyKitError(Errors.SC_NO_OBJECT, Errors.MSG_NO_OBJECT));
+			else if(SynergyKit.isDebugModeEnabled())
+				SynergyKitLog.print(Errors.MSG_NO_CALLBACK_LISTENER);
 			
 			return;
 		}
@@ -102,28 +102,28 @@ public class Files implements IFiles{
 	public void downloadBitmap(String uri, final BitmapResponseListener listener) {
 		
 		//Download file
-		SynergyKIT.downloadFile(uri, new BytesResponseListener() {
-			
-			//Error callback
-			@Override
-			public void errorCallback(int statusCode, SynergyKITError errorObject) {
-				listener.errorCallback(statusCode, errorObject);				
-			}
-			
-			//Done callback
-			@Override
-			public void doneCallback(int statusCode, byte[] data) {
-				Bitmap bitmap = null;
-				
-				//build bitmap
-				if(data!=null){
-					bitmap = BitmapFactory.decodeByteArray(data , 0, data .length);
-				}
-				
-				
-				listener.doneCallback(statusCode, bitmap);
-			}
-		});
+		SynergyKit.downloadFile(uri, new BytesResponseListener() {
+
+            //Error callback
+            @Override
+            public void errorCallback(int statusCode, SynergyKitError errorObject) {
+                listener.errorCallback(statusCode, errorObject);
+            }
+
+            //Done callback
+            @Override
+            public void doneCallback(int statusCode, byte[] data) {
+                Bitmap bitmap = null;
+
+                //build bitmap
+                if (data != null) {
+                    bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+                }
+
+
+                listener.doneCallback(statusCode, bitmap);
+            }
+        });
 		
 	}
 
@@ -131,11 +131,11 @@ public class Files implements IFiles{
 	@Override
 	public void downloadFile(String uri, BytesResponseListener listener) {
 		FileRequestGet request = new FileRequestGet();
-		SynergyKITConfig config = SynergyKIT.getConfig();		
+		SynergyKitConfig config = SynergyKit.getConfig();
 				
 		
 		//Uri builder
-		SynergyKITUri synergyKITUri = new SynergyKITUri(uri);
+		SynergyKitUri synergyKITUri = new SynergyKitUri(uri);
 		
 		//set config
 		config.setUri(synergyKITUri);
@@ -143,7 +143,7 @@ public class Files implements IFiles{
 
 		request.setConfig(config);
 		request.setListener(listener); 
-		SynergyKIT.synergylize(request, config.isParallelMode());	
+		SynergyKit.synergylize(request, config.isParallelMode());
 	}
 
 

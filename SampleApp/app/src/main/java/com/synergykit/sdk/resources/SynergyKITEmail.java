@@ -7,7 +7,7 @@ package com.synergykit.sdk.resources;
 
 import java.io.Serializable;
 
-public class SynergyKITEmail extends SynergyKITObject  implements Serializable {
+public class SynergyKitEmail extends SynergyKitObject implements Serializable {
 	
 	/* Attributes */
 	protected String email;

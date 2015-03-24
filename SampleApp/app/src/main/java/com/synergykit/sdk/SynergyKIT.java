@@ -20,14 +20,14 @@ import com.synergykit.sdk.listeners.SocketEventListener;
 import com.synergykit.sdk.listeners.SocketStateListener;
 import com.synergykit.sdk.listeners.UserResponseListener;
 import com.synergykit.sdk.listeners.UsersResponseListener;
-import com.synergykit.sdk.request.SynergyKITRequest;
-import com.synergykit.sdk.resources.SynergyKITBatchItem;
-import com.synergykit.sdk.resources.SynergyKITConfig;
-import com.synergykit.sdk.resources.SynergyKITEmail;
-import com.synergykit.sdk.resources.SynergyKITNotification;
-import com.synergykit.sdk.resources.SynergyKITObject;
-import com.synergykit.sdk.resources.SynergyKITPlatform;
-import com.synergykit.sdk.resources.SynergyKITUser;
+import com.synergykit.sdk.request.SynergyKitRequest;
+import com.synergykit.sdk.resources.SynergyKitBatchItem;
+import com.synergykit.sdk.resources.SynergyKitConfig;
+import com.synergykit.sdk.resources.SynergyKitEmail;
+import com.synergykit.sdk.resources.SynergyKitNotification;
+import com.synergykit.sdk.resources.SynergyKitObject;
+import com.synergykit.sdk.resources.SynergyKitPlatform;
+import com.synergykit.sdk.resources.SynergyKitUser;
 
 import java.lang.reflect.Type;
 import java.util.LinkedList;
@@ -37,328 +37,328 @@ import java.util.LinkedList;
  *
  */
 
-public class SynergyKIT {
+public class SynergyKit {
 
 	/* Synergylize */
-	public static void synergylize(SynergyKITRequest request, boolean parallelMode){
-		SynergyKITSdk.getInstance().synergylize(request, parallelMode);
+	public static void synergylize(SynergyKitRequest request, boolean parallelMode){
+		SynergyKitSdk.getInstance().synergylize(request, parallelMode);
 	}
 	
 	//------------------------------------------------------------------------------
 	/* Init */
 	public static void init(String tenant, String applicationKey) {
-		SynergyKITSdk.getInstance().init(tenant, applicationKey);
+		SynergyKitSdk.getInstance().init(tenant, applicationKey);
 	}
 
 	/* Reset */
 	public static void reset() {
-		SynergyKITSdk.getInstance().reset();	
+		SynergyKitSdk.getInstance().reset();
 	}
 
 	
 	/* Tenant setter */
 	public static void setTenant(String tenant) {
-		SynergyKITSdk.getInstance().setTenant(tenant);
+		SynergyKitSdk.getInstance().setTenant(tenant);
 	}
 
 	/* Tenant getter */
 	public static String getTenant() {
-		return SynergyKITSdk.getInstance().getTenant();
+		return SynergyKitSdk.getInstance().getTenant();
 	}
 
 	/* Application key setter */
 	public static void setApplicationKey(String applicationKey) {
-		SynergyKITSdk.getInstance().setApplicationKey(applicationKey);		
+		SynergyKitSdk.getInstance().setApplicationKey(applicationKey);
 	}
 
 	/* Application key getter */
 	public static String getApplicationKey() {
-		return SynergyKITSdk.getInstance().getApplicationKey();
+		return SynergyKitSdk.getInstance().getApplicationKey();
 	}
 
 	/* Is init */
 	public static boolean isInit() {
-		return SynergyKITSdk.getInstance().isInit();
+		return SynergyKitSdk.getInstance().isInit();
 	}
 	
 	/* Config setter */
-	public static void setConfig(SynergyKITConfig config) {
-		SynergyKITSdk.getInstance().setConfig(config);
+	public static void setConfig(SynergyKitConfig config) {
+		SynergyKitSdk.getInstance().setConfig(config);
 	}
 
 	/* Config getter */
-	public static SynergyKITConfig getConfig() {
-		return SynergyKITSdk.getInstance().getConfig();
+	public static SynergyKitConfig getConfig() {
+		return SynergyKitSdk.getInstance().getConfig();
 	}
 	
 	/* Debug mode enabled getter */
 	public static boolean isDebugModeEnabled(){
-		return SynergyKITSdk.getInstance().isDebugModeEnabled();
+		return SynergyKitSdk.getInstance().isDebugModeEnabled();
 	}
 	
 	/* Debug mode enabled setter */ 
 	public static void setDebugModeEnabled(boolean debugModeEnabled){
-		SynergyKITSdk.getInstance().setDebugModeEnabled(debugModeEnabled);
+		SynergyKitSdk.getInstance().setDebugModeEnabled(debugModeEnabled);
 	}
 	
 	//-------------------------------------------------------------------------------------------------------------------	
 	/* Install cache */
 	public static void installCache(Context context) {
-		SynergyKITSdk.getInstance().installCache(context);		
+		SynergyKitSdk.getInstance().installCache(context);
 	}
 	
 	//------------------------------------------------------------------------------
 	/* Get record */
-	public static void getRecord(SynergyKITConfig config, ResponseListener listener) {
-		SynergyKITSdk.getInstance().getRecord(config, listener);
+	public static void getRecord(SynergyKitConfig config, ResponseListener listener) {
+		SynergyKitSdk.getInstance().getRecord(config, listener);
 	}
 
     /* Invoke cloud code*/
-    public static void invokeCloudCode(SynergyKITConfig config,SynergyKITObject object,  ResponseListener listener) {
-        SynergyKITSdk.getInstance().invokeCloudCode(config, object,  listener);
+    public static void invokeCloudCode(SynergyKitConfig config,SynergyKitObject object,  ResponseListener listener) {
+        SynergyKitSdk.getInstance().invokeCloudCode(config, object,  listener);
     }
 
 
 	/* Get record */
 	public static void getRecord(String collectionUrl, String recordId, Type type,	ResponseListener listener, boolean parallelMode) {
-		SynergyKITSdk.getInstance().getRecord(collectionUrl, recordId, type, listener, parallelMode);
+		SynergyKitSdk.getInstance().getRecord(collectionUrl, recordId, type, listener, parallelMode);
 		
 	}
 	
 	/* Get records */
-	public static void getRecords(SynergyKITConfig config, RecordsResponseListener listener) {
-		SynergyKITSdk.getInstance().getRecords(config, listener);
+	public static void getRecords(SynergyKitConfig config, RecordsResponseListener listener) {
+		SynergyKitSdk.getInstance().getRecords(config, listener);
 	}
 
 	/* Get records */
 	public static void getRecords(String collectionUrl, Type type, RecordsResponseListener listener, boolean parallelMode) {
-		SynergyKITSdk.getInstance().getRecords(collectionUrl, type, listener, parallelMode);
+		SynergyKitSdk.getInstance().getRecords(collectionUrl, type, listener, parallelMode);
 	}
 
     /* Create record */
-	public static void createRecord(String collectionUrl, SynergyKITObject object, ResponseListener listener, boolean parallelMode) {
-		SynergyKITSdk.getInstance().createRecord(collectionUrl, object, listener, parallelMode);
+	public static void createRecord(String collectionUrl, SynergyKitObject object, ResponseListener listener, boolean parallelMode) {
+		SynergyKitSdk.getInstance().createRecord(collectionUrl, object, listener, parallelMode);
 		
 	}
 
 	/* Update record */
-	public static void updateRecord(String collectionUrl,SynergyKITObject object, ResponseListener listener,	boolean parallelMode) {
-		SynergyKITSdk.getInstance().updateRecord(collectionUrl, object, listener, parallelMode);
+	public static void updateRecord(String collectionUrl,SynergyKitObject object, ResponseListener listener,	boolean parallelMode) {
+		SynergyKitSdk.getInstance().updateRecord(collectionUrl, object, listener, parallelMode);
 		
 	}
 
 	/* Delete record */
 	public static void deleteRecord(String collectionUrl, String recordId,	DeleteResponseListener listener, boolean parallelMode) {
-		SynergyKITSdk.getInstance().deleteRecord(collectionUrl, recordId, listener, parallelMode);		
+		SynergyKitSdk.getInstance().deleteRecord(collectionUrl, recordId, listener, parallelMode);
 	}
 
 	//-------------------------------------------------------------------------------------------------------------------
 	/* Get user */
-	public static void getUser(SynergyKITConfig config, UserResponseListener listener) {
-		SynergyKITSdk.getInstance().getUser(config, listener);		
+	public static void getUser(SynergyKitConfig config, UserResponseListener listener) {
+		SynergyKitSdk.getInstance().getUser(config, listener);
 	}
 	
 	/* Get user */
 	public static void getUser(String userId, Type type, UserResponseListener listener, boolean parallelMode) {
-		SynergyKITSdk.getInstance().getUser(userId, type, listener, parallelMode);		
+		SynergyKitSdk.getInstance().getUser(userId, type, listener, parallelMode);
 	}
 
 	/* Get users */
-	public static void getUsers(SynergyKITConfig config, UsersResponseListener listener) {
-		SynergyKITSdk.getInstance().getUsers(config, listener);		
+	public static void getUsers(SynergyKitConfig config, UsersResponseListener listener) {
+		SynergyKitSdk.getInstance().getUsers(config, listener);
 	}
 
 	/* Get users */
 	public static void getUsers(Type type, UsersResponseListener listener,	boolean parallelMode) {
-		SynergyKITSdk.getInstance().getUsers(type, listener, parallelMode);		
+		SynergyKitSdk.getInstance().getUsers(type, listener, parallelMode);
 	}
 
 	/* Create user */
-	public static void createUser(SynergyKITUser user, UserResponseListener listener, boolean parallelMode) {
-		SynergyKITSdk.getInstance().createUser(user, listener, parallelMode);		
+	public static void createUser(SynergyKitUser user, UserResponseListener listener, boolean parallelMode) {
+		SynergyKitSdk.getInstance().createUser(user, listener, parallelMode);
 	}
 	
 	/* Update user */
-	public static void updateUser(SynergyKITUser user, UserResponseListener listener, boolean parallelMode) {
-		SynergyKITSdk.getInstance().updateUser(user, listener, parallelMode);	
+	public static void updateUser(SynergyKitUser user, UserResponseListener listener, boolean parallelMode) {
+		SynergyKitSdk.getInstance().updateUser(user, listener, parallelMode);
 	}
 
 	/* Delete user */
-	public static void deleteUser(SynergyKITUser user, DeleteResponseListener listener,	boolean parallelMode) {
-		SynergyKITSdk.getInstance().deleteUser(user, listener, parallelMode);
+	public static void deleteUser(SynergyKitUser user, DeleteResponseListener listener,	boolean parallelMode) {
+		SynergyKitSdk.getInstance().deleteUser(user, listener, parallelMode);
 	}
 
     /* Add platform (GCM) */
-    public static void addPlatformToUser(SynergyKITUser user, SynergyKITPlatform platform, PlatformResponseListener listener, boolean parallelMode) {
-        SynergyKITSdk.getInstance().addPlatformToUser(user, platform, listener, parallelMode);
+    public static void addPlatformToUser(SynergyKitUser user, SynergyKitPlatform platform, PlatformResponseListener listener, boolean parallelMode) {
+        SynergyKitSdk.getInstance().addPlatformToUser(user, platform, listener, parallelMode);
     }
 
     /* Update platform by _id */
-    public static void updatePlatformInUser(SynergyKITUser user, SynergyKITPlatform platform, PlatformResponseListener listener, boolean parallelMode) {
-        SynergyKITSdk.getInstance().updatePlatformInUser(user, platform, listener, parallelMode);
+    public static void updatePlatformInUser(SynergyKitUser user, SynergyKitPlatform platform, PlatformResponseListener listener, boolean parallelMode) {
+        SynergyKitSdk.getInstance().updatePlatformInUser(user, platform, listener, parallelMode);
     }
 
     /* Delete platform by _id */
-    public static void deletePlatform(SynergyKITUser user, SynergyKITPlatform platform, DeleteResponseListener listener,	boolean parallelMode) {
-        SynergyKITSdk.getInstance().deletePlatform(user, platform, listener, parallelMode);
+    public static void deletePlatform(SynergyKitUser user, SynergyKitPlatform platform, DeleteResponseListener listener,	boolean parallelMode) {
+        SynergyKitSdk.getInstance().deletePlatform(user, platform, listener, parallelMode);
     }
 
     /* Get platform by user and platformId */
-    public void getPlatform(SynergyKITUser user, String platformId, PlatformResponseListener listener, boolean parallelMode) {
-        SynergyKITSdk.getInstance().getPlatform(user, platformId, listener, parallelMode);
+    public void getPlatform(SynergyKitUser user, String platformId, PlatformResponseListener listener, boolean parallelMode) {
+        SynergyKitSdk.getInstance().getPlatform(user, platformId, listener, parallelMode);
     }
 
     /* Get platforms[] by user */
-    public void getPlatforms(SynergyKITUser user, PlatformsResponseListener listener, boolean parallelMode) {
-        SynergyKITSdk.getInstance().getPlatforms(user, listener, parallelMode);
+    public void getPlatforms(SynergyKitUser user, PlatformsResponseListener listener, boolean parallelMode) {
+        SynergyKitSdk.getInstance().getPlatforms(user, listener, parallelMode);
     }
 	
 	//-------------------------------------------------------------------------------------------------------------------	
 	/* Send email */
-	public static void sendEmail(String mailId, SynergyKITEmail email, EmailResponseListener listener, boolean parallelMode){
-		SynergyKITSdk.getInstance().sendEmail(mailId, email, listener, parallelMode);
+	public static void sendEmail(String mailId, SynergyKitEmail email, EmailResponseListener listener, boolean parallelMode){
+		SynergyKitSdk.getInstance().sendEmail(mailId, email, listener, parallelMode);
 	}
 	
 	/* Send notification */
-	public static void sendNotification(SynergyKITNotification notification, NotificationResponseListener listener, boolean parralelMode){
-		SynergyKITSdk.getInstance().sendNotification(notification, listener, parralelMode);
+	public static void sendNotification(SynergyKitNotification notification, NotificationResponseListener listener, boolean parralelMode){
+		SynergyKitSdk.getInstance().sendNotification(notification, listener, parralelMode);
 	}
 	
 	//-------------------------------------------------------------------------------------------------------------------	
 	/* Register user */
-	public static void registerUser(SynergyKITUser user, UserResponseListener listener){
-		SynergyKITSdk.getInstance().registerUser(user, listener);
+	public static void registerUser(SynergyKitUser user, UserResponseListener listener){
+		SynergyKitSdk.getInstance().registerUser(user, listener);
 	}
 	
 	/* Login user */
-	public static void loginUser(SynergyKITUser user, UserResponseListener listener){
-		SynergyKITSdk.getInstance().loginUser(user, listener);
+	public static void loginUser(SynergyKitUser user, UserResponseListener listener){
+		SynergyKitSdk.getInstance().loginUser(user, listener);
 	}
 	
 	//-------------------------------------------------------------------------------------------------------------------
 	/* Upload file */
 	public static void uploadFile(byte[] data, FileDataResponseListener listener) {
-		SynergyKITSdk.getInstance().uploadFile(data, listener);
+		SynergyKitSdk.getInstance().uploadFile(data, listener);
 		
 	}
 	
 	/* Upload bitmap */
 	public static void uploadBitmap(Bitmap bitmap, FileDataResponseListener listener) {
-		SynergyKITSdk.getInstance().uploadBitmap(bitmap, listener);
+		SynergyKitSdk.getInstance().uploadBitmap(bitmap, listener);
 		
 	}
 
 	/* Download bitmap */
 	public static void downloadBitmap(String uri, BitmapResponseListener listener) {
-		SynergyKITSdk.getInstance().downloadBitmap(uri, listener);
+		SynergyKitSdk.getInstance().downloadBitmap(uri, listener);
 		
 	}
 
 	/* Download file */
 	public static void downloadFile(String uri, BytesResponseListener listener) {
-		SynergyKITSdk.getInstance().downloadFile(uri, listener);
+		SynergyKitSdk.getInstance().downloadFile(uri, listener);
 		
 	}
     //-------------------------------------------------------------------------------------------------------------------
     /* Init batch */
     public static void initBatch(String batchId) {
-        SynergyKITSdk.getInstance().initBatch(batchId);
+        SynergyKitSdk.getInstance().initBatch(batchId);
     }
 
     /* Remove batch */
     public static void removeBatch(String batchId) {
-        SynergyKITSdk.getInstance().removeBatch(batchId);
+        SynergyKitSdk.getInstance().removeBatch(batchId);
     }
 
     /* Remove all batches */
 
     public static void removeAllBatches() {
-        SynergyKITSdk.getInstance().removeAllBatches();
+        SynergyKitSdk.getInstance().removeAllBatches();
     }
 
     /* Send batch */
     public static void sendBatch(String batchId, BatchResponseListener listener, boolean parallelMode) {
-        SynergyKITSdk.getInstance().sendBatch(batchId, listener, parallelMode);
+        SynergyKitSdk.getInstance().sendBatch(batchId, listener, parallelMode);
     }
 
     /*Batch getter*/
-    public static LinkedList<SynergyKITBatchItem> getBatch(String batchId) {
-        return SynergyKITSdk.getInstance().getBatch(batchId);
+    public static LinkedList<SynergyKitBatchItem> getBatch(String batchId) {
+        return SynergyKitSdk.getInstance().getBatch(batchId);
     }
 
     //-------------------------------------------------------------------------------------------------------------------
 
     /* Init socket */
     public static boolean initSocket() {
-        return SynergyKITSdk.getInstance().initSocket();
+        return SynergyKitSdk.getInstance().initSocket();
     }
 
     /* Is socket inited*/
     public static boolean isSocketInited() {
-        return SynergyKITSdk.getInstance().isSocketInited();
+        return SynergyKitSdk.getInstance().isSocketInitialized();
     }
 
     /* Is socket connected*/
     public static boolean isSocketConnected() {
-        return SynergyKITSdk.getInstance().isSocketConnected();
+        return SynergyKitSdk.getInstance().isSocketConnected();
     }
 
     /* Connect socket*/
 
     public static void connectSocket(SocketStateListener listener) {
-        SynergyKITSdk.getInstance().connectSocket(listener);
+        SynergyKitSdk.getInstance().connectSocket(listener);
     }
 
     /* Connect socket*/
 
     public static void connectSocket() {
-        SynergyKITSdk.getInstance().connectSocket();
+        SynergyKitSdk.getInstance().connectSocket();
     }
 
     /* Disconnect socket */
 
     public static void disconnectSocket() {
-        SynergyKITSdk.getInstance().disconnectSocket();
+        SynergyKitSdk.getInstance().disconnectSocket();
     }
 
     /* Emit via socket */
 
     public static void emitViaSocket(String event, Object... args) {
-        SynergyKITSdk.getInstance().emitViaSocket(event, args);
+        SynergyKitSdk.getInstance().emitViaSocket(event, args);
     }
 
     /* Emit via socket */
 
     public static void emitViaSocket(String event, Object[] args, Ack ack) {
-        SynergyKITSdk.getInstance().emitViaSocket(event,args,ack);
+        SynergyKitSdk.getInstance().emitViaSocket(event,args,ack);
     }
 
 
     public static void onSocket(String message, String collection, String filterName, String filter, SocketEventListener listener) {
-        SynergyKITSdk.getInstance().onSocket(message,collection, filterName, filter,listener);
+        SynergyKitSdk.getInstance().onSocket(message,collection, filterName, filter,listener);
 
     }
 
 
     public static void onSocket(String message, String collection, SocketEventListener listener) {
-        SynergyKITSdk.getInstance().onSocket(message, collection, listener);
+        SynergyKitSdk.getInstance().onSocket(message, collection, listener);
     }
 
     public static void onSocket(String event, Emitter.Listener listener){
-        SynergyKITSdk.getInstance().onSocket(event,listener);
+        SynergyKitSdk.getInstance().onSocket(event,listener);
     }
 
     public static void offSocket(String message, String collection, String filterName, String filter, SocketEventListener listener) {
-        SynergyKITSdk.getInstance().offSocket(message,collection,filterName,filter,listener);
+        SynergyKitSdk.getInstance().offSocket(message,collection,filterName,filter,listener);
     }
 
 
     public static void offSocket(String message, String collection, SocketEventListener listener) {
-        SynergyKITSdk.getInstance().offSocket(message,collection,listener);
+        SynergyKitSdk.getInstance().offSocket(message,collection,listener);
     }
 
     public static void offSocket(String event, Emitter.Listener listener){
-        SynergyKITSdk.getInstance().offSocket(event,listener);
+        SynergyKitSdk.getInstance().offSocket(event,listener);
     }
 
 

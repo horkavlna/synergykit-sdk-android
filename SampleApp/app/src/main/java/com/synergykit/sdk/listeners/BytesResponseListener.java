@@ -5,9 +5,9 @@ package com.synergykit.sdk.listeners;
  *
  */
 
-import com.synergykit.sdk.resources.SynergyKITError;
+import com.synergykit.sdk.resources.SynergyKitError;
 
 public interface BytesResponseListener {
 	public void doneCallback(int statusCode,byte[] data);
-	public void errorCallback(int statusCode, SynergyKITError errorObject);
+	public void errorCallback(int statusCode, SynergyKitError errorObject);
 }

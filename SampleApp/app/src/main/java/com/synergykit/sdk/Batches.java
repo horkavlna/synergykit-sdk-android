@@ -5,13 +5,12 @@ import com.synergykit.sdk.builders.errors.Errors;
 import com.synergykit.sdk.builders.uri.Resource;
 import com.synergykit.sdk.interfaces.IBatches;
 import com.synergykit.sdk.listeners.BatchResponseListener;
-import com.synergykit.sdk.log.SynergyKITLog;
+import com.synergykit.sdk.log.SynergyKitLog;
 import com.synergykit.sdk.request.BatchRequestPost;
-import com.synergykit.sdk.request.RecordRequestPost;
-import com.synergykit.sdk.resources.SynergyKITBatchItem;
-import com.synergykit.sdk.resources.SynergyKITBatchResponse;
-import com.synergykit.sdk.resources.SynergyKITConfig;
-import com.synergykit.sdk.resources.SynergyKITError;
+import com.synergykit.sdk.resources.SynergyKitBatchItem;
+import com.synergykit.sdk.resources.SynergyKitBatchResponse;
+import com.synergykit.sdk.resources.SynergyKitConfig;
+import com.synergykit.sdk.resources.SynergyKitError;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -22,7 +21,7 @@ import java.util.LinkedList;
 public class Batches implements IBatches{
 
     /* Attributes */
-    private HashMap<String,LinkedList<SynergyKITBatchItem>> batches = new HashMap<>();
+    private HashMap<String,LinkedList<SynergyKitBatchItem>> batches = new HashMap<>();
 
     /* Init */
     @Override
@@ -33,7 +32,7 @@ public class Batches implements IBatches{
               return;
         }
 
-        batches.put(batchId,new LinkedList<SynergyKITBatchItem>()); //init
+        batches.put(batchId,new LinkedList<SynergyKitBatchItem>()); //init
     }
 
     /* Remove */
@@ -52,19 +51,19 @@ public class Batches implements IBatches{
     /* Send */
     @Override
     public void sendBatch(String batchId, BatchResponseListener listener, boolean parallelMode) {
-        SynergyKITConfig config = new SynergyKITConfig();
+        SynergyKitConfig config = new SynergyKitConfig();
         BatchRequestPost request = new BatchRequestPost();
 
         //Batch check
         if(batchId==null || !batches.containsKey(batchId)){
             //Log
-            SynergyKITLog.print(Errors.MSG_BATCH_NOT_FOUND);
+            SynergyKitLog.print(Errors.MSG_BATCH_NOT_FOUND);
 
             //error callback
             if(listener!=null)
-                listener.errorCallback(Errors.SC_BATCH_NOT_FOUND, new SynergyKITError(Errors.SC_BATCH_NOT_FOUND, Errors.MSG_BATCH_NOT_FOUND));
-            else if(SynergyKIT.isDebugModeEnabled())
-                SynergyKITLog.print(Errors.MSG_NO_CALLBACK_LISTENER);
+                listener.errorCallback(Errors.SC_BATCH_NOT_FOUND, new SynergyKitError(Errors.SC_BATCH_NOT_FOUND, Errors.MSG_BATCH_NOT_FOUND));
+            else if(SynergyKit.isDebugModeEnabled())
+                SynergyKitLog.print(Errors.MSG_NO_CALLBACK_LISTENER);
 
             return;
         }
@@ -76,7 +75,7 @@ public class Batches implements IBatches{
         //set config
         config.setUri(uriBuilder.build());
         config.setParallelMode(parallelMode);
-        config.setType(SynergyKITBatchResponse[].class);
+        config.setType(SynergyKitBatchResponse[].class);
 
 
         //set request
@@ -85,13 +84,13 @@ public class Batches implements IBatches{
         request.setObject(batches.get(batchId));
 
         //execute
-        SynergyKIT.synergylize(request, parallelMode);
+        SynergyKit.synergylize(request, parallelMode);
 
     }
 
     /* Batch getter*/
     @Override
-    public LinkedList<SynergyKITBatchItem> getBatch(String batchId) {
+    public LinkedList<SynergyKitBatchItem> getBatch(String batchId) {
        return batches.get(batchId);
 
     }

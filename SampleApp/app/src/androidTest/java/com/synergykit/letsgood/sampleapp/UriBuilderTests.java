@@ -1,12 +1,10 @@
 package com.synergykit.letsgood.sampleapp;
 
-import com.synergykit.sdk.SynergyKIT;
 import com.synergykit.sdk.builders.UriBuilder;
 import com.synergykit.sdk.builders.uri.Resource;
-import com.synergykit.sdk.resources.SynergyKITUri;
+import com.synergykit.sdk.resources.SynergyKitUri;
 
 import junit.framework.TestCase;
-import junit.framework.TestResult;
 
 /**
  * Created by Letsgood.com - Pavel Stambrecht on 18. 3. 2015.
@@ -24,7 +22,7 @@ public class UriBuilderTests extends TestCase {
 
     /* Test add */
     public void testFunctionUri() {
-        SynergyKITUri uri = UriBuilder.newInstance()
+        SynergyKitUri uri = UriBuilder.newInstance()
                                 .setResource(Resource.RESOURCE_FUNCTIONS)
                                 .setFunctionId(FUNCTION_ID)
                                 .build();

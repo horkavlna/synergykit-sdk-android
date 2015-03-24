@@ -5,9 +5,9 @@ import com.synergykit.sdk.listeners.PlatformResponseListener;
 import com.synergykit.sdk.listeners.PlatformsResponseListener;
 import com.synergykit.sdk.listeners.UserResponseListener;
 import com.synergykit.sdk.listeners.UsersResponseListener;
-import com.synergykit.sdk.resources.SynergyKITConfig;
-import com.synergykit.sdk.resources.SynergyKITPlatform;
-import com.synergykit.sdk.resources.SynergyKITUser;
+import com.synergykit.sdk.resources.SynergyKitConfig;
+import com.synergykit.sdk.resources.SynergyKitPlatform;
+import com.synergykit.sdk.resources.SynergyKitUser;
 
 import java.lang.reflect.Type;
 
@@ -17,17 +17,17 @@ import java.lang.reflect.Type;
  */
 
 public interface IUsers{
-	public void getUser(SynergyKITConfig config, UserResponseListener listener);
+	public void getUser(SynergyKitConfig config, UserResponseListener listener);
 	public void getUser(String userId, Type type, UserResponseListener listener, boolean parallelMode );
-	public void getUsers(SynergyKITConfig config, UsersResponseListener listener);
+	public void getUsers(SynergyKitConfig config, UsersResponseListener listener);
 	public void getUsers(Type type, UsersResponseListener listener, boolean parallelMode);
-	public void createUser(SynergyKITUser user, UserResponseListener listener, boolean parallelMode);
-	public void updateUser(SynergyKITUser user, UserResponseListener listener, boolean parallelMode);
-	public void deleteUser(SynergyKITUser user,DeleteResponseListener listener, boolean parallelMode);
+	public void createUser(SynergyKitUser user, UserResponseListener listener, boolean parallelMode);
+	public void updateUser(SynergyKitUser user, UserResponseListener listener, boolean parallelMode);
+	public void deleteUser(SynergyKitUser user,DeleteResponseListener listener, boolean parallelMode);
 
-    public void addPlatformToUser(SynergyKITUser user, SynergyKITPlatform platform, PlatformResponseListener listener, boolean parallelMode);
-    public void updatePlatformInUser(SynergyKITUser user, SynergyKITPlatform platform, PlatformResponseListener listener, boolean parallelMode);
-    public void deletePlatform(SynergyKITUser user, SynergyKITPlatform platform, DeleteResponseListener listener,	boolean parallelMode);
-    public void getPlatform(SynergyKITUser user,String platformId, PlatformResponseListener listener, boolean parallelMode );
-    public void getPlatforms(SynergyKITUser user, PlatformsResponseListener listener, boolean parallelMode);
+    public void addPlatformToUser(SynergyKitUser user, SynergyKitPlatform platform, PlatformResponseListener listener, boolean parallelMode);
+    public void updatePlatformInUser(SynergyKitUser user, SynergyKitPlatform platform, PlatformResponseListener listener, boolean parallelMode);
+    public void deletePlatform(SynergyKitUser user, SynergyKitPlatform platform, DeleteResponseListener listener,	boolean parallelMode);
+    public void getPlatform(SynergyKitUser user,String platformId, PlatformResponseListener listener, boolean parallelMode );
+    public void getPlatforms(SynergyKitUser user, PlatformsResponseListener listener, boolean parallelMode);
 }

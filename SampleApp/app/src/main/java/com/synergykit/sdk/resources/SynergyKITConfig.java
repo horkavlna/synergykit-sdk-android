@@ -8,10 +8,10 @@ import java.lang.reflect.Type;
  *
  */
 
-public class SynergyKITConfig  implements Serializable {
+public class SynergyKitConfig implements Serializable {
 	/* Attributes */
 	private boolean parallelMode = false;
-	private SynergyKITUri synergyKITUri = null;
+	private SynergyKitUri synergyKITUri = null;
 	private Type type = null;
 	
 	/* Parallel mode getter */
@@ -25,12 +25,12 @@ public class SynergyKITConfig  implements Serializable {
 	}
 	
 	/* Uri getter */
-	public SynergyKITUri getUri() {
+	public SynergyKitUri getUri() {
 		return synergyKITUri;
 	}
 	
 	/* Uri setter */
-	public void setUri(SynergyKITUri synergyKITUri) {
+	public void setUri(SynergyKitUri synergyKITUri) {
 		this.synergyKITUri = synergyKITUri;
 	}
 	

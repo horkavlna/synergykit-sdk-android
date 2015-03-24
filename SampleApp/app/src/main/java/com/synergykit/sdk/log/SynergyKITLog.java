@@ -7,20 +7,20 @@ import android.util.Log;
  *
  */
 
-public class SynergyKITLog {
+public class SynergyKitLog {
 	
 	/* Constants */
-	private static final String TAG = "SynergyKITDebug";
+	private static final String TAG = "SynergyKitDebug";
 
 	/* Attributes */
-	private static SynergyKITLog instance = null;
+	private static SynergyKitLog instance = null;
 	private boolean enabled = false;
 	
 	/* Instance getter */
-	public static SynergyKITLog getInstance(){
+	public static SynergyKitLog getInstance(){
 		
 		if(instance == null){
-			instance = new SynergyKITLog();
+			instance = new SynergyKitLog();
 		}
 		
 		return instance;
@@ -28,12 +28,12 @@ public class SynergyKITLog {
 	
 	/* Enabled setter */
 	public static void setEnabled(boolean enabled){
-		SynergyKITLog.getInstance().enabled = enabled;
+		SynergyKitLog.getInstance().enabled = enabled;
 	}
 	
 	/* Enabled getter */
 	public static boolean isEnabled(){
-		return SynergyKITLog.getInstance().enabled;
+		return SynergyKitLog.getInstance().enabled;
 	}
 	
 	/* Log */
@@ -43,7 +43,7 @@ public class SynergyKITLog {
 			return;
 		
 		//print 
-		if(SynergyKITLog.getInstance().enabled == true){
+		if(SynergyKitLog.getInstance().enabled == true){
 			Log.d(TAG, log);
 		}
 			

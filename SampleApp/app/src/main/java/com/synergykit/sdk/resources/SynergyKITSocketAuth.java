@@ -1,12 +1,11 @@
 package com.synergykit.sdk.resources;
 
-import com.synergykit.sdk.SynergyKIT;
-import com.synergykit.sdk.builders.uri.Filter;
+import com.synergykit.sdk.SynergyKit;
 
 /**
  * Created by Letsgood.com - Pavel Stambrecht on 11. 3. 2015.
  */
-public class SynergyKITSocketAuth {
+public class SynergyKitSocketAuth {
 
     private String tenant;
     private String key;
@@ -16,9 +15,9 @@ public class SynergyKITSocketAuth {
     private Query query;
 
 
-    public SynergyKITSocketAuth(){
-        tenant=SynergyKIT.getTenant();
-        key=SynergyKIT.getApplicationKey();
+    public SynergyKitSocketAuth(){
+        tenant= SynergyKit.getTenant();
+        key= SynergyKit.getApplicationKey();
     }
 
 

@@ -1,17 +1,13 @@
 package com.synergykit.sdk.resources;
 
-import com.google.gson.Gson;
-import com.google.gson.annotations.Expose;
 import com.synergykit.sdk.addons.GsonWrapper;
-
-import org.json.JSONObject;
 
 import java.io.Serializable;
 
 /**
  * Created by Letsgood.com - Pavel Stambrecht on 23. 2. 2015.
  */
-public class SynergyKITBatchResponse<T> extends SynergyKITObject implements Serializable {
+public class SynergyKitBatchResponse<T> extends SynergyKitObject implements Serializable {
 
     /*Attributes*/
     private int id;

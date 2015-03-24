@@ -7,7 +7,7 @@ package com.synergykit.sdk.builders.uri;
  */
 
 import com.synergykit.sdk.builders.errors.Errors;
-import com.synergykit.sdk.log.SynergyKITLog;
+import com.synergykit.sdk.log.SynergyKitLog;
 
 public class RecordId {
 
@@ -20,7 +20,7 @@ public class RecordId {
 		
 		//null check
 		if(recordId==null || recordId.length()==0){
-			SynergyKITLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
+			SynergyKitLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
 		}	
 		
 		this.recordId = recordId;		

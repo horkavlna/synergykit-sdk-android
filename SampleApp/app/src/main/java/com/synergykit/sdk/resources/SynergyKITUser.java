@@ -8,14 +8,14 @@ import java.util.List;
  *
  */
 
-public class SynergyKITUser extends SynergyKITObject  implements Serializable {
+public class SynergyKitUser extends SynergyKitObject implements Serializable {
 	
 	/* Attributes */
 	protected String password;	
 	protected String email;
 	protected String activationHash;
 
-	protected List<SynergyKITPlatform> platforms;
+	protected List<SynergyKitPlatform> platforms;
 
 	/* Email getter  */
 	public String getEmail() {
@@ -28,7 +28,7 @@ public class SynergyKITUser extends SynergyKITObject  implements Serializable {
 	}
 
 	/* Platform getter */
-	public List<SynergyKITPlatform> getPlatforms() {
+	public List<SynergyKitPlatform> getPlatforms() {
 		return platforms;
 	}
 	

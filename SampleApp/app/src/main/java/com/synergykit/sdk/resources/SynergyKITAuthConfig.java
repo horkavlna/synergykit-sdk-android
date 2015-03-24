@@ -7,7 +7,7 @@ package com.synergykit.sdk.resources;
 
 import java.io.Serializable;
 
-public class SynergyKITAuthConfig  implements Serializable {
+public class SynergyKitAuthConfig implements Serializable {
 	
 	/* Attributes */
 	private String tenant = null;

@@ -5,9 +5,9 @@ package com.synergykit.sdk.listeners;
  *
  */
 
-import com.synergykit.sdk.resources.SynergyKITError;
+import com.synergykit.sdk.resources.SynergyKitError;
 
 public interface DeleteResponseListener {
 	public void doneCallback(int statusCode);
-	public void errorCallback(int statusCode, SynergyKITError errorObject);
+	public void errorCallback(int statusCode, SynergyKitError errorObject);
 }

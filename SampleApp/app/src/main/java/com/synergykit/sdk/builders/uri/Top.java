@@ -6,7 +6,7 @@ package com.synergykit.sdk.builders.uri;
  */
 
 import com.synergykit.sdk.builders.errors.Errors;
-import com.synergykit.sdk.log.SynergyKITLog;
+import com.synergykit.sdk.log.SynergyKitLog;
 
 public class Top {
 
@@ -20,7 +20,7 @@ public class Top {
 	public void setTop(int top){	
 		
 		if(top<MIN_VALUE){
-			SynergyKITLog.print(Errors.MSG_TOP_NEGATIVE);
+			SynergyKitLog.print(Errors.MSG_TOP_NEGATIVE);
 		}
 		
 		this.top = new String("&$top=" + Integer.toString(top));

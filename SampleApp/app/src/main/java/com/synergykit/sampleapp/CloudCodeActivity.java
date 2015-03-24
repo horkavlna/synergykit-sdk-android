@@ -17,14 +17,14 @@ import android.widget.Toast;
 import com.synergykit.sampleapp.addons.PicturePicker;
 import com.synergykit.sampleapp.model.CloudCodeDemo;
 import com.synergykit.sampleapp.widgets.CustomProgressDialog;
-import com.synergykit.sdk.SynergyKIT;
+import com.synergykit.sdk.SynergyKit;
 import com.synergykit.sdk.listeners.FileDataResponseListener;
 import com.synergykit.sdk.listeners.ResponseListener;
-import com.synergykit.sdk.resources.SynergyKITConfig;
-import com.synergykit.sdk.resources.SynergyKITError;
-import com.synergykit.sdk.resources.SynergyKITFileData;
-import com.synergykit.sdk.resources.SynergyKITObject;
-import com.synergykit.sdk.resources.SynergyKITUri;
+import com.synergykit.sdk.resources.SynergyKitConfig;
+import com.synergykit.sdk.resources.SynergyKitError;
+import com.synergykit.sdk.resources.SynergyKitFileData;
+import com.synergykit.sdk.resources.SynergyKitObject;
+import com.synergykit.sdk.resources.SynergyKitUri;
 
 /**
  * Created by Marek on 1/14/15.
@@ -81,20 +81,20 @@ public class CloudCodeActivity extends ActionBarActivity {
         final CustomProgressDialog pd = new CustomProgressDialog(
                 this, "Loading...");
 
-        SynergyKIT.uploadBitmap(b, new FileDataResponseListener() {
+        SynergyKit.uploadBitmap(b, new FileDataResponseListener() {
 
             @Override
-            public void errorCallback(int statusCode, SynergyKITError errorObject) {
+            public void errorCallback(int statusCode, SynergyKitError errorObject) {
                 Toast.makeText(CloudCodeActivity.this, errorObject.toString(), Toast.LENGTH_SHORT).show();
                 pd.dismiss();
             }
 
             @Override
-            public void doneCallback(int statusCode, SynergyKITFileData object) {
+            public void doneCallback(int statusCode, SynergyKitFileData object) {
 
 
-                SynergyKITConfig config = new SynergyKITConfig();
-                config.setUri(new SynergyKITUri("https://synergykit-sample-app.api.synergykit.com/v2/functions/face-recognition"));
+                SynergyKitConfig config = new SynergyKitConfig();
+                config.setUri(new SynergyKitUri("https://synergykit-sample-app.api.synergykit.com/v2/functions/face-recognition"));
                 config.setParallelMode(false);
                 config.setType(CloudCodeDemo.class);
 
@@ -103,17 +103,17 @@ public class CloudCodeActivity extends ActionBarActivity {
                 ccd.setPath(object.getPath());
                 ccd.setName(name.getText().toString());
 
-                SynergyKIT.invokeCloudCode(config,ccd,new ResponseListener() {
+                SynergyKit.invokeCloudCode(config, ccd, new ResponseListener() {
                     @Override
-                    public void doneCallback(int statusCode, SynergyKITObject object) {
+                    public void doneCallback(int statusCode, SynergyKitObject object) {
                         pd.dismiss();
                         CloudCodeDemo ccd = (CloudCodeDemo) object;
-                        resultCloudCode.setText("Age: "+ccd.getAge()+", Age range: "+ccd.getAgeRange()+", Gender: "+ccd.getGender() +", Gender confidence: "+ccd.getGenderConfidence()+", Race: "+ccd.getRace()+", Race confidence"+ccd.getRaceConfidence()+", Glass: "+ccd.getGlass()+", "+ccd.getGlassConfidence()+", Smiling: "+ccd.getSmiling());
+                        resultCloudCode.setText("Age: " + ccd.getAge() + ", Age range: " + ccd.getAgeRange() + ", Gender: " + ccd.getGender() + ", Gender confidence: " + ccd.getGenderConfidence() + ", Race: " + ccd.getRace() + ", Race confidence" + ccd.getRaceConfidence() + ", Glass: " + ccd.getGlass() + ", " + ccd.getGlassConfidence() + ", Smiling: " + ccd.getSmiling());
 
                     }
 
                     @Override
-                    public void errorCallback(int statusCode, SynergyKITError errorObject) {
+                    public void errorCallback(int statusCode, SynergyKitError errorObject) {
                         pd.dismiss();
                         Toast.makeText(CloudCodeActivity.this, errorObject.toString(), Toast.LENGTH_SHORT).show();
                     }

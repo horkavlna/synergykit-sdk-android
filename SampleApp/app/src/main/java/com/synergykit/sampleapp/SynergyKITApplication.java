@@ -2,22 +2,22 @@ package com.synergykit.sampleapp;
 
 import android.app.Application;
 
-import com.synergykit.sdk.SynergyKIT;
-import com.synergykit.sdk.log.SynergyKITLog;
+import com.synergykit.sdk.SynergyKit;
+import com.synergykit.sdk.log.SynergyKitLog;
 
 /**
  * Created by Marek on 1/13/15.
  */
-public class SynergyKITApplication extends Application {
+public class SynergyKitApplication extends Application {
 
     @Override
     public void onCreate() {
         super.onCreate();
-        if(!SynergyKIT.isInit()) {
-            SynergyKIT.init("synergykit-sample-app", "7cbb9eed-17dd-4f75-a7bd-c92f2f6faef9");
-            SynergyKIT.initSocket();
-            SynergyKIT.setDebugModeEnabled(true);
-            SynergyKITLog.getInstance().setEnabled(true);
+        if(!SynergyKit.isInit()) {
+            SynergyKit.init("synergykit", "4df126bc-d8a2-408e-8f4e-be2b7c506f5a");
+            SynergyKit.initSocket();
+            SynergyKit.setDebugModeEnabled(true);
+            SynergyKitLog.getInstance().setEnabled(true);
         }
     }
 }

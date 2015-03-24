@@ -6,23 +6,22 @@ package com.synergykit.sdk.builders;
  *
  */
 
-import com.synergykit.sdk.SynergyKIT;
+import com.synergykit.sdk.SynergyKit;
 import com.synergykit.sdk.builders.uri.Collection;
-import com.synergykit.sdk.builders.uri.Filter;
-import com.synergykit.sdk.builders.uri.InLineCount;
-import com.synergykit.sdk.builders.uri.OrderBy;
 import com.synergykit.sdk.builders.uri.RecordId;
 import com.synergykit.sdk.builders.uri.Resource;
-import com.synergykit.sdk.builders.uri.Select;
-import com.synergykit.sdk.builders.uri.Skip;
-import com.synergykit.sdk.builders.uri.Top;
 
-import com.synergykit.sdk.resources.SynergyKITUri;
+import com.synergykit.sdk.resources.SynergyKitUri;
 
 public class UriBuilder {
 	/* Constants */
-	private static final String BASE_SYNERGYKIT_URL = "https://%s.api.synergykit.com/v2";
-    private static final String SOCKET_SYNERGYKIT_URL = "https://%s.api.synergykit.com";
+//	private static final String BASE_SYNERGYKIT_URL = "https://%s.api.synergykit.com/v2";
+//    private static final String SOCKET_SYNERGYKIT_URL = "https://%s.api.synergykit.com";
+
+    private static final String BASE_SYNERGYKIT_URL = "http://172.22.0.104:5078/v2.1";
+    private static final String SOCKET_SYNERGYKIT_URL = "http://172.22.0.104:5078";
+
+
 	
 	/* Attributes */
 	private Resource resource = new Resource();
@@ -119,7 +118,7 @@ public class UriBuilder {
 	}
 
 	/* Build */
-	public SynergyKITUri build(){
+	public SynergyKitUri build(){
 		String uri = new String(BASE_SYNERGYKIT_URL);
 		boolean hasFilters = false;
 		
@@ -139,19 +138,19 @@ public class UriBuilder {
 
 
 	    //set tenant
-		uri = String.format(uri, SynergyKIT.getTenant());
+		uri = String.format(uri, SynergyKit.getTenant());
 		
 		
-		return new SynergyKITUri(uri);	
+		return new SynergyKitUri(uri);
 	}
 
     /* Socket address getter*/
-    public SynergyKITUri getSocketUrl(){
+    public SynergyKitUri getSocketUrl(){
         String uri = new String(SOCKET_SYNERGYKIT_URL);
 
         //set tenant
-        uri = String.format(uri, SynergyKIT.getTenant());
+        uri = String.format(uri, SynergyKit.getTenant());
 
-        return new SynergyKITUri(uri);
+        return new SynergyKitUri(uri);
     }
 }

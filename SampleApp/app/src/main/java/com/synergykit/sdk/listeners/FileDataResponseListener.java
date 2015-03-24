@@ -5,10 +5,10 @@ package com.synergykit.sdk.listeners;
  *
  */
 
-import com.synergykit.sdk.resources.SynergyKITError;
-import com.synergykit.sdk.resources.SynergyKITFileData;
+import com.synergykit.sdk.resources.SynergyKitError;
+import com.synergykit.sdk.resources.SynergyKitFileData;
 
 public interface FileDataResponseListener {
-	public void doneCallback(int statusCode,SynergyKITFileData fileData);
-	public void errorCallback(int statusCode, SynergyKITError errorObject);
+	public void doneCallback(int statusCode,SynergyKitFileData fileData);
+	public void errorCallback(int statusCode, SynergyKitError errorObject);
 }

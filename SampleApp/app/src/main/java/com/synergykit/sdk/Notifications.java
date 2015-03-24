@@ -3,40 +3,40 @@ package com.synergykit.sdk;
 import com.synergykit.sdk.builders.UriBuilder;
 import com.synergykit.sdk.builders.errors.Errors;
 import com.synergykit.sdk.builders.uri.Resource;
-import com.synergykit.sdk.interfaces.INotification;
+import com.synergykit.sdk.interfaces.INotifications;
 import com.synergykit.sdk.listeners.EmailResponseListener;
 import com.synergykit.sdk.listeners.NotificationResponseListener;
-import com.synergykit.sdk.log.SynergyKITLog;
+import com.synergykit.sdk.log.SynergyKitLog;
 import com.synergykit.sdk.request.EmailRequestPost;
 import com.synergykit.sdk.request.NotificationRequestPost;
-import com.synergykit.sdk.resources.SynergyKITConfig;
-import com.synergykit.sdk.resources.SynergyKITEmail;
-import com.synergykit.sdk.resources.SynergyKITError;
-import com.synergykit.sdk.resources.SynergyKITNotification;
+import com.synergykit.sdk.resources.SynergyKitConfig;
+import com.synergykit.sdk.resources.SynergyKitEmail;
+import com.synergykit.sdk.resources.SynergyKitError;
+import com.synergykit.sdk.resources.SynergyKitNotification;
 
 /*
  * Copyright 2014 Letsgood.com s.r.o.
  *
  */
 
-public class Notifications implements INotification{
+public class Notifications implements INotifications {
 
 	/* Send email */
 	@Override
-	public void sendEmail(String mailId, SynergyKITEmail email, EmailResponseListener listener,	boolean parallelMode) {
-		SynergyKITConfig config = new SynergyKITConfig();
+	public void sendEmail(String mailId, SynergyKitEmail email, EmailResponseListener listener,	boolean parallelMode) {
+		SynergyKitConfig config = new SynergyKitConfig();
 		EmailRequestPost request = new EmailRequestPost();
 
 		//Email check
 		if(email == null){
-			SynergyKITLog.print(Errors.MSG_NO_OBJECT);
+			SynergyKitLog.print(Errors.MSG_NO_OBJECT);
 			
 			
 			//Error callback
 			if(listener!=null)
-				listener.errorCallback(Errors.SC_NO_OBJECT, new SynergyKITError(Errors.SC_NO_OBJECT, Errors.MSG_NO_OBJECT));
-			else if(SynergyKIT.isDebugModeEnabled())
-				SynergyKITLog.print(Errors.MSG_NO_CALLBACK_LISTENER);
+				listener.errorCallback(Errors.SC_NO_OBJECT, new SynergyKitError(Errors.SC_NO_OBJECT, Errors.MSG_NO_OBJECT));
+			else if(SynergyKit.isDebugModeEnabled())
+				SynergyKitLog.print(Errors.MSG_NO_CALLBACK_LISTENER);
 			
 			return;
 		}
@@ -57,26 +57,26 @@ public class Notifications implements INotification{
 		request.setObject(email);
 		
 		//execute
-		SynergyKIT.synergylize(request, parallelMode);
+		SynergyKit.synergylize(request, parallelMode);
 
 			
 	}
 
 	/* Send notification */
 	@Override
-	public void sendNotification(SynergyKITNotification notification, NotificationResponseListener listener, boolean parallelMode) {
-		SynergyKITConfig config = new SynergyKITConfig();
+	public void sendNotification(SynergyKitNotification notification, NotificationResponseListener listener, boolean parallelMode) {
+		SynergyKitConfig config = new SynergyKitConfig();
 		NotificationRequestPost request = new NotificationRequestPost();
 
 		//Email check
 		if(notification == null){
-			SynergyKITLog.print(Errors.MSG_NO_OBJECT);		
+			SynergyKitLog.print(Errors.MSG_NO_OBJECT);
 			
 			//error callback
 			if(listener!=null)
-				listener.errorCallback(Errors.SC_NO_OBJECT, new SynergyKITError(Errors.SC_NO_OBJECT, Errors.MSG_NO_OBJECT));
-			else if(SynergyKIT.isDebugModeEnabled())
-				SynergyKITLog.print(Errors.MSG_NO_CALLBACK_LISTENER);
+				listener.errorCallback(Errors.SC_NO_OBJECT, new SynergyKitError(Errors.SC_NO_OBJECT, Errors.MSG_NO_OBJECT));
+			else if(SynergyKit.isDebugModeEnabled())
+				SynergyKitLog.print(Errors.MSG_NO_CALLBACK_LISTENER);
 			
 			return;
 		}
@@ -98,7 +98,7 @@ public class Notifications implements INotification{
 		request.setObject(notification);
 		
 		//execute
-		SynergyKIT.synergylize(request, parallelMode);
+		SynergyKit.synergylize(request, parallelMode);
 		
 	}
 

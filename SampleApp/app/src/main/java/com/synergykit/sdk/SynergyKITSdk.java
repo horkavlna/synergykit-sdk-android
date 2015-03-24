@@ -11,12 +11,12 @@ import com.synergykit.sdk.cache.Cache;
 import com.synergykit.sdk.interfaces.IAuthorization;
 import com.synergykit.sdk.interfaces.IBatches;
 import com.synergykit.sdk.interfaces.ICache;
-import com.synergykit.sdk.interfaces.ICloudCode;
+import com.synergykit.sdk.interfaces.ICloudCodes;
 import com.synergykit.sdk.interfaces.IFiles;
-import com.synergykit.sdk.interfaces.INotification;
+import com.synergykit.sdk.interfaces.INotifications;
 import com.synergykit.sdk.interfaces.IRecords;
 import com.synergykit.sdk.interfaces.ISocket;
-import com.synergykit.sdk.interfaces.ISynergyKITSdk;
+import com.synergykit.sdk.interfaces.ISynergyKitSdk;
 import com.synergykit.sdk.interfaces.IUsers;
 import com.synergykit.sdk.listeners.BatchResponseListener;
 import com.synergykit.sdk.listeners.BitmapResponseListener;
@@ -33,16 +33,16 @@ import com.synergykit.sdk.listeners.SocketEventListener;
 import com.synergykit.sdk.listeners.SocketStateListener;
 import com.synergykit.sdk.listeners.UserResponseListener;
 import com.synergykit.sdk.listeners.UsersResponseListener;
-import com.synergykit.sdk.log.SynergyKITLog;
-import com.synergykit.sdk.request.SynergyKITRequest;
-import com.synergykit.sdk.resources.SynergyKITAuthConfig;
-import com.synergykit.sdk.resources.SynergyKITBatchItem;
-import com.synergykit.sdk.resources.SynergyKITConfig;
-import com.synergykit.sdk.resources.SynergyKITEmail;
-import com.synergykit.sdk.resources.SynergyKITNotification;
-import com.synergykit.sdk.resources.SynergyKITObject;
-import com.synergykit.sdk.resources.SynergyKITPlatform;
-import com.synergykit.sdk.resources.SynergyKITUser;
+import com.synergykit.sdk.log.SynergyKitLog;
+import com.synergykit.sdk.request.SynergyKitRequest;
+import com.synergykit.sdk.resources.SynergyKitAuthConfig;
+import com.synergykit.sdk.resources.SynergyKitBatchItem;
+import com.synergykit.sdk.resources.SynergyKitConfig;
+import com.synergykit.sdk.resources.SynergyKitEmail;
+import com.synergykit.sdk.resources.SynergyKitNotification;
+import com.synergykit.sdk.resources.SynergyKitObject;
+import com.synergykit.sdk.resources.SynergyKitPlatform;
+import com.synergykit.sdk.resources.SynergyKitUser;
 
 import java.lang.reflect.Type;
 import java.util.LinkedList;
@@ -52,28 +52,28 @@ import java.util.LinkedList;
  *
  */
 
-public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotification, ICache, IAuthorization, IFiles, ICloudCode, IBatches,ISocket{
+public class SynergyKitSdk implements ISynergyKitSdk, IRecords, IUsers, INotifications, ICache, IAuthorization, IFiles, ICloudCodes, IBatches,ISocket{
 	
 	/* Attributes */
-	private static SynergyKITSdk instance = null;
-	private SynergyKITAuthConfig authConfig = new SynergyKITAuthConfig();
-	private SynergyKITConfig config = new SynergyKITConfig();
+	private static SynergyKitSdk instance = null;
+	private SynergyKitAuthConfig authConfig = new SynergyKitAuthConfig();
+	private SynergyKitConfig config = new SynergyKitConfig();
 	private IRecords records = new Records();
 	private IUsers users = new Users();
-	private INotification notifications = new Notifications();
+	private INotifications notifications = new Notifications();
 	private IAuthorization authorization = new Authorization();
 	private ICache cache = new Cache();
 	private IFiles files = new Files();
-    private ICloudCode cloudCode = new CloudCode();
+    private ICloudCodes cloudCode = new CloudCodes();
     private IBatches batches = new Batches();
 	private ISocket socket = new Socket();
 
 	//---------------------------------------------------------------------------------------
 	/* Instance static getter */
-	public static SynergyKITSdk getInstance(){
+	public static SynergyKitSdk getInstance(){
 		
 		if(instance == null )
-			instance = new SynergyKITSdk();
+			instance = new SynergyKitSdk();
 		
 		return instance;
 	}
@@ -89,7 +89,7 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotific
 	/* Reset */
 	@Override
 	public void reset() {
-		authConfig = new SynergyKITAuthConfig();	
+		authConfig = new SynergyKitAuthConfig();
 	}
 
 	
@@ -135,17 +135,17 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotific
 	
 	/*Config setter */ 
 	@Override
-	public void setConfig(SynergyKITConfig config) {		
+	public void setConfig(SynergyKitConfig config) {
 		this.config = config;
 	}
 
 	/* Config getter */
 	@Override
-	public SynergyKITConfig getConfig() {		
+	public SynergyKitConfig getConfig() {
 		
 		if(config==null){
 			//Log
-			SynergyKITLog.print(Errors.MSG_NO_CONFIG);
+			SynergyKitLog.print(Errors.MSG_NO_CONFIG);
 		}
 		
 		return config;
@@ -153,12 +153,12 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotific
 	
 	/* Synergylize */
 	@Override
-	public void synergylize(SynergyKITRequest request, boolean parallelMode) {
+	public void synergylize(SynergyKitRequest request, boolean parallelMode) {
 		
 		if(request==null){
 
 			//Log
-			SynergyKITLog.print(Errors.MSG_NO_REQUEST);
+			SynergyKitLog.print(Errors.MSG_NO_REQUEST);
 			
 			return;
 		}
@@ -175,25 +175,25 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotific
 	/* Debug mode enabled getter */
 	@Override
 	public boolean isDebugModeEnabled(){ 
-		return SynergyKITLog.isEnabled();
+		return SynergyKitLog.isEnabled();
 	}
 	
 	/* Debug mode enabled setter */ 
 	@Override
 	public void setDebugModeEnabled(boolean debugModeEnabled){
-		SynergyKITLog.setEnabled(debugModeEnabled);
+		SynergyKitLog.setEnabled(debugModeEnabled);
 	}
 	
 	//---------------------------------------------------------------------------------------
 	/* Get record */
     @Override
-    public void invokeCloudCode(SynergyKITConfig config,SynergyKITObject object,  ResponseListener listener) {
+    public void invokeCloudCode(SynergyKitConfig config,SynergyKitObject object,  ResponseListener listener) {
         cloudCode.invokeCloudCode(config, object, listener);
     }
 
 	/* Get record */
 	@Override
-	public void getRecord(SynergyKITConfig config, ResponseListener listener) {
+	public void getRecord(SynergyKitConfig config, ResponseListener listener) {
 		records.getRecord(config, listener);		
 	}
 
@@ -205,7 +205,7 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotific
 	
 	/* Get records */
 	@Override
-	public void getRecords(SynergyKITConfig config,	RecordsResponseListener listener) {
+	public void getRecords(SynergyKitConfig config,	RecordsResponseListener listener) {
 		records.getRecords(config, listener);		
 	}
 
@@ -217,13 +217,13 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotific
 
 	/* Create record */
 	@Override
-	public void createRecord(String collectionUrl, SynergyKITObject object,	ResponseListener listener, boolean parallelMode) {
+	public void createRecord(String collectionUrl, SynergyKitObject object,	ResponseListener listener, boolean parallelMode) {
 		records.createRecord(collectionUrl, object, listener, parallelMode);	
 	}
 
 	/* Update record */
 	@Override
-	public void updateRecord(String collectionUrl,SynergyKITObject object, ResponseListener listener,	boolean parallelMode) {
+	public void updateRecord(String collectionUrl,SynergyKitObject object, ResponseListener listener,	boolean parallelMode) {
 		records.updateRecord(collectionUrl,  object, listener, parallelMode);
 	}
 
@@ -236,7 +236,7 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotific
 	//-------------------------------------------------------------------------------------------------------------------
 	/* Get user */
 	@Override
-	public void getUser(SynergyKITConfig config, UserResponseListener listener) {
+	public void getUser(SynergyKitConfig config, UserResponseListener listener) {
 		users.getUser(config, listener);		
 	}
 	
@@ -248,7 +248,7 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotific
 
 	/* Get users */
 	@Override
-	public void getUsers(SynergyKITConfig config, UsersResponseListener listener) {
+	public void getUsers(SynergyKitConfig config, UsersResponseListener listener) {
 		users.getUsers(config, listener);		
 	}
 
@@ -260,57 +260,57 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotific
 
 	/* Create user */
 	@Override
-	public void createUser(SynergyKITUser user, UserResponseListener listener, boolean parallelMode) {
+	public void createUser(SynergyKitUser user, UserResponseListener listener, boolean parallelMode) {
 		users.createUser(user, listener, parallelMode);		
 	}
 	
 	/* Update user */
 	@Override
-	public void updateUser(SynergyKITUser user, UserResponseListener listener, boolean parallelMode) {
+	public void updateUser(SynergyKitUser user, UserResponseListener listener, boolean parallelMode) {
 		users.updateUser(user, listener, parallelMode);
 	}
 
 	/* Delete user */
 	@Override
-	public void deleteUser(SynergyKITUser user, DeleteResponseListener listener,	boolean parallelMode) {
+	public void deleteUser(SynergyKitUser user, DeleteResponseListener listener,	boolean parallelMode) {
 		users.deleteUser(user, listener, parallelMode);
 	}
 
     /* Add platform (GCM) */
-    public void addPlatformToUser(SynergyKITUser user, SynergyKITPlatform platform, PlatformResponseListener listener, boolean parallelMode) {
+    public void addPlatformToUser(SynergyKitUser user, SynergyKitPlatform platform, PlatformResponseListener listener, boolean parallelMode) {
         users.addPlatformToUser(user, platform, listener, parallelMode);
     }
 
     /* Update platform by _id */
-    public void updatePlatformInUser(SynergyKITUser user, SynergyKITPlatform platform, PlatformResponseListener listener, boolean parallelMode) {
+    public void updatePlatformInUser(SynergyKitUser user, SynergyKitPlatform platform, PlatformResponseListener listener, boolean parallelMode) {
         users.updatePlatformInUser(user, platform, listener, parallelMode);
     }
 
     /* Delete platform by _id */
-    public void deletePlatform(SynergyKITUser user, SynergyKITPlatform platform, DeleteResponseListener listener, boolean parallelMode) {
+    public void deletePlatform(SynergyKitUser user, SynergyKitPlatform platform, DeleteResponseListener listener, boolean parallelMode) {
         users.deletePlatform(user, platform, listener, parallelMode);
     }
 
     @Override
-    public void getPlatform(SynergyKITUser user, String platformId, PlatformResponseListener listener, boolean parallelMode) {
+    public void getPlatform(SynergyKitUser user, String platformId, PlatformResponseListener listener, boolean parallelMode) {
         users.getPlatform(user, platformId, listener, parallelMode);
     }
 
     @Override
-    public void getPlatforms(SynergyKITUser user, PlatformsResponseListener listener, boolean parallelMode) {
+    public void getPlatforms(SynergyKitUser user, PlatformsResponseListener listener, boolean parallelMode) {
         users.getPlatforms(user, listener, parallelMode);
     }
 
     //-------------------------------------------------------------------------------------------------------------------
 	/* Send email */
 	@Override
-	public void sendEmail(String mailId,SynergyKITEmail email, EmailResponseListener listener, boolean parallelMode) {
+	public void sendEmail(String mailId,SynergyKitEmail email, EmailResponseListener listener, boolean parallelMode) {
 		notifications.sendEmail(mailId, email, listener, parallelMode);
 	}
 	
 	/* Send notification */
 	@Override
-	public void sendNotification(SynergyKITNotification notification, NotificationResponseListener listener, boolean parralelMode) {
+	public void sendNotification(SynergyKitNotification notification, NotificationResponseListener listener, boolean parralelMode) {
 		notifications.sendNotification(notification, listener, parralelMode);		
 	}
 	
@@ -324,13 +324,13 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotific
 	//-------------------------------------------------------------------------------------------------------------------
 	/* Register user */
 	@Override
-	public void registerUser(SynergyKITUser user, UserResponseListener listener) {
+	public void registerUser(SynergyKitUser user, UserResponseListener listener) {
 		authorization.registerUser(user, listener);		
 	}
 
 	/* Login user */
 	@Override
-	public void loginUser(SynergyKITUser user, UserResponseListener listener) {
+	public void loginUser(SynergyKitUser user, UserResponseListener listener) {
 		authorization.loginUser(user, listener);		
 	}
 
@@ -390,7 +390,7 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotific
 
     /*Batch getter*/
     @Override
-    public LinkedList<SynergyKITBatchItem> getBatch(String batchId) {
+    public LinkedList<SynergyKitBatchItem> getBatch(String batchId) {
         return batches.getBatch(batchId);
     }
 
@@ -403,8 +403,8 @@ public class SynergyKITSdk implements ISynergyKITSdk, IRecords, IUsers, INotific
 
     /* Is socket inited*/
     @Override
-    public boolean isSocketInited() {
-        return socket.isSocketInited();
+    public boolean isSocketInitialized() {
+        return socket.isSocketInitialized();
     }
 
     /* Is socket connected*/

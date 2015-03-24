@@ -7,10 +7,10 @@ package com.synergykit.sdk.request;
 
 import com.synergykit.sdk.builders.errors.Errors;
 import com.synergykit.sdk.listeners.BytesResponseListener;
-import com.synergykit.sdk.log.SynergyKITLog;
-import com.synergykit.sdk.resources.SynergyKITConfig;
-import com.synergykit.sdk.resources.SynergyKITError;
-import com.synergykit.sdk.resources.SynergyKITResponse;
+import com.synergykit.sdk.log.SynergyKitLog;
+import com.synergykit.sdk.resources.SynergyKitConfig;
+import com.synergykit.sdk.resources.SynergyKitError;
+import com.synergykit.sdk.resources.SynergyKitResponse;
 
 import org.apache.http.HttpStatus;
 
@@ -19,14 +19,14 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 
 
-public class FileRequestGet extends SynergyKITRequest{
+public class FileRequestGet extends SynergyKitRequest {
 
 	/* Attributes */
-	private SynergyKITConfig config;
+	private SynergyKitConfig config;
 	private BytesResponseListener listener;
 	 
 	/* Config setter */
-	public void setConfig(SynergyKITConfig config){
+	public void setConfig(SynergyKitConfig config){
 		this.config = config;
 	}
 	
@@ -40,7 +40,7 @@ public class FileRequestGet extends SynergyKITRequest{
 	@Override
 	protected Object doInBackground(Void... params) {
 		ResponseDataHolder dataHolder = null;
-		SynergyKITResponse response = null;
+		SynergyKitResponse response = null;
 		ByteArrayOutputStream byteArrayOutputStream;
 		byte[] buffer = null;
 		int readInt = 0;
@@ -72,7 +72,7 @@ public class FileRequestGet extends SynergyKITRequest{
 				e.printStackTrace();
 				dataHolder = new ResponseDataHolder(); //init
 				dataHolder.statusCode = Errors.SC_UNSPECIFIED_ERROR; //set status code
-				dataHolder.errorObject = new SynergyKITError(Errors.SC_UNSPECIFIED_ERROR, Errors.MSG_UNSPECIFIED_ERROR);
+				dataHolder.errorObject = new SynergyKitError(Errors.SC_UNSPECIFIED_ERROR, Errors.MSG_UNSPECIFIED_ERROR);
 			}
 			
 		}else{
@@ -91,7 +91,7 @@ public class FileRequestGet extends SynergyKITRequest{
 		
 		//null listener 
 		if(listener==null){
-			SynergyKITLog.print(Errors.MSG_NO_CALLBACK_LISTENER);
+			SynergyKitLog.print(Errors.MSG_NO_CALLBACK_LISTENER);
 			
 			return;
 		}	

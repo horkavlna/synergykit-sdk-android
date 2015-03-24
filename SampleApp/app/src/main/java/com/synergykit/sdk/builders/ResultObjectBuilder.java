@@ -2,8 +2,8 @@ package com.synergykit.sdk.builders;
 
 import com.synergykit.sdk.addons.GsonWrapper;
 import com.synergykit.sdk.builders.errors.Errors;
-import com.synergykit.sdk.resources.SynergyKITError;
-import com.synergykit.sdk.resources.SynergyKITObject;
+import com.synergykit.sdk.resources.SynergyKitError;
+import com.synergykit.sdk.resources.SynergyKitObject;
 
 import org.apache.http.HttpStatus;
 import org.apache.http.ParseException;
@@ -18,7 +18,7 @@ import java.lang.reflect.Type;
 public class ResultObjectBuilder {
 	
 	/* Build base object */
-	public static SynergyKITObject buildObject(int statusCode,BufferedReader data,Type type){
+	public static SynergyKitObject buildObject(int statusCode,BufferedReader data,Type type){
 		
 		// Param check
 		if(data == null || statusCode!=HttpStatus.SC_OK)
@@ -27,7 +27,7 @@ public class ResultObjectBuilder {
 		
 		// Build object
 		try {	
-			return (SynergyKITObject) GsonWrapper.getGson().fromJson(data, type);
+			return (SynergyKitObject) GsonWrapper.getGson().fromJson(data, type);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -37,8 +37,8 @@ public class ResultObjectBuilder {
 	
 	
 	/* Build base objects */
-	public static SynergyKITObject[] buildObjects(int statusCode, BufferedReader data, Type type){
-		SynergyKITObject[] baseObjects;
+	public static SynergyKitObject[] buildObjects(int statusCode, BufferedReader data, Type type){
+		SynergyKitObject[] baseObjects;
 		
 		// Param check
 		if(data == null || statusCode!=HttpStatus.SC_OK)
@@ -46,7 +46,7 @@ public class ResultObjectBuilder {
 		
 		// Build objects
 		try {
-			baseObjects = (SynergyKITObject[]) GsonWrapper.getGson().fromJson(data, type);																					
+			baseObjects = (SynergyKitObject[]) GsonWrapper.getGson().fromJson(data, type);
 			
 			return baseObjects;
 			
@@ -58,8 +58,8 @@ public class ResultObjectBuilder {
 	}
 	
 	/* Build error object */
-	public static SynergyKITError buildError(int statusCode, BufferedReader data){
-		SynergyKITError errorObject;
+	public static SynergyKitError buildError(int statusCode, BufferedReader data){
+		SynergyKitError errorObject;
 		
 		// Param check
 		if(data == null)
@@ -68,7 +68,7 @@ public class ResultObjectBuilder {
 		
 		// Build error
 		try {
-			errorObject =  (SynergyKITError) GsonWrapper.getGson().fromJson(data, SynergyKITError.class);
+			errorObject =  (SynergyKitError) GsonWrapper.getGson().fromJson(data, SynergyKitError.class);
 			errorObject.setStatusCode(statusCode);
 			return errorObject;
 			
@@ -80,8 +80,8 @@ public class ResultObjectBuilder {
 	}
 	
 	/* Build error object */
-	public static SynergyKITError buildError(int statusCode){			
-		SynergyKITError error = new SynergyKITError();
+	public static SynergyKitError buildError(int statusCode){
+		SynergyKitError error = new SynergyKitError();
 		
 		error.setStatusCode(statusCode); //set status code
 		

@@ -7,7 +7,7 @@ package com.synergykit.sdk.resources;
 
 import java.io.Serializable;
 
-public class SynergyKITError  implements Serializable {
+public class SynergyKitError implements Serializable {
 	
 	/* Attributes */
 	private int statusCode;
@@ -15,7 +15,7 @@ public class SynergyKITError  implements Serializable {
 
     
     /* Constructor */
-    public SynergyKITError(int statusCode, String message){
+    public SynergyKitError(int statusCode, String message){
     	
     	this.statusCode=statusCode; //set status code
     	
@@ -27,7 +27,7 @@ public class SynergyKITError  implements Serializable {
     }
     
     /* Constructor */
-    public SynergyKITError(){
+    public SynergyKitError(){
     	this(0, new String());
     }
     

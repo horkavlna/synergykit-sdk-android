@@ -13,11 +13,11 @@ import com.synergykit.sampleapp.adapters.DemoObjectAdapter;
 import com.synergykit.sampleapp.model.DemoObject;
 import com.synergykit.sampleapp.widgets.CustomProgressDialog;
 import com.synergykit.sampleapp.widgets.ErrorAlertDialog;
-import com.synergykit.sdk.SynergyKIT;
+import com.synergykit.sdk.SynergyKit;
 import com.synergykit.sdk.listeners.RecordsResponseListener;
 import com.synergykit.sdk.listeners.ResponseListener;
-import com.synergykit.sdk.resources.SynergyKITError;
-import com.synergykit.sdk.resources.SynergyKITObject;
+import com.synergykit.sdk.resources.SynergyKitError;
+import com.synergykit.sdk.resources.SynergyKitObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,7 +29,7 @@ public class RequestsActivity  extends ActionBarActivity {
 
     private ListView list;
     private DemoObjectAdapter adapter;
-    private ArrayList<SynergyKITObject> demoObjects;
+    private ArrayList<SynergyKitObject> demoObjects;
     private Button postButton;
     private EditText textEdit;
 
@@ -61,15 +61,15 @@ public class RequestsActivity  extends ActionBarActivity {
                 DemoObject demoObject = new DemoObject();
                 demoObject.setText(textEdit.getText().toString());
 
-                SynergyKIT.createRecord("demo-objects",demoObject, new ResponseListener() {
+                SynergyKit.createRecord("demo-objects", demoObject, new ResponseListener() {
                     @Override
-                    public void doneCallback(int statusCode, final SynergyKITObject object) {
+                    public void doneCallback(int statusCode, final SynergyKitObject object) {
                         pd.dismiss();
                         loadData();
                     }
 
                     @Override
-                    public void errorCallback(int statusCode, SynergyKITError errorObject) {
+                    public void errorCallback(int statusCode, SynergyKitError errorObject) {
                         pd.dismiss();
                         if (errorObject != null) {
                             new ErrorAlertDialog(RequestsActivity.this, errorObject
@@ -77,7 +77,7 @@ public class RequestsActivity  extends ActionBarActivity {
                         }
 
                     }
-                },false);
+                }, false);
             }
         });
 
@@ -90,13 +90,13 @@ public class RequestsActivity  extends ActionBarActivity {
         final CustomProgressDialog pd = new CustomProgressDialog(
                 this, "Loading...");
 
-        SynergyKIT.getRecords("demo-objects", DemoObject[].class, new RecordsResponseListener() {
+        SynergyKit.getRecords("demo-objects", DemoObject[].class, new RecordsResponseListener() {
             @Override
-            public void doneCallback(int statusCode, SynergyKITObject[] objects) {
+            public void doneCallback(int statusCode, SynergyKitObject[] objects) {
                 pd.dismiss();
 
                 if (objects != null)
-                    demoObjects = new ArrayList<SynergyKITObject>(Arrays.asList(objects));
+                    demoObjects = new ArrayList<SynergyKitObject>(Arrays.asList(objects));
 
                 adapter = new DemoObjectAdapter(RequestsActivity.this, R.layout.item_demo_object,
                         demoObjects);
@@ -105,14 +105,14 @@ public class RequestsActivity  extends ActionBarActivity {
             }
 
             @Override
-            public void errorCallback(int statusCode, SynergyKITError errorObject) {
+            public void errorCallback(int statusCode, SynergyKitError errorObject) {
                 pd.dismiss();
                 if (errorObject != null) {
                     new ErrorAlertDialog(RequestsActivity.this, errorObject
                             .getMessage()).show();
                 }
             }
-        },false);
+        }, false);
     }
 
     @Override

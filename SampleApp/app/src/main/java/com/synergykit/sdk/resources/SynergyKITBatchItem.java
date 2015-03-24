@@ -1,11 +1,9 @@
 package com.synergykit.sdk.resources;
 
-import com.google.gson.annotations.Expose;
-
 /**
  * Created by Letsgood.com - Pavel Stambrecht on 23. 2. 2015.
  */
-public class SynergyKITBatchItem {
+public class SynergyKitBatchItem {
 
     /* Attributes */
 
@@ -16,19 +14,19 @@ public class SynergyKITBatchItem {
 
 
     /* Constructor */
-    public SynergyKITBatchItem(String method, String url){
+    public SynergyKitBatchItem(String method, String url){
         this(0,method,url,null);
     }
 
-    public SynergyKITBatchItem(String method, String url, Object body){
+    public SynergyKitBatchItem(String method, String url, Object body){
         this(0,method,url,body);
     }
 
-    public SynergyKITBatchItem(int id, String method, String url){
+    public SynergyKitBatchItem(int id, String method, String url){
         this(id,method,url,null);
     }
 
-    public SynergyKITBatchItem(int id, String method, String url, Object body){
+    public SynergyKitBatchItem(int id, String method, String url, Object body){
         this.method = method;
         this.url = url;
         this.id = id;

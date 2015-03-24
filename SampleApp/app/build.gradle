@@ -23,7 +23,11 @@ android {
 }
 
 dependencies {
-    compile 'com.github.nkzawa:socket.io-client:0.3.0'
+
+    compile ('com.github.nkzawa:socket.io-client:0.3.0'){
+        exclude group: 'org.json', module: 'json'
+    }
+
     compile 'com.facebook.android:facebook-android-sdk:+'
     compile 'com.android.support:support-v4:21.0.3'
     compile 'com.google.android.gms:play-services:+'
