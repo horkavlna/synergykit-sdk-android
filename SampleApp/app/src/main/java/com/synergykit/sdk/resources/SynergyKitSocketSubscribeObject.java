@@ -1,5 +1,6 @@
 package com.synergykit.sdk.resources;
 
+import com.google.gson.annotations.Expose;
 import com.synergykit.sdk.SynergyKit;
 import com.synergykit.sdk.builders.errors.Errors;
 import com.synergykit.sdk.log.SynergyKitLog;
@@ -9,11 +10,19 @@ import com.synergykit.sdk.log.SynergyKitLog;
  */
 public class SynergyKitSocketSubscribeObject {
 
+
+    /* Attributes */
+    @Expose
     private String tenant;
+    @Expose
     private String key;
+    @Expose
     private String token;
+    @Expose
     private String collectionName;
+    @Expose
     private String eventName;
+    @Expose
     private SynergyKitSocketFilter filter;
 
 

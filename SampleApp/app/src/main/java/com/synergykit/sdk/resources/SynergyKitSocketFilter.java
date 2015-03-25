@@ -1,5 +1,6 @@
 package com.synergykit.sdk.resources;
 
+import com.google.gson.annotations.Expose;
 import com.synergykit.sdk.builders.uri.Filter;
 
 /**
@@ -8,7 +9,9 @@ import com.synergykit.sdk.builders.uri.Filter;
 public class SynergyKitSocketFilter {
 
     /* Attributes */
+    @Expose
     private String name;
+    @Expose
     private String query;
 
     /* Constructor  */

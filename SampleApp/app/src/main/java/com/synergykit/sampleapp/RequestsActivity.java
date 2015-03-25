@@ -31,6 +31,7 @@ public class RequestsActivity  extends ActionBarActivity {
     private DemoObjectAdapter adapter;
     private ArrayList<SynergyKitObject> demoObjects;
     private Button postButton;
+    private Button postButton2;
     private EditText textEdit;
 
     @Override
@@ -44,6 +45,7 @@ public class RequestsActivity  extends ActionBarActivity {
 
         textEdit = (EditText) findViewById(R.id.text);
         postButton = (Button) findViewById(R.id.postButton);
+        postButton2 = (Button) findViewById(R.id.postButton2);
 
         list = (ListView) findViewById(R.id.listView);
 
@@ -51,7 +53,7 @@ public class RequestsActivity  extends ActionBarActivity {
             @Override
             public void onClick(View v) {
 
-                if (textEdit.getText().toString().length()<1)
+                if (textEdit.getText().toString().length() < 1)
                     return;
 
                 final CustomProgressDialog pd = new CustomProgressDialog(
@@ -81,8 +83,41 @@ public class RequestsActivity  extends ActionBarActivity {
             }
         });
 
-        loadData();
 
+        postButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (textEdit.getText().toString().length() < 1)
+                    return;
+
+                final CustomProgressDialog pd = new CustomProgressDialog(
+                        RequestsActivity.this, "Loading...");
+
+
+                DemoObject demoObject = new DemoObject("demo-objects");
+                demoObject.setText(textEdit.getText().toString());
+                demoObject.save(new ResponseListener() {
+                    @Override
+                    public void doneCallback(int statusCode, final SynergyKitObject object) {
+                        pd.dismiss();
+                        loadData2(object.getRecordId());
+                    }
+
+                    @Override
+                    public void errorCallback(int statusCode, SynergyKitError errorObject) {
+                        pd.dismiss();
+                        if (errorObject != null) {
+                            new ErrorAlertDialog(RequestsActivity.this, errorObject
+                                    .getMessage()).show();
+                        }
+
+                    }
+                });
+            }
+        });
+
+        loadData();
     }
 
 
@@ -113,6 +148,41 @@ public class RequestsActivity  extends ActionBarActivity {
                 }
             }
         }, false);
+    }
+
+
+    private void loadData2(String recordId){
+        final CustomProgressDialog pd = new CustomProgressDialog(
+                this, "Loading...");
+
+        new DemoObject("demo-objects",recordId).fetch(new ResponseListener() {
+
+            @Override
+            public void doneCallback(int statusCode, SynergyKitObject object) {
+                pd.dismiss();
+                DemoObject[] demoObject = new DemoObject[1];
+                demoObject[0] = (DemoObject) object;
+
+
+                if (demoObjects != null)
+                    demoObjects = new ArrayList<SynergyKitObject>(Arrays.asList(demoObject));
+
+                adapter = new DemoObjectAdapter(RequestsActivity.this, R.layout.item_demo_object,
+                        demoObjects);
+
+                list.setAdapter(adapter);
+            }
+
+            @Override
+            public void errorCallback(int statusCode, SynergyKitError errorObject) {
+                pd.dismiss();
+                if (errorObject != null) {
+                    new ErrorAlertDialog(RequestsActivity.this, errorObject
+                            .getMessage()).show();
+                }
+            }
+        });
+
     }
 
     @Override

@@ -5,6 +5,7 @@ package com.synergykit.sdk.resources;
  *
  */
 
+import com.google.gson.annotations.Expose;
 import com.synergykit.sdk.SynergyKit;
 
 import java.io.Serializable;
@@ -12,8 +13,11 @@ import java.io.Serializable;
 public class SynergyKitAuthConfig implements Serializable {
 	
 	/* Attributes */
+    @Expose
 	private String tenant = null;
+    @Expose
 	private String applicationKey = null;
+    @Expose
     private String token = null;
 	
 	/* Tenant getter */

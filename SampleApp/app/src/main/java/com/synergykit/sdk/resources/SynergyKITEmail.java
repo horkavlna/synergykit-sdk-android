@@ -5,13 +5,18 @@ package com.synergykit.sdk.resources;
  *
  */
 
+import com.google.gson.annotations.Expose;
+
 import java.io.Serializable;
 
 public class SynergyKitEmail extends SynergyKitObject implements Serializable {
 	
 	/* Attributes */
+    @Expose
 	protected String email;
+    @Expose
 	protected String subject;
+    @Expose
     protected String from;
 
 

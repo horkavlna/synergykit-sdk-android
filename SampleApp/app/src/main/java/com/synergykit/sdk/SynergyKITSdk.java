@@ -84,6 +84,7 @@ public class SynergyKitSdk implements ISynergyKitSdk, IRecords, IUsers, INotific
 	public void init(String tenant, String applicationKey) {
 		this.setTenant(tenant);
 		this.setApplicationKey(applicationKey);
+        this.initSocket();
 	}
 
 	/* Reset */
@@ -410,8 +411,6 @@ public class SynergyKitSdk implements ISynergyKitSdk, IRecords, IUsers, INotific
     }
 
     //-------------------------------------------------------------------------------------------------------------------
-
-
     @Override
     public boolean initSocket() {
         return socket.initSocket();

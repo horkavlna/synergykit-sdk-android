@@ -11,18 +11,11 @@ import com.synergykit.sdk.builders.uri.Collection;
 import com.synergykit.sdk.builders.uri.RecordId;
 import com.synergykit.sdk.builders.uri.Resource;
 
+import com.synergykit.sdk.resources.SynergyKitConfig;
 import com.synergykit.sdk.resources.SynergyKitUri;
 
 public class UriBuilder {
-	/* Constants */
-//	private static final String BASE_SYNERGYKIT_URL = "https://%s.api.synergykit.com/v2";
-//    private static final String SOCKET_SYNERGYKIT_URL = "https://%s.api.synergykit.com";
 
-    private static final String BASE_SYNERGYKIT_URL = "http://172.22.0.104:5078/v2.1";
-    private static final String SOCKET_SYNERGYKIT_URL = "http://172.22.0.104:5078";
-
-
-	
 	/* Attributes */
 	private Resource resource = new Resource();
 	private Collection collection = new Collection();
@@ -119,7 +112,7 @@ public class UriBuilder {
 
 	/* Build */
 	public SynergyKitUri build(){
-		String uri = new String(BASE_SYNERGYKIT_URL);
+		String uri = new String(SynergyKitConfig.API_SYNERGYKIT_URL);
 		boolean hasFilters = false;
 		
 		
@@ -146,7 +139,7 @@ public class UriBuilder {
 
     /* Socket address getter*/
     public SynergyKitUri getSocketUrl(){
-        String uri = new String(SOCKET_SYNERGYKIT_URL);
+        String uri = new String(SynergyKitConfig.SOCKET_SYNERGYKIT_URL);
 
         //set tenant
         uri = String.format(uri, SynergyKit.getTenant());

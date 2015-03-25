@@ -1,5 +1,7 @@
 package com.synergykit.sdk.resources;
 
+import com.google.gson.annotations.Expose;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -12,8 +14,11 @@ import java.io.Serializable;
 public class SynergyKitResponse implements Serializable {
 	
 	/* Attributes */
+    @Expose
 	private int statusCode = 0;
+    @Expose
 	private BufferedReader bufferedReader = null;
+    @Expose
 	private InputStream inputStream = null;;
 	
 	/* Status code getter */

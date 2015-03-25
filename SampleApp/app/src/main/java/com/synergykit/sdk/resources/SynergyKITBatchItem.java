@@ -1,15 +1,20 @@
 package com.synergykit.sdk.resources;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * Created by Letsgood.com - Pavel Stambrecht on 23. 2. 2015.
  */
 public class SynergyKitBatchItem {
 
     /* Attributes */
-
+    @Expose
     private String method;
+    @Expose
     private String url;
+    @Expose
     private int id;
+    @Expose
     private Object body;
 
 

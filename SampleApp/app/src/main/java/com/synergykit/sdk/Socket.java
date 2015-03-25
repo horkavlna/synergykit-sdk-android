@@ -4,6 +4,7 @@ import android.support.annotation.Nullable;
 
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
+import com.google.gson.annotations.Expose;
 import com.synergykit.sdk.addons.GsonWrapper;
 import com.synergykit.sdk.builders.UriBuilder;
 import com.synergykit.sdk.builders.errors.Errors;
@@ -134,10 +135,10 @@ public class Socket implements ISocket{
 
         stateListener.setEnabled(false); //unset base listeners
 
-        if(socket!=null)
-          socket.disconnect(); //disconnect
-
-        SynergyKitLog.print(STATE_DISCONNECTED); //state disconnected
+        if(socket!=null && socket.connected()){
+            socket.disconnect(); //disconnect
+            SynergyKitLog.print(STATE_DISCONNECTED); //state disconnected
+        }
 
         if(stateListener.getSocketStateListener()!=null)
             stateListener.getSocketStateListener().disconnected();
@@ -404,9 +405,13 @@ public class Socket implements ISocket{
     private class SocketSpeakItem{
 
         /* Attributes */
+        @Expose
         private Object message;
+        @Expose
         private String tenant =null;
+        @Expose
         private String token = null;
+        @Expose
         private String eventName = null;
 
         /* Constructor */

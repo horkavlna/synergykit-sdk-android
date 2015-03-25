@@ -17,6 +17,7 @@ package com.synergykit.sdk.addons;
  */
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class GsonWrapper {
 
@@ -26,7 +27,7 @@ public class GsonWrapper {
 	/* Gson getter */
 	public static Gson getGson(){
 		if(mGson == null)
-			GsonWrapper.mGson = new Gson();
+			GsonWrapper.mGson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 
 		return GsonWrapper.mGson;
 	}

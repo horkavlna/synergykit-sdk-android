@@ -1,5 +1,7 @@
 package com.synergykit.sdk.resources;
 
+import com.google.gson.annotations.Expose;
+
 import java.io.Serializable;
 import java.lang.reflect.Type;
 
@@ -9,9 +11,18 @@ import java.lang.reflect.Type;
  */
 
 public class SynergyKitConfig implements Serializable {
-	/* Attributes */
+    /* Constants */
+    public static final String BASE_SYNERGYKIT_URL = "https://%s.api.synergykit.com";
+    public static final String API_SYNERGYKIT_URL = BASE_SYNERGYKIT_URL + "/v2.1";
+    public static final String SOCKET_SYNERGYKIT_URL = BASE_SYNERGYKIT_URL;
+
+
+    /* Attributes */
+    @Expose
 	private boolean parallelMode = false;
+    @Expose
 	private SynergyKitUri synergyKITUri = null;
+    @Expose
 	private Type type = null;
 	
 	/* Parallel mode getter */

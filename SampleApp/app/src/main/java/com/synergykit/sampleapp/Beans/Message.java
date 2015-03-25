@@ -1,5 +1,6 @@
 package com.synergykit.sampleapp.beans;
 
+import com.google.gson.annotations.Expose;
 import com.synergykit.sdk.resources.SynergyKitObject;
 
 /**
@@ -7,7 +8,9 @@ import com.synergykit.sdk.resources.SynergyKitObject;
  */
 public class Message extends SynergyKitObject {
 
+    @Expose
     private String name = null;
+    @Expose
     private String text = null;
 
 

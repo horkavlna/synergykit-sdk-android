@@ -93,7 +93,7 @@ public class SocketActivity extends ActionBarActivity implements TextWatcher{
 
             @Override
             public void errorCallback(int statusCode, SynergyKitError errorObject) {
-
+                SynergyKitLog.print("User not logged: " + errorObject.toString());
             }
         });
 
@@ -118,8 +118,10 @@ public class SocketActivity extends ActionBarActivity implements TextWatcher{
 
     @Override
     protected void onDestroy() {
-
-      SynergyKit.emitViaSocket("leave",name);
+      Message message = new Message();
+      message.setName(name);
+      message.setText("");
+      SynergyKit.emitViaSocket("leave",message);
 
        SynergyKit.disconnectSocket();
         super.onDestroy();
@@ -137,7 +139,13 @@ public class SocketActivity extends ActionBarActivity implements TextWatcher{
 
     @Override
     public void afterTextChanged(Editable s) {
-        SynergyKit.emitViaSocket("typing",name);
+        Message message = new Message();
+        message.setName(name);
+        message.setText("");
+
+
+
+        SynergyKit.emitViaSocket("typing",message);
     }
 
     /** **************************************************************** */
@@ -238,8 +246,11 @@ public class SocketActivity extends ActionBarActivity implements TextWatcher{
                     sendButton.setEnabled(true);
                     sendButton.setBackgroundResource(R.color.white);
 
+                    Message message = new Message();
+                    message.setName(name);
+                    message.setText("");
 
-                    SynergyKit.emitViaSocket("joined",name);
+                    SynergyKit.emitViaSocket("joined",message);
 
                 }
             });
@@ -270,12 +281,12 @@ public class SocketActivity extends ActionBarActivity implements TextWatcher{
         @Override
         public void call(Object... args) {
 
-                String data =(String)args[0];;
+                String data =((JSONObject) args[0]).toString();
 
-                final String message = GsonWrapper.getGson().fromJson(data, String.class);
+                final Message message = GsonWrapper.getGson().fromJson(data, Message.class);
                 final TextView textView = new TextView(SocketActivity.this);
                 textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                textView.setText(message + "  connected" );
+                textView.setText(message.getName() + "  connected" );
                 textView.setGravity(Gravity.CENTER_HORIZONTAL);
 
                 runOnUiThread(new Runnable() {
@@ -311,12 +322,12 @@ public class SocketActivity extends ActionBarActivity implements TextWatcher{
         @Override
         public void call(Object... args) {
 
-            String data =(String)args[0];;
+            String data =((JSONObject) args[0]).toString();;
 
-            final String message = GsonWrapper.getGson().fromJson(data, String.class);
+            final Message message = GsonWrapper.getGson().fromJson(data, Message.class);
             final TextView textView = new TextView(SocketActivity.this);
             textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            textView.setText(message + "  disconnected" );
+            textView.setText(message.getName() + "  disconnected" );
             textView.setGravity(Gravity.CENTER_HORIZONTAL);
 
             runOnUiThread(new Runnable() {
@@ -352,19 +363,19 @@ public class SocketActivity extends ActionBarActivity implements TextWatcher{
         @Override
         public void call(Object... args) {
 
-            String data =(String)args[0];;
+            String data =((JSONObject) args[0]).toString();
 
-            final String message = GsonWrapper.getGson().fromJson(data, String.class);
+            final Message message = GsonWrapper.getGson().fromJson(data, Message.class);
 
 
-            if(name.equals(message))
+            if(name.equals(message.getName()))
                 return;
 
 
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    typingTextView.setText(message + " is typing");
+                    typingTextView.setText(message.getName() + " is typing");
 
                 }
             });

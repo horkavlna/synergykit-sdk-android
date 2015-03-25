@@ -6,6 +6,7 @@ import android.webkit.URLUtil;
  * Copyright 2014 Letsgood.com s.r.o.
  *
  */
+import com.google.gson.annotations.Expose;
 import com.synergykit.sdk.builders.errors.Errors;
 import com.synergykit.sdk.log.SynergyKitLog;
 

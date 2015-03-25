@@ -5,6 +5,8 @@ package com.synergykit.sdk.resources;
  *
  */
 
+import com.google.gson.annotations.Expose;
+
 import java.io.Serializable;
 
 public class SynergyKitPlatform extends SynergyKitObject implements Serializable {
@@ -14,8 +16,11 @@ public class SynergyKitPlatform extends SynergyKitObject implements Serializable
 
 
     /* Attributes */
+    @Expose
 	private String platformName = PLATFORM;
+    @Expose
 	private String registrationId;
+    @Expose
 	private boolean development;
 
 	/* Name getter */

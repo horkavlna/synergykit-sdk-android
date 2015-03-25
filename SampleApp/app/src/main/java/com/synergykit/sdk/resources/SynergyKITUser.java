@@ -1,5 +1,7 @@
 package com.synergykit.sdk.resources;
 
+import com.google.gson.annotations.Expose;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -11,9 +13,13 @@ import java.util.List;
 public class SynergyKitUser extends SynergyKitObject implements Serializable {
 	
 	/* Attributes */
-	protected String password;	
+    @Expose
+	protected String password;
+    @Expose
 	protected String email;
+    @Expose
 	protected String activationHash;
+    @Expose
     protected String sessionToken;
 
 	protected List<SynergyKitPlatform> platforms;

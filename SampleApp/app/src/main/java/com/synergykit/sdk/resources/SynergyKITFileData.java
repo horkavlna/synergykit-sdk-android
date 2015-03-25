@@ -5,15 +5,22 @@ package com.synergykit.sdk.resources;
  *
  */
 
+import com.google.gson.annotations.Expose;
+
 import java.io.Serializable;
 
 public class SynergyKitFileData extends SynergyKitObject implements Serializable {
 	
 	/* Attributes */
+    @Expose
 	protected String path;
+    @Expose
 	protected String extension;
+    @Expose
 	protected long size;
+    @Expose
 	protected String fileName;
+    @Expose
 	protected String applicationUrl;
 
 	/* Path getter */

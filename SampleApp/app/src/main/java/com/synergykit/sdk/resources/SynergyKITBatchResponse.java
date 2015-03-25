@@ -1,5 +1,6 @@
 package com.synergykit.sdk.resources;
 
+import com.google.gson.annotations.Expose;
 import com.synergykit.sdk.addons.GsonWrapper;
 
 import java.io.Serializable;
@@ -10,9 +11,13 @@ import java.io.Serializable;
 public class SynergyKitBatchResponse<T> extends SynergyKitObject implements Serializable {
 
     /*Attributes*/
+    @Expose
     private int id;
+    @Expose
     private String status;
+    @Expose
     private int statusCode;
+    @Expose
     private T body;
 
     /* Status Code getter */

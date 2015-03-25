@@ -297,11 +297,6 @@ public class SynergyKit {
     }
 
     //-------------------------------------------------------------------------------------------------------------------
-
-    public static boolean initSocket() {
-        return SynergyKitSdk.getInstance().initSocket();
-    }
-
     public static boolean isSocketInitialized() {
         return SynergyKitSdk.getInstance().isSocketInitialized();
     }

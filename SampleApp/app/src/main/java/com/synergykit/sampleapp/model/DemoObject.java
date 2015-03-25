@@ -1,5 +1,6 @@
 package com.synergykit.sampleapp.model;
 
+import com.google.gson.annotations.Expose;
 import com.synergykit.sdk.resources.SynergyKitObject;
 
 /**
@@ -7,7 +8,22 @@ import com.synergykit.sdk.resources.SynergyKitObject;
  */
 public class DemoObject extends SynergyKitObject {
 
+    @Expose
     private String text;
+
+
+    public DemoObject(){
+        super();
+    }
+
+
+    public DemoObject(String collectionUrl){
+        super(collectionUrl);
+    }
+
+    public DemoObject(String collectionUrl, String recordId){
+        super(collectionUrl, recordId);
+    }
 
     public String getText() {
         return text;

@@ -1,5 +1,7 @@
 package com.synergykit.sdk.resources;
 
+import com.google.gson.annotations.Expose;
+
 import java.io.Serializable;
 import java.util.LinkedList;
 
@@ -10,14 +12,13 @@ import java.util.LinkedList;
 
 public class SynergyKitNotification extends SynergyKitObject implements Serializable {
 
-    /* Constants */
-    public static final String PAYLOAD_TYPE_PLAYER_PROFILE_ID = "player_profile_id";
-    public static final String PAYLOAD_TYPE_TEAM_ID = "team_id";
-
 
 	/* Attributes */
+    @Expose
 	private LinkedList<String> userIds = new LinkedList<String>();
+    @Expose
 	private String alert = null;
+    @Expose
     private String payload = null;
 
 	/* Constructor */

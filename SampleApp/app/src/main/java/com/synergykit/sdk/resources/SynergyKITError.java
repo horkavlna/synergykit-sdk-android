@@ -5,12 +5,16 @@ package com.synergykit.sdk.resources;
  *
  */
 
+import com.google.gson.annotations.Expose;
+
 import java.io.Serializable;
 
 public class SynergyKitError implements Serializable {
 	
 	/* Attributes */
+    @Expose
 	private int statusCode;
+    @Expose
     private String message;
 
     
