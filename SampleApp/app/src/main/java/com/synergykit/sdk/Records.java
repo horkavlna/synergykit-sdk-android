@@ -11,6 +11,7 @@ import com.synergykit.sdk.listeners.RecordsResponseListener;
 import com.synergykit.sdk.listeners.ResponseListener;
 import com.synergykit.sdk.log.SynergyKitLog;
 import com.synergykit.sdk.request.RecordRequestGet;
+import com.synergykit.sdk.request.RecordRequestPatch;
 import com.synergykit.sdk.request.RecordRequestPost;
 import com.synergykit.sdk.request.RecordRequestPut;
 import com.synergykit.sdk.request.RecordsRequestGet;
@@ -178,7 +179,47 @@ public class Records implements IRecords {
 		
 	}
 
-	/* Record deleter */
+    @Override
+    public void patchRecord(String collectionUrl, SynergyKitObject object, ResponseListener listener, boolean parallelMode) {
+        SynergyKitConfig config = new SynergyKitConfig();
+        RecordRequestPatch request = new RecordRequestPatch();
+
+        //Object check
+        if(object == null){
+            //Log
+            SynergyKitLog.print(Errors.MSG_NO_OBJECT);
+
+            //error callback
+            if(listener!=null)
+                listener.errorCallback(Errors.SC_NO_OBJECT, new SynergyKitError(Errors.SC_NO_OBJECT, Errors.MSG_NO_OBJECT));
+            else if(SynergyKit.isDebugModeEnabled())
+                SynergyKitLog.print(Errors.MSG_NO_CALLBACK_LISTENER);
+
+            return;
+        }
+
+        //Uri builder
+        UriBuilder uriBuilder = new UriBuilder()
+                .setResource(Resource.RESOURCE_DATA)
+                .setCollection(collectionUrl)
+                .setRecordId(object.get_id());
+
+        //set config
+        config.setUri(uriBuilder.build());
+        config.setParallelMode(parallelMode);
+        config.setType(object.getClass());
+
+
+        //set request
+        request.setConfig(config);
+        request.setListener(listener);
+        request.setObject(object);
+
+        //execute
+        SynergyKit.synergylize(request, parallelMode);
+    }
+
+    /* Record deleter */
 	@Override
 	public void deleteRecord(String collectionUrl, String recordId,	DeleteResponseListener listener, boolean parallelMode) {
 		SynergyKitConfig config = new SynergyKitConfig();

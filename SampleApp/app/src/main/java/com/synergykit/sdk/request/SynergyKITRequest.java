@@ -6,6 +6,7 @@ import com.synergykit.sdk.builders.ResultObjectBuilder;
 import com.synergykit.sdk.builders.errors.Errors;
 import com.synergykit.sdk.requestmethods.Delete;
 import com.synergykit.sdk.requestmethods.Get;
+import com.synergykit.sdk.requestmethods.Patch;
 import com.synergykit.sdk.requestmethods.Post;
 import com.synergykit.sdk.requestmethods.PostFile;
 import com.synergykit.sdk.requestmethods.Put;
@@ -66,8 +67,10 @@ public abstract class SynergyKitRequest extends AsyncTask<Void, Void, Object> {
 
 		return response;
 	}
+
+
 	
-	/* Request method POST */
+	/* File method POST */
 	protected static SynergyKitResponse postFile(SynergyKitUri uri, byte[] data) {
 		SynergyKitResponse response = new SynergyKitResponse();
 		PostFile postFile = new PostFile(uri, data);
@@ -99,6 +102,19 @@ public abstract class SynergyKitRequest extends AsyncTask<Void, Void, Object> {
 
 		return response;
 	}
+
+
+    /* Request method PATCH */
+    protected static SynergyKitResponse patch(SynergyKitUri uri, Object object) {
+        SynergyKitResponse response = new SynergyKitResponse();
+        Patch patch = new Patch(uri, object);
+
+        response.setBufferedReader(patch.execute());
+        response.setStatusCode(patch.getStatusCode());
+
+        return response;
+    }
+
 
 	/* Manage response */
 	protected ResponseDataHolder manageResponseToObject(

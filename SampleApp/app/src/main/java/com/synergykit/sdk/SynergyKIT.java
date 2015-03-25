@@ -157,6 +157,12 @@ public class SynergyKit {
 		
 	}
 
+    /* Patch record */
+    public static void patchRecord(String collectionUrl,SynergyKitObject object, ResponseListener listener,	boolean parallelMode) {
+        SynergyKitSdk.getInstance().patchRecord(collectionUrl, object, listener, parallelMode);
+
+    }
+
 	/* Delete record */
 	public static void deleteRecord(String collectionUrl, String recordId,	DeleteResponseListener listener, boolean parallelMode) {
 		SynergyKitSdk.getInstance().deleteRecord(collectionUrl, recordId, listener, parallelMode);
@@ -193,6 +199,11 @@ public class SynergyKit {
 		SynergyKitSdk.getInstance().updateUser(user, listener, parallelMode);
 	}
 
+    /* Update user */
+    public static void patchUser(SynergyKitUser user, UserResponseListener listener, boolean parallelMode) {
+        SynergyKitSdk.getInstance().patchUser(user, listener, parallelMode);
+    }
+
 	/* Delete user */
 	public static void deleteUser(SynergyKitUser user, DeleteResponseListener listener,	boolean parallelMode) {
 		SynergyKitSdk.getInstance().deleteUser(user, listener, parallelMode);
@@ -206,6 +217,11 @@ public class SynergyKit {
     /* Update platform by _id */
     public static void updatePlatformInUser(SynergyKitUser user, SynergyKitPlatform platform, PlatformResponseListener listener, boolean parallelMode) {
         SynergyKitSdk.getInstance().updatePlatformInUser(user, platform, listener, parallelMode);
+    }
+
+    /* Patch platform by _id */
+    public static void patchPlatformInUser(SynergyKitUser user, SynergyKitPlatform platform, PlatformResponseListener listener, boolean parallelMode) {
+        SynergyKitSdk.getInstance().patchPlatformInUser(user, platform, listener, parallelMode);
     }
 
     /* Delete platform by _id */

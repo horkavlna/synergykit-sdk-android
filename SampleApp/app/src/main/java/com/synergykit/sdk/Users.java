@@ -16,11 +16,13 @@ import com.synergykit.sdk.listeners.UserResponseListener;
 import com.synergykit.sdk.listeners.UsersResponseListener;
 import com.synergykit.sdk.log.SynergyKitLog;
 import com.synergykit.sdk.request.PlatformRequestGet;
+import com.synergykit.sdk.request.PlatformRequestPatch;
 import com.synergykit.sdk.request.PlatformRequestPost;
 import com.synergykit.sdk.request.PlatformRequestPut;
 import com.synergykit.sdk.request.PlatformsRequestGet;
 import com.synergykit.sdk.request.RequestDelete;
 import com.synergykit.sdk.request.UserRequestGet;
+import com.synergykit.sdk.request.UserRequestPatch;
 import com.synergykit.sdk.request.UserRequestPost;
 import com.synergykit.sdk.request.UserRequestPut;
 import com.synergykit.sdk.request.UsersRequestGet;
@@ -184,7 +186,46 @@ public class Users implements IUsers{
 		SynergyKit.synergylize(request, parallelMode);
 	}
 
-	/* Delete user */
+    @Override
+    public void patchUser(SynergyKitUser user, UserResponseListener listener, boolean parallelMode) {
+        SynergyKitConfig config = new SynergyKitConfig();
+        UserRequestPatch request = new UserRequestPatch();
+
+        //User check
+        if(user == null){
+            //Log
+            SynergyKitLog.print(Errors.MSG_NO_OBJECT);
+
+            //error callback
+            if(listener!=null)
+                listener.errorCallback(Errors.SC_NO_OBJECT, new SynergyKitError(Errors.SC_NO_OBJECT, Errors.MSG_NO_OBJECT));
+            else if(SynergyKit.isDebugModeEnabled())
+                SynergyKitLog.print(Errors.MSG_NO_CALLBACK_LISTENER);
+
+            return;
+        }
+
+        //Uri builder
+        UriBuilder uriBuilder = new UriBuilder()
+                .setResource(Resource.RESOURCE_USERS)
+                .setRecordId(user.get_id());
+
+        //set config
+        config.setUri(uriBuilder.build());
+        config.setParallelMode(parallelMode);
+        config.setType(user.getClass());
+
+
+        //set request
+        request.setConfig(config);
+        request.setListener(listener);
+        request.setObject(user);
+
+        //execute
+        SynergyKit.synergylize(request, parallelMode);
+    }
+
+    /* Delete user */
 	@Override
 	public void deleteUser(SynergyKitUser user, DeleteResponseListener listener,	boolean parallelMode) {
 		SynergyKitConfig config = new SynergyKitConfig();
@@ -263,8 +304,46 @@ public class Users implements IUsers{
     @Override
     public void updatePlatformInUser(SynergyKitUser user, SynergyKitPlatform platform, PlatformResponseListener listener, boolean parallelMode) {
         SynergyKitConfig config = new SynergyKitConfig();
-        PlatformRequestPut
-                request = new PlatformRequestPut();
+        PlatformRequestPut request = new PlatformRequestPut();
+
+        //User check
+        if(user == null || platform == null){
+            //Log
+            SynergyKitLog.print(Errors.MSG_NO_OBJECT);
+
+            //error callback
+            if(listener!=null)
+                listener.errorCallback(Errors.SC_NO_OBJECT, new SynergyKitError(Errors.SC_NO_OBJECT, Errors.MSG_NO_OBJECT));
+            else if(SynergyKit.isDebugModeEnabled())
+                SynergyKitLog.print(Errors.MSG_NO_CALLBACK_LISTENER);
+
+            return;
+        }
+
+        //Uri builder
+        UriBuilder uriBuilder = new UriBuilder()
+                .setResource(String.format(Resource.RESOURCE_USERS_PLATFORMS,user.get_id()))
+                .setRecordId(platform.get_id());
+
+        //set config
+        config.setUri(uriBuilder.build());
+        config.setParallelMode(parallelMode);
+        config.setType(platform.getClass());
+
+
+        //set request
+        request.setConfig(config);
+        request.setListener(listener);
+        request.setObject(platform);
+
+        //execute
+        SynergyKit.synergylize(request, parallelMode);
+    }
+
+    @Override
+    public void patchPlatformInUser(SynergyKitUser user, SynergyKitPlatform platform, PlatformResponseListener listener, boolean parallelMode) {
+        SynergyKitConfig config = new SynergyKitConfig();
+        PlatformRequestPatch request = new PlatformRequestPatch();
 
         //User check
         if(user == null || platform == null){

@@ -20,5 +20,6 @@ public interface IRecords {
 	public void getRecords(String collectionUrl, Type type, RecordsResponseListener listener, boolean parallelMode);
 	public void createRecord(String collectionUrl, SynergyKitObject object, ResponseListener listener, boolean parallelMode);
 	public void updateRecord(String collectionUrl, SynergyKitObject object, ResponseListener listener, boolean parallelMode);
-	public void deleteRecord(String collectionUrl, String recordId,DeleteResponseListener listener, boolean parallelMode);
+    public void patchRecord(String collectionUrl, SynergyKitObject object, ResponseListener listener, boolean parallelMode);
+    public void deleteRecord(String collectionUrl, String recordId,DeleteResponseListener listener, boolean parallelMode);
 }

@@ -240,7 +240,12 @@ public class SynergyKitSdk implements ISynergyKitSdk, IRecords, IUsers, INotific
 		records.updateRecord(collectionUrl,  object, listener, parallelMode);
 	}
 
-	/* Delete record */
+    @Override
+    public void patchRecord(String collectionUrl, SynergyKitObject object, ResponseListener listener, boolean parallelMode) {
+        records.patchRecord(collectionUrl,  object, listener, parallelMode);
+    }
+
+    /* Delete record */
 	@Override
 	public void deleteRecord(String collectionUrl, String recordId,	DeleteResponseListener listener, boolean parallelMode) {
 		records.deleteRecord(collectionUrl, recordId, listener, parallelMode);
@@ -283,7 +288,12 @@ public class SynergyKitSdk implements ISynergyKitSdk, IRecords, IUsers, INotific
 		users.updateUser(user, listener, parallelMode);
 	}
 
-	/* Delete user */
+    @Override
+    public void patchUser(SynergyKitUser user, UserResponseListener listener, boolean parallelMode) {
+        users.patchUser(user, listener, parallelMode);
+    }
+
+    /* Delete user */
 	@Override
 	public void deleteUser(SynergyKitUser user, DeleteResponseListener listener,	boolean parallelMode) {
 		users.deleteUser(user, listener, parallelMode);
@@ -297,6 +307,11 @@ public class SynergyKitSdk implements ISynergyKitSdk, IRecords, IUsers, INotific
     /* Update platform by _id */
     public void updatePlatformInUser(SynergyKitUser user, SynergyKitPlatform platform, PlatformResponseListener listener, boolean parallelMode) {
         users.updatePlatformInUser(user, platform, listener, parallelMode);
+    }
+
+    @Override
+    public void patchPlatformInUser(SynergyKitUser user, SynergyKitPlatform platform, PlatformResponseListener listener, boolean parallelMode) {
+        users.patchPlatformInUser(user, platform, listener, parallelMode);
     }
 
     /* Delete platform by _id */
