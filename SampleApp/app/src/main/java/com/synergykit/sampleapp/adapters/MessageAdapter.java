@@ -47,7 +47,7 @@ public class MessageAdapter extends ArrayAdapter<SocketMessage> {
         if(message.getType()==2){
             userLetterTextView.setText("");
         }else{
-            userLetterTextView.setText(message.getName().charAt(0));
+            userLetterTextView.setText(String.valueOf(message.getName().charAt(0)));
         }
 
 

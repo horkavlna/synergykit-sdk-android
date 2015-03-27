@@ -56,7 +56,8 @@
                 android:layout_below="@id/stateTextView"
                 android:layout_above="@+id/typingTextView"
                 android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"/>
+                android:layout_marginTop="10dp"
+                android:dividerHeight="0dp"/>
 
         <TextView
             android:id="@+id/typingTextView"
