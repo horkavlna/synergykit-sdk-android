@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <ProgressBar
             android:id="@+id/loadingProgressBar"
@@ -46,24 +46,17 @@
             android:gravity="center"
             />
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@+id/typingTextView"
-            android:layout_below="@id/stateTextView"
-            android:layout_marginBottom="20dp"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:background="@color/white">
-
-            <LinearLayout
-                android:id="@+id/messageLinearLayout"
+            <ListView
+                android:id="@+id/messageListView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_gravity="bottom"/>
-        </ScrollView>
+                android:layout_gravity="bottom"
+                android:background="@color/transparent"
+                android:layout_below="@id/stateTextView"
+                android:layout_above="@+id/typingTextView"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"/>
 
         <TextView
             android:id="@+id/typingTextView"

@@ -360,6 +360,4 @@ public class SynergyKit {
     public static void emitViaSocket(String eventName, Object object) {
         SynergyKitSdk.getInstance().emitViaSocket(eventName, object);
     }
-
-
 }

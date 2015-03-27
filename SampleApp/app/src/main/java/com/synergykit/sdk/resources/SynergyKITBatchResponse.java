@@ -13,10 +13,13 @@ public class SynergyKitBatchResponse<T> extends SynergyKitObject implements Seri
     /*Attributes*/
     @Expose
     private int id;
+
     @Expose
     private String status;
+
     @Expose
     private int statusCode;
+
     @Expose
     private T body;
 

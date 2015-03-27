@@ -12,11 +12,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.synergykit.sampleapp.beans.Message;
-import com.synergykit.sdk.Socket;
+import com.synergykit.sampleapp.adapters.MessageAdapter;
+import com.synergykit.sampleapp.beans.SocketMessage;
 import com.synergykit.sdk.SynergyKit;
 import com.synergykit.sdk.SynergyKitSdk;
 import com.synergykit.sdk.addons.GsonWrapper;
@@ -29,8 +30,9 @@ import com.synergykit.sdk.resources.SynergyKitError;
 import com.synergykit.sdk.resources.SynergyKitObject;
 import com.synergykit.sdk.resources.SynergyKitUser;
 
-import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Random;
 
 
 /**
@@ -40,13 +42,16 @@ public class SocketActivity extends ActionBarActivity implements TextWatcher{
 
     private String name = new String();
     private Button sendButton = null;
-    private LinearLayout messageLinearLayout = null;
+    private ListView messageListView = null;
     private EditText messageEditText = null;
+    private int userId = 0;
 
     private TextView typingTextView = null;
     private TextView stateTextView = null;
     RelativeLayout loadingLayout;
-    SynergyKitSdk sdk = new SynergyKitSdk();
+
+    MessageAdapter adapter;
+
 
 
     @Override
@@ -59,14 +64,19 @@ public class SocketActivity extends ActionBarActivity implements TextWatcher{
         actionBar.setHomeButtonEnabled(true);
 
         sendButton = (Button) findViewById(R.id.buttonSend);
-        messageLinearLayout = (LinearLayout) findViewById(R.id.messageLinearLayout);
+        messageListView = (ListView) findViewById(R.id.messageListView);
         messageEditText = (EditText) findViewById(R.id.messageEditText);
         messageEditText.addTextChangedListener(this);
         loadingLayout = (RelativeLayout) findViewById(R.id.loadingLayout);
         stateTextView = (TextView )findViewById(R.id.stateTextView);
         typingTextView = (TextView )findViewById(R.id.typingTextView);
 
+        adapter = new MessageAdapter(getBaseContext(),R.layout.item_socket_message_right);
+        messageListView.setAdapter(adapter);
 
+        Random rand = new Random();
+
+        userId = rand.nextInt();
 
 
         if(getIntent()!=null && getIntent().getStringExtra("name")!=null)
@@ -84,8 +94,7 @@ public class SocketActivity extends ActionBarActivity implements TextWatcher{
             public void doneCallback(int statusCode, SynergyKitUser user) {
                 SynergyKitLog.print("User logged");
                 SynergyKit.onSocket("created", "messages", new CreatedMessagesListener());
-                SynergyKit.onSocket("joined",new UserJoinedListener());
-                SynergyKit.onSocket("leave",new UserLeaveListener());
+                SynergyKit.onSocket("user_state",new UserStateListener());
                 SynergyKit.onSocket("typing",new TypingListener());
                 SynergyKit.connectSocket(new ConnectionStateListener());
 
@@ -118,10 +127,11 @@ public class SocketActivity extends ActionBarActivity implements TextWatcher{
 
     @Override
     protected void onDestroy() {
-      Message message = new Message();
+      SocketMessage message = new SocketMessage();
       message.setName(name);
-      message.setText("");
-      SynergyKit.emitViaSocket("leave",message);
+      message.setText("leaved");
+      message.setUserId(userId);
+      SynergyKit.emitViaSocket("user_state",message);
 
        SynergyKit.disconnectSocket();
         super.onDestroy();
@@ -139,8 +149,9 @@ public class SocketActivity extends ActionBarActivity implements TextWatcher{
 
     @Override
     public void afterTextChanged(Editable s) {
-        Message message = new Message();
+        SocketMessage message = new SocketMessage();
         message.setName(name);
+        message.setUserId(userId);
         message.setText("");
 
 
@@ -153,8 +164,9 @@ public class SocketActivity extends ActionBarActivity implements TextWatcher{
 
         @Override
         public void onClick(View v) {
-            Message message = new Message();
+            SocketMessage message = new SocketMessage();
             message.setName(name);
+            message.setUserId(userId);
             message.setText(messageEditText.getText().toString());
 
             if (message.getText() == null || message.getText().isEmpty())
@@ -219,16 +231,19 @@ public class SocketActivity extends ActionBarActivity implements TextWatcher{
             String data = null;
 
                 data = jsonObject.toString();
-                final Message message = GsonWrapper.getGson().fromJson(data, Message.class);
-                final TextView textView = new TextView(SocketActivity.this);
-                textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                final SocketMessage message = GsonWrapper.getGson().fromJson(data, SocketMessage.class);
 
+
+                if(userId == message.getUserId())
+                    message.setType(1);
+                else
+                    message.setType(0);
 
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        textView.setText(message.getName() + ": " + message.getText());
-                        messageLinearLayout.addView(textView);
+                        adapter.add(message);
+                        adapter.notifyDataSetChanged();
                     }
                 });
 
@@ -246,11 +261,12 @@ public class SocketActivity extends ActionBarActivity implements TextWatcher{
                     sendButton.setEnabled(true);
                     sendButton.setBackgroundResource(R.color.white);
 
-                    Message message = new Message();
+                    SocketMessage message = new SocketMessage();
                     message.setName(name);
-                    message.setText("");
+                    message.setUserId(userId);
+                    message.setText("joined");
 
-                    SynergyKit.emitViaSocket("joined",message);
+                    SynergyKit.emitViaSocket("user_state",message);
 
                 }
             });
@@ -266,7 +282,12 @@ public class SocketActivity extends ActionBarActivity implements TextWatcher{
                 }
             });
 
-            SynergyKit.emitViaSocket("leave",name);
+            SocketMessage message = new SocketMessage();
+            message.setName(name);
+            message.setUserId(userId);
+            message.setText("leaved");
+
+            SynergyKit.emitViaSocket("user_state",message);
         }
 
         @Override
@@ -277,65 +298,24 @@ public class SocketActivity extends ActionBarActivity implements TextWatcher{
 
 
     /** **************************************************************** */
-    private class UserJoinedListener implements SocketEventListener{
+    private class UserStateListener implements SocketEventListener{
         @Override
         public void call(Object... args) {
 
                 String data =((JSONObject) args[0]).toString();
 
-                final Message message = GsonWrapper.getGson().fromJson(data, Message.class);
-                final TextView textView = new TextView(SocketActivity.this);
-                textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                textView.setText(message.getName() + "  connected" );
-                textView.setGravity(Gravity.CENTER_HORIZONTAL);
+                final SocketMessage message = GsonWrapper.getGson().fromJson(data, SocketMessage.class);
+
+                message.setType(2);
+
 
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        messageLinearLayout.addView(textView);
+                        adapter.add(message);
+                        adapter.notifyDataSetChanged();
                     }
                 });
-
-
-        }
-
-        @Override
-        public void subscribed() {
-
-
-
-        }
-
-        @Override
-        public void unsubscribed() {
-
-        }
-
-        @Override
-        public void unauthorized() {
-
-        }
-    }
-
-    /** **************************************************************** */
-    private class UserLeaveListener implements SocketEventListener{
-        @Override
-        public void call(Object... args) {
-
-            String data =((JSONObject) args[0]).toString();;
-
-            final Message message = GsonWrapper.getGson().fromJson(data, Message.class);
-            final TextView textView = new TextView(SocketActivity.this);
-            textView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-            textView.setText(message.getName() + "  disconnected" );
-            textView.setGravity(Gravity.CENTER_HORIZONTAL);
-
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    messageLinearLayout.addView(textView);
-                }
-            });
 
 
         }
@@ -365,17 +345,15 @@ public class SocketActivity extends ActionBarActivity implements TextWatcher{
 
             String data =((JSONObject) args[0]).toString();
 
-            final Message message = GsonWrapper.getGson().fromJson(data, Message.class);
+            final SocketMessage message = GsonWrapper.getGson().fromJson(data, SocketMessage.class);
 
-
-            if(name.equals(message.getName()))
+            if(userId == message.getUserId())
                 return;
-
 
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    typingTextView.setText(message.getName() + " is typing");
+                    typingTextView.setText(message.getName() +" "+ message.getText());
 
                 }
             });
