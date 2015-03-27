@@ -25,7 +25,7 @@ How to use it?
 - Import project with destination folder SampleApp
 - That's all. Project uses Gradle.
 
-## SynergyKIT Android SDK
+## SynergyKit Android SDK
 Version 0.0.4:
 - REST API wrapper (CRUD operations POST, PUT, GET, DELETE)
 - OData filtering
@@ -55,105 +55,231 @@ dependencies {
 ```
 - Next version will be available via jCenter / Maven dependencies
 
-### SynergyKIT initialization (onCreate in Application class)
+### SynergyKit initialization
+The initialization must be the first step of using SynergyKit Android SDK. Typically it's called from onCreate method of Application. If you don't know your application tenant or application key visit our https://synergykit.com website. Both of this are available there. 
+
+#### Base initialization
 ```java
-if(!SynergyKIT.isInit()) {
-    SynergyKIT.init("synergykit-sample-app", "7cbb9eed-17dd-4f75-a7bd-c92f2f6faef9");
-    SynergyKIT.setDebugModeEnabled(true); //TODO set FALSE !!
-    SynergyKITLog.getInstance().setEnabled(true);
+
+private static final String APPLICATION_TENANT = "synergykit-sample-app";
+private static final String APPLICATION_KEY = "7cbb9eed-17dd-4f75-a7bd-c92f2f6faef9";
+
+.
+.
+.
+
+if(!SynergyKit.isInit()) {
+    SynergyKit.init(APPLICATION_TENANT, APPLICATION_KEY);
 }
 ```
 
-### Cache installation
+#### Debug mode settings
+
+You can also enable a debug mode. In debug mode SynergyKit Android SDK prints error messages and endpoint URI to console. 
+
 ```java
-SynergyKIT.installCache(getApplicationContext());
+SynergyKit.setDebugModeEnabled(true);
+```
+An example code from Sample App:
+```java
+
+public class SampleAppApplication extends Application {
+
+	private static final String APPLICATION_TENANT = "synergykit-sample-app";
+	private static final String APPLICATION_KEY = "7cbb9eed-17dd-4f75-a7bd-c92f2f6faef9";
+	
+	@Override
+	public void onCreate() {
+		super.onCreate();
+		
+		if(!SynergyKit.isInit()) {
+			SynergyKit.init(APPLICATION_TENANT, APPLICATION_KEY);
+	        SynergyKit.setDebugModeEnabled(true);
+		}
+	 }
+ }
+```
+
+
+### Cache installation
+
+The SynergyKit Android SDK provides Http response cache (HttpResponseCache). Http response cache caches all of your application's HTTP requests. This cache requires Android 4.0  or later.
+
+You can install this cache with default cache dir size (10 MiB):
+```java
+SynergyKit.installCache(getApplicationContext());
+```
+
+Or you can install this cache with your own cache dir size:
+```java
+long cacheSize = 8 * 1024 * 1024; //8 MiB
+SynergyKit.installCache(getApplicationContext(), cacheSize);
+```
+
+You can also flush installed cache:
+
+```java
+SynergyKit.flushCache();
 ```
 
 ### Records management
+SynergyKit Android SDK provides CRUD methods to read or modify record(s). Every of this method has done and error callback. 
+
+Done callback is called when everything was done without any error. It's called with Http Status Code and SynergyKitObject / SynergyKitObjects which may be retype to expected object type.
+
+Error callback is called when the error occurred. It's called also with Http Status Code and SynergyKitError object.
 
 #### `GET` Read record from collection
 ```java
-SynergyKIT.getRecord("demo_collection","494991d3-ecb8-4472-9c2a-1a4a1ed10946",DemoObject.class , new ResponseListener() {
+private static final String COLLECTION = "demo_collection";
+private static final String RECORD_ID = "494991d3-ecb8-4472-9c2a-1a4a1ed10946"; 
+private static final Type OBJECT_TYPE = DemoObject.class;
+private static final boolean PARALLEL_MODE = false;
+
+.
+.
+.
+
+SynergyKit.getRecord(COLLECTION,RECORD_ID,OBJECT_TYPE , new ResponseListener() {
 	
 	@Override
-	public void errorCallback(int statusCode, SynergyKITError errorObject) {
+	public void errorCallback(int statusCode, SynergyKitError errorObject) {
 		// Error callback
 		
 	}
 	
 	@Override
-	public void doneCallback(int statusCode, SynergyKITObject object) {
-		//Done callback
-		
+	public void doneCallback(int statusCode, SynergyKitObject object) {
+		//Done callback		
 		DemoObject object = (DemoObject) object;
 		
 	}
-}, true);
+}, PARALLEL_MODE);
 ```
 #### `GET` Read records from collection
 ```java
-SynergyKIT.getRecords("demo_collection", DemoObject[].class, new RecordsResponseListener() {
+private static final String COLLECTION = "demo_collection";
+private static final Type OBJECTS_TYPE = DemoObject[].class;
+private static final boolean PARALLEL_MODE = false;
+
+.
+.
+.
+
+SynergyKit.getRecords(COLLECTION, OBJECTS_TYPE, new ResponseListener() {
 	
 	@Override
-	public void errorCallback(int statusCode, SynergyKITError errorObject) {
+	public void errorCallback(int statusCode, SynergyKitError errorObject) {
 		// Error callback
 		
 	}
 	
 	@Override
-	public void doneCallback(int statusCode, SynergyKITObject[] objects) {
-		//Done callback
-		
-		DemoObject[] demoObjects = (DemoObject[]) objects;
+	public void doneCallback(int statusCode, SynergyKitObject[] object) {
+		//Done callback		
+		DemoObject[] object = (DemoObject[]) object;
 		
 	}
-}, true);
+}, PARALLEL_MODE);
 ```
 
 #### `POST` Create new record
 ```java
-SynergyKIT.createRecord("demo_collection", demoObject ,new ResponseListener() {
+
+private static final String COLLECTION = "demo_collection";
+private static final boolean PARALLEL_MODE = false;
+DemoObject demoObject = new DemoObject();
+
+.
+.
+.
+
+SynergyKit.createRecord(COLLECTION, demoObject ,new ResponseListener() {
 	
 	@Override
-	public void errorCallback(int statusCode, SynergyKITError errorObject) {
+	public void errorCallback(int statusCode, SynergyKitError errorObject) {
 		// Error callback
 		
 	}
 	
 	@Override
-	public void doneCallback(int statusCode, SynergyKITObject object) {
+	public void doneCallback(int statusCode, SynergyKitObject object) {
 		// Done callback
 		
 		DemoObject demoObject = (DemoObject) object;
 	}
-}, true);
+}, PARALLEL_MODE);
 ```
 
 #### `PUT` Update existing record
 ```java
-SynergyKIT.updateRecord("demo_collection", demoObject ,new ResponseListener() {
+private static final String COLLECTION = "demo_collection";
+private static final boolean PARALLEL_MODE = false;
+DemoObject demoObject = new DemoObject();
+demoObject.setRecordId("15038c19-35d2-4b70-baa1-dcc8f36dbd33");
+
+
+
+
+SynergyKIT.updateRecord(COLLECTION, demoObject ,new ResponseListener() {
 	
 	@Override
-	public void errorCallback(int statusCode, SynergyKITError errorObject) {
+	public void errorCallback(int statusCode, SynergyKitError errorObject) {
 		// Error callback
 		
 	}
 	
 	@Override
-	public void doneCallback(int statusCode, SynergyKITObject object) {
+	public void doneCallback(int statusCode, SynergyKitObject object) {
 		// Done callback
 		
 		DemoObject demoObject = (DemoObject) object;
 	}
-}, true);
+}, PARALLEL_MODE);
+```
+
+#### `PATCH` Patch existing record
+```java
+private static final String COLLECTION = "demo_collection";
+DemoObject demoObject = new DemoObject();
+demoObject.setRecordId("15038c19-35d2-4b70-baa1-dcc8f36dbd33");
+private static final boolean PARALLEL_MODE = false;
+
+.
+.
+.
+
+SynergyKIT.patchRecord(COLLECTION, demoObject ,new ResponseListener() {
+	
+	@Override
+	public void errorCallback(int statusCode, SynergyKitError errorObject) {
+		// Error callback
+		
+	}
+	
+	@Override
+	public void doneCallback(int statusCode, SynergyKitObject object) {
+		// Done callback
+		
+		DemoObject demoObject = (DemoObject) object;
+	}
+}, PARALLEL_MODE);
 ```
 
 #### `DELETE` Delete record
 ```java
-SynergyKIT.deleteRecord("demo_collection", "494991d3-ecb8-4472-9c2a-1a4a1ed10946", new DeleteResponseListener() {
+private static final String COLLECTION = "demo_collection";
+private static final String RECORD_ID = "15038c19-35d2-4b70-baa1-dcc8f36dbd33";
+private static final boolean PARALLEL_MODE = false;
+
+.
+.
+.
+
+SynergyKit.deleteRecord(COLLECTION, RECORD_ID, new DeleteResponseListener() {
 	
 	@Override
-	public void errorCallback(int statusCode, SynergyKITError errorObject) {
+	public void errorCallback(int statusCode, SynergyKitError errorObject) {
 		// Error callback
 		
 	}
@@ -163,14 +289,28 @@ SynergyKIT.deleteRecord("demo_collection", "494991d3-ecb8-4472-9c2a-1a4a1ed10946
 		// Done callback
 		
 	}
-}, true);
+}, PARALLEL_MODE);
 ```
 
 ### Users management
 
+SynergyKit Android SDK provides CRUD methods to read or modify users. Every of this method has done and error callback. 
+
+Done callback is called when everything was done without any error. It's called with Http Status Code and SynergyKitUser / SynergyKitUsers.
+
+Error callback is called when the error occurred. It's called also with Http Status Code and SynergyKitError object.
+
+
 #### `GET` Read user from collection
 ```java
-SynergyKIT.getUser("494991d3-ecb8-4472-9c2a-1a4a1ed10946", DemoUser.class,new UserResponseListener() {
+private static final String USER_ID = "494991d3-ecb8-4472-9c2a-1a4a1ed10946";
+private static final boolean PARALLEL_MODE = false;
+
+.
+.
+.
+
+SynergyKIT.getUser(USER_ID, DemoUser.class,new UserResponseListener() {
 			
 	@Override
 	public void errorCallback(int statusCode, SynergyKITError errorObject) {
@@ -185,7 +325,7 @@ SynergyKIT.getUser("494991d3-ecb8-4472-9c2a-1a4a1ed10946", DemoUser.class,new Us
 		DemoUser demoUser = (DemoUser) user;
 		
 	}
-}, true);
+}, PARALLEL_MODE);
 ```
 #### `GET` Read users from collection
 ```java
@@ -227,6 +367,24 @@ SynergyKIT.createUser(demoUser, new UserResponseListener() {
 ```
 
 #### `PUT` Update existing user
+```java
+SynergyKIT.updateUser(demoUser, new UserResponseListener() {
+		
+	@Override
+	public void errorCallback(int statusCode, SynergyKITError errorObject) {
+		// Error callback
+		
+	}
+	
+	@Override
+	public void doneCallback(int statusCode, SynergyKITUser user) {
+		// Done callback
+		
+		DemoUser demoUser = (DemoUser) user;
+	}
+}, true);
+```
+#### `PATCH` Patch existing user
 ```java
 SynergyKIT.updateUser(demoUser, new UserResponseListener() {
 		
