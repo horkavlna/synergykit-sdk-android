@@ -421,19 +421,30 @@ SynergyKIT.deleteUser("494991d3-ecb8-4472-9c2a-1a4a1ed10946", new DeleteResponse
 }, true);
 ```
 ### User authorization
+SynergyKit Android SDK provides also authorization. You can register new user or login existing one.
+
 
 #### `POST` Register new user
+This method register new user. New user must have email and password. These parameters must be unique.
+Register method has also done and error callback.
+
+
 ```java
-SynergyKIT.registerUser(demoUser, new UserResponseListener() {
+
+DemoUser demoUser = new DemoUser();
+demoUser.setEmail("demouser@synergykit.com");
+demoUser.setPassword("mystrongpassword");
+
+SynergyKit.registerUser(demoUser, new UserResponseListener() {
 		
 	@Override
-	public void errorCallback(int statusCode, SynergyKITError errorObject) {
+	public void errorCallback(int statusCode, SynergyKitError errorObject) {
 		// Error callback
 		
 	}
 	
 	@Override
-	public void doneCallback(int statusCode, SynergyKITUser user) {
+	public void doneCallback(int statusCode, SynergyKitUser user) {
 		// Done callback
 		
 		DemoUser demoUser = (DemoUser) user;
@@ -442,17 +453,20 @@ SynergyKIT.registerUser(demoUser, new UserResponseListener() {
 ```
 
 #### `POST` Login user
+This method login existing user.  User verification is by email and password. These parameters must be unique.
+Login method has also done and error callback. 
+
 ```java
-SynergyKIT.loginUser(demoUser, new UserResponseListener() {
+SynergyKit.loginUser(demoUser, new UserResponseListener() {
 		
 	@Override
-	public void errorCallback(int statusCode, SynergyKITError errorObject) {
+	public void errorCallback(int statusCode, SynergyKitError errorObject) {
 		// Error callback
 		
 	}
 	
 	@Override
-	public void doneCallback(int statusCode, SynergyKITUser user) {
+	public void doneCallback(int statusCode, SynergyKitUser user) {
 		// Done callback
 		
 		DemoUser demoUser = (DemoUser) user;
