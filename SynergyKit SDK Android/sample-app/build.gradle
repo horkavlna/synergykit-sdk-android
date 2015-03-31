@@ -25,6 +25,6 @@ dependencies {
     compile 'com.facebook.android:facebook-android-sdk:+'
     compile 'com.android.support:support-v4:21.0.3'
     compile 'com.google.android.gms:play-services:+'
-    compile project(':synergykit-sdk-android')
+    compile 'com.letsgood:synergykit-sdk-android:2.1.0'
 
 }
