@@ -770,6 +770,54 @@ To disconnect socket use method disconnectSocket();
 ```java
 SynergyKit.disconnectSocket();
 ```
+
+##CloudCode
+SynergyKit provides using cloudcode. You can simple write your code and invoke it by sdk.
+
+<p align="center" >
+<img src="https://synergykit.blob.core.windows.net/synergykit-sample-app/cloudcode.png" alt="SynergyKIT" title="SynergyKIT">
+</p>
+
+```java
+/*
+* Build your function uri
+*/
+SynergyKitUri uri = new UriBuilder()
+                     .setResource(Resource.RESOURCE_FUNCTIONS)
+                     .setFunctionId("face-recognition")
+                     .build();
+
+/*
+* Create configuration object
+*/
+SynergyKitConfig config = new SynergyKitConfig();
+config.setParallelMode(false);
+config.setType(SynergyKitObject.class);
+config.setUri(uri);
+
+
+/*
+* Create object which extedns from SynergyKitObject and contains your cloudcode function  parameters
+*/
+
+CloudeCodeParams params = new CloudCodeParams();
+
+/*
+* Invoke cloud code
+*/
+SynergyKit.invokeCloudCode(config,params,new ResponseListener() {
+       @Override
+       public void doneCallback(int statusCode, SynergyKitObject object) {
+           
+       }
+
+       @Override
+       public void errorCallback(int statusCode, SynergyKitError errorObject) {
+
+       }
+   });
+```
+
 ## Author
 
 <img src="http://letsgood.com/src/img/logo-letsgood.png" alt="SynergyKIT" title="SynergyKIT" width="10%"> 
