@@ -614,10 +614,10 @@ SynergyKit.synergylize(new SynergyKitRequest() {
 }, PARALLEL_MODE);
 ```
 
-##Socket
+###Socket
 SynergyKit provides Socket.IO to make real-time communication. With this funcion you can develop dynamic applications like a chat. More information about Socket.IO is available here http://socket.io/ .
 
-### Connect socket
+####Connect socket
 To connect socket to SynergyKit server you must call SynergyKit.connect() method.
 
 ```java
@@ -645,7 +645,7 @@ SynergyKit.connectSocket(new SocketStateListener() {
 });
 ```
 
-### Listen collection changes
+#### Listen collection changes
 SynergyKit provides listening changes of records in data collection. You can listen  `created`, `updated`, `patched`, `deleted`.  You can set / unset listener befor or after socket connection.
 
 ```java
@@ -701,7 +701,7 @@ private static final String COLLECTION = "demo_collection";
 SynergyKit.offSocket(Socket.MESSAGE_CREATED,COLLECTION);
 ```
 
-### Listen messages
+#### Listen messages
 You can also listen messages which are directly send to listeners and are not stored in SynergyKit.
 
 ```java
@@ -743,7 +743,7 @@ SynergyKit.onSocket(EVENT_TYPING,new SocketEventListener() {
      });
 ```
 
-### Send message
+#### Send message
 You can send message which is directly send to listeners and is not stored in SynergyKit.
 
 ```java
@@ -765,13 +765,13 @@ SynergyKit.emitViaSocket(EVENT_TYPING,message);
 ```
 
 
-### Disconnect socket
+#### Disconnect socket
 To disconnect socket use method disconnectSocket();
 ```java
 SynergyKit.disconnectSocket();
 ```
 
-##CloudCode
+###CloudCode
 SynergyKit provides using cloudcode. You can simple write your code and invoke it by sdk.
 
 <p align="center" >
