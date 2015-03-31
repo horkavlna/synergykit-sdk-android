@@ -210,11 +210,15 @@ public class Socket implements ISocket {
                 selectedSocketListenerItem = socketListenerItems.get(i);
                 if(selectedSocketListenerItem!=null && selectedSocketListenerItem.equals(socketListenerItem)){
 
-                    /* off */
+                    // off
                     if(selectedSocketListenerItem.getCallListener()!=null)
                         socket.off(selectedSocketListenerItem.getEvent(),selectedSocketListenerItem.getCallListener());
                     else
                         socket.off(selectedSocketListenerItem.getEvent());
+
+                    //call unsubscribed
+                    if(selectedSocketListenerItem.getUnsubscribedListener()!=null)
+                        selectedSocketListenerItem.getUnsubscribedListener().call();
 
                 }
             }
