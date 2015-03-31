@@ -11,7 +11,7 @@ We know how hard can be to work with untried API, so we prepared SDKs for mostly
 </p>
 
 ## Android Sample App uses SynergyKit Android SDK
-Version 2.1.0:
+Version 0.0.4:
 - GET/POST requests examples
 - Cloud code integration with Face++
 
