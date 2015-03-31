@@ -38,18 +38,26 @@ Version2.1.0:
 - Socket.IO 
 
 Roadmap2.1.1:
-- jCenter / Maven dependencies
+- jCenter
 
 How to use it?
 - Open Android Studio
-- Create your new project
-- Import module sdk from synergykit-sdk-android/sdk
+- Create / open your project
+- Add repository to repositories in build.gradle of your project
+```java
+dependencies {
+  jcenter()
+  maven {
+	  url  "http://dl.bintray.com/letsgood/maven"
+  }
+}
+```
 - Add dependency to your project/module build.gradle
 
 
 ```java
 dependencies {
-  compile project(':sdk')
+  compile 'synergykit-sdk-android:sdk:+'
 }
 ```
 - Next version will be available via jCenter / Maven dependencies
