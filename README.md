@@ -27,7 +27,7 @@ How to use it?
 
 ## SynergyKit Android SDK
 Version2.1.0:
-- REST API wrapper (CRUD operations POST, PUT, GET, DELETE)
+- REST API wrapper (CRUD operations POST, PUT, PATCH, GET, DELETE)
 - OData filtering
 - Uploading and downloading files and pictures from global CDN network
 - Sending e-mails and push notifications via GCM
@@ -60,7 +60,6 @@ dependencies {
   compile 'synergykit-sdk-android:sdk:+'
 }
 ```
-- Next version will be available via jCenter / Maven dependencies
 
 ### SynergyKit initialization
 The initialization must be the first step of using SynergyKit Android SDK. Typically it's called from onCreate method of Application. If you don't know your application tenant or application key visit our https://synergykit.com website. Both of this are available there. 
