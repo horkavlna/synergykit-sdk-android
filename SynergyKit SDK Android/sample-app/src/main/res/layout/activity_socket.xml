@@ -1,0 +1,106 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:id="@+id/loadingLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/loadingProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_centerInParent="true"
+            />
+
+        <TextView
+            android:layout_below="@id/loadingProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Connecting..."
+            android:layout_centerHorizontal="true"/>
+
+
+        </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".LoginActivity">
+
+        <TextView
+            android:id="@+id/stateTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:background="@color/red"
+            android:layout_alignParentTop="true"
+            android:textColor="@color/white"
+            android:text="Disconnected"
+            android:gravity="center"
+            />
+
+            <ListView
+                android:id="@+id/messageListView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="bottom"
+                android:background="@color/transparent"
+                android:layout_below="@id/stateTextView"
+                android:layout_above="@+id/typingTextView"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:dividerHeight="0dp"/>
+
+        <TextView
+            android:id="@+id/typingTextView"
+            android:layout_width="wrap_content"
+            android:minWidth="100dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/messageEditText"
+            android:layout_marginBottom="10dp"
+            android:background="@color/white"
+            android:gravity="top|left"
+            android:textColor="@color/orange"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+
+            />
+
+        <EditText
+            android:id="@+id/messageEditText"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_above="@+id/buttonSend"
+            android:layout_marginBottom="10dp"
+            android:background="@color/white"
+            android:gravity="top|left"
+            android:lines="10"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:inputType="textCapSentences"
+            />
+
+
+        <Button
+            android:id="@+id/buttonSend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/gray_brightness77"
+            android:enabled="false"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:text="Send"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+
+
+    </RelativeLayout>
+</LinearLayout>

@@ -1,7 +1,6 @@
 .idea/
 out/
 synergykit.iml
-<<<<<<< HEAD
 synergykit-android.iml
 
 # built application files
@@ -35,6 +34,4 @@ Project.iml
 
 # idea folder from android studio
 .idea/
-=======
-synergykit-android.iml
->>>>>>> gitHubOrigin/master
+
