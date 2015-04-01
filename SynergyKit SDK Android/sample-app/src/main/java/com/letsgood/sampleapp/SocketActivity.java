@@ -17,6 +17,8 @@ import android.widget.TextView;
 import com.letsgood.sampleapp.adapters.MessageAdapter;
 import com.letsgood.synergykitsdkandroid.SynergyKit;
 import com.letsgood.synergykitsdkandroid.addons.GsonWrapper;
+import com.letsgood.synergykitsdkandroid.builders.ODataBuilder;
+import com.letsgood.synergykitsdkandroid.builders.uri.Filter;
 import com.letsgood.synergykitsdkandroid.listeners.ResponseListener;
 import com.letsgood.synergykitsdkandroid.listeners.SocketEventListener;
 import com.letsgood.synergykitsdkandroid.listeners.SocketStateListener;
@@ -24,6 +26,7 @@ import com.letsgood.synergykitsdkandroid.listeners.UserResponseListener;
 import com.letsgood.synergykitsdkandroid.log.SynergyKitLog;
 import com.letsgood.synergykitsdkandroid.resources.SynergyKitError;
 import com.letsgood.synergykitsdkandroid.resources.SynergyKitObject;
+import com.letsgood.synergykitsdkandroid.resources.SynergyKitSocketFilter;
 import com.letsgood.synergykitsdkandroid.resources.SynergyKitUser;
 
 
@@ -93,7 +96,6 @@ public class SocketActivity extends ActionBarActivity implements TextWatcher {
                 SynergyKit.onSocket("user_state", new UserStateListener());
                 SynergyKit.onSocket("typing", new TypingListener());
                 SynergyKit.connectSocket(new ConnectionStateListener());
-
             }
 
             @Override

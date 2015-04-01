@@ -36,35 +36,24 @@ Version2.1.0:
 - New REST API (2.1.0) interface supported
 - Cloud code support
 - Socket.IO 
-
-Roadmap2.1.1:
 - jCenter
 
 How to use it?
 - Open Android Studio
 - Create / open your project
-- Add repository to repositories in build.gradle of your project
+- Add dependency in your project/module build.gradle
 ```java
 dependencies {
-  jcenter()
-  maven {
-	  url  "http://dl.bintray.com/letsgood/maven"
-  }
-}
-```
-- Add dependency to your project/module build.gradle
-
-
-```java
-dependencies {
-  compile 'synergykit-sdk-android:sdk:+'
+  compile 'com.letsgood:synergykit-sdk-android:2.1.0'
 }
 ```
 
 ### SynergyKit initialization
+
 The initialization must be the first step of using SynergyKit Android SDK. Typically it's called from onCreate method of Application. If you don't know your application tenant or application key visit our https://synergykit.com website. Both of this are available there. 
 
 #### Base initialization
+
 ```java
 
 private static final String APPLICATION_TENANT = "synergykit-sample-app";
@@ -109,6 +98,7 @@ public class SampleAppApplication extends Application {
 
 ### Cache installation
 
+
 The SynergyKit Android SDK provides Http response cache (HttpResponseCache). Http response cache caches all of your application's HTTP requests. This cache requires Android 4.0  or later.
 
 You can install this cache with default cache dir size (10 MiB):
@@ -129,6 +119,7 @@ SynergyKit.flushCache();
 ```
 
 ### Records management
+
 SynergyKit Android SDK provides CRUD methods to read or modify record(s). Every of this method has done and error callback. 
 
 Done callback is called when everything was done without any error. It's called with Http Status Code and SynergyKitObject / SynergyKitObjects which may be retype to expected object type.
@@ -136,6 +127,7 @@ Done callback is called when everything was done without any error. It's called 
 Error callback is called when the error occurred. It's called also with Http Status Code and SynergyKitError object.
 
 #### `GET` Read record from collection
+
 ```java
 private static final String COLLECTION = "demo_collection";
 private static final String RECORD_ID = "494991d3-ecb8-4472-9c2a-1a4a1ed10946"; 
@@ -163,6 +155,7 @@ SynergyKit.getRecord(COLLECTION,RECORD_ID,OBJECT_TYPE , new ResponseListener() {
 }, PARALLEL_MODE);
 ```
 #### `GET` Read records from collection
+
 ```java
 private static final String COLLECTION = "demo_collection";
 private static final Type OBJECTS_TYPE = DemoObject[].class;
@@ -190,6 +183,7 @@ SynergyKit.getRecords(COLLECTION, OBJECTS_TYPE, new ResponseListener() {
 ```
 
 #### `POST` Create new record
+
 ```java
 
 private static final String COLLECTION = "demo_collection";
@@ -218,6 +212,7 @@ SynergyKit.createRecord(COLLECTION, demoObject ,new ResponseListener() {
 ```
 
 #### `PUT` Update existing record
+
 ```java
 private static final String COLLECTION = "demo_collection";
 private static final boolean PARALLEL_MODE = false;
@@ -245,6 +240,7 @@ SynergyKIT.updateRecord(COLLECTION, demoObject ,new ResponseListener() {
 ```
 
 #### `PATCH` Patch existing record
+
 ```java
 private static final String COLLECTION = "demo_collection";
 DemoObject demoObject = new DemoObject();
@@ -273,6 +269,7 @@ SynergyKIT.patchRecord(COLLECTION, demoObject ,new ResponseListener() {
 ```
 
 #### `DELETE` Delete record
+
 ```java
 private static final String COLLECTION = "demo_collection";
 private static final String RECORD_ID = "15038c19-35d2-4b70-baa1-dcc8f36dbd33";
@@ -300,6 +297,7 @@ SynergyKit.deleteRecord(COLLECTION, RECORD_ID, new DeleteResponseListener() {
 
 ### Users management
 
+
 SynergyKit Android SDK provides CRUD methods to read or modify users. Every of this method has done and error callback. 
 
 Done callback is called when everything was done without any error. It's called with Http Status Code and SynergyKitUser / SynergyKitUsers.
@@ -308,6 +306,7 @@ Error callback is called when the error occurred. It's called also with Http Sta
 
 
 #### `GET` Read user from collection
+
 ```java
 private static final String USER_ID = "494991d3-ecb8-4472-9c2a-1a4a1ed10946";
 private static final boolean PARALLEL_MODE = false;
@@ -334,6 +333,7 @@ SynergyKit.getUser(USER_ID, DemoUser.class,new UserResponseListener() {
 }, PARALLEL_MODE);
 ```
 #### `GET` Read users from collection
+
 ```java
 SynergyKit.getUsers(DemoUser[].class, new UsersResponseListener() {
 	
@@ -354,6 +354,7 @@ SynergyKit.getUsers(DemoUser[].class, new UsersResponseListener() {
 ```
 
 #### `POST` Create new user
+
 ```java
 DemoUser demoUser = new DemoUser();
 
@@ -375,6 +376,7 @@ SynergyKit.createUser(demoUser, new UserResponseListener() {
 ```
 
 #### `PUT` Update existing user
+
 ```java
 DemoUser demoUser = new DemoUser();
 
@@ -395,6 +397,7 @@ SynergyKit.updateUser(demoUser, new UserResponseListener() {
 }, true);
 ```
 #### `PATCH` Patch existing user
+
 ```java
 DemoUser demoUser = new DemoUser();
 
@@ -416,6 +419,7 @@ SynergyKit.updateUser(demoUser, new UserResponseListener() {
 ```
 
 #### `DELETE` Delete user
+
 ```java
 DemoUser demoUser = new DemoUser();
 demoUser.set__id("494991d3-ecb8-4472-9c2a-1a4a1ed10946");
@@ -436,10 +440,12 @@ SynergyKit.deleteUser(demoUser, new DeleteResponseListener() {
 }, true);
 ```
 ### User authorization
+
 SynergyKit Android SDK provides also authorization. You can register new user or login existing one.
 
 
 #### `POST` Register new user
+
 This method register new user. New user must have email and password. These parameters must be unique.
 Register method has also done and error callback.
 
@@ -468,6 +474,7 @@ SynergyKit.registerUser(demoUser, new UserResponseListener() {
 ```
 
 #### `POST` Login user
+
 This method login existing user.  User verification is provided by email and password. These parameters must be unique.
 
 Login method has also done and error callback. 
@@ -500,19 +507,23 @@ SynergyKit.setToken("ae10ecfdaa33658d563a2s55");
 
 
 ### Making requests with own URI (with OData filtering)
+
 With OData you can filter, order and select data with REST Api endpoints. Web API supports the following OData query options:
 
-#### $expand
-Expands related entities inline.
 #### $filter
+
 Filters the results, based on a Boolean condition.
 #### $orderby
+
 Sorts the results.
 #### $select
+
 Selects which properties to include in the response.
 #### $skip
+
 Skips the first n results.
 #### $top
+
 Returns only the first n the results.
 
 More informations you can get on http://odata.org
@@ -572,6 +583,7 @@ SynergyKit.getRecord(config, new ResponseListener() {
 
 ### Making own requests
 
+
 ```java
 private static final String COLLECTION = "demo_collection";
 private static final boolean PARALLEL_MODE = false;
@@ -622,9 +634,11 @@ SynergyKit.synergylize(new SynergyKitRequest() {
 ```
 
 ###Socket
+
 SynergyKit provides Socket.IO to make real-time communication. With this funcion you can develop dynamic applications like a chat. More information about Socket.IO is available here http://socket.io/ .
 
 ####Connect socket
+
 To connect socket to SynergyKit server you must call SynergyKit.connect() method.
 
 ```java
@@ -653,6 +667,7 @@ SynergyKit.connectSocket(new SocketStateListener() {
 ```
 
 #### Listen collection changes
+
 SynergyKit provides listening changes of records in data collection. You can listen  `created`, `updated`, `patched`, `deleted`.  You can set / unset listener befor or after socket connection.
 
 ```java
@@ -708,7 +723,74 @@ private static final String COLLECTION = "demo_collection";
 SynergyKit.offSocket(Socket.MESSAGE_CREATED,COLLECTION);
 ```
 
+#### Listen collection changes with filter
+
+SynergyKit provides listening changes of filtered collection records. Just create you filter and set socket listener.
+
+```java
+
+/*
+* If you wanna listen new posted records from user called TestUser on collection demo_collection you can use this code.
+*/
+
+private static final String COLLECTION = "demo_collection";
+private static final String FILTER_NAME = "filter_records_from_testuser";
+
+.
+.
+.
+
+//Build your OData Filter
+ODataBuilder oDataBuilder = ODataBuilder.newInstance().setFilter(Filter.buildAttribute("from"),Filter.OPERATOR_EQUAL,Filter.buildParametr("TestUser"));
+
+//Create filter
+SynergyKitSocketFilter filter = new SynergyKitSocketFilter(FILTER_NAME,oDataBuilder.build());
+
+//set listener with filter
+SynergyKit.onSocket(Socket.MESSAGE_CREATED,COLLECTION, filter,new SocketEventListener() {
+	  @Override
+      public void call(Object... args) {
+		// this method is called when new record was created in collection demo_collection
+             
+      }
+
+      @Override
+      public void subscribed() {
+		// this method is called when listener was subscribed and is ready to listen
+      }
+
+      @Override
+      public void unsubscribed() {
+		// this method is called when you call SynergyKit.offSocket(...); method and listener is unsubscribed 
+      }
+
+      @Override
+      public void unauthorized() {
+		// this method is called when listener was not authorized. Typically it's caused by wrong or invalid token.
+      }
+     });
+```
+
+If you don't want to listen collection changes anymore you can call SynergyKit.offSocket(...) method.
+
+```java
+
+/*
+* If you wanna stop listen new posted records to collection demo_collection you can use this code.
+*/
+
+
+private static final String COLLECTION = "demo_collection";
+
+.
+.
+.
+
+SynergyKit.offSocket(Socket.MESSAGE_CREATED,COLLECTION);
+
+
 #### Listen messages
+
 You can also listen messages which are directly send to listeners and are not stored in SynergyKit.
 
 ```java
@@ -751,6 +833,7 @@ SynergyKit.onSocket(EVENT_TYPING,new SocketEventListener() {
 ```
 
 #### Send message
+
 You can send message which is directly send to listeners and is not stored in SynergyKit.
 
 ```java
@@ -773,12 +856,14 @@ SynergyKit.emitViaSocket(EVENT_TYPING,message);
 
 
 #### Disconnect socket
+
 To disconnect socket use method disconnectSocket();
 ```java
 SynergyKit.disconnectSocket();
 ```
 
 ###CloudCode
+
 SynergyKit provides using cloudcode. You can simple write your code and invoke it by sdk.
 
 <p align="center" >
