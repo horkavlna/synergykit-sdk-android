@@ -1,0 +1,118 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:id="@+id/loadingLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/loadingProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.AppCompat.ProgressBar"
+            android:layout_centerInParent="true"
+            />
+
+        <TextView
+            android:layout_below="@id/loadingProgressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Connecting..."
+            android:layout_centerHorizontal="true"/>
+
+
+        </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".LoginActivity">
+
+        <TextView
+            android:id="@+id/stateTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="2dp"
+            android:background="@color/red"
+            android:layout_alignParentTop="true"
+            android:textColor="@color/white"
+            android:text="Disconnected"
+            android:textSize="12sp"
+            android:gravity="center"
+            />
+
+            <ListView
+                android:id="@+id/messageListView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="bottom"
+                android:background="@color/transparent"
+                android:layout_below="@id/stateTextView"
+                android:layout_above="@+id/typingTextView"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:dividerHeight="0dp"
+                android:stackFromBottom="true"
+                android:transcriptMode="alwaysScroll"/>
+
+        <TextView
+            android:id="@+id/typingTextView"
+            android:layout_width="wrap_content"
+            android:minWidth="100dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/messageEditText"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/edit_text"
+            android:gravity="top|left"
+            android:textColor="@color/orange"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:paddingLeft="@dimen/defaultMargin"
+            android:paddingRight="@dimen/defaultMargin"
+
+
+            />
+
+        <EditText
+            android:id="@+id/messageEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/buttonSend"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/defaultMargin"
+            android:gravity="center|left"
+            android:singleLine="true"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:inputType="textCapSentences"
+            android:minHeight="25dp"
+            android:paddingLeft="@dimen/defaultMargin"
+            android:paddingRight="@dimen/defaultMargin"
+            />
+
+
+        <Button
+            android:id="@+id/buttonSend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:background="@color/gray_brightness77"
+            android:enabled="false"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:text="Send"
+            android:layout_marginBottom="@dimen/defaultMargin"
+            android:padding="0dp"
+            android:minHeight="25dp"
+            />
+
+
+    </RelativeLayout>
+</LinearLayout>

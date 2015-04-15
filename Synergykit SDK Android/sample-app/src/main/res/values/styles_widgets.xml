@@ -1,0 +1,81 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="defaultButton" parent="@android:style/Widget.Holo.Light.Button">
+        <item name="android:minHeight">@dimen/buttonMinHeight</item>
+        <item name="android:layout_margin">@dimen/buttonMargin</item>
+        <item name="android:background">@drawable/button_selector</item>
+        <item name="android:textSize">@dimen/buttonTextSize</item>
+        <item name="android:textColor">@drawable/text_button_selector</item>
+        <item name="android:padding">@dimen/buttonPadding</item>
+
+    </style>
+
+    <style name="menuButton" parent="@android:style/Widget.Holo.Light.Button">
+        <item name="android:minHeight">@dimen/buttonMinHeight</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">left|center_vertical</item>
+        <item name="android:background">@drawable/menu_button_selector</item>
+        <item name="android:textSize">@dimen/buttonTextSize</item>
+        <item name="android:textColor">@drawable/text_menu_button_selector</item>
+        <item name="android:padding">@dimen/buttonPadding</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:drawableEnd">@drawable/ic_action_expand</item>
+
+    </style>
+
+    <style name="checkBox" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/checkBoxTextSize</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/textDescription</item>
+    </style>
+
+    <style name="editText" parent="@style/Widget.AppCompat.EditText">
+        <item name="android:textSize">@dimen/editTextTextSize</item>
+        <item name="android:textColorHint">@color/editTextHint</item>
+        <item name="android:textColor">@color/editTextDescription</item>
+        <item name="android:minHeight">@dimen/buttonMinHeight</item>
+        <item name="android:background">@drawable/edit_text_selector</item>
+        <item name="android:paddingLeft">20dp</item>
+        <item name="android:paddingRight">20dp</item>
+        <item name="android:inputType">textCapSentences</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="defaultListView" parent="@android:style/Widget.ListView">
+        <item name="android:overScrollMode">always</item>
+        <item name="android:dividerHeight">1dp</item>
+        <item name="android:divider">@color/listviewDivider</item>
+        <item name="android:choiceMode">singleChoice</item>
+        <item name="android:listSelector">@drawable/ab_selector</item>
+    </style>
+
+    <style name="drawerListView" parent="defaultListView">
+        <item name="android:divider">@color/gray_brightness90</item>
+    </style>
+
+    <style name="defaultGridView" parent="@android:style/Widget.GridView">
+        <item name="android:background">@color/gridViewBackgroundItem</item>
+        <item name="android:listSelector">@drawable/grid_selector</item>
+        <item name="android:overScrollMode">never</item>
+        <item name="android:scrollbars">vertical</item>
+        <item name="android:dividerHeight">@dimen/listViewDividerHeight</item>
+        <item name="android:activatedBackgroundIndicator">@drawable/grid_selector_selection</item>
+    </style>
+
+    <style name="alertMessage">
+        <item name="android:textSize">@dimen/alertMessage</item>
+        <item name="android:padding">@dimen/appPadding</item>
+    </style>
+
+    <style name="alertTitle">
+        <item name="android:textSize">@dimen/alertTitle</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingBottom">@dimen/appPadding</item>
+        <item name="android:paddingTop">@dimen/appPadding</item>
+        <item name="android:paddingRight">@dimen/appPadding</item>
+    </style>
+
+</resources>
