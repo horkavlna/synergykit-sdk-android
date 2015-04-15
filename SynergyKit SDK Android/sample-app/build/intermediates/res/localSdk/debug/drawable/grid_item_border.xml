@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid 
+        android:color="@color/listviewBackgroundItem" 
+    />
+    <stroke 
+        android:width="1px" 
+        android:color="@color/gridViewDivider" 
+    />
+</shape><!-- From: file:/C:/Users/Pavel/Documents/Git%20Repositories/synergykit-sdk-android/Synergykit%20SDK%20Android/sample-app/src/main/res/drawable/grid_item_border.xml -->

@@ -1,1 +1,0 @@
-include ':app', ':synergykit-sdk-android', ':sample-app'

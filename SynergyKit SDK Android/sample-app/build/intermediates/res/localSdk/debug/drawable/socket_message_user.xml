@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="oval">
+
+    <solid
+        android:color="@color/app_color"
+        />
+
+
+</shape><!-- From: file:/C:/Users/Pavel/Documents/Git%20Repositories/synergykit-sdk-android/Synergykit%20SDK%20Android/sample-app/src/main/res/drawable/socket_message_user.xml -->

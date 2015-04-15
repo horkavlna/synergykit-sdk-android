@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.letsgood</groupId>
+  <artifactId>synergykit-sdk-android</artifactId>
+  <version>2.1.2</version>
+  <packaging>aar</packaging>
+  <name>synergykit-sdk-android</name>
+  <url>https://synergykit.com</url>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+  <scm>
+    <connection>https://github.com/Letsgood/synergykit-sdk-android</connection>
+    <developerConnection>https://github.com/Letsgood/synergykit-sdk-android</developerConnection>
+    <url>https://synergykit.com</url>
+  </scm>
+  <dependencies>
+    <dependency>
+      <groupId>com.github.nkzawa</groupId>
+      <artifactId>socket.io-client</artifactId>
+      <version>0.3.0</version>
+      <scope>compile</scope>
+      <exclusions>
+        <exclusion>
+          <artifactId>json</artifactId>
+          <groupId>org.json</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.2.4</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.android.support</groupId>
+      <artifactId>appcompat-v7</artifactId>
+      <version>21.0.3</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+</project>

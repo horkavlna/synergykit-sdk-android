@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/C:/Users/Pavel/Documents/Git%20Repositories/synergykit-sdk-android/Synergykit%20SDK%20Android/sample-app/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.0.0/res/values-ms/values.xml -->
+    <eat-comment/>
+    <string name="messenger_send_button_text">Hantar</string>
+</resources>
