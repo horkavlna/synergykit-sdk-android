@@ -15,7 +15,9 @@ import android.widget.TextView;
 
 import com.letsgood.sampleapp.model.DemoObject;
 import com.letsgood.sampleapp.model.DemoUser;
+import com.letsgood.sampleapp.widgets.CustomProgressDialog;
 import com.letsgood.synergykitsdkandroid.Synergykit;
+import com.letsgood.synergykitsdkandroid.addons.GsonWrapper;
 import com.letsgood.synergykitsdkandroid.builders.UriBuilder;
 import com.letsgood.synergykitsdkandroid.builders.uri.Resource;
 import com.letsgood.synergykitsdkandroid.config.SynergykitConfig;
@@ -75,6 +77,8 @@ public class QueriesActivity extends ActionBarActivity implements View.OnClickLi
         findLastFileButton.setOnClickListener(this);
         fiveFilesButton.setOnClickListener(this);
 
+        printOutput("Review source code for more information about what's happening.");
+
     }
 
 
@@ -127,7 +131,6 @@ public class QueriesActivity extends ActionBarActivity implements View.OnClickLi
         setEnabled(false);
 
         outputLinearLayout.removeAllViews();
-        printOutput("Finding last user...");
 
         SynergykitUri synergyKitUri = UriBuilder
                 .newInstance()
@@ -142,21 +145,26 @@ public class QueriesActivity extends ActionBarActivity implements View.OnClickLi
                 .setType(DemoUser.class)
                 .setUri(synergyKitUri);
 
+        final CustomProgressDialog progressDialog =  new CustomProgressDialog(this,"Finding ...");
 
         Synergykit.getUser(config, new UserResponseListener() {
             @Override
             public void doneCallback(int statusCode, SynergykitUser user) {
-                printOutput("Finding done");
-                printOutput("User: " + ((DemoUser) user).getName());
+
+                if(((DemoUser) user).getName()==null || ((DemoUser) user).getName().isEmpty())
+                    printOutput(((DemoUser) user).getEmail());
+                else
+                    printOutput(((DemoUser) user).getEmail() + " (" + ((DemoUser) user).getName() + ")");
 
                 setEnabled(true);
+                progressDialog.dismiss();
             }
 
             @Override
             public void errorCallback(int statusCode, SynergykitError errorObject) {
-                printOutput("Finding failed");
                 printOutput(errorObject.toString());
                 setEnabled(true);
+                progressDialog.dismiss();
             }
         });
 
@@ -166,7 +174,6 @@ public class QueriesActivity extends ActionBarActivity implements View.OnClickLi
         setEnabled(false);
 
         outputLinearLayout.removeAllViews();
-        printOutput("Getting 5 emails...");
 
         SynergykitUri synergyKitUri = UriBuilder
                 .newInstance()
@@ -181,24 +188,28 @@ public class QueriesActivity extends ActionBarActivity implements View.OnClickLi
                 .setType(DemoUser[].class)
                 .setUri(synergyKitUri);
 
+        final CustomProgressDialog progressDialog =  new CustomProgressDialog(this,"Getting ...");
 
         Synergykit.getUsers(config, new UsersResponseListener() {
             @Override
             public void doneCallback(int statusCode, SynergykitUser[] users) {
-                printOutput("Getting done");
 
                 for (int i = 0; users != null && i < users.length; i++)
-                    printOutput("Email " + Integer.toString(i + 1) + ": " + ((DemoUser) users[i]).getEmail());
+                    if(((DemoUser) users[i]).getEmail()==null || ((DemoUser) users[i]).getEmail().isEmpty())
+                      printOutput("-");
+                    else
+                      printOutput(((DemoUser) users[i]).getEmail());
 
                 setEnabled(true);
+                progressDialog.dismiss();
 
             }
 
             @Override
             public void errorCallback(int statusCode, SynergykitError errorObject) {
-                printOutput("Getting failed");
                 printOutput(errorObject.toString());
                 setEnabled(true);
+                progressDialog.dismiss();
             }
         });
     }
@@ -207,7 +218,6 @@ public class QueriesActivity extends ActionBarActivity implements View.OnClickLi
         setEnabled(false);
 
         outputLinearLayout.removeAllViews();
-        printOutput("Finding last record...");
 
         SynergykitUri synergyKitUri = UriBuilder
                 .newInstance()
@@ -223,21 +233,21 @@ public class QueriesActivity extends ActionBarActivity implements View.OnClickLi
                 .setType(DemoObject.class)
                 .setUri(synergyKitUri);
 
+        final CustomProgressDialog progressDialog =  new CustomProgressDialog(this,"Finding ...");
 
         Synergykit.getRecord(config, new ResponseListener() {
             @Override
             public void doneCallback(int statusCode, SynergykitObject object) {
-                printOutput("Finding done");
-                printOutput("Record: " + ((DemoObject) object).getText());
-
+                printOutput(((DemoObject) object).getText());
                 setEnabled(true);
+                progressDialog.dismiss();
             }
 
             @Override
             public void errorCallback(int statusCode, SynergykitError errorObject) {
-                printOutput("Finding failed");
                 printOutput(errorObject.toString());
                 setEnabled(true);
+                progressDialog.dismiss();
             }
         });
 
@@ -247,7 +257,6 @@ public class QueriesActivity extends ActionBarActivity implements View.OnClickLi
         setEnabled(false);
 
         outputLinearLayout.removeAllViews();
-        printOutput("Getting 5 texts...");
 
         SynergykitUri synergyKitUri = UriBuilder
                 .newInstance()
@@ -263,24 +272,28 @@ public class QueriesActivity extends ActionBarActivity implements View.OnClickLi
                 .setType(DemoObject[].class)
                 .setUri(synergyKitUri);
 
+        final CustomProgressDialog progressDialog =  new CustomProgressDialog(this,"Getting ...");
 
         Synergykit.getRecords(config, new RecordsResponseListener() {
             @Override
             public void doneCallback(int statusCode, SynergykitObject[] objects) {
-                printOutput("Getting done");
+
 
                 for (int i = 0; objects != null && i < objects.length; i++)
-                    printOutput("Text " + Integer.toString(i + 1) + ": " + ((DemoObject) objects[i]).getText());
-
+                    if(((DemoObject) objects[i]).getText()==null || ((DemoObject) objects[i]).getText().isEmpty())
+                        printOutput("-");
+                    else
+                        printOutput(((DemoObject) objects[i]).getText());
                 setEnabled(true);
+                progressDialog.dismiss();
 
             }
 
             @Override
             public void errorCallback(int statusCode, SynergykitError errorObject) {
-                printOutput("Getting failed");
                 printOutput(errorObject.toString());
                 setEnabled(true);
+                progressDialog.dismiss();
             }
         });
 
@@ -290,7 +303,6 @@ public class QueriesActivity extends ActionBarActivity implements View.OnClickLi
         setEnabled(false);
 
         outputLinearLayout.removeAllViews();
-        printOutput("Finding last file record...");
 
         SynergykitUri synergyKitUri = UriBuilder
                 .newInstance()
@@ -305,25 +317,23 @@ public class QueriesActivity extends ActionBarActivity implements View.OnClickLi
                 .setType(SynergykitFile.class)
                 .setUri(synergyKitUri);
 
+        final CustomProgressDialog progressDialog =  new CustomProgressDialog(this,"Finding ...");
 
         Synergykit.getFile(config, new FileResponseListener() {
             @Override
             public void doneCallback(int statusCode, SynergykitFile file) {
-                printOutput("Finding done");
-                printOutput("File path: " + file.getPath());
+                printOutput(file.getPath());
 
 
                 if (!file.getPath().endsWith(".jpg")) {
                     setEnabled(true);
+                    progressDialog.dismiss();
                     return;
                 }
-
-                printOutput("Download image...");
 
                 Synergykit.downloadBitmap(file.getPath(), new BitmapResponseListener() {
                     @Override
                     public void doneCallback(int statusCode, Bitmap bitmap) {
-                        printOutput("Download done...");
                         ImageView imageView = new ImageView(getApplicationContext());
                         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(android.app.ActionBar.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         imageView.setImageBitmap(bitmap);
@@ -331,22 +341,23 @@ public class QueriesActivity extends ActionBarActivity implements View.OnClickLi
                         outputLinearLayout.addView(imageView);
 
                         setEnabled(true);
+                        progressDialog.dismiss();
                     }
 
                     @Override
                     public void errorCallback(int statusCode, SynergykitError errorObject) {
-                        printOutput("Downloading failed");
                         printOutput(errorObject.toString());
                         setEnabled(true);
+                        progressDialog.dismiss();
                     }
                 });
             }
 
             @Override
             public void errorCallback(int statusCode, SynergykitError errorObject) {
-                printOutput("Finding failed");
                 printOutput(errorObject.toString());
                 setEnabled(true);
+                progressDialog.dismiss();
             }
         });
 
@@ -357,12 +368,11 @@ public class QueriesActivity extends ActionBarActivity implements View.OnClickLi
         setEnabled(false);
 
         outputLinearLayout.removeAllViews();
-        printOutput("Finding last file record...");
 
         SynergykitUri synergyKitUri = UriBuilder
                 .newInstance()
                 .setResource(Resource.RESOURCE_FILES)
-                .setOrderByDesc("createdAt")
+                .setOrderByDesc("size")
                 .setTop(5)
                 .build();
 
@@ -372,23 +382,24 @@ public class QueriesActivity extends ActionBarActivity implements View.OnClickLi
                 .setType(SynergykitFile[].class)
                 .setUri(synergyKitUri);
 
+        final CustomProgressDialog progressDialog =  new CustomProgressDialog(this,"Getting ...");
 
         Synergykit.getFiles(config, new FilesResponseListener() {
             @Override
             public void doneCallback(int statusCode, SynergykitFile[] files) {
-                printOutput("Finding done");
 
                 for (int i = 0; files != null && i < files.length; i++)
-                    printOutput("File " + Integer.toString(i + 1) + " path: " + files[i].getPath());
+                    printOutput(Long.toString(files[i].getSize()/1024) + " Kb");
 
                 setEnabled(true);
+                progressDialog.dismiss();
             }
 
             @Override
             public void errorCallback(int statusCode, SynergykitError errorObject) {
-                printOutput("Finding failed");
                 printOutput(errorObject.toString());
                 setEnabled(true);
+                progressDialog.dismiss();
             }
         });
 

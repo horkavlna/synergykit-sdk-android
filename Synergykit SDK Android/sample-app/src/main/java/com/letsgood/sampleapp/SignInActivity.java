@@ -2,6 +2,7 @@ package com.letsgood.sampleapp;
 
 
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -24,6 +25,12 @@ import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.plus.People;
+import com.google.android.gms.plus.Plus;
 import com.letsgood.sampleapp.model.DemoUser;
 import com.letsgood.sampleapp.widgets.CustomProgressDialog;
 import com.letsgood.synergykitsdkandroid.Synergykit;
@@ -40,12 +47,14 @@ import java.security.NoSuchAlgorithmException;
 /**
  * Created by Marek on 1/13/15.
  */
-public class SignInActivity extends ActionBarActivity implements View.OnClickListener {
+public class SignInActivity extends ActionBarActivity implements View.OnClickListener, GoogleApiClient.ConnectionCallbacks,GoogleApiClient.OnConnectionFailedListener,ResultCallback<People.LoadPeopleResult> {
 
     /* Constants */
     private static final String USER_SHARED_PREF = "user-shared-pref";
     private static final String USER_PASSWD_TAG = "user-password-tag";
     private static final String USER_EMAIL_TAG = "user-email-tag";
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+
 
     /* Attributes */
     private SharedPreferences sharedPreferences = null;
@@ -53,9 +62,20 @@ public class SignInActivity extends ActionBarActivity implements View.OnClickLis
     private EditText passwordEditText;
     private Button signInButton;
     private LoginButton facebookButton;
-    private Button addRoleButton;
-    private Button removeRoleButton;
+    private SignInButton googleButton;
     private CallbackManager callbackManager;
+    private GoogleApiClient googleApiClient;
+
+    /**
+     * True if the sign-in button was clicked.  When true, we know to resolve all
+     * issues preventing sign-in without waiting.
+     */
+    private boolean googleButtonClicked;
+
+    /**
+     * True if we are in the process of resolving a ConnectionResult
+     */
+    private boolean intentInProgress;
 
 
     @Override
@@ -99,9 +119,8 @@ public class SignInActivity extends ActionBarActivity implements View.OnClickLis
         emailEditText =(EditText) findViewById(R.id.emailEditText);
         passwordEditText =(EditText) findViewById(R.id.passwordEditText);
         signInButton = (Button) findViewById(R.id.signInButton);
-        addRoleButton = (Button) findViewById(R.id.addRoleButton);
-        removeRoleButton = (Button) findViewById(R.id.removeRoleButton);
         facebookButton = (LoginButton) findViewById(R.id.facebookLoginButton);
+        googleButton = (SignInButton) findViewById(R.id.googleLoginButton);
 
 
         emailEditText.setText(sharedPreferences.getString(USER_EMAIL_TAG,""));
@@ -109,29 +128,36 @@ public class SignInActivity extends ActionBarActivity implements View.OnClickLis
 
 
         signInButton.setOnClickListener(this);
-        addRoleButton.setOnClickListener(this);
-        removeRoleButton.setOnClickListener(this);
-
-
 
         // Callback registration
         facebookButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 LoginManager.getInstance().logOut();
+                DemoUser user=null;
 
                 if(Synergykit.getLoggedUser()==null){
-
-                    return;
+                    user = new DemoUser();
+                }else{
+                    user = (DemoUser)Synergykit.getLoggedUser();
                 }
 
-                SynergykitUser user = Synergykit.getLoggedUser();
                 SynergykitFacebookAuthData facebookAuthData = new SynergykitFacebookAuthData(loginResult.getAccessToken().getUserId(),loginResult.getAccessToken().getToken());
 
                 Synergykit.linkFacebook(user, facebookAuthData, new UserResponseListener() {
                     @Override
                     public void doneCallback(int statusCode, SynergykitUser user) {
-                        SynergykitLog.print(Synergykit.getGson().toJson(user));
+                        DemoUser demoUser = (DemoUser)user;
+
+                        if(demoUser.getName()==null)
+                            demoUser.setName("Anonymous");
+
+                        Synergykit.setLoggedUser(demoUser);
+
+
+
+                        Toast.makeText(getApplicationContext(),"You're signed in via Facebook!", Toast.LENGTH_SHORT).show();
+                        finish();
                     }
 
                     @Override
@@ -160,12 +186,28 @@ public class SignInActivity extends ActionBarActivity implements View.OnClickLis
                 // App code
             }
         });
+
+
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(Plus.API)
+                .addScope(Plus.SCOPE_PLUS_LOGIN)
+                .build();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PLAY_SERVICES_RESOLUTION_REQUEST) {
+            intentInProgress = false;
+
+            if (!googleApiClient.isConnecting()) {
+                googleApiClient.connect();
+            }
+        }
     }
 
 
@@ -235,62 +277,79 @@ public class SignInActivity extends ActionBarActivity implements View.OnClickLis
 
     }
 
-
-    /* Add role */
-    private void addRole(){
-
-        if(Synergykit.getLoggedUser()==null){
-            Toast.makeText(getApplicationContext(),"You're not signed in",Toast.LENGTH_SHORT).show();
-            return;
+    @Override
+    public void onConnectionFailed(ConnectionResult result) {
+        if (!intentInProgress) {
+            if (googleButtonClicked && result.hasResolution()) {
+                // The user has already clicked 'sign-in' so we attempt to resolve all
+                // errors until the user is signed in, or they cancel.
+                try {
+                    result.startResolutionForResult(this, PLAY_SERVICES_RESOLUTION_REQUEST);
+                    intentInProgress = true;
+                } catch (IntentSender.SendIntentException e) {
+                    // The intent was canceled before it was sent.  Return to the default
+                    // state and attempt to connect to get an updated ConnectionResult.
+                    intentInProgress = false;
+                    googleApiClient.connect();
+                }
+            }
         }
-
-        //show progress dialog
-        final CustomProgressDialog progressDialog =  new CustomProgressDialog(this,"Adding role...");
-
-        Synergykit.addRole(Synergykit.getLoggedUser(), "test1", new UserResponseListener() {
-            @Override
-            public void doneCallback(int statusCode, SynergykitUser user) {
-                progressDialog.dismiss();
-                Toast.makeText(getApplicationContext(), "Role was added.", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void errorCallback(int statusCode, SynergykitError errorObject) {
-                progressDialog.dismiss();
-                Toast.makeText(getApplicationContext(), errorObject.toString(), Toast.LENGTH_SHORT).show();
-            }
-        }, true);
-
     }
 
-    /* Add role */
-    private void removeRole(){
+//
+//    /* Add role */
+//    private void addRole(){
+//
+//        if(Synergykit.getLoggedUser()==null){
+//            Toast.makeText(getApplicationContext(),"You're not signed in",Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//
+//        //show progress dialog
+//        final CustomProgressDialog progressDialog =  new CustomProgressDialog(this,"Adding role...");
+//
+//        Synergykit.addRole(Synergykit.getLoggedUser(), "test1", new UserResponseListener() {
+//            @Override
+//            public void doneCallback(int statusCode, SynergykitUser user) {
+//                progressDialog.dismiss();
+//                Toast.makeText(getApplicationContext(), "Role was added.", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void errorCallback(int statusCode, SynergykitError errorObject) {
+//                progressDialog.dismiss();
+//                Toast.makeText(getApplicationContext(), errorObject.toString(), Toast.LENGTH_SHORT).show();
+//            }
+//        }, true);
+//
+//    }
 
-        if(Synergykit.getLoggedUser()==null){
-            Toast.makeText(getApplicationContext(),"You're not signed in",Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        //show progress dialog
-        final CustomProgressDialog progressDialog =  new CustomProgressDialog(this,"Adding role...");
-
-        Synergykit.removeRole(Synergykit.getLoggedUser(), "test1", new UserResponseListener() {
-            @Override
-            public void doneCallback(int statusCode, SynergykitUser user) {
-                progressDialog.dismiss();
-                Toast.makeText(getApplicationContext(), "Role was removed.", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void errorCallback(int statusCode, SynergykitError errorObject) {
-                progressDialog.dismiss();
-                Toast.makeText(getApplicationContext(), errorObject.toString(), Toast.LENGTH_SHORT).show();
-            }
-        }, true);
-
-    }
-
-    /* Remove role */
+//    /* Remove role */
+//    private void removeRole(){
+//
+//        if(Synergykit.getLoggedUser()==null){
+//            Toast.makeText(getApplicationContext(),"You're not signed in",Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//
+//        //show progress dialog
+//        final CustomProgressDialog progressDialog =  new CustomProgressDialog(this,"Adding role...");
+//
+//        Synergykit.removeRole(Synergykit.getLoggedUser(), "test1", new UserResponseListener() {
+//            @Override
+//            public void doneCallback(int statusCode, SynergykitUser user) {
+//                progressDialog.dismiss();
+//                Toast.makeText(getApplicationContext(), "Role was removed.", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void errorCallback(int statusCode, SynergykitError errorObject) {
+//                progressDialog.dismiss();
+//                Toast.makeText(getApplicationContext(), errorObject.toString(), Toast.LENGTH_SHORT).show();
+//            }
+//        }, true);
+//
+//    }
 
     /* On click */
     @Override
@@ -300,13 +359,39 @@ public class SignInActivity extends ActionBarActivity implements View.OnClickLis
                 signIn();
                 break;
 
-            case R.id.addRoleButton:
-                addRole();
-                break;
+            case R.id.googleLoginButton:
+                if(!googleApiClient.isConnecting()){
 
-            case R.id.removeRoleButton:
-                removeRole();
-                break;
+                }
         }
+    }
+
+    protected void onStart() {
+        super.onStart();
+        googleApiClient.connect();
+    }
+
+    protected void onStop() {
+        super.onStop();
+
+        if (googleApiClient.isConnected()) {
+            googleApiClient.disconnect();
+        }
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        Plus.PeopleApi.loadVisible(googleApiClient, null).setResultCallback(this);
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+       googleApiClient.connect();
+    }
+
+
+    @Override
+    public void onResult(People.LoadPeopleResult loadPeopleResult) {
+
     }
 }

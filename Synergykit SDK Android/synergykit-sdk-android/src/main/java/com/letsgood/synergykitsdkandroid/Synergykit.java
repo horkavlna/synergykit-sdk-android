@@ -25,10 +25,12 @@ import com.letsgood.synergykitsdkandroid.listeners.SocketStateListener;
 import com.letsgood.synergykitsdkandroid.listeners.UserResponseListener;
 import com.letsgood.synergykitsdkandroid.listeners.UsersResponseListener;
 import com.letsgood.synergykitsdkandroid.request.SynergykitRequest;
+import com.letsgood.synergykitsdkandroid.resources.SynergykitAnonymousAuthData;
 import com.letsgood.synergykitsdkandroid.resources.SynergykitBatchItem;
 import com.letsgood.synergykitsdkandroid.resources.SynergykitEmail;
 import com.letsgood.synergykitsdkandroid.resources.SynergykitFacebookAuthData;
 import com.letsgood.synergykitsdkandroid.resources.SynergykitFile;
+import com.letsgood.synergykitsdkandroid.resources.SynergykitGoogleAuthData;
 import com.letsgood.synergykitsdkandroid.resources.SynergykitNotification;
 import com.letsgood.synergykitsdkandroid.resources.SynergykitObject;
 import com.letsgood.synergykitsdkandroid.resources.SynergykitPlatform;
@@ -140,22 +142,23 @@ public class Synergykit {
 	public static void installCache(Context context) {
 		SynergykitSdk.getInstance().installCache(context);
 	}
-	
-	//------------------------------------------------------------------------------
-	/* Get record */
-	public static void getRecord(SynergykitConfig config, ResponseListener listener) {
-		SynergykitSdk.getInstance().getRecord(config, listener);
-	}
+
+    //-------------------------------------------------------------------------------------------------------------------
 
     /* Invoke cloud code*/
     public static void invokeCloudCode(SynergykitConfig config,SynergykitObject object,  ResponseListener listener) {
         SynergykitSdk.getInstance().invokeCloudCode(config, object,  listener);
     }
 
+	//------------------------------------------------------------------------------
+	/* Get record */
+	public static void getRecord(SynergykitConfig config, ResponseListener listener) {
+		SynergykitSdk.getInstance().getRecord(config, listener);
+	}
 
 	/* Get record */
-	public static void getRecord(String collectionUrl, String recordId, Type type,	ResponseListener listener, boolean parallelMode) {
-		SynergykitSdk.getInstance().getRecord(collectionUrl, recordId, type, listener, parallelMode);
+	public static void getRecord(String collection, String recordId, Type type,	ResponseListener listener, boolean parallelMode) {
+		SynergykitSdk.getInstance().getRecord(collection, recordId, type, listener, parallelMode);
 		
 	}
 	
@@ -165,31 +168,31 @@ public class Synergykit {
 	}
 
 	/* Get records */
-	public static void getRecords(String collectionUrl, Type type, RecordsResponseListener listener, boolean parallelMode) {
-		SynergykitSdk.getInstance().getRecords(collectionUrl, type, listener, parallelMode);
+	public static void getRecords(String collection, Type type, RecordsResponseListener listener, boolean parallelMode) {
+		SynergykitSdk.getInstance().getRecords(collection, type, listener, parallelMode);
 	}
 
     /* Create record */
-	public static void createRecord(String collectionUrl, SynergykitObject object, ResponseListener listener, boolean parallelMode) {
-		SynergykitSdk.getInstance().createRecord(collectionUrl, object, listener, parallelMode);
+	public static void createRecord(String collection, SynergykitObject object, ResponseListener listener, boolean parallelMode) {
+		SynergykitSdk.getInstance().createRecord(collection, object, listener, parallelMode);
 		
 	}
 
 	/* Update record */
-	public static void updateRecord(String collectionUrl,SynergykitObject object, ResponseListener listener,	boolean parallelMode) {
-		SynergykitSdk.getInstance().updateRecord(collectionUrl, object, listener, parallelMode);
+	public static void updateRecord(String collection,SynergykitObject object, ResponseListener listener,	boolean parallelMode) {
+		SynergykitSdk.getInstance().updateRecord(collection, object, listener, parallelMode);
 		
 	}
 
     /* Patch record */
-    public static void patchRecord(String collectionUrl,SynergykitObject object, ResponseListener listener,	boolean parallelMode) {
-        SynergykitSdk.getInstance().patchRecord(collectionUrl, object, listener, parallelMode);
+    public static void patchRecord(String collection,SynergykitObject object, ResponseListener listener,	boolean parallelMode) {
+        SynergykitSdk.getInstance().patchRecord(collection, object, listener, parallelMode);
 
     }
 
 	/* Delete record */
-	public static void deleteRecord(String collectionUrl, String recordId,	DeleteResponseListener listener, boolean parallelMode) {
-		SynergykitSdk.getInstance().deleteRecord(collectionUrl, recordId, listener, parallelMode);
+	public static void deleteRecord(String collection, String recordId,	DeleteResponseListener listener, boolean parallelMode) {
+		SynergykitSdk.getInstance().deleteRecord(collection, recordId, listener, parallelMode);
 	}
 
 	//-------------------------------------------------------------------------------------------------------------------
@@ -308,6 +311,31 @@ public class Synergykit {
     /* Link Twitter*/
     public static void linkTwitter(SynergykitUser user, SynergykitTwitterAuthData twitterAuthData, UserResponseListener listener) {
         SynergykitSdk.getInstance().linkTwitter(user, twitterAuthData, listener);
+    }
+
+    /* Link Google*/
+    public static void linkGoogle(SynergykitUser user, SynergykitGoogleAuthData googleAuthData, UserResponseListener listener) {
+        SynergykitSdk.getInstance().linkGoogle(user,googleAuthData,listener);
+    }
+
+    /* Login via Facebook */
+    public static void loginViaFacebook(SynergykitFacebookAuthData facebookAuthData, UserResponseListener listener) {
+        SynergykitSdk.getInstance().loginViaFacebook(facebookAuthData,listener);
+    }
+
+    /* Login Twitter*/
+    public static void loginViaTwitter(SynergykitTwitterAuthData twitterAuthData, UserResponseListener listener) {
+        SynergykitSdk.getInstance().loginViaTwitter(twitterAuthData,listener);
+    }
+
+    /* Login Google */
+    public static void loginViaGoogle(SynergykitGoogleAuthData googleAuthData, UserResponseListener listener) {
+        SynergykitSdk.getInstance().loginViaGoogle(googleAuthData,listener);
+    }
+
+    /* Login anonymous */
+    public static void loginAnonymous(SynergykitAnonymousAuthData anonymousAuthData, UserResponseListener listener) {
+        SynergykitSdk.getInstance().loginAnonymous(anonymousAuthData,listener);
     }
 	
 	//-------------------------------------------------------------------------------------------------------------------

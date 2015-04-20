@@ -22,15 +22,19 @@
     <color name="orange_light">#FFF0E0</color>
     <color name="orange_dark">#E68A00</color>
     <color name="orange">#FF9900</color>
+    <color name="blue">#1364d6</color>
     <color name="red">#E43421</color>
     <color name="green">#33CC33</color>
     <color name="yellow">#FEFF82</color>
     <color name="transparent">@android:color/transparent</color>
+    <color name="blue_fb">#1e5199</color>
+    <color name="blue_twitter">#00a6ea</color>
+    <color name="red_google">#ef1410</color>
 
     <!-- Default colors -->
     <color name="layout_bg_color">@color/white</color>
     <color name="layout_placeholder_bg_color">@color/gray_brightness92</color>
-    <color name="app_color">#FF9B00</color>
+    <color name="app_color">@color/blue</color>
     <color name="app_color_dark">#000000</color>
     <color name="selector_color">@color/app_color</color>
     <color name="appbasetheme_color">@color/app_color</color>

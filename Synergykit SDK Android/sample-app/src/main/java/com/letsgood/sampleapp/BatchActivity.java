@@ -54,6 +54,7 @@ public class BatchActivity extends ActionBarActivity implements View.OnClickList
         outputLinearLayout = (LinearLayout) findViewById(R.id.linearLayoutOutput);
         inputEditText = (EditText) findViewById(R.id.inputEditText);
         batchButton.setOnClickListener(this);
+        printOutput("For more information about actions in batch request watch source code.");
     }
 
 

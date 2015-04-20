@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.letsgood.sampleapp.model.DemoObject;
+import com.letsgood.sampleapp.widgets.CustomProgressDialog;
 import com.letsgood.synergykitsdkandroid.Synergykit;
 import com.letsgood.synergykitsdkandroid.builders.UriBuilder;
 import com.letsgood.synergykitsdkandroid.builders.uri.Resource;
@@ -22,6 +23,9 @@ import com.letsgood.synergykitsdkandroid.listeners.ResponseListener;
 import com.letsgood.synergykitsdkandroid.resources.SynergykitError;
 import com.letsgood.synergykitsdkandroid.resources.SynergykitObject;
 import com.letsgood.synergykitsdkandroid.resources.SynergykitUri;
+
+import java.text.SimpleDateFormat;
+import java.util.GregorianCalendar;
 
 /**
  * Created by Marek on 1/13/15.
@@ -54,6 +58,8 @@ public class DataActivity extends ActionBarActivity implements View.OnClickListe
         inputEditText = (EditText) findViewById(R.id.inputEditText);
         postDataButton.setOnClickListener(this);
         getDataButton.setOnClickListener(this);
+
+        printOutput("At first post some data.");
 
     }
 
@@ -105,23 +111,30 @@ public class DataActivity extends ActionBarActivity implements View.OnClickListe
         demoObject.setText(inputEditText.getText().toString());
 
         outputLinearLayout.removeAllViews();
-        printOutput("Posting text...");
+        final CustomProgressDialog progressDialog =  new CustomProgressDialog(this,"Posting ...");
 
         Synergykit.createRecord(COLLECTION_DEMO_OBJECTS, demoObject, new ResponseListener() {
             @Override
             public void doneCallback(int statusCode, SynergykitObject object) {
-                printOutput("Posting done");
-                printOutput("Text: " + demoObject.getText());
+                GregorianCalendar gc = new GregorianCalendar();
+                gc.setTimeInMillis(object.getCreatedAt());
+                SimpleDateFormat fmt = new SimpleDateFormat("MM/dd HH:mm:ss");
+
+
+
+                printOutput(fmt.format(gc.getTime())+" " + demoObject.getText());
                 postDataButton.setEnabled(true);
                 getDataButton.setEnabled(true);
+                inputEditText.getText().clear();
+                progressDialog.dismiss();
             }
 
             @Override
             public void errorCallback(int statusCode, SynergykitError errorObject) {
-                printOutput("Posting failed");
                 printOutput(errorObject.toString());
                 postDataButton.setEnabled(true);
                 getDataButton.setEnabled(true);
+                progressDialog.dismiss();
             }
         }, false);
 
@@ -132,8 +145,6 @@ public class DataActivity extends ActionBarActivity implements View.OnClickListe
         getDataButton.setEnabled(false);
 
         outputLinearLayout.removeAllViews();
-        printOutput("Geting last 10 texts...");
-
 
         SynergykitUri synergyKitUri = UriBuilder
                                         .newInstance()
@@ -150,16 +161,22 @@ public class DataActivity extends ActionBarActivity implements View.OnClickListe
                                     .setUri(synergyKitUri);
 
 
+
+        final CustomProgressDialog progressDialog =  new CustomProgressDialog(this,"Getting ...");
+
         Synergykit.getRecords(config, new RecordsResponseListener() {
             @Override
-            public void doneCallback(int statusCode, SynergykitObject[] object) {
-                printOutput("Getting done");
+            public void doneCallback(int statusCode, SynergykitObject[] objects) {
 
-                for (int i = 0; i < object.length; i++)
-                    printOutput("Text " + Integer.toString(i + 1) + ": " + ((DemoObject) object[i]).getText());
-
+                for (int i = 0; i < objects.length; i++){
+                    GregorianCalendar gc = new GregorianCalendar();
+                    gc.setTimeInMillis(objects[i].getCreatedAt());
+                    SimpleDateFormat fmt = new SimpleDateFormat("MM/dd HH:mm:ss");
+                    printOutput(fmt.format(gc.getTime())+" " + ((DemoObject)objects[i]).getText());
+                }
                 postDataButton.setEnabled(true);
                 getDataButton.setEnabled(true);
+                progressDialog.dismiss();
             }
 
             @Override
@@ -168,6 +185,7 @@ public class DataActivity extends ActionBarActivity implements View.OnClickListe
                 printOutput(errorObject.toString());
                 postDataButton.setEnabled(true);
                 getDataButton.setEnabled(true);
+                progressDialog.dismiss();
             }
         });
     }
@@ -180,9 +198,12 @@ public class DataActivity extends ActionBarActivity implements View.OnClickListe
             return;
 
         textView.setText(message);
+
         outputLinearLayout.addView(textView);
 
+
     }
+
 
 
 

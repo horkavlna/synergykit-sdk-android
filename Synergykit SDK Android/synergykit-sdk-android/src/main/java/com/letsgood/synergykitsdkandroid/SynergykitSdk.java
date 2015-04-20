@@ -43,11 +43,13 @@ import com.letsgood.synergykitsdkandroid.listeners.UserResponseListener;
 import com.letsgood.synergykitsdkandroid.listeners.UsersResponseListener;
 import com.letsgood.synergykitsdkandroid.log.SynergykitLog;
 import com.letsgood.synergykitsdkandroid.request.SynergykitRequest;
+import com.letsgood.synergykitsdkandroid.resources.SynergykitAnonymousAuthData;
 import com.letsgood.synergykitsdkandroid.resources.SynergykitAuthConfig;
 import com.letsgood.synergykitsdkandroid.resources.SynergykitBatchItem;
 import com.letsgood.synergykitsdkandroid.resources.SynergykitEmail;
 import com.letsgood.synergykitsdkandroid.resources.SynergykitFacebookAuthData;
 import com.letsgood.synergykitsdkandroid.resources.SynergykitFile;
+import com.letsgood.synergykitsdkandroid.resources.SynergykitGoogleAuthData;
 import com.letsgood.synergykitsdkandroid.resources.SynergykitNotification;
 import com.letsgood.synergykitsdkandroid.resources.SynergykitObject;
 import com.letsgood.synergykitsdkandroid.resources.SynergykitPlatform;
@@ -421,6 +423,36 @@ public class SynergykitSdk implements ISynergyKitSdk, IRecords, IUsers, INotific
     @Override
     public void linkTwitter(SynergykitUser user, SynergykitTwitterAuthData twitterAuthData, UserResponseListener listener) {
         authorization.linkTwitter(user, twitterAuthData, listener);
+    }
+
+    /* Link Google*/
+    @Override
+    public void linkGoogle(SynergykitUser user, SynergykitGoogleAuthData googleAuthData, UserResponseListener listener) {
+        authorization.linkGoogle(user,googleAuthData,listener);
+    }
+
+    /* Login via Facebook */
+    @Override
+    public void loginViaFacebook(SynergykitFacebookAuthData facebookAuthData, UserResponseListener listener) {
+        authorization.loginViaFacebook(facebookAuthData,listener);
+    }
+
+    /* Login Twitter*/
+    @Override
+    public void loginViaTwitter(SynergykitTwitterAuthData twitterAuthData, UserResponseListener listener) {
+        authorization.loginViaTwitter(twitterAuthData,listener);
+    }
+
+    /* Login Google */
+    @Override
+    public void loginViaGoogle(SynergykitGoogleAuthData googleAuthData, UserResponseListener listener) {
+        authorization.loginViaGoogle(googleAuthData,listener);
+    }
+
+    /* Login anonymous */
+    @Override
+    public void loginAnonymous(SynergykitAnonymousAuthData anonymousAuthData, UserResponseListener listener) {
+        authorization.loginAnonymous(anonymousAuthData,listener);
     }
 
     //-------------------------------------------------------------------------------------------------------------------

@@ -39,7 +39,7 @@ public class NotificationIntent extends IntentService {
         notificationManager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext())
-                                                    .setSmallIcon(R.drawable.ic_launcher)
+                                                    .setSmallIcon(R.mipmap.ic_launcher)
                                                     .setContentTitle(getString(R.string.app_name))
                                                     .setStyle(new NotificationCompat.BigTextStyle().bigText(extras.getString("alert")))
                                                      .setContentText(extras.getString("alert"))

@@ -7,8 +7,10 @@ package com.letsgood.synergykitsdkandroid.resources;
  */
 
 import com.google.gson.annotations.Expose;
+import com.letsgood.synergykitsdkandroid.Synergykit;
 
 import java.io.Serializable;
+import java.util.LinkedList;
 import java.util.List;
 
 public class SynergykitUser extends SynergykitObject implements Serializable {
@@ -26,6 +28,10 @@ public class SynergykitUser extends SynergykitObject implements Serializable {
 	protected List<SynergykitPlatform> platforms;
     @Expose
     protected AuthData authData;
+    @Expose
+    protected boolean isActivated = false;
+    @Expose
+    protected LinkedList<String> roles = new LinkedList<>();
 
 	/* Email getter  */
 	public String getEmail() {
@@ -72,6 +78,21 @@ public class SynergykitUser extends SynergykitObject implements Serializable {
         this.authData = authData;
     }
 
+    /* Is activated */
+    public boolean isActivated() {
+        return isActivated;
+    }
+
+    /* Set activated */
+    public void setActivated(boolean isActivated) {
+        this.isActivated = isActivated;
+    }
+
+    /* Roles getter */
+    public LinkedList<String> getRoles() {
+        return roles;
+    }
+
     /* -------------------------------------------------------------- */
     public class AuthData {
 
@@ -82,22 +103,50 @@ public class SynergykitUser extends SynergykitObject implements Serializable {
         @Expose
         private SynergykitTwitterAuthData twitter;
 
+        @Expose
+        private SynergykitAnonymousAuthData anonymous;
+
+        @Expose
+        private SynergykitGoogleAuthData google;
+
 
         public AuthData() {
-            twitter = null;
-            facebook = null;
+            this.twitter = null;
+            this.facebook = null;
+            this.anonymous = null;
+            this.google = null;
         }
 
         /* Constructor */
         public AuthData(SynergykitFacebookAuthData facebookAuthData) {
-            facebook = facebookAuthData;
-            twitter = null;
+            this.facebook = facebookAuthData;
+            this.twitter = null;
+            this.anonymous = null;
+            this.google = null;
         }
 
         /* Constructor */
         public AuthData(SynergykitTwitterAuthData twitterAuthData) {
             facebook = null;
             twitter = twitterAuthData;
+            this.anonymous = null;
+            this.google = null;
+        }
+
+        /* Constructor */
+        public AuthData(SynergykitGoogleAuthData googleAuthData) {
+            facebook = null;
+            twitter = null;
+            this.anonymous = null;
+            this.google = googleAuthData;
+        }
+
+        /* Constructor */
+        public AuthData(SynergykitAnonymousAuthData anonymousAuthData) {
+            facebook = null;
+            twitter = null;
+            this.anonymous = anonymousAuthData;
+            this.google = null;
         }
 
         /* Facebook getter */
@@ -120,5 +169,14 @@ public class SynergykitUser extends SynergykitObject implements Serializable {
             this.twitter = twitter;
         }
 
+        /* Anonymous setter*/
+        public SynergykitAnonymousAuthData getAnonymous() {
+            return anonymous;
+        }
+
+        /* Anonymous setter */
+        public void setAnonymous(SynergykitAnonymousAuthData anonymous) {
+            this.anonymous = anonymous;
+        }
     }
 }

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.letsgood.sampleapp.model.DemoEmail;
+import com.letsgood.sampleapp.widgets.CustomProgressDialog;
 import com.letsgood.synergykitsdkandroid.Synergykit;
 import com.letsgood.synergykitsdkandroid.listeners.EmailResponseListener;
 import com.letsgood.synergykitsdkandroid.resources.SynergykitError;
@@ -82,14 +83,16 @@ public class EmailActivity extends ActionBarActivity implements View.OnClickList
         email.setSubject("SynergyKit Sample App Demo Email");
 
         outputLinearLayout.removeAllViews();
-        printOutput("Email: " +  Synergykit.getLoggedUser().getEmail());
-        printOutput("Sending email...");
+
+        final CustomProgressDialog progressDialog =  new CustomProgressDialog(this,"Sending ...");
 
         Synergykit.sendEmail(DemoEmail.EMAIL_ID, email, new EmailResponseListener() {
             @Override
             public void doneCallback(int statusCode) {
-                printOutput("Sending done");
+                printOutput("Email was send.");
                 sendButton.setEnabled(true);
+                progressDialog.dismiss();
+
             }
 
             @Override
@@ -97,6 +100,7 @@ public class EmailActivity extends ActionBarActivity implements View.OnClickList
                 printOutput("Sending failed");
                 printOutput(errorObject.toString());
                 sendButton.setEnabled(true);
+                progressDialog.dismiss();
             }
         }, true);
 

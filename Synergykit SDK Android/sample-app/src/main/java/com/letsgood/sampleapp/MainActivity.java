@@ -14,6 +14,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.letsgood.synergykitsdkandroid.Synergykit;
+import com.letsgood.synergykitsdkandroid.listeners.DeleteResponseListener;
+import com.letsgood.synergykitsdkandroid.listeners.ResponseListener;
+import com.letsgood.synergykitsdkandroid.resources.SynergykitError;
+import com.letsgood.synergykitsdkandroid.resources.SynergykitObject;
+
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener {
 
@@ -66,6 +72,20 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
+
+        Synergykit.deleteRecord("collection","recordId",new DeleteResponseListener() {
+            @Override
+            public void doneCallback(int statusCode) {
+
+            }
+
+            @Override
+            public void errorCallback(int statusCode, SynergykitError errorObject) {
+
+            }
+        }, false);
+
         return true;
     }
 

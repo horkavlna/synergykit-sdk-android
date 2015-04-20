@@ -30,7 +30,7 @@ public class ErrorAlertDialog {
 		alertDialogError.setTitleTextColor(context.getResources().getColor(
 				R.color.alertError));
 		alertDialogError.setTitleBackground(R.drawable.alert_error);
-		alertDialogError.setTitleImage(R.drawable.ic_launcher);
+		alertDialogError.setTitleImage(R.mipmap.ic_launcher);
 		alertDialogError.setTitleText(context.getString(R.string.app_name)); 
 		alertDialogError.setMessageText(error);
 		alertDialogError.setButtonPositive("ok");

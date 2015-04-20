@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.letsgood.sampleapp.widgets.CustomProgressDialog;
 import com.letsgood.synergykitsdkandroid.Synergykit;
 import com.letsgood.synergykitsdkandroid.listeners.NotificationResponseListener;
 import com.letsgood.synergykitsdkandroid.listeners.PlatformResponseListener;
@@ -132,21 +133,21 @@ public class NotificationsActivity  extends ActionBarActivity implements View.On
         notification.addUserId(Synergykit.getLoggedUser().getId());
 
         outputLinearLayout.removeAllViews();
-        printOutput("Sending notification...");
 
+        final CustomProgressDialog progressDialog =  new CustomProgressDialog(this,"Sending ...");
 
         Synergykit.sendNotification(notification, new NotificationResponseListener() {
             @Override
             public void doneCallback(int statusCode) {
-                printOutput("Sending done");
+                progressDialog.dismiss();
                 sendButton.setEnabled(true);
             }
 
             @Override
             public void errorCallback(int statusCode, SynergykitError errorObject) {
-                printOutput("Sending failed");
                 printOutput(errorObject.toString());
                 sendButton.setEnabled(true);
+                progressDialog.dismiss();
             }
         }, true);
 

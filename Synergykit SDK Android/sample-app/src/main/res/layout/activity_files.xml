@@ -35,7 +35,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginRight="@dimen/defaultMargin"
                 android:layout_weight="1"
-                android:text="Get last one" />
+                android:text="Fetch last one" />
 
             <Button
                 android:id="@+id/buttonDestroyLastOne"

@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.letsgood.sampleapp.model.DemoUser;
+import com.letsgood.sampleapp.widgets.CustomProgressDialog;
 import com.letsgood.synergykitsdkandroid.Synergykit;
 import com.letsgood.synergykitsdkandroid.builders.UriBuilder;
 import com.letsgood.synergykitsdkandroid.builders.uri.Resource;
@@ -60,11 +61,6 @@ public class FilesActivity extends ActionBarActivity implements View.OnClickList
         destroyLastOneButton = (Button)findViewById(R.id.buttonDestroyLastOne);
 
         outputLinearLayout = (LinearLayout) findViewById(R.id.linearLayoutOutput);
-
-        if(Synergykit.getLoggedUser()==null){
-            Toast.makeText(getApplicationContext(),"You're not signed in. Sign in first.",Toast.LENGTH_SHORT).show();
-            return;
-        }
 
         uploadFileFromBundleButton.setOnClickListener(this);
         getLastOneButton.setOnClickListener(this);
@@ -132,25 +128,24 @@ public class FilesActivity extends ActionBarActivity implements View.OnClickList
 
         setEnabled(false);
         outputLinearLayout.removeAllViews();
-        printOutput("Uploading file...");
+
+        final CustomProgressDialog progressDialog =  new CustomProgressDialog(this,"Uploading ...");
 
         Synergykit.createFile(logoBitmap, new FileResponseListener() {
             @Override
             public void doneCallback(int statusCode, SynergykitFile file) {
-                printOutput("Uploading done.");
-                printOutput("File: " + Synergykit.getGson().toJson(file));
+                printOutput(file.getPath());
 
                 if (!file.getPath().endsWith(".jpg")) {
                     setEnabled(true);
+                    progressDialog.dismiss();
                     return;
                 }
-
-                printOutput("Download image...");
 
                 Synergykit.downloadBitmap(file.getPath(), new BitmapResponseListener() {
                     @Override
                     public void doneCallback(int statusCode, Bitmap bitmap) {
-                        printOutput("Download done...");
+
                         ImageView imageView = new ImageView(getApplicationContext());
                         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
@@ -159,22 +154,23 @@ public class FilesActivity extends ActionBarActivity implements View.OnClickList
                         outputLinearLayout.addView(imageView);
 
                         setEnabled(true);
+                        progressDialog.dismiss();
                     }
 
                     @Override
                     public void errorCallback(int statusCode, SynergykitError errorObject) {
-                        printOutput("Downloading failed");
                         printOutput(errorObject.toString());
                         setEnabled(true);
+                        progressDialog.dismiss();
                     }
                 });
             }
 
             @Override
             public void errorCallback(int statusCode, SynergykitError errorObject) {
-                printOutput("Getting failed.");
                 printOutput(errorObject.toString());
                 setEnabled(true);
+                progressDialog.dismiss();
             }
         });
     }
@@ -183,7 +179,6 @@ public class FilesActivity extends ActionBarActivity implements View.OnClickList
 
         setEnabled(false);
         outputLinearLayout.removeAllViews();
-        printOutput("Getting last one...");
 
         SynergykitUri uri = UriBuilder.newInstance()
                                         .setResource(Resource.RESOURCE_FILES)
@@ -195,25 +190,24 @@ public class FilesActivity extends ActionBarActivity implements View.OnClickList
                                                     .setUri(uri)
                                                     .setType(SynergykitFile.class);
 
+        final CustomProgressDialog progressDialog =  new CustomProgressDialog(this,"Fetching ...");
 
         Synergykit.getFile(config, new FileResponseListener() {
             @Override
             public void doneCallback(int statusCode, SynergykitFile file) {
-                printOutput("Getting failed.");
-                printOutput("File: " + Synergykit.getGson().toJson(file));
+
+                printOutput(file.getPath());
 
 
                 if (!file.getPath().endsWith(".jpg")) {
                     setEnabled(true);
+                    progressDialog.dismiss();
                     return;
                 }
-
-                printOutput("Download image...");
 
                 Synergykit.downloadBitmap(file.getPath(), new BitmapResponseListener() {
                     @Override
                     public void doneCallback(int statusCode, Bitmap bitmap) {
-                        printOutput("Download done...");
                         ImageView imageView = new ImageView(getApplicationContext());
                         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
@@ -222,22 +216,23 @@ public class FilesActivity extends ActionBarActivity implements View.OnClickList
                         outputLinearLayout.addView(imageView);
 
                         setEnabled(true);
+                        progressDialog.dismiss();
                     }
 
                     @Override
                     public void errorCallback(int statusCode, SynergykitError errorObject) {
-                        printOutput("Downloading failed");
                         printOutput(errorObject.toString());
                         setEnabled(true);
+                        progressDialog.dismiss();
                     }
                 });
             }
 
             @Override
             public void errorCallback(int statusCode, SynergykitError errorObject) {
-                printOutput("Getting failed.");
                 printOutput(errorObject.toString());
                 setEnabled(true);
+                progressDialog.dismiss();
             }
         });
     }
@@ -245,7 +240,6 @@ public class FilesActivity extends ActionBarActivity implements View.OnClickList
     private void destroyLastOne(){
         setEnabled(false);
         outputLinearLayout.removeAllViews();
-        printOutput("Getting last one...");
 
         SynergykitUri uri = UriBuilder.newInstance()
                 .setResource(Resource.RESOURCE_FILES)
@@ -257,27 +251,25 @@ public class FilesActivity extends ActionBarActivity implements View.OnClickList
                 .setUri(uri)
                 .setType(SynergykitFile.class);
 
+        final CustomProgressDialog progressDialog =  new CustomProgressDialog(this,"Destroying ...");
 
         Synergykit.getFile(config, new FileResponseListener() {
             @Override
             public void doneCallback(int statusCode, SynergykitFile file) {
-                printOutput("Getting done.");
-                printOutput("File: " + Synergykit.getGson().toJson(file));
-
-                printOutput("Deleting file...");
 
                 Synergykit.deleteFile(file.getId(), new DeleteResponseListener() {
                     @Override
                     public void doneCallback(int statusCode) {
-                        printOutput("Deleting done.");
-                        printOutput("File destroyed");
+                        printOutput("Last file destroyed.");
                         setEnabled(true);
+                        progressDialog.dismiss();
                     }
 
                     @Override
                     public void errorCallback(int statusCode, SynergykitError errorObject) {
-                        printOutput("Deleting failed.");
+
                         setEnabled(true);
+                        progressDialog.dismiss();
                     }
                 }, true);
 
@@ -286,9 +278,9 @@ public class FilesActivity extends ActionBarActivity implements View.OnClickList
 
             @Override
             public void errorCallback(int statusCode, SynergykitError errorObject) {
-                printOutput("Getting failed.");
                 printOutput(errorObject.toString());
                 setEnabled(true);
+                progressDialog.dismiss();
             }
         });
     }
@@ -303,7 +295,7 @@ public class FilesActivity extends ActionBarActivity implements View.OnClickList
 
 
     private Bitmap generateBitmap(){
-        Bitmap logoBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
+        Bitmap logoBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
         Bitmap outputBitmap = Bitmap.createBitmap(400, logoBitmap.getHeight(), Bitmap.Config.ARGB_8888);
         Paint textPaint = new Paint();
 
