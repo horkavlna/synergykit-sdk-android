@@ -15,6 +15,10 @@ We know how hard can be to work with untried API, so we prepared SDKs for mostly
 - [Node.js SDK](https://github.com/Synergykit/synergykit-sdk-nodejs)
 <br>
 
+**Table of content**
+
+[TOC]
+
 ## Sample Application
 Almost all possibilities of Synergykit are presented in Sample Application that was developed next to SDK as introduction of how it works.
 
