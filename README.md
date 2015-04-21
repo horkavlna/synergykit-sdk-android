@@ -13,11 +13,6 @@ We know how hard can be to work with untried API, so we prepared SDKs for mostly
 - [Node.js SDK](https://github.com/Synergykit/synergykit-sdk-nodejs)
 <br>
 
-**Table of content**
-
-[TOC]
-
-
 ## Sample Application
 Almost all possibilities of Synergykit are presented in Sample Application that was developed next to SDK as introduction of how it works.
 
@@ -32,7 +27,7 @@ Almost all possibilities of Synergykit are presented in Sample Application that 
 
 Synergykit SDK Android is available through [jcenter](https://bintray.com/letsgood/maven/synergykit-sdk-android/view). To install it, simply add the following line to your Gradle dependencies:
 
-`compile 'com.letsgood:synergykit-sdk-android:2.1.1'`
+`compile 'com.letsgood:synergykit-sdk-android:2.1.3'`
 
 ## Architecture 
 
@@ -1115,7 +1110,7 @@ SynergyKit.flushCache();
 
 
 ## Changelog
-### Version 2.1.1
+### Version 2.1.3
 
 
 ## Author
