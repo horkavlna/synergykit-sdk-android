@@ -29,7 +29,7 @@ Almost all possibilities of Synergykit are presented in Sample Application that 
 
 Synergykit SDK Android is available through [jcenter](https://bintray.com/letsgood/maven/synergykit-sdk-android/view). To install it, simply add the following line to your Gradle dependencies:
 
-`compile 'com.letsgood:synergykit-sdk-android:2.1.3'`
+`compile 'com.letsgood:synergykit-sdk-android:2.1.1'`
 
 ## Architecture 
 
@@ -1112,7 +1112,7 @@ SynergyKit.flushCache();
 
 
 ## Changelog
-### Version 2.1.3
+### Version 2.1.1
 
 
 ## Author
