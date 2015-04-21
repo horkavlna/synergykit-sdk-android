@@ -46,6 +46,7 @@ import com.letsgood.synergykitsdkandroid.request.SynergykitRequest;
 import com.letsgood.synergykitsdkandroid.resources.SynergykitAnonymousAuthData;
 import com.letsgood.synergykitsdkandroid.resources.SynergykitAuthConfig;
 import com.letsgood.synergykitsdkandroid.resources.SynergykitBatchItem;
+import com.letsgood.synergykitsdkandroid.resources.SynergykitCloudCode;
 import com.letsgood.synergykitsdkandroid.resources.SynergykitEmail;
 import com.letsgood.synergykitsdkandroid.resources.SynergykitFacebookAuthData;
 import com.letsgood.synergykitsdkandroid.resources.SynergykitFile;
@@ -220,8 +221,8 @@ public class SynergykitSdk implements ISynergyKitSdk, IRecords, IUsers, INotific
 	//---------------------------------------------------------------------------------------
 	/* Get record */
     @Override
-    public void invokeCloudCode(SynergykitConfig config,SynergykitObject object,  ResponseListener listener) {
-        cloudCode.invokeCloudCode(config, object, listener);
+    public void invokeCloudCode(SynergykitCloudCode cloudCodeObject, Type type, ResponseListener listener, boolean parallelMode) {
+        cloudCode.invokeCloudCode(cloudCodeObject, type, listener,parallelMode);
     }
 
 	/* Get record */

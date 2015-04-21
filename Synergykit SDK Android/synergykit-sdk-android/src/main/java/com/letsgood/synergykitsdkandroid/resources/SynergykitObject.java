@@ -64,7 +64,7 @@ public class SynergykitObject implements Serializable, ISynergykitObjectProtocol
 
     /* Version setter */
     public void setVersion(long version) {
-        this.__v = __v;
+        this.__v = version;
     }
     
     /* CreatedAt setter */

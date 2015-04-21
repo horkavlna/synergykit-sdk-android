@@ -9,11 +9,12 @@ package com.letsgood.synergykitsdkandroid.interfaces;
 
 
 import com.letsgood.synergykitsdkandroid.listeners.ResponseListener;
-import com.letsgood.synergykitsdkandroid.config.SynergykitConfig;
-import com.letsgood.synergykitsdkandroid.resources.SynergykitObject;
+import com.letsgood.synergykitsdkandroid.resources.SynergykitCloudCode;
+
+import java.lang.reflect.Type;
 
 public interface ICloudCodes {
-	public void invokeCloudCode(SynergykitConfig config, SynergykitObject object, ResponseListener listener);
+	public void invokeCloudCode(SynergykitCloudCode cloudCodeObject,Type type, ResponseListener listener, boolean parallelMode);
 
 }
 

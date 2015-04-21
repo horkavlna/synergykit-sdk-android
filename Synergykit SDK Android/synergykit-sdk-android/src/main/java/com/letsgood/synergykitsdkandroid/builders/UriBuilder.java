@@ -9,6 +9,7 @@ package com.letsgood.synergykitsdkandroid.builders;
 
 import com.letsgood.synergykitsdkandroid.Synergykit;
 import com.letsgood.synergykitsdkandroid.builders.uri.Collection;
+import com.letsgood.synergykitsdkandroid.builders.uri.Filter;
 import com.letsgood.synergykitsdkandroid.builders.uri.RecordId;
 import com.letsgood.synergykitsdkandroid.builders.uri.Resource;
 import com.letsgood.synergykitsdkandroid.config.SynergykitConfig;
@@ -74,10 +75,16 @@ public class UriBuilder {
         oDataBuilder.setFilter(filter);
 		return this;
 	}
-	
+
+    /* Filter setter */
+    public UriBuilder setFilter(Filter filter){
+        oDataBuilder.setFilter(filter);
+        return this;
+    }
+
 	/* Select setter */
-	public UriBuilder setSelect(String attribute){
-        oDataBuilder.setSelect(attribute);
+	public UriBuilder addSelect(String attribute){
+        oDataBuilder.addSelect(attribute);
 		return this;
 	}
 	

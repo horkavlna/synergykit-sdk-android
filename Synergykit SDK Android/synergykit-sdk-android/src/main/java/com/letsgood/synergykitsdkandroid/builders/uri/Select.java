@@ -19,13 +19,18 @@ public class Select {
 	/* Attributes */
 	private List<String> selectList = new LinkedList<String>();
 
+    public static Select newInstance(){
+        return new Select();
+    }
+
 	/* Select setter */
-	public void setSelect(String attribute) {
+	public Select addSelect(String attribute) {
 		if (attribute == null || attribute.length() == 0) {
 			SynergykitLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
 		}
 
 		selectList.add(attribute);
+        return this;
 	}
 
 	/* Select getter */
@@ -39,7 +44,7 @@ public class Select {
 		for (int i = 0; i < selectList.size(); i++) {
 
 			if (i == 0)
-				fullSelect = new String("&$select=" + selectList.get(i));
+				fullSelect = new String("$select=" + selectList.get(i));
 			else
 				fullSelect += "," + selectList.get(i);
 		}

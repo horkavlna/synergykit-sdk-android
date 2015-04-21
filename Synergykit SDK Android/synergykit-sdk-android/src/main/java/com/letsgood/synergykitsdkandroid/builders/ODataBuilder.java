@@ -44,9 +44,15 @@ public class ODataBuilder {
         return this;
     }
 
+    /* Filter setter */
+    public ODataBuilder setFilter(Filter filter){
+        this.filter = filter;
+        return this;
+    }
+
     /* Select setter */
-    public ODataBuilder setSelect(String attribute){
-        this.select.setSelect(attribute);
+    public ODataBuilder addSelect(String attribute){
+        this.select.addSelect(attribute);
         return this;
     }
 
@@ -90,9 +96,13 @@ public class ODataBuilder {
             if(hasFilters==false){
                 oData+="?";
                 hasFilters=true;
+                oData += select.getSelect();
+            }else{
+                oData += "&" + select.getSelect();
             }
 
-            oData += select.getSelect();
+
+
         }
 
         //set filter
@@ -101,9 +111,10 @@ public class ODataBuilder {
             if(hasFilters==false){
                 oData+="?";
                 hasFilters=true;
+                oData+=filter.getFilter();
+            }else{
+                oData+="&" + filter.getFilter();
             }
-
-            oData+=filter.getFilter();
         }
 
         //set order by
@@ -112,9 +123,10 @@ public class ODataBuilder {
             if(hasFilters==false){
                 oData+="?";
                 hasFilters=true;
+                oData+=orderBy.getOrderBy();
             }
 
-            oData+=orderBy.getOrderBy();
+            oData+="&" + orderBy.getOrderBy();
         }
 
 
@@ -124,9 +136,11 @@ public class ODataBuilder {
             if(hasFilters==false){
                 oData+="?";
                 hasFilters=true;
+                oData+=top.getTop();
+            }else{
+                oData+="&" + top.getTop();
             }
 
-            oData+=top.getTop();
         }
 
         //set skip
@@ -135,9 +149,10 @@ public class ODataBuilder {
             if(hasFilters==false){
                 oData+="?";
                 hasFilters=true;
+                oData+=skip.getSkip();
+            }else{
+                oData+="&" + skip.getSkip();
             }
-
-            oData+=skip.getSkip();
         }
 
         //set inline count
@@ -145,9 +160,10 @@ public class ODataBuilder {
 
             if(hasFilters==false){
                 oData+="?";
+                oData+=inLineCount.getInLineCount();
+            }else{
+                oData+="&" + inLineCount.getInLineCount();
             }
-
-            oData+=inLineCount.getInLineCount();
         }
 
         return oData;

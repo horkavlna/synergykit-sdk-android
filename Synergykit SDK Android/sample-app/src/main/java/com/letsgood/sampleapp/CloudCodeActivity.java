@@ -97,36 +97,28 @@ public class CloudCodeActivity extends ActionBarActivity {
             @Override
             public void doneCallback(int statusCode, SynergykitFile object) {
 
-                UriBuilder uriBuilder = UriBuilder.newInstance()
-                        .setResource(Resource.RESOURCE_FUNCTIONS)
-                        .setFunctionId("face-recognition");
-
-
-                SynergykitConfig config = new SynergykitConfig();
-                config.setUri(uriBuilder.build());
-                config.setParallelMode(false);
-                config.setType(CloudCodeDemo.class);
-
-
-                CloudCodeDemo ccd = new CloudCodeDemo();
+                CloudCodeDemo ccd = new CloudCodeDemo("face-recognition");
                 ccd.setPath(object.getPath());
                 ccd.setName(name.getText().toString());
 
-                Synergykit.invokeCloudCode(config, ccd, new ResponseListener() {
+
+                Synergykit.invokeCloudCode(ccd,CloudCodeDemo.class,new ResponseListener() {
                     @Override
                     public void doneCallback(int statusCode, SynergykitObject object) {
                         pd.dismiss();
                         CloudCodeDemo ccd = (CloudCodeDemo) object;
                         resultCloudCode.setText("Age: " + ccd.getAge() + ", Age range: " + ccd.getAgeRange() + ", Gender: " + ccd.getGender() + ", Gender confidence: " + ccd.getGenderConfidence() + ", Race: " + ccd.getRace() + ", Race confidence" + ccd.getRaceConfidence() + ", Glass: " + ccd.getGlass() + ", " + ccd.getGlassConfidence() + ", Smiling: " + ccd.getSmiling());
-
                     }
 
                     @Override
                     public void errorCallback(int statusCode, SynergykitError errorObject) {
                         pd.dismiss();
                         Toast.makeText(CloudCodeActivity.this, errorObject.toString(), Toast.LENGTH_SHORT).show();
+
                     }
-                });
+                },false);
+
+
 
             }
         });

@@ -24,22 +24,28 @@ public class OrderBy{
 	
 	/* Attributes */
 	private List<String> orderByList = new LinkedList<String>();
+
+    /* New instance */
+    public static OrderBy newInstance(){
+        return new OrderBy();
+    }
 	
 	/* Order by desc */
-	public void setOrderByAsc(String parameter){
-		this.setOrderBy(parameter, DIRECTION_ASCENDING);		
+	public OrderBy setOrderByAsc(String parameter){
+		this.setOrderBy(parameter, DIRECTION_ASCENDING);
+        return this;
 	}
 	
 	
 	/* Order by desc */
-	public void setOrderByDesc(String parameter){
+	public OrderBy setOrderByDesc(String parameter){
 		this.setOrderBy(parameter, DIRECTION_DESCENDING);
 
-		
+		return this;
 	}
 	
 	/* Order by */
-	private void setOrderBy(String parameter, String direction){
+	private OrderBy setOrderBy(String parameter, String direction){
 		//parameter check
 		if(parameter==null || parameter.length()==0){
 			SynergykitLog.print(Errors.MSG_NULL_ARGUMENTS_OR_EMPTY);
@@ -54,6 +60,8 @@ public class OrderBy{
 		
 		//add order by
 		orderByList.add(parameter + "+" + direction);
+
+        return this;
 	}
 	
 	
@@ -70,7 +78,7 @@ public class OrderBy{
 		for(int i=0; i<orderByList.size(); i++){
 			
 			if(i==0)
-				fullOrderBy = new String( "&$orderby=" + orderByList.get(i));
+				fullOrderBy = new String( "$orderby=" + orderByList.get(i));
 			else
 				fullOrderBy += "," + orderByList.get(i);
 		}

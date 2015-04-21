@@ -15,17 +15,22 @@ public class Skip {
 	
 	/* Attributes */
 	private String skip;
-	
+
+    /* New instance */
+    public static Skip newInstace(){
+        return new Skip();
+    }
 	
 	/* Top setter */
-	public void setSkip(int skip){
+	public Skip setSkip(int skip){
 		
 		if(skip<MIN_VALUE){
 			SynergykitLog.print(Errors.MSG_SKIP_NEGATIVE);
 		}
 			
 		
-		this.skip = new String("&$skip=" + Integer.toString(skip));
+		this.skip = new String("$skip=" + Integer.toString(skip));
+        return this;
 	}
 	
 	

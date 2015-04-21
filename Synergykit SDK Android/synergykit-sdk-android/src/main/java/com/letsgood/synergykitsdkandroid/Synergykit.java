@@ -27,6 +27,7 @@ import com.letsgood.synergykitsdkandroid.listeners.UsersResponseListener;
 import com.letsgood.synergykitsdkandroid.request.SynergykitRequest;
 import com.letsgood.synergykitsdkandroid.resources.SynergykitAnonymousAuthData;
 import com.letsgood.synergykitsdkandroid.resources.SynergykitBatchItem;
+import com.letsgood.synergykitsdkandroid.resources.SynergykitCloudCode;
 import com.letsgood.synergykitsdkandroid.resources.SynergykitEmail;
 import com.letsgood.synergykitsdkandroid.resources.SynergykitFacebookAuthData;
 import com.letsgood.synergykitsdkandroid.resources.SynergykitFile;
@@ -146,8 +147,8 @@ public class Synergykit {
     //-------------------------------------------------------------------------------------------------------------------
 
     /* Invoke cloud code*/
-    public static void invokeCloudCode(SynergykitConfig config,SynergykitObject object,  ResponseListener listener) {
-        SynergykitSdk.getInstance().invokeCloudCode(config, object,  listener);
+    public static void invokeCloudCode(SynergykitCloudCode cloudCodeObject, Type type, ResponseListener listener, boolean parallelMode) {
+        SynergykitSdk.getInstance().invokeCloudCode(cloudCodeObject,type, listener,parallelMode);
     }
 
 	//------------------------------------------------------------------------------
@@ -278,8 +279,8 @@ public class Synergykit {
 
 	//-------------------------------------------------------------------------------------------------------------------
 	/* Send email */
-	public static void sendEmail(String mailId, SynergykitEmail email, EmailResponseListener listener, boolean parallelMode){
-		SynergykitSdk.getInstance().sendEmail(mailId, email, listener, parallelMode);
+	public static void sendEmail(String templateName, SynergykitEmail email, EmailResponseListener listener, boolean parallelMode){
+		SynergykitSdk.getInstance().sendEmail(templateName, email, listener, parallelMode);
 	}
 	
 	/* Send notification */

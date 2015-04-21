@@ -21,14 +21,21 @@ public class SynergykitNotification extends SynergykitObject implements Serializ
     @Expose
     private String payload = null;
 
+
+    /* New instance */
+    public static SynergykitNotification newInstance(){
+        return new SynergykitNotification();
+    }
+
 	/* Alert getter */
 	public String getAlert() {
 		return alert;
 	}
 
 	/* Alert setter */
-	public void setAlert(String alert) {
+	public SynergykitNotification setAlert(String alert) {
 		this.alert = alert;
+        return this;
 	}
 
 	/* User ids getter */
@@ -37,19 +44,23 @@ public class SynergykitNotification extends SynergykitObject implements Serializ
 	}
 
 	/* User ids setter */
-	public void setUserIds(LinkedList<String> userIds) {
+	public SynergykitNotification setUserIds(LinkedList<String> userIds) {
 		this.userIds = userIds;
 
 		// if null
 		if (this.userIds == null) {
 			this.userIds = new LinkedList<String>();
 		}
+
+        return this;
 	}
 
 	/* Add user id */
-	public void addUserId(String userId){
+	public SynergykitNotification addUserId(String userId){
 		if(userId!=null && !this.userIds.contains(userId))
 			this.userIds.add(userId);
+
+        return this;
 	}
 
 	/* Remove user id */
@@ -58,11 +69,14 @@ public class SynergykitNotification extends SynergykitObject implements Serializ
 			this.userIds.remove(userId);
 	}
 
+    /* Payload getter */
     public String getPayload() {
         return payload;
     }
 
-    public void setPayload(String payload) {
+    /* Payload setter */
+    public SynergykitNotification setPayload(String payload) {
         this.payload = payload;
+        return this;
     }
 }

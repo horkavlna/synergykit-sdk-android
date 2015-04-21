@@ -9,27 +9,16 @@ import com.letsgood.synergykitsdkandroid.resources.SynergykitObject;
  */
 public class DemoObject extends SynergykitObject {
 
+    /* Attributes */
     @Expose
     private String text;
 
-
-    public DemoObject(){
-        super();
-    }
-
-
-    public DemoObject(String collectionUrl){
-        super(collectionUrl);
-    }
-
-    public DemoObject(String collectionUrl, String recordId){
-        super(collectionUrl, recordId);
-    }
-
+    /* Text getter */
     public String getText() {
         return text;
     }
 
+    /* Text setter */
     public void setText(String text) {
         this.text = text;
     }

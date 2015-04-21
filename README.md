@@ -1,651 +1,231 @@
-<p align="center" >
-<img src="https://synergykit.blob.core.windows.net/synergykit/fbf107a82dceb49843f8de1fda4d9ea9.png" alt="SynergyKIT" title="SynergyKIT" width="33%">
-</p>
-Letsgood.com run Backend as a Service SynergyKit for fast and simple mobile/web/desktop applications products deployment. SynergyKit allows enterpreneurs implement an idea to project fast and low cost like Lean Startup, validates and runs product.
+# Synergykit Android SDK
 
-We know how hard can be to work with untried API, so we prepared SDKs for mostly used platforms. If you are looking for iOS SDK, you probably want https://github.com/Letsgood/synergykit-sdk-ios.
+<p align="left" style="margin-bottom:0;" >
+<img src="https://synergykit.blob.core.windows.net/synergykit/56a5f0b93ad04ca42265cfab4e1810fb.png" alt="SynergyKIT" title="SynergyKit">
 
-## High level Architecture
-<p align="center" >
-<img src="https://synergykit.blob.core.windows.net/synergykit/56a5f0b93ad04ca42265cfab4e1810fb.png" alt="SynergyKIT" title="SynergyKIT">
-</p>
+Letsgood.com runs Backend as a Service Synergykit for **fast and simple mobile/web/desktop applications development**. Synergykit allows enterpreneurs implement an idea to project fast and low cost like Lean Startup, validates and runs product.
 
-## Android Sample App uses SynergyKit Android SDK
-Version 0.0.4:
-- GET/POST requests examples
-- Cloud code integration with Face++
+We know how hard can be to work with untried API, so we prepared SDKs for mostly used platforms.
 
-Roadmap 0.0.5:
-- Notifications
-- Sign In
-- Sign Up support for integration third party applications (Facebook, Google, Twitter, Github, LinkedIn, etc.)
+**Another SDKs**
 
-How to use it?
-- Open Android Studio
-- Open existing project 
-- That's all. Project uses Gradle.
+- [iOS SDK](https://github.com/Synergykit/synergykit-sdk-ios)
+- [Node.js SDK](https://github.com/Synergykit/synergykit-sdk-nodejs)
+<br>
 
-## SynergyKit Android SDK
-Version2.1.0:
-- REST API wrapper (CRUD operations POST, PUT, PATCH, GET, DELETE)
-- OData filtering
-- Uploading and downloading files and pictures from global CDN network
-- Sending e-mails and push notifications via GCM
-- Strong hashed passwords
-- HTTPs security
-- New REST API (2.1.0) interface supported
-- Cloud code support
-- Socket.IO 
-- jCenter
+**Table of content**
 
-How to use it?
-- Open Android Studio
-- Create / open your project
-- Add dependency in your project/module build.gradle
+[TOC]
+
+
+## Sample Application
+Almost all possibilities of Synergykit are presented in Sample Application that was developed next to SDK as introduction of how it works.
+
+### Sample App Installation 
+
+- Clone or download the repository.
+- Open `Android Studio`.
+- Open project `Synergykit SDK Android`
+- Run Gradle task `installLocalSdkDebug` in module  `sample-app`
+
+## Installation
+
+Synergykit SDK Android is available through [jcenter](https://bintray.com/letsgood/maven/synergykit-sdk-android/view). To install it, simply add the following line to your Gradle dependencies:
+
+`compile 'com.letsgood:synergykit-sdk-android:2.1.1'`
+
+## Architecture 
+
+Popis architektury SDK, nenA­ povinnA©, jA! chci zveA™ejnit zA!kladnA­ class diagram.
+
+### Building model
+SynergyKit has two base objects `SynergykitObject` and `SynergykitUser`.  Every object which you want to store in SynergyKit must extends `SynergykitObject`. Every user you want to sign in, sign out or store in SynergyKit must extends `SynergykitUser`.   
+
+SDK uses [Google Gson](https://code.google.com/p/google-gson/) to serialize object to jSon and deserialize object from jSon.  Every argument of your objects which would be serialize/deserialize must have `@Expose` annotation. 
+
 ```java
-dependencies {
-  compile 'com.letsgood:synergykit-sdk-android:2.1.0'
+public class DemoObject extends SynergykitObject {
+
+    /* Attributes */
+    @Expose
+    private String text; //this attribute will be serialize/deserialize
+
+    /* Text getter */
+    public String getText() {
+        return text;
+    }
+
+    /* Text setter */
+    public void setText(String text) {
+        this.text = text;
+    }
+
 }
 ```
 
-### SynergyKit initialization
-
-The initialization must be the first step of using SynergyKit Android SDK. Typically it's called from onCreate method of Application. If you don't know your application tenant or application key visit our https://synergykit.com website. Both of this are available there. 
-
-#### Base initialization
-
 ```java
+public class DemoUser extends SynergykitUser {
 
-private static final String APPLICATION_TENANT = "synergykit-sample-app";
-private static final String APPLICATION_KEY = "7cbb9eed-17dd-4f75-a7bd-c92f2f6faef9";
+    /* Attributes */
+    @Expose
+    private String name; //this attribute will be serialize/deserialize
+    private int age; //this attribute will not be serialize/deserialize
 
-.
-.
-.
+    /* Name getter */
+    public String getName() {
+        return name;
+    }
 
-if(!SynergyKit.isInit()) {
-    SynergyKit.init(APPLICATION_TENANT, APPLICATION_KEY);
+    /* Name setter */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /* Age getter */
+    public int getAge() {
+        return age;
+    }
+
+    /* Age setter */
+    public void setAge(int age) {
+        this.age = age;
+    }
 }
 ```
 
-#### Debug mode settings
+## Synergykit Initialization
+Before you can start with Synergykit SDK you need to set tenant and key. Is recommended to set it up in `onCreate` method  the your application class (class extended Application).
 
-You can also enable a debug mode. In debug mode SynergyKit Android SDK prints error messages and endpoint URI to console. 
-
-```java
-SynergyKit.setDebugModeEnabled(true);
-```
-An example code from Sample App:
-```java
-
-public class SampleAppApplication extends Application {
-
-	private static final String APPLICATION_TENANT = "synergykit-sample-app";
-	private static final String APPLICATION_KEY = "7cbb9eed-17dd-4f75-a7bd-c92f2f6faef9";
-	
-	@Override
-	public void onCreate() {
-		super.onCreate();
-		
-		if(!SynergyKit.isInit()) {
-			SynergyKit.init(APPLICATION_TENANT, APPLICATION_KEY);
-	        SynergyKit.setDebugModeEnabled(true);
-		}
-	 }
- }
-```
-
-
-### Cache installation
-
-
-The SynergyKit Android SDK provides Http response cache (HttpResponseCache). Http response cache caches all of your application's HTTP requests. This cache requires Android 4.0  or later.
-
-You can install this cache with default cache dir size (10 MiB):
-```java
-SynergyKit.installCache(getApplicationContext());
-```
-
-Or you can install this cache with your own cache dir size:
-```java
-long cacheSize = 8 * 1024 * 1024; //8 MiB
-SynergyKit.installCache(getApplicationContext(), cacheSize);
-```
-
-You can also flush installed cache:
+You can find it in **Settings > Application keys > Tenant** and **Settings > Application keys > Value** in Synergykit web application.
 
 ```java
-SynergyKit.flushCache();
+Synergykit.init(APPLICATION_TENANT, APPLICATION_KEY);
 ```
 
-### Records management
+## Responses handling
+There are many options that you can receive at the end of API communication. SDK provides many listeners to hadle responses.
 
-SynergyKit Android SDK provides CRUD methods to read or modify record(s). Every of this method has done and error callback. 
+Every request has response listener  which provides `doneCallback` and  `errorCallback`. `doneCallback` is called when everything was done without error. `errorCallback` otherwise.
 
-Done callback is called when everything was done without any error. It's called with Http Status Code and SynergyKitObject / SynergyKitObjects which may be retype to expected object type.
-
-Error callback is called when the error occurred. It's called also with Http Status Code and SynergyKitError object.
-
-#### `GET` Read record from collection
+For example base `ResponseListener` 
 
 ```java
-private static final String COLLECTION = "demo_collection";
-private static final String RECORD_ID = "494991d3-ecb8-4472-9c2a-1a4a1ed10946"; 
-private static final Type OBJECT_TYPE = DemoObject.class;
-private static final boolean PARALLEL_MODE = false;
-
-.
-.
-.
-
-SynergyKit.getRecord(COLLECTION,RECORD_ID,OBJECT_TYPE , new ResponseListener() {
-	
-	@Override
-	public void errorCallback(int statusCode, SynergyKitError errorObject) {
-		// Error callback
-		
-	}
-	
-	@Override
-	public void doneCallback(int statusCode, SynergyKitObject object) {
-		//Done callback		
-		DemoObject object = (DemoObject) object;
-		
-	}
-}, PARALLEL_MODE);
+public interface ResponseListener {
+	public void doneCallback(int statusCode, SynergykitObject object);
+	public void errorCallback(int statusCode, SynergykitError errorObject);
+}
 ```
-#### `GET` Read records from collection
+## Documents
+Documents are data saved in collections. Collections are basically tables in database where you can store your data. By sending requests to the documents endpoint, you can list, create, update or delete documents.
+
+### Create new document
+
+| Parameter | Type | Notes ||
+|:-|:-|:-|:-:|
+|collection |String| Location of document | **required**
+|object |SynergykitObject| SynergykitObject or object extended SynergykitObject |**required**
+|listener |ResponseListener||  optional
+|parallelMode| boolean | Indicates whether the requests are provided in parallel or in series|  **required**
 
 ```java
-private static final String COLLECTION = "demo_collection";
-private static final Type OBJECTS_TYPE = DemoObject[].class;
-private static final boolean PARALLEL_MODE = false;
+Synergykit.createRecord("collection",new SynergykitObject(),new ResponseListener() {
+   @Override
+   public void doneCallback(int statusCode, SynergykitObject object) {
+		//your code
+   }
 
-.
-.
-.
-
-SynergyKit.getRecords(COLLECTION, OBJECTS_TYPE, new ResponseListener() {
-	
-	@Override
-	public void errorCallback(int statusCode, SynergyKitError errorObject) {
-		// Error callback
-		
-	}
-	
-	@Override
-	public void doneCallback(int statusCode, SynergyKitObject[] object) {
-		//Done callback		
-		DemoObject[] object = (DemoObject[]) object;
-		
-	}
-}, PARALLEL_MODE);
+   @Override
+   public void errorCallback(int statusCode, SynergykitError errorObject) {
+		//your code
+   }
+},true);
 ```
+### Retrieve an existing document by ID
 
-#### `POST` Create new record
+| Parameter | Type | Notes ||
+|:-|:-|:-|:-:|
+|collection |String| Location of document | **required**
+|recordId |String| Record identificator |**required**
+|type |Type| Object type |**required**
+|listener |ResponseListener||  optional
+|parallelMode| boolean | Indicates whether the requests are provided in parallel or in series|  **required**
 
 ```java
+Synergykit.getRecord("collection","recordId",SynergykitObject.class,new ResponseListener() {
+  @Override
+  public void doneCallback(int statusCode, SynergykitObject object) {
+    //your code
+  }
 
-private static final String COLLECTION = "demo_collection";
-private static final boolean PARALLEL_MODE = false;
-DemoObject demoObject = new DemoObject();
-
-.
-.
-.
-
-SynergyKit.createRecord(COLLECTION, demoObject ,new ResponseListener() {
-	
-	@Override
-	public void errorCallback(int statusCode, SynergyKitError errorObject) {
-		// Error callback
-		
-	}
-	
-	@Override
-	public void doneCallback(int statusCode, SynergyKitObject object) {
-		// Done callback
-		
-		DemoObject demoObject = (DemoObject) object;
-	}
-}, PARALLEL_MODE);
+  @Override
+  public void errorCallback(int statusCode, SynergykitError errorObject) {
+	//your code
+  }
+},false);
 ```
-
-#### `PUT` Update existing record
+### Update document
+| Parameter | Type | Notes ||
+|:-|:-|:-|:-:|
+|collection |String| Location of document | **required**
+|object |SynergykitObject|SynergykitObject or object extended SynergykitObject  |**required**
+|type |Type| Object type |**required**
+|listener |ResponseListener||  optional
+|parallelMode| boolean | Indicates whether the requests are provided in parallel or in series|  **required**
 
 ```java
-private static final String COLLECTION = "demo_collection";
-private static final boolean PARALLEL_MODE = false;
-DemoObject demoObject = new DemoObject();
-demoObject.setRecordId("15038c19-35d2-4b70-baa1-dcc8f36dbd33");
+ Synergykit.updateRecord("collection",object,new ResponseListener() {
+     @Override
+     public void doneCallback(int statusCode, SynergykitObject object) {
+		//your code
+     }
 
-
-
-
-SynergyKIT.updateRecord(COLLECTION, demoObject ,new ResponseListener() {
-	
-	@Override
-	public void errorCallback(int statusCode, SynergyKitError errorObject) {
-		// Error callback
-		
-	}
-	
-	@Override
-	public void doneCallback(int statusCode, SynergyKitObject object) {
-		// Done callback
-		
-		DemoObject demoObject = (DemoObject) object;
-	}
-}, PARALLEL_MODE);
+     @Override
+     public void errorCallback(int statusCode, SynergykitError errorObject) {
+		//your code
+     }
+ },true);
 ```
+### Delete document
 
-#### `PATCH` Patch existing record
+| Parameter | Type | Notes | |
+|:-|:-|:-|:-:|
+|collection |String| Location of document | **required**
+|recordId |String| Record identificator |**required**
+|listener |DeleteResponseListener||  optional
+|parallelMode| boolean | Indicates whether the requests are provided in parallel or in series|  **required**
 
 ```java
-private static final String COLLECTION = "demo_collection";
-DemoObject demoObject = new DemoObject();
-demoObject.setRecordId("15038c19-35d2-4b70-baa1-dcc8f36dbd33");
-private static final boolean PARALLEL_MODE = false;
+Synergykit.deleteRecord("collection","recordId",new DeleteResponseListener() {
+    @Override
+    public void doneCallback(int statusCode) {
+		//your code
+    }
 
-.
-.
-.
-
-SynergyKIT.patchRecord(COLLECTION, demoObject ,new ResponseListener() {
-	
-	@Override
-	public void errorCallback(int statusCode, SynergyKitError errorObject) {
-		// Error callback
-		
-	}
-	
-	@Override
-	public void doneCallback(int statusCode, SynergyKitObject object) {
-		// Done callback
-		
-		DemoObject demoObject = (DemoObject) object;
-	}
-}, PARALLEL_MODE);
+    @Override
+    public void errorCallback(int statusCode, SynergykitError errorObject) {
+		//your code
+    }
+},false);
 ```
 
-#### `DELETE` Delete record
+## Real-time data observerving
+SDK supports real time communication through sockets. With this funcion you can develop dynamic applications.
 
-```java
-private static final String COLLECTION = "demo_collection";
-private static final String RECORD_ID = "15038c19-35d2-4b70-baa1-dcc8f36dbd33";
-private static final boolean PARALLEL_MODE = false;
-
-.
-.
-.
-
-SynergyKit.deleteRecord(COLLECTION, RECORD_ID, new DeleteResponseListener() {
-	
-	@Override
-	public void errorCallback(int statusCode, SynergyKitError errorObject) {
-		// Error callback
-		
-	}
-	
-	@Override
-	public void doneCallback(int statusCode) {
-		// Done callback
-		
-	}
-}, PARALLEL_MODE);
-```
-
-### Users management
-
-
-SynergyKit Android SDK provides CRUD methods to read or modify users. Every of this method has done and error callback. 
-
-Done callback is called when everything was done without any error. It's called with Http Status Code and SynergyKitUser / SynergyKitUsers.
-
-Error callback is called when the error occurred. It's called also with Http Status Code and SynergyKitError object.
-
-
-#### `GET` Read user from collection
-
-```java
-private static final String USER_ID = "494991d3-ecb8-4472-9c2a-1a4a1ed10946";
-private static final boolean PARALLEL_MODE = false;
-
-.
-.
-.
-
-SynergyKit.getUser(USER_ID, DemoUser.class,new UserResponseListener() {
-			
-	@Override
-	public void errorCallback(int statusCode, SynergyKitError errorObject) {
-		// Error callback
-		
-	}
-	
-	@Override
-	public void doneCallback(int statusCode, SynergyKitUser user) {
-		// Done callback
-		
-		DemoUser demoUser = (DemoUser) user;
-		
-	}
-}, PARALLEL_MODE);
-```
-#### `GET` Read users from collection
-
-```java
-SynergyKit.getUsers(DemoUser[].class, new UsersResponseListener() {
-	
-	@Override
-	public void errorCallback(int statusCode, SynergyKitError errorObject) {
-		// Error callback
-		
-	}
-	
-	@Override
-	public void doneCallback(int statusCode, SynergyKitUser[] users) {
-		// Done callback
-		
-		DemoUser[] demoUsers = (DemoUser[]) users;
-		
-	}
-}, true);
-```
-
-#### `POST` Create new user
-
-```java
-DemoUser demoUser = new DemoUser();
-
-SynergyKit.createUser(demoUser, new UserResponseListener() {
-		
-	@Override
-	public void errorCallback(int statusCode, SynergyKitError errorObject) {
-		// Error callback
-		
-	}
-	
-	@Override
-	public void doneCallback(int statusCode, SynergyKitUser user) {
-		// Done callback
-		
-		DemoUser demoUser = (DemoUser) user;
-	}
-}, true);
-```
-
-#### `PUT` Update existing user
-
-```java
-DemoUser demoUser = new DemoUser();
-
-SynergyKit.updateUser(demoUser, new UserResponseListener() {
-		
-	@Override
-	public void errorCallback(int statusCode, SynergyKitError errorObject) {
-		// Error callback
-		
-	}
-	
-	@Override
-	public void doneCallback(int statusCode, SynergyKitUser user) {
-		// Done callback
-		
-		DemoUser demoUser = (DemoUser) user;
-	}
-}, true);
-```
-#### `PATCH` Patch existing user
-
-```java
-DemoUser demoUser = new DemoUser();
-
-SynergyKit.updateUser(demoUser, new UserResponseListener() {
-		
-	@Override
-	public void errorCallback(int statusCode, SynergyKitError errorObject) {
-		// Error callback
-		
-	}
-	
-	@Override
-	public void doneCallback(int statusCode, SynergyKitUser user) {
-		// Done callback
-		
-		DemoUser demoUser = (DemoUser) user;
-	}
-}, true);
-```
-
-#### `DELETE` Delete user
-
-```java
-DemoUser demoUser = new DemoUser();
-demoUser.set__id("494991d3-ecb8-4472-9c2a-1a4a1ed10946");
-
-SynergyKit.deleteUser(demoUser, new DeleteResponseListener() {
-		
-	@Override
-	public void errorCallback(int statusCode, SynergyKitError errorObject) {
-		// Error callback
-		
-	}
-	
-	@Override
-	public void doneCallback(int statusCode) {
-		// Done callback
-		
-	}
-}, true);
-```
-### User authorization
-
-SynergyKit Android SDK provides also authorization. You can register new user or login existing one.
-
-
-#### `POST` Register new user
-
-This method register new user. New user must have email and password. These parameters must be unique.
-Register method has also done and error callback.
-
-
-```java
-
-DemoUser demoUser = new DemoUser();
-demoUser.setEmail("demouser@synergykit.com");
-demoUser.setPassword("mystrongpassword");
-
-SynergyKit.registerUser(demoUser, new UserResponseListener() {
-		
-	@Override
-	public void errorCallback(int statusCode, SynergyKitError errorObject) {
-		// Error callback
-		
-	}
-	
-	@Override
-	public void doneCallback(int statusCode, SynergyKitUser user) {
-		// Done callback
-		
-		DemoUser demoUser = (DemoUser) user;
-	}
-}, true);
-```
-
-#### `POST` Login user
-
-This method login existing user.  User verification is provided by email and password. These parameters must be unique.
-
-Login method has also done and error callback. 
-
-```java
-SynergyKit.loginUser(demoUser, new UserResponseListener() {
-		
-	@Override
-	public void errorCallback(int statusCode, SynergyKitError errorObject) {
-		// Error callback
-		
-	}
-	
-	@Override
-	public void doneCallback(int statusCode, SynergyKitUser user) {
-		// Done callback
-		
-		DemoUser demoUser = (DemoUser) user;
-	}
-});
-```
-
-
-
-After login is automatically set session token to SynergyKit. It's necessery for next request authorization. But you can do it manually too.
-
-```java
-SynergyKit.setToken("ae10ecfdaa33658d563a2s55");
-```
-
-
-### Making requests with own URI (with OData filtering)
-
-With OData you can filter, order and select data with REST Api endpoints. Web API supports the following OData query options:
-
-#### $filter
-
-Filters the results, based on a Boolean condition.
-#### $orderby
-
-Sorts the results.
-#### $select
-
-Selects which properties to include in the response.
-#### $skip
-
-Skips the first n results.
-#### $top
-
-Returns only the first n the results.
-
-More informations you can get on http://odata.org
-
-```java
-/*
- * Build your own URI 
- * 
- * Example:  Top 20 records from collection demo_collection where attribute age equals 18
- */
-
-private static final String COLLECTION = "demo_collection";
-
-.
-.
-.
-
-SynergyKitUri uri =  new UriBuilder()
-				.setResource(Resource.RESOURCE_DATA)
-				.setCollection(COLLECTION)
-				.setFilter(Filter.buildAttribute("age"), Filter.OPERATOR_EQUAL, 18)
-				.setTop(20)
-				.build();
-
-/*
- * Set configuration object
- * 
- */
-
-SynergyKitConfig config = new SynergyKITConfig();
-config.setUri(uri);
-config.setType(DemoObject[].class);
-config.setParallelMode(false);
-
-
-/*
- * Make request
- */
-
-SynergyKit.getRecord(config, new ResponseListener() {
-	
-	@Override
-	public void errorCallback(int statusCode, SynergyKitError errorObject) {
-		// Error callback
-		
-	}
-	
-	@Override
-	public void doneCallback(int statusCode, SynergyKitObject object) {
-		// Done callback
-		
-		DemoObject demoObjects[] = (DemoObject[]) objects;
-		
-	}
-});
-```
-
-### Making own requests
-
-
-```java
-private static final String COLLECTION = "demo_collection";
-private static final boolean PARALLEL_MODE = false;
-
-.
-.
-.
-
-SynergyKit.synergylize(new SynergyKitRequest() {
-	
-	@Override
-	protected void onPostExecute(Object object) {
-		ResponseDataHolder responseDataHolder = (ResponseDataHolder) object;
-		
-		//Manage result stored in responseDataHolder
-		
-		
-		
-	}
-	
-	@Override
-	protected Object doInBackground(Void... params) {
-	
-		/*
-		 * Build own uri
-		 */
-		SynergyKitUri uri = new UriBuilder()
-					.setResource(Resource.RESOURCE_DATA)
-					.setCollection("demo_collection")
-					.build();
-		
-		/*
-		 * Make request
-		 */
-		SynergyKitResponse response = SynergyKitRequest.get(uri);
-		
-		/*
-		 * Manage response to objects and store in response data holder
-		 * ResponseDataHolder is a storage for errors & objects & status code, ...
-		 */
-		
-		ResponseDataHolder responseDataHolder = manageResponseToObjects(response, DemoObject[].class);
-		
-		
-		return responseDataHolder;
-	}
-}, PARALLEL_MODE);
-```
-
-###Socket
-
-SynergyKit provides Socket.IO to make real-time communication. With this funcion you can develop dynamic applications like a chat. More information about Socket.IO is available here http://socket.io/ .
-
-####Connect socket
-
+### Connect
 To connect socket to SynergyKit server you must call SynergyKit.connect() method.
 
 ```java
 SynergyKit.connectSocket();
 ```
 
-If you need to listend states `connected`, `disconnected` and `reconnected` you can call connect method with listener.
+### Disconnect
+To disconnect socket use method disconnectSocket();
+```java
+SynergyKit.disconnectSocket();
+```
+
+### Checking connection state
+If you need to check states `connected`, `disconnected` and `reconnected` you can call connect method with listener.
 
 ```java
 SynergyKit.connectSocket(new SocketStateListener() {
@@ -665,10 +245,9 @@ SynergyKit.connectSocket(new SocketStateListener() {
    }
 });
 ```
+### Start observing whole collection
 
-#### Listen collection changes
-
-SynergyKit provides listening changes of records in data collection. You can listen  `created`, `updated`, `patched`, `deleted`.  You can set / unset listener befor or after socket connection.
+SynergyKit provides listening changes of records in data collection. You can listen  `created`, `updated`, `patched`, `deleted` states.  You can set / unset listener(s) befor or after socket is connected (Both situation are supported).
 
 ```java
 
@@ -705,27 +284,9 @@ SynergyKit.onSocket(Socket.MESSAGE_CREATED,COLLECTION,new SocketEventListener() 
       }
      });
 ```
+### Start observing collection with filter
 
-If you don't want to listen collection changes anymore you can call SynergyKit.offSocket(...) method.
-```java
-
-/*
-* If you wanna stop listen new posted records to collection demo_collection you can use this code.
-*/
-
-
-private static final String COLLECTION = "demo_collection";
-
-.
-.
-.
-
-SynergyKit.offSocket(Socket.MESSAGE_CREATED,COLLECTION);
-```
-
-#### Listen collection changes with filter
-
-SynergyKit provides listening changes of filtered collection records. Just create you filter and set socket listener.
+SynergyKit provides listening changes of filtered collection records. Just create your filter and set socket listener.
 
 ```java
 
@@ -746,7 +307,7 @@ ODataBuilder oDataBuilder = ODataBuilder.newInstance().setFilter(Filter.buildAtt
 //Create filter
 SynergyKitSocketFilter filter = new SynergyKitSocketFilter(FILTER_NAME,oDataBuilder.build());
 
-//set listener with filter
+//Set listener with filter
 SynergyKit.onSocket(Socket.MESSAGE_CREATED,COLLECTION, filter,new SocketEventListener() {
 	  @Override
       public void call(Object... args) {
@@ -770,9 +331,8 @@ SynergyKit.onSocket(Socket.MESSAGE_CREATED,COLLECTION, filter,new SocketEventLis
       }
      });
 ```
-
+### Stop observing
 If you don't want to listen collection changes anymore you can call SynergyKit.offSocket(...) method.
-
 ```java
 
 /*
@@ -787,11 +347,30 @@ private static final String COLLECTION = "demo_collection";
 .
 
 SynergyKit.offSocket(Socket.MESSAGE_CREATED,COLLECTION);
+```
+### Speak communication
+Communication without data storage from device to device.
 
+#### Send speak
 
-#### Listen messages
+```java
 
-You can also listen messages which are directly send to listeners and are not stored in SynergyKit.
+/*
+* For example if you're developing chat and you wanna send message about typing you can use this code.
+*/
+
+private static final String EVENT_TYPING = "typing";
+
+.
+.
+.
+
+Message message = new Message();
+message.setText("TestUser is typing");
+
+SynergyKit.emitViaSocket(EVENT_TYPING,message);
+```
+#### Receive speak
 
 ```java
 
@@ -832,83 +411,712 @@ SynergyKit.onSocket(EVENT_TYPING,new SocketEventListener() {
      });
 ```
 
-#### Send message
+## Queries
+You can retrieve multiple objects at once by sending a request with query. If query has no conditions API returns simply lists of all objects in collection.
 
-You can send message which is directly send to listeners and is not stored in SynergyKit.
+For more complex filtering and sorting Synergykit accepts OData standard. These queries can be used with data, users and files.
 
+### Available conditions
+Query string is builded according to [OData Protocol](http://odata.org) and is appended to the end of the url.
+
+The OData Protocol specification defines how to standardize a typed, resource-oriented CRUD interface for manipulating data sources by providing collections of entries which must have required elements.
+
+#### filter
+Equivalent to if (field == "value" && secondField >= 33 || thirdField < 132000).
 ```java
+uriBuilder.setFilter(Filter.newInstance()
+                 .setFilter(Filter.buildAttribute("field")
+				 + Filter.buildParametr("value")
+                 + Filter.OPERATOR_AND 
+                 + Filter.buildAttribute("secondField") 
+                 + Filter.OPERATOR_GREATER_THAN_OR_EQUAL 
+                 + Filter.buildParametr(33)
+                 + Filter.OPERATOR_OR
+                 + Filter.buildAttribute("thirdField") 
+                 + Filter.OPERATOR_LESS_THAN 
+                 + Filter.buildParametr(132000)));
+```
+Available relation operators
 
-/*
-* For example if you're developing chat and you wanna send message about typing you can use this code.
-*/
+- `==` or `eq`
+- `!=` or `ne`
+- `>=` or `ge`
+- `<=` or `le`
+- `>` or `gt`
+- `<` or `lt`
 
-private static final String EVENT_TYPING = "typing";
-
-.
-.
-.
-
-Message message = new Message();
-message.setText("TestUser is typing");
-
-SynergyKit.emitViaSocket(EVENT_TYPING,message);
+#### startswith
+```java
+uriBuilder.setFilter(Filter
+			.newInstance()
+			.setFilter(Filter.buildStartsWithFilter("name","a")));
+```
+#### endswith
+```java
+uriBuilder.setFilter(Filter
+			.newInstance()
+			.setFilter(Filter.buildEndsWithFilter("name","z")));
+```
+#### substringof
+```java
+uriBuilder.setFilter(Filter
+			.newInstance()
+			.setFilter(Filter.buildSubStringOfFilter("name","bc")));
+```
+#### in
+```java
+ String[] names = new String[2];
+        names[0] = "Lucas";
+        names[1] = "Thomas";
+        
+uriBuilder.setFilter(Filter
+			.newInstance()
+			.setFilter("name",Filter.OPERATOR_IN,Filter.buildArrayParameter(names)));
+```
+#### nin
+```java
+String[] names = new String[2];
+        names[0] = "John";
+        names[1] = "Mark";
+        
+uriBuilder.setFilter(Filter.newInstance()			.setFilter("name",Filter.OPERATOR_NOT_IN,Filter.buildArrayParameter(names)));
+```
+#### select
+```java
+uriBuilder.addSelect("firstName")
+             .addSelect("lastName");
+```
+#### top
+```java
+uriBuilder.setTop(5);
+```
+#### orderby
+```java
+uriBuilder.setOrderByAsc("name");
+```
+#### inlinecount
+```java
+ uriBuilder.setEnabled(true);
+```
+#### skip
+```java
+uriBuilder.setSkip(32);
 ```
 
-
-#### Disconnect socket
-
-To disconnect socket use method disconnectSocket();
+### Querying objects
+If query is prepared, you just call some of Synergykit methods.
 ```java
-SynergyKit.disconnectSocket();
+SynergykitConfig config = SynergykitConfig
+						 .newInstance()
+	                     .setUri(uriBuilder.build())
+	                     .setParallelMode(false)
+	                     .setType(SynergykitObject[].class);
+
+Synergykit.getRecords(config,new RecordsResponseListener() {
+ @Override
+ public void doneCallback(int statusCode, SynergykitObject[] objects) {
+     
+ }
+
+ @Override
+ public void errorCallback(int statusCode, SynergykitError errorObject) {
+
+ }
+});
 ```
 
-###CloudCode
+### List all users
 
-SynergyKit provides using cloudcode. You can simple write your code and invoke it by sdk.
+`SQuery` with `SynergykitUser` object without conditions.
+```java
+SynergykitUri synergykitUri = UriBuilder
+                                 .newInstance()
+                                 .setResource(Resource.RESOURCE_USERS)
+                                 .build();
 
-<p align="center" >
-<img src="https://synergykit.blob.core.windows.net/synergykit-sample-app/cloudcode.png" alt="SynergyKIT" title="SynergyKIT">
-</p>
+SynergykitConfig config = SynergykitConfig
+                                 .newInstance()
+                                 .setParallelMode(false)
+                                .setType(SynergykitUser[].class)
+                                .setUri(synergykitUri);
+
+Synergykit.getUsers(config,new UsersResponseListener() {
+    @Override
+    public void doneCallback(int statusCode, SynergykitUser[] users) {
+        
+    }
+
+    @Override
+    public void errorCallback(int statusCode, SynergykitError errorObject) {
+
+    }
+});
+```
+### List all documents
+```java
+SynergykitUri synergykitUri = UriBuilder
+                                 .newInstance()
+                                 .setResource(Resource.RESOURCE_DATA)
+                                 .setCollection("collection")
+                                 .build();
+
+SynergykitConfig config = SynergykitConfig
+                                 .newInstance()
+                                 .setParallelMode(false)
+                                .setType(SynergykitObject[].class)
+                                .setUri(synergykitUri);
+
+Synergykit.getRecords(config,new RecordsResponseListener() {
+    @Override
+    public void doneCallback(int statusCode, SynergykitObject[] users) {
+
+    }
+
+    @Override
+    public void errorCallback(int statusCode, SynergykitError errorObject) {
+
+    }
+});
+```
+### List all files
+```java
+SynergykitUri synergykitUri = UriBuilder
+                                      .newInstance()
+                                      .setResource(Resource.RESOURCE_FILES)
+                                      .build();
+
+SynergykitConfig config = SynergykitConfig
+                                 .newInstance()
+                                 .setParallelMode(false)
+                                .setType(SynergykitFile[].class)
+                                .setUri(synergykitUri);
+
+Synergykit.getFiles(config, new FilesResponseListener() {
+    @Override
+    public void doneCallback(int statusCode, SynergykitFile[] users) {
+
+    }
+
+    @Override
+    public void errorCallback(int statusCode, SynergykitError errorObject) {
+
+    }
+});
+```
+
+## Users
+Users are alfa and omega of every application. In Synergykit you can easily work with your users by methods listed below.
+### Create a new user	
+
+| Parameter | Type | Notes | |
+|:-|:-|:-|:-:|
+|user |SynergykitUser| SynergykitUser or object extended SynergykitUser | **required**
+|listener |UserResponseListener|  | optional
+|parallelMode |boolean|Indicates whether the requests are provided in parallel or in series  | **required**
 
 ```java
-/*
-* Build your function uri
-*/
-SynergyKitUri uri = new UriBuilder()
-                     .setResource(Resource.RESOURCE_FUNCTIONS)
-                     .setFunctionId("face-recognition")
-                     .build();
+Synergykit.createUser(new SynergykitUser(),new UserResponseListener() {
+    @Override
+    public void doneCallback(int statusCode, SynergykitUser user) {
+		//your code
+    }
 
-/*
-* Create configuration object
-*/
-SynergyKitConfig config = new SynergyKitConfig();
-config.setParallelMode(false);
-config.setType(SynergyKitObject.class);
-config.setUri(uri);
+    @Override
+    public void errorCallback(int statusCode, SynergykitError errorObject) {
+		//your code
+    }
+},false);
+```
+### Retrieve an existing user by ID
 
+| Parameter | Type | Notes | |
+|:-|:-|:-|:-:|
+|userId |String| User identification | **required**
+|type |Type| User object type | **required**
+|listener |UserResponseListener|  | optional
+|parallelMode |boolean|Indicates whether the requests are provided in parallel or in series  | **required**
 
-/*
-* Create object which extedns from SynergyKitObject and contains your cloudcode function  parameters
-*/
+```java
+Synergykit.getUser("userId",SynergykitUser.class,new UserResponseListener() {
+    @Override
+    public void doneCallback(int statusCode, SynergykitUser user) {
+		//your code
+    }
 
-CloudeCodeParams params = new CloudCodeParams();
+    @Override
+    public void errorCallback(int statusCode, SynergykitError errorObject) {
+		//your code
+    }
+},false);
+```
+### Update user
+Save method executes `PUT` request if `_id` is set. 
 
-/*
-* Invoke cloud code
-*/
-SynergyKit.invokeCloudCode(config,params,new ResponseListener() {
+| Parameter | Type | Notes | |
+|:-|:-|:-|:-:|
+|user |SynergykitUser| SynergykitUser or object extended SynergykitUser | **required**
+|listener |UserResponseListener|  | optional
+|parallelMode |boolean|Indicates whether the requests are provided in parallel or in series  | **required**
+
+```java
+Synergykit.updateUser(new SynergykitUser(),new UserResponseListener() {
+    @Override
+    public void doneCallback(int statusCode, SynergykitUser user) {
+
+    }
+
+    @Override
+    public void errorCallback(int statusCode, SynergykitError errorObject) {
+
+    }
+},true);
+```
+### Delete user
+
+| Parameter | Type | Notes | |
+|:-|:-|:-|:-:|
+|user |SynergykitUser| SynergykitUser or object extended SynergykitUser to delete | **required**
+|listener |UserResponseListener|  | optional
+|parallelMode |boolean|Indicates whether the requests are provided in parallel or in series  | **required**
+
+```java
+Synergykit.deleteUser(user,new DeleteResponseListener() {
+    @Override
+    public void doneCallback(int statusCode) {
+
+    }
+
+    @Override
+    public void errorCallback(int statusCode, SynergykitError errorObject) {
+
+    }
+},true);
+```
+
+### Add role
+
+| Parameter | Type | Notes | |
+|:-|:-|:-|:-:|
+|user |SynergykitUser| SynergykitUser or object extended SynergykitUser| **required**
+|role |String| Role define in SynergyKit | **required**
+|listener |UserResponseListener|  | optional
+|parallelMode |boolean|Indicates whether the requests are provided in parallel or in series  | **required**
+
+```java
+Synergykit.addRole(user,"role",new UserResponseListener() {
+    @Override
+    public void doneCallback(int statusCode, SynergykitUser user) {
+
+    }
+
+    @Override
+    public void errorCallback(int statusCode, SynergykitError errorObject) {
+
+    }
+},true);
+```
+### Remove role
+
+| Parameter | Type | Notes | |
+|:-|:-|:-|:-:|
+|user |SynergykitUser| SynergykitUser or object extended SynergykitUser| **required**
+|role |String| Role define in SynergyKit | **required**
+|listener |UserResponseListener|  | optional
+|parallelMode |boolean|Indicates whether the requests are provided in parallel or in series  | **required**
+
+```java
+Synergykit.removeRole(user,"role",new UserResponseListener() {
+    @Override
+    public void doneCallback(int statusCode, SynergykitUser user) {
+
+    }
+
+    @Override
+    public void errorCallback(int statusCode, SynergykitError errorObject) {
+
+    }
+},true);
+```
+
+### Add platform to user
+Platforms are useful for pairing individual mobile devices or web applications to the user via registration ID. After assignment platform to the user you will be able to send push notifications to the device or application.
+
+**Before you can work with platforms** of user is needed to login first. After successful login SDK receives sessionToken for authentication of user. Token is held by the SDK and is automatically inserted into the Headers.
+
+| Parameter | Type | Notes | |
+|:-|:-|:-|:-:|
+|user |SynergykitUser| SynergykitUser or object extended SynergykitUser| **required**
+|platform |SynergykitPlatform|  | **required**
+|listener |PlatformResponseListener|  | optional
+|parallelMode |boolean|Indicates whether the requests are provided in parallel or in series  | **required**
+
+```java
+Synergykit.addPlatformToUser(user,platform,new PlatformResponseListener() {
+        @Override
+        public void doneCallback(int statusCode, SynergykitPlatform platform) {
+
+        }
+
+        @Override
+        public void errorCallback(int statusCode, SynergykitError errorObject) {
+
+        }
+    },true);
+```
+
+### Retrive platform 
+
+| Parameter | Type | Notes | |
+|:-|:-|:-|:-:|
+|user |SynergykitUser| SynergykitUser or object extended SynergykitUser| **required**
+|platformId |String|  | **required**
+|listener |PlatformResponseListener|  | optional
+|parallelMode |boolean|Indicates whether the requests are provided in parallel or in series  | **required**
+
+```java
+Synergykit.getPlatform(user,"platformId",new PlatformResponseListener() {
+    @Override
+    public void doneCallback(int statusCode, SynergykitPlatform platform) {
+
+    }
+
+    @Override
+    public void errorCallback(int statusCode, SynergykitError errorObject) {
+
+    }
+},true);
+```
+
+### Update platform
+Platforms contain of a few parameters but only two are updatable. Save method executes `PUT` request if `_id` is set, it could change `development` and `registrationId`. 
+
+| Parameter | Type | Notes | |
+|:-|:-|:-|:-:|
+|user |SynergykitUser| SynergykitUser or object extended SynergykitUser| **required**
+|platform |SynergykitPlatform|  | **required**
+|listener |PlatformResponseListener|  | optional
+|parallelMode |boolean|Indicates whether the requests are provided in parallel or in series  | **required**
+
+```java
+Synergykit.updatePlatformInUser(user,platform,new PlatformResponseListener() {
+   @Override
+   public void doneCallback(int statusCode, SynergykitPlatform platform) {
+
+   }
+
+   @Override
+   public void errorCallback(int statusCode, SynergykitError errorObject) {
+
+   }
+},true);
+```
+### Delete platform
+
+| Parameter | Type | Notes | |
+|:-|:-|:-|:-:|
+|user |SynergykitUser| SynergykitUser or object extended SynergykitUser| **required**
+|platform |SynergykitPlatform|  | **required**
+|listener |DeleteResponseListener|  | optional
+|parallelMode |boolean|Indicates whether the requests are provided in parallel or in series  | **required**
+
+```java
+Synergykit.deletePlatform(user,platform,new DeleteResponseListener() {
+      @Override
+      public void doneCallback(int statusCode) {
+
+      }
+
+      @Override
+      public void errorCallback(int statusCode, SynergykitError errorObject) {
+
+      }
+  },true);
+```
+
+### Activating user
+By default, user is not activated. This mean, that you can use this state to validate user e-mail address by sending him activation link.
+
+To activate user, send an email with this activation link /v2.1/users/activation/[ACTIVATION_HASH]. You can provide parameter callback with url address where you want to redirect user after activation.
+
+Or **if you know that e-mai address is valid** you can activate user with SDK.
+
+```java
+user.setActivated(true);
+```
+### Login user
+If user was registrated via normal way, which means by email and password, you can authenticate him with login method.
+
+| Parameter | Type | Notes | |
+|:-|:-|:-|:-:|
+|user |SynergykitUser| SynergykitUser with email and password | **required**
+|listener | UserResponseListener |  | optional
+
+```java
+Synergykit.loginUser(user,new UserResponseListener() {
+      @Override
+      public void doneCallback(int statusCode, SynergykitUser user) {
+          
+      }
+
+      @Override
+      public void errorCallback(int statusCode, SynergykitError errorObject) {
+
+      }
+  });
+```
+
+## Communication
+In Synergykit you can communicate with your users by different ways. There are listed some methods below this section.
+
+One way is to sending push notifications into user devices. This action need to have filled your API key for Android devices in Settings, section Android. For push notifications into iOS devices you need to fill your password and certificates into Apple section in Settings.
+
+Another way is to sending emails to your users. For this you need to create email templates in administration under Mailing section.
+
+### Send notification
+
+| Parameter | Type | Notes | |
+|:-|:-|:-|:-:|
+|notification| NSArray| List of recipient | **required**
+|listener | NotificationResponseListener |  | optional
+|parallelMode |boolean|Indicates whether the requests are provided in parallel or in series  | **required**
+
+```java
+SynergykitNotification notification = SynergykitNotification
+                                        .newInstance()
+                                        .setAlert("My notification")
+                                        .addUserId("userId")
+                                        .setPayload("payload");
+
+Synergykit.sendNotification(notification,new NotificationResponseListener() {
+    @Override
+    public void doneCallback(int statusCode) {
+
+    }
+
+    @Override
+    public void errorCallback(int statusCode, SynergykitError errorObject) {
+
+    }
+},true);
+```
+### Send e-mail
+
+| Parameter | Type | Notes | |
+|:-|:-|:-|:-:|
+|templateName | String| Name of e-mail template from SynergyKit | **required**
+|email |SynergykitEmail| E-mail information | **required**
+|listener | EmailResponseListener |  | optional
+|parallelMode |boolean|Indicates whether the requests are provided in parallel or in series  | **required**
+
+```java
+SynergykitEmail email = SynergykitEmail
+                               .newInstace()
+                               .setEmail("name@domain.com")
+                               .setSubject("subject")
+                               .setFrom("your-email@domain.com");
+
+   Synergykit.sendEmail("templateName",email,new EmailResponseListener() {
        @Override
-       public void doneCallback(int statusCode, SynergyKitObject object) {
-           
+       public void doneCallback(int statusCode) {
+
        }
 
        @Override
-       public void errorCallback(int statusCode, SynergyKitError errorObject) {
+       public void errorCallback(int statusCode, SynergykitError errorObject) {
 
        }
-   });
+   },false);
 ```
+E-mail template should looks like this example.
+```
+<p>Hello %name%,</p>
+<br>
+<p>this e-mail was send from Synergykit Sample Application.</p>
+<br>
+<p>Synergykit Team</p>
+```
+
+## Files
+Synergykit can be also used for storing as much quantity of files as you need for your application.
+### Upload file
+Synergykit Android SDK supports upload bitmaps and byte array. If file is successfully uploaded `SynergykitFile` representing just created file object is returned. `SynergykitFile` contains path to file from where is file accessible.
+
+| Parameter | Type | Notes | |
+|:-|:-|:-|:-:|
+|bitmap |Bitmap| Bitmap to upload | **required**
+|listener	|	FileResponseListener	|		|	optional	|
+
+```java
+/*
+* Example of bitmap uploading
+*/
+
+Synergykit.createFile(bitmap,new FileResponseListener() {
+   @Override
+   public void doneCallback(int statusCode, SynergykitFile file) {
+       
+   }
+
+   @Override
+   public void errorCallback(int statusCode, SynergykitError errorObject) {
+
+   }
+});
+```
+### Retrieve file by ID
+
+| Parameter | Type | Notes | |
+|:-|:-|:-|:-:|
+|fileId |String| File identification | **required**
+|listener	|	FileResponseListener	|		|	optional	
+
+```java
+Synergykit.getFile("fileId",new FileResponseListener() {
+    @Override
+    public void doneCallback(int statusCode, SynergykitFile file) {
+
+    }
+
+    @Override
+    public void errorCallback(int statusCode, SynergykitError errorObject) {
+
+    }
+},false);
+```
+### Delete file
+
+| Parameter | Type | Notes | |
+|:-|:-|:-|:-:|
+|fileId |String| File identification | **required**
+|listener	|	DeleteResponseListener	|		|	optional	
+
+```java
+Synergykit.deleteFile("fileId",new DeleteResponseListener() {
+    @Override
+    public void doneCallback(int statusCode) {
+
+    }
+
+    @Override
+    public void errorCallback(int statusCode, SynergykitError errorObject) {
+
+    }
+},true);
+```
+
+## Cloud Code
+Our vision is to let developers build any app without dealing with servers. For complex apps, sometimes you just need a bit of logic that isn't running on a mobile device. Cloud Code makes this possible.
+
+Cloud Code runs in the Node.js jailed sandbox and uses strict JavaScript language with some prepared modules and variables, which you can use for your development.
+
+
+### Run cloud code
+
+| Parameter | Type | Notes | |
+|:-|:-|:-|:-:|
+|	cloudCode	|	SynergykitCloudCode	|	SynergykitCloudCode or object extended SynergykitCloudCode with other parameters	|	**required**	|
+|	type	|	Type	|	Return object type (Must extend SynergykitObject)	|	**required**	|
+|	listener	|	ResponseListener()	|		|	optional	|
+
+```java
+ SynergykitCloudCode cloudCode = SynergykitCloudCode.newInstance("cloudCodeName");
+
+ Synergykit.invokeCloudCode(cloudCode, SynergykitObject.class,new ResponseListener() {
+     @Override
+     public void doneCallback(int statusCode, SynergykitObject object) {
+
+     }
+
+     @Override
+     public void errorCallback(int statusCode, SynergykitError errorObject) {
+
+     }
+ },true);
+```
+
+Example cloud code function should looks like this.
+```
+callback("Hello " + parameters.name + "!")
+```
+## Batch request
+We know that internet connection is sometimes unstable and we know it's not really good for synchronization algorithm where dozens of requests need to be executed without mistake. Batch request minimizes risk with connection failure - it's all in one or nothing, not first five request, then two failed (walk under the bridge) and at the end three successful.
+
+### BatchItem
+You can batch every request you can imagine with `SynergykitBatchItem` object. At first create batch item that says where and how to do it.
+
+| Parameter | Type | Notes | |
+|:-|:-|:-|:-:|
+|	method	|	String	|	REST method	|	**required**	|
+|	endpoint	|	SynergykitEndpoint	|	REST API endpoint	|	**required**	|
+|	body	|	Child of SynergykitObject	|	POST request body	|	optional	|
+
+```java
+SynergykitEndpoint endpoint = UriBuilder.newInstance()
+                                        .setResource(Resource.RESOURCE_DATA)
+                                        .setRecordId("resourceId")
+                                        .buildEndpoint();
+
+SynergykitBatchItem batchItem = new SynergykitBatchItem(Synergykit.GET,endpoint);
+```
+### Adding to batch
+Every batch item need to be add to batch which you can send. At firt you must initialize batch. Then you can add BatchItems and send them all together.
+```java
+Synergykit.initBatch("batchId");
+
+Synergykit.getBatch("batchId").add(batchItem-0);
+Synergykit.getBatch("batchId").add(batchItem-1);
+.
+.
+.
+Synergykit.getBatch("batchId").add(batchItem-n);
+```
+### Sending batch
+Batch executes every request in the order in which they were added.
+
+| Parameter | Type | Notes | |
+|:-|:-|:-|:-:|
+|	batchId	|	String	|	Batch identification	|	**required**	|
+|	listener	|	BatchResponseListener	|		|	optional	|
+|	parallelMode	|	boolean	|		|	optional	|
+
+```java
+Synergykit.sendBatch("batchId",new BatchResponseListener() {
+    @Override
+    public void doneCallback(int statusCode, SynergykitBatchResponse[] batchResponse) {
+
+    }
+
+    @Override
+    public void errorCallback(int statusCode, SynergykitError errorObject) {
+
+    }
+},true);
+```
+## Cache
+The SynergyKit Android SDK provides Http response cache (HttpResponseCache). Http response cache caches all of your application's HTTP requests. This cache requires Android 4.0  or later.
+
+### Install cache
+You can install this cache with default cache dir size (10 MiB):
+```java
+SynergyKit.installCache(getApplicationContext());
+```
+
+Or you can install this cache with your own cache dir size:
+```java
+long cacheSize = 8 * 1024 * 1024; //8 MiB
+SynergyKit.installCache(getApplicationContext(), cacheSize);
+```
+###Flush cache
+You can also flush installed cache:
+
+```java
+SynergyKit.flushCache();
+```
+
+
+## Changelog
+### Version 2.1.1
+
 
 ## Author
 
@@ -918,8 +1126,6 @@ Letsgood.com s.r.o., Prague, Heart of Europe
 
 development@letsgood.com, http://letsgood.com/en
 
-
-
 ## License
 
-SynergyKIT Android SDK is available under the Apache License, Version 2.0
+Synergykit SDK Android is available under the Apache 2.0 licence. See the LICENSE file for more info.

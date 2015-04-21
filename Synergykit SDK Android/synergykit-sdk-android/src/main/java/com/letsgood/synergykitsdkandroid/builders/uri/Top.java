@@ -13,18 +13,24 @@ public class Top {
 
 	/* Constants */
 	private static final int MIN_VALUE = 0;
-	
+
 	/* Attributes */
 	private String top;
+
+    /* New instance */
+    public static Top newInstance(){
+        return new Top();
+    }
 	
 	/* Top setter */
-	public void setTop(int top){	
+	public Top setTop(int top){
 		
 		if(top<MIN_VALUE){
 			SynergykitLog.print(Errors.MSG_TOP_NEGATIVE);
 		}
 		
-		this.top = new String("&$top=" + Integer.toString(top));
+		this.top = new String("$top=" + Integer.toString(top));
+        return this;
 	}
 	
 	

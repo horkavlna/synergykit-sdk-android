@@ -19,6 +19,10 @@ public class SynergykitEmail extends SynergykitObject implements Serializable {
     @Expose
     protected String from;
 
+    /* New Instance */
+    public static SynergykitEmail newInstace(){
+        return new SynergykitEmail();
+    }
 
 	/* Email getter */
 	public String getEmail() {
@@ -26,8 +30,9 @@ public class SynergykitEmail extends SynergykitObject implements Serializable {
 	}
 
 	/* Email setter */
-	public void setEmail(String email) {
+	public SynergykitEmail setEmail(String email) {
 		this.email = email;
+        return this;
 	}
 
 	/* Subject getter */
@@ -36,15 +41,17 @@ public class SynergykitEmail extends SynergykitObject implements Serializable {
 	}
 
 	/* Subject setter */
-	public void setSubject(String subject) {
+	public SynergykitEmail setSubject(String subject) {
 		this.subject = subject;
+        return this;
 	}
 
     public String getFrom() {
         return from;
     }
 
-    public void setFrom(String from) {
+    public SynergykitEmail setFrom(String from) {
         this.from = from;
+        return this;
     }
 }

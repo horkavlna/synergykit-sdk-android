@@ -10,16 +10,22 @@
 
     </style>
 
-    <style name="facebookButton" parent="defaultButton">
-        <item name="android:background">@drawable/button_facebook_selector</item>
+    <style name="facebookButton">
+        <item name="android:minHeight">@dimen/buttonMinHeight</item>
+        <item name="android:layout_margin">@dimen/buttonMargin</item>
+        <item name="android:textSize">@dimen/buttonTextSize</item>
+        <item name="android:padding">@dimen/buttonPadding</item>
     </style>
 
     <style name="twitterButton" parent="defaultButton">
         <item name="android:background">@drawable/button_twitter_selector</item>
     </style>
 
-    <style name="googleButton" parent="defaultButton">
-        <item name="android:background">@drawable/button_google_selector</item>
+    <style name="googleButton">
+        <item name="android:minHeight">@dimen/buttonMinHeight</item>
+        <item name="android:layout_margin">@dimen/buttonMargin</item>
+        <item name="android:textSize">@dimen/buttonTextSize</item>
+        <item name="android:padding">@dimen/buttonPadding</item>
     </style>
 
     <style name="menuButton" parent="@android:style/Widget.Holo.Light.Button">

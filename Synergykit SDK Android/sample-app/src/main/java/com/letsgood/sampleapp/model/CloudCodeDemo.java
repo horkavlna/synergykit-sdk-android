@@ -2,12 +2,13 @@ package com.letsgood.sampleapp.model;
 
 
 import com.google.gson.annotations.Expose;
+import com.letsgood.synergykitsdkandroid.resources.SynergykitCloudCode;
 import com.letsgood.synergykitsdkandroid.resources.SynergykitObject;
 
 /**
  * Created by Marek on 1/14/15.
  */
-public class CloudCodeDemo extends SynergykitObject {
+public class CloudCodeDemo extends SynergykitCloudCode {
     @Expose
     private String path;
     @Expose
@@ -30,6 +31,10 @@ public class CloudCodeDemo extends SynergykitObject {
     private float glassConfidence;
     @Expose
     private String name;
+
+    public CloudCodeDemo(String cloudCodeName) {
+        super(cloudCodeName);
+    }
 
     public String getName() {
         return name;

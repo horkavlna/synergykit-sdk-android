@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.letsgood.sampleapp.model.DemoObject;
+import com.letsgood.sampleapp.widgets.CustomProgressDialog;
 import com.letsgood.synergykitsdkandroid.Synergykit;
 import com.letsgood.synergykitsdkandroid.builders.UriBuilder;
 import com.letsgood.synergykitsdkandroid.builders.uri.Resource;
@@ -117,29 +118,30 @@ public class BatchActivity extends ActionBarActivity implements View.OnClickList
                                         .setType(DemoObject.class);
 
 
-        printOutput("Getting last record....");
+        final CustomProgressDialog progressDialog =  new CustomProgressDialog(this,"Posting ...");
+
         Synergykit.getRecord(config, new ResponseListener() {
             @Override
             public void doneCallback(int statusCode, SynergykitObject object) {
-                DemoObject demoObject = (DemoObject) object;
-                DemoObject demoObjectPatch = new DemoObject();
+                DemoObject originalObject = (DemoObject) object;
+                DemoObject postObject = new DemoObject();
+                DemoObject putObject = originalObject;
+                DemoObject patchObject = new DemoObject();
 
-                printOutput("Getting done.");
+                //post object
+                postObject.setText(inputEditText.getText().toString());
 
-                //set demo object
-                demoObject.setText(inputEditText.getText().toString());
+                //put object
+                putObject.setText(inputEditText.getText().toString());
 
-                //set patch object
-                demoObjectPatch.setText("another string");
-                demoObjectPatch.setId(demoObject.getId());
-                demoObjectPatch.setVersion(demoObject.getVersion());
+                //patch object
+                patchObject.setId(putObject.getId());
+                patchObject.setText("another string");
+                patchObject.setVersion(putObject.getVersion()+1);
+
 
 
                 Synergykit.initBatch(BATCH_ID);
-
-                //Batch item 0
-                DemoObject demoObjectBatch0 = new DemoObject();
-                demoObject.setText(inputEditText.getText().toString());
 
 
                 SynergykitEndpoint batchEndpoint0 = UriBuilder
@@ -148,7 +150,7 @@ public class BatchActivity extends ActionBarActivity implements View.OnClickList
                         .setCollection(COLLECTION_DEMO_OBJECTS)
                         .buildEndpoint();
 
-                SynergykitBatchItem batchItem0 = new SynergykitBatchItem(Synergykit.POST, batchEndpoint0, demoObjectBatch0);
+                SynergykitBatchItem batchItem0 = new SynergykitBatchItem(Synergykit.POST, batchEndpoint0, postObject);
                 Synergykit.getBatch(BATCH_ID).add(batchItem0);
 
                 //Batch item 1
@@ -156,10 +158,10 @@ public class BatchActivity extends ActionBarActivity implements View.OnClickList
                         .newInstance()
                         .setResource(Resource.RESOURCE_DATA)
                         .setCollection(COLLECTION_DEMO_OBJECTS)
-                        .setRecordId(demoObject.getId())
+                        .setRecordId(putObject.getId())
                         .buildEndpoint();
 
-                SynergykitBatchItem batchItem1 = new SynergykitBatchItem(Synergykit.PUT, batchEndpoint1, demoObject);
+                SynergykitBatchItem batchItem1 = new SynergykitBatchItem(Synergykit.PUT, batchEndpoint1, putObject);
                 Synergykit.getBatch(BATCH_ID).add(batchItem1);
 
                 //Batch item 2
@@ -167,11 +169,11 @@ public class BatchActivity extends ActionBarActivity implements View.OnClickList
                         .newInstance()
                         .setResource(Resource.RESOURCE_DATA)
                         .setCollection(COLLECTION_DEMO_OBJECTS)
-                        .setRecordId(demoObjectPatch.getId())
+                        .setRecordId(patchObject.getId())
                         .buildEndpoint();
 
-                demoObjectPatch.setVersion(demoObject.getVersion() + 1);
-                SynergykitBatchItem batchItem2 = new SynergykitBatchItem(Synergykit.PATCH, batchEndpoint2, demoObjectPatch);
+
+                SynergykitBatchItem batchItem2 = new SynergykitBatchItem(Synergykit.PATCH, batchEndpoint2, patchObject);
                 Synergykit.getBatch(BATCH_ID).add(batchItem2);
 
                 //Batch item 3
@@ -179,7 +181,7 @@ public class BatchActivity extends ActionBarActivity implements View.OnClickList
                         .newInstance()
                         .setResource(Resource.RESOURCE_DATA)
                         .setCollection(COLLECTION_DEMO_OBJECTS)
-                        .setRecordId(demoObject.getId())
+                        .setRecordId(putObject.getId())
                         .buildEndpoint();
 
                 SynergykitBatchItem batchItem3 = new SynergykitBatchItem(Synergykit.DELETE, batchEndpoint3);
@@ -190,33 +192,39 @@ public class BatchActivity extends ActionBarActivity implements View.OnClickList
                         .newInstance()
                         .setResource(Resource.RESOURCE_DATA)
                         .setCollection(COLLECTION_DEMO_OBJECTS)
-                        .setRecordId(demoObject.getId())
+                        .setRecordId(putObject.getId())
                         .buildEndpoint();
 
 
-                SynergykitBatchItem batchItem4 = new SynergykitBatchItem(Synergykit.PUT, batchEndpoint4, demoObject);
+                SynergykitBatchItem batchItem4 = new SynergykitBatchItem(Synergykit.PUT, batchEndpoint4, putObject);
                 Synergykit.getBatch(BATCH_ID).add(batchItem4);
 
-                printOutput("Sending batch...");
                 Synergykit.sendBatch(BATCH_ID, new BatchResponseListener() {
                     @Override
                     public void doneCallback(int statusCode, SynergykitBatchResponse[] batchResponse) {
-                        printOutput("Sending batch done.");
+
 
 
                         for (int i = 0; batchResponse != null && i < batchResponse.length; i++) {
-                            printOutput("Batch item " + i + " response: " + Integer.toString(batchResponse[i].getStatusCode()) + " " + Synergykit.getGson().toJson(batchResponse[i].getBody()));
-
+                           String jSon =Synergykit.getGson().toJson(batchResponse[i].getBody());
+                            if(batchResponse[i].getStatusCode() == 200) {
+                                DemoObject demoObject =  Synergykit.getGson().fromJson(jSon,DemoObject.class);
+                                printOutput(Integer.toString(batchResponse[i].getStatusCode()) + " " + demoObject.getText());
+                            }else {
+                                SynergykitError error = Synergykit.getGson().fromJson(jSon,SynergykitError.class);
+                                printOutput(Integer.toString(batchResponse[i].getStatusCode()) + " " + error.getMessage());
+                            }
                         }
 
                         batchButton.setEnabled(true);
+                        progressDialog.dismiss();
                     }
 
                     @Override
                     public void errorCallback(int statusCode, SynergykitError errorObject) {
-                        printOutput("Sending batch failed.");
                         printOutput(errorObject.toString());
                         batchButton.setEnabled(true);
+                        progressDialog.dismiss();
                     }
                 }, false);
 

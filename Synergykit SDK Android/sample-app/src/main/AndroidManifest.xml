@@ -116,6 +116,9 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="b94080c8467838e54bdc88f196f99d2e96f89119" />
     </application>
 
 </manifest>

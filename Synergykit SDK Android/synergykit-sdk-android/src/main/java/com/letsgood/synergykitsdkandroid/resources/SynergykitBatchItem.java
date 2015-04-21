@@ -14,6 +14,7 @@ public class SynergykitBatchItem {
     private String endpoint;
     @Expose
     private int id;
+
     @Expose
     private Object body;
 
