@@ -1,6 +1,11 @@
 # Synergykit Android SDK
 
-Letsgood.com runs Backend as a Service Synergykit for **fast and simple mobile/web/desktop applications development**. Synergykit allows enterpreneurs implement an idea to project fast and low cost like Lean Startup, validates and runs product.
+<p align="left" style="margin-bottom:0;" >
+<img src="https://synergykit.blob.core.windows.net/synergykit/56a5f0b93ad04ca42265cfab4e1810fb.png" alt="SynergyKIT" title="SynergyKit">
+</p>
+
+
+Letsgood.com runs Backend as a Service Synergykit for *fast and simple mobile/web/desktop applications development*. Synergykit allows enterpreneurs implement an idea to project fast and low cost like Lean Startup, validates and runs product.
 
 We know how hard can be to work with untried API, so we prepared SDKs for mostly used platforms.
 
@@ -28,7 +33,7 @@ Synergykit SDK Android is available through [jcenter](https://bintray.com/letsgo
 
 ## Architecture 
 
-Popis architektury SDK, nenA­ povinnA©, jA! chci zveA™ejnit zA!kladnA­ class diagram.
+
 
 ### Building model
 SynergyKit has two base objects `SynergykitObject` and `SynergykitUser`.  Every object which you want to store in SynergyKit must extends `SynergykitObject`. Every user you want to sign in, sign out or store in SynergyKit must extends `SynergykitUser`.   
@@ -929,11 +934,8 @@ E-mail template should looks like this example.
 ```
 
 ## Files
-
 Synergykit can be also used for storing as much quantity of files as you need for your application.
-
 ### Upload file
-
 Synergykit Android SDK supports upload bitmaps and byte array. If file is successfully uploaded `SynergykitFile` representing just created file object is returned. `SynergykitFile` contains path to file from where is file accessible.
 
 | Parameter | Type | Notes | |
