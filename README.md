@@ -1,1126 +1,2079 @@
-# Synergykit Android SDK
+<h1 id="synergykit-android-sdk">Synergykit Android SDK</h1>
 
-<p align="left" style="margin-bottom:0;" >
+<p align="left">
 <img src="https://synergykit.blob.core.windows.net/synergykit/56a5f0b93ad04ca42265cfab4e1810fb.png" alt="SynergyKIT" title="SynergyKit">
+</p>
 
-Letsgood.com runs Backend as a Service Synergykit for **fast and simple mobile/web/desktop applications development**. Synergykit allows enterpreneurs implement an idea to project fast and low cost like Lean Startup, validates and runs product.
+<p>Letsgood.com runs Backend as a Service Synergykit for <em>fast and simple mobile/web/desktop applications development</em>. Synergykit allows enterpreneurs implement an idea to project fast and low cost like Lean Startup, validates and runs product.</p>
 
-We know how hard can be to work with untried API, so we prepared SDKs for mostly used platforms.
+<p>We know how hard can be to work with untried API, so we prepared SDKs for mostly used platforms.</p>
 
-**Another SDKs**
+<p><strong>Another SDKs</strong></p>
 
-- [iOS SDK](https://github.com/Synergykit/synergykit-sdk-ios)
-- [Node.js SDK](https://github.com/Synergykit/synergykit-sdk-nodejs)
-<br>
+<ul>
+<li><a href="https://github.com/Synergykit/synergykit-sdk-ios">iOS SDK</a></li>
+<li><a href="https://github.com/Synergykit/synergykit-sdk-nodejs">Node.js SDK</a> <br>
+<br></li>
+</ul>
 
-## Sample Application
-Almost all possibilities of Synergykit are presented in Sample Application that was developed next to SDK as introduction of how it works.
+<p><strong>Table of content</strong></p>
 
-### Sample App Installation 
+<p><div class="toc">
+<ul>
+<li><a href="#synergykit-android-sdk">Synergykit Android SDK</a><ul>
+<li><a href="#sample-application">Sample Application</a><ul>
+<li><a href="#sample-app-installation">Sample App Installation</a></li>
+</ul>
+</li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#architecture">Architecture</a><ul>
+<li><a href="#building-model">Building model</a></li>
+</ul>
+</li>
+<li><a href="#synergykit-initialization">Synergykit Initialization</a></li>
+<li><a href="#responses-handling">Responses handling</a></li>
+<li><a href="#documents">Documents</a><ul>
+<li><a href="#create-new-document">Create new document</a></li>
+<li><a href="#retrieve-an-existing-document-by-id">Retrieve an existing document by ID</a></li>
+<li><a href="#update-document">Update document</a></li>
+<li><a href="#delete-document">Delete document</a></li>
+</ul>
+</li>
+<li><a href="#real-time-data-observerving">Real-time data observerving</a><ul>
+<li><a href="#connect">Connect</a></li>
+<li><a href="#disconnect">Disconnect</a></li>
+<li><a href="#checking-connection-state">Checking connection state</a></li>
+<li><a href="#start-observing-whole-collection">Start observing whole collection</a></li>
+<li><a href="#start-observing-collection-with-filter">Start observing collection with filter</a></li>
+<li><a href="#stop-observing">Stop observing</a></li>
+<li><a href="#speak-communication">Speak communication</a><ul>
+<li><a href="#send-speak">Send speak</a></li>
+<li><a href="#receive-speak">Receive speak</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#queries">Queries</a><ul>
+<li><a href="#available-conditions">Available conditions</a><ul>
+<li><a href="#filter">filter</a></li>
+<li><a href="#startswith">startswith</a></li>
+<li><a href="#endswith">endswith</a></li>
+<li><a href="#substringof">substringof</a></li>
+<li><a href="#in">in</a></li>
+<li><a href="#nin">nin</a></li>
+<li><a href="#select">select</a></li>
+<li><a href="#top">top</a></li>
+<li><a href="#orderby">orderby</a></li>
+<li><a href="#inlinecount">inlinecount</a></li>
+<li><a href="#skip">skip</a></li>
+</ul>
+</li>
+<li><a href="#querying-objects">Querying objects</a></li>
+<li><a href="#list-all-users">List all users</a></li>
+<li><a href="#list-all-documents">List all documents</a></li>
+<li><a href="#list-all-files">List all files</a></li>
+</ul>
+</li>
+<li><a href="#users">Users</a><ul>
+<li><a href="#create-a-new-user">Create a new user</a></li>
+<li><a href="#retrieve-an-existing-user-by-id">Retrieve an existing user by ID</a></li>
+<li><a href="#update-user">Update user</a></li>
+<li><a href="#delete-user">Delete user</a></li>
+<li><a href="#add-role">Add role</a></li>
+<li><a href="#remove-role">Remove role</a></li>
+<li><a href="#add-platform-to-user">Add platform to user</a></li>
+<li><a href="#retrive-platform">Retrive platform</a></li>
+<li><a href="#update-platform">Update platform</a></li>
+<li><a href="#delete-platform">Delete platform</a></li>
+<li><a href="#activating-user">Activating user</a></li>
+<li><a href="#login-user">Login user</a></li>
+</ul>
+</li>
+<li><a href="#communication">Communication</a><ul>
+<li><a href="#send-notification">Send notification</a></li>
+<li><a href="#send-e-mail">Send e-mail</a></li>
+</ul>
+</li>
+<li><a href="#files">Files</a><ul>
+<li><a href="#upload-file">Upload file</a></li>
+<li><a href="#retrieve-file-by-id">Retrieve file by ID</a></li>
+<li><a href="#delete-file">Delete file</a></li>
+</ul>
+</li>
+<li><a href="#cloud-code">Cloud Code</a><ul>
+<li><a href="#run-cloud-code">Run cloud code</a></li>
+</ul>
+</li>
+<li><a href="#batch-request">Batch request</a><ul>
+<li><a href="#batchitem">BatchItem</a></li>
+<li><a href="#adding-to-batch">Adding to batch</a></li>
+<li><a href="#sending-batch">Sending batch</a></li>
+</ul>
+</li>
+<li><a href="#cache">Cache</a><ul>
+<li><a href="#install-cache">Install cache</a></li>
+<li><a href="#flush-cache">Flush cache</a></li>
+</ul>
+</li>
+<li><a href="#changelog">Changelog</a><ul>
+<li><a href="#version-211">Version 2.1.1</a></li>
+</ul>
+</li>
+<li><a href="#author">Author</a></li>
+<li><a href="#license">License</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</p>
 
-- Clone or download the repository.
-- Open `Android Studio`.
-- Open project `Synergykit SDK Android`
-- Run Gradle task `installLocalSdkDebug` in module  `sample-app`
 
-## Installation
 
-Synergykit SDK Android is available through [jcenter](https://bintray.com/letsgood/maven/synergykit-sdk-android/view). To install it, simply add the following line to your Gradle dependencies:
+<h2 id="sample-application">Sample Application</h2>
 
-`compile 'com.letsgood:synergykit-sdk-android:2.1.3'`
+<p>Almost all possibilities of Synergykit are presented in Sample Application that was developed next to SDK as introduction of how it works.</p>
 
-## Architecture 
 
-Popis architektury SDK, nenA� povinnA�, jA! chci zveA�ejnit zA!kladnA� class diagram.
 
-### Building model
-SynergyKit has two base objects `SynergykitObject` and `SynergykitUser`.  Every object which you want to store in SynergyKit must extends `SynergykitObject`. Every user you want to sign in, sign out or store in SynergyKit must extends `SynergykitUser`.   
+<h3 id="sample-app-installation">Sample App Installation</h3>
 
-SDK uses [Google Gson](https://code.google.com/p/google-gson/) to serialize object to jSon and deserialize object from jSon.  Every argument of your objects which would be serialize/deserialize must have `@Expose` annotation. 
+<ul>
+<li>Clone or download the repository.</li>
+<li>Open <code>Android Studio</code>.</li>
+<li>Open project <code>Synergykit SDK Android</code></li>
+<li>Run Gradle task <code>installLocalSdkDebug</code> in module  <code>sample-app</code></li>
+</ul>
 
-```java
-public class DemoObject extends SynergykitObject {
 
-    /* Attributes */
-    @Expose
-    private String text; //this attribute will be serialize/deserialize
 
-    /* Text getter */
-    public String getText() {
-        return text;
+<h2 id="installation">Installation</h2>
+
+<p>Synergykit SDK Android is available through <a href="https://bintray.com/letsgood/maven/synergykit-sdk-android/view">jcenter</a>. To install it, simply add the following line to your Gradle dependencies:</p>
+
+<p><code>compile 'com.letsgood:synergykit-sdk-android:2.1.1'</code></p>
+
+
+
+<h2 id="architecture">Architecture</h2>
+
+
+
+<h3 id="building-model">Building model</h3>
+
+<p>SynergyKit has two base objects <code>SynergykitObject</code> and <code>SynergykitUser</code>.  Every object which you want to store in SynergyKit must extends <code>SynergykitObject</code>. Every user you want to sign in, sign out or store in SynergyKit must extends <code>SynergykitUser</code>.   </p>
+
+<p>SDK uses <a href="https://code.google.com/p/google-gson/">Google Gson</a> to serialize object to jSon and deserialize object from jSon.  Every argument of your objects which would be serialize/deserialize must have <code>@Expose</code> annotation. </p>
+
+
+
+<pre class="prettyprint"><code class="language-java hljs "><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DemoObject</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">SynergykitObject</span> {</span>
+
+    <span class="hljs-comment">/* Attributes */</span>
+    <span class="hljs-annotation">@Expose</span>
+    <span class="hljs-keyword">private</span> String text; <span class="hljs-comment">//this attribute will be serialize/deserialize</span>
+
+    <span class="hljs-comment">/* Text getter */</span>
+    <span class="hljs-keyword">public</span> String <span class="hljs-title">getText</span>() {
+        <span class="hljs-keyword">return</span> text;
     }
 
-    /* Text setter */
-    public void setText(String text) {
-        this.text = text;
+    <span class="hljs-comment">/* Text setter */</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setText</span>(String text) {
+        <span class="hljs-keyword">this</span>.text = text;
     }
 
-}
-```
+}</code></pre>
 
-```java
-public class DemoUser extends SynergykitUser {
 
-    /* Attributes */
-    @Expose
-    private String name; //this attribute will be serialize/deserialize
-    private int age; //this attribute will not be serialize/deserialize
 
-    /* Name getter */
-    public String getName() {
-        return name;
+<pre class="prettyprint"><code class="language-java hljs "><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DemoUser</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">SynergykitUser</span> {</span>
+
+    <span class="hljs-comment">/* Attributes */</span>
+    <span class="hljs-annotation">@Expose</span>
+    <span class="hljs-keyword">private</span> String name; <span class="hljs-comment">//this attribute will be serialize/deserialize</span>
+    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> age; <span class="hljs-comment">//this attribute will not be serialize/deserialize</span>
+
+    <span class="hljs-comment">/* Name getter */</span>
+    <span class="hljs-keyword">public</span> String <span class="hljs-title">getName</span>() {
+        <span class="hljs-keyword">return</span> name;
     }
 
-    /* Name setter */
-    public void setName(String name) {
-        this.name = name;
+    <span class="hljs-comment">/* Name setter */</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setName</span>(String name) {
+        <span class="hljs-keyword">this</span>.name = name;
     }
 
-    /* Age getter */
-    public int getAge() {
-        return age;
+    <span class="hljs-comment">/* Age getter */</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getAge</span>() {
+        <span class="hljs-keyword">return</span> age;
     }
 
-    /* Age setter */
-    public void setAge(int age) {
-        this.age = age;
+    <span class="hljs-comment">/* Age setter */</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setAge</span>(<span class="hljs-keyword">int</span> age) {
+        <span class="hljs-keyword">this</span>.age = age;
     }
-}
-```
+}</code></pre>
 
-## Synergykit Initialization
-Before you can start with Synergykit SDK you need to set tenant and key. Is recommended to set it up in `onCreate` method  the your application class (class extended Application).
 
-You can find it in **Settings > Application keys > Tenant** and **Settings > Application keys > Value** in Synergykit web application.
 
-```java
-Synergykit.init(APPLICATION_TENANT, APPLICATION_KEY);
-```
+<h2 id="synergykit-initialization">Synergykit Initialization</h2>
 
-## Responses handling
-There are many options that you can receive at the end of API communication. SDK provides many listeners to hadle responses.
+<p>Before you can start with Synergykit SDK you need to set tenant and key. Is recommended to set it up in <code>onCreate</code> method  the your application class (class extended Application).</p>
 
-Every request has response listener  which provides `doneCallback` and  `errorCallback`. `doneCallback` is called when everything was done without error. `errorCallback` otherwise.
+<p>You can find it in <strong>Settings &gt; Application keys &gt; Tenant</strong> and <strong>Settings &gt; Application keys &gt; Value</strong> in Synergykit web application.</p>
 
-For example base `ResponseListener` 
 
-```java
-public interface ResponseListener {
-	public void doneCallback(int statusCode, SynergykitObject object);
-	public void errorCallback(int statusCode, SynergykitError errorObject);
-}
-```
-## Documents
-Documents are data saved in collections. Collections are basically tables in database where you can store your data. By sending requests to the documents endpoint, you can list, create, update or delete documents.
 
-### Create new document
+<pre class="prettyprint"><code class="language-java hljs ">Synergykit.init(APPLICATION_TENANT, APPLICATION_KEY);</code></pre>
 
-| Parameter | Type | Notes ||
-|:-|:-|:-|:-:|
-|collection |String| Location of document | **required**
-|object |SynergykitObject| SynergykitObject or object extended SynergykitObject |**required**
-|listener |ResponseListener||  optional
-|parallelMode| boolean | Indicates whether the requests are provided in parallel or in series|  **required**
 
-```java
-Synergykit.createRecord("collection",new SynergykitObject(),new ResponseListener() {
-   @Override
-   public void doneCallback(int statusCode, SynergykitObject object) {
-		//your code
+
+<h2 id="responses-handling">Responses handling</h2>
+
+<p>There are many options that you can receive at the end of API communication. SDK provides many listeners to hadle responses.</p>
+
+<p>Every request has response listener  which provides <code>doneCallback</code> and  <code>errorCallback</code>. <code>doneCallback</code> is called when everything was done without error. <code>errorCallback</code> otherwise.</p>
+
+<p>For example base <code>ResponseListener</code> </p>
+
+
+
+<pre class="prettyprint"><code class="language-java hljs "><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">ResponseListener</span> {</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doneCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitObject object);
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">errorCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitError errorObject);
+}</code></pre>
+
+
+
+<h2 id="documents">Documents</h2>
+
+<p>Documents are data saved in collections. Collections are basically tables in database where you can store your data. By sending requests to the documents endpoint, you can list, create, update or delete documents.</p>
+
+
+
+<h3 id="create-new-document">Create new document</h3>
+
+<table>
+<thead>
+<tr>
+  <th align="left">Parameter</th>
+  <th align="left">Type</th>
+  <th align="left">Notes</th>
+  <th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td align="left">collection</td>
+  <td align="left">String</td>
+  <td align="left">Location of document</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+<tr>
+  <td align="left">object</td>
+  <td align="left">SynergykitObject</td>
+  <td align="left">SynergykitObject or object extended SynergykitObject</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+<tr>
+  <td align="left">listener</td>
+  <td align="left">ResponseListener</td>
+  <td align="left"></td>
+  <td align="center">optional</td>
+</tr>
+<tr>
+  <td align="left">parallelMode</td>
+  <td align="left">boolean</td>
+  <td align="left">Indicates whether the requests are provided in parallel or in series</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+</tbody></table>
+
+
+
+
+<pre class="prettyprint"><code class="language-java hljs ">Synergykit.createRecord(<span class="hljs-string">"collection"</span>,<span class="hljs-keyword">new</span> SynergykitObject(),<span class="hljs-keyword">new</span> ResponseListener() {
+   <span class="hljs-annotation">@Override</span>
+   <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doneCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitObject object) {
+        <span class="hljs-comment">//your code</span>
    }
 
-   @Override
-   public void errorCallback(int statusCode, SynergykitError errorObject) {
-		//your code
+   <span class="hljs-annotation">@Override</span>
+   <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">errorCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitError errorObject) {
+        <span class="hljs-comment">//your code</span>
    }
-},true);
-```
-### Retrieve an existing document by ID
+},<span class="hljs-keyword">true</span>);</code></pre>
 
-| Parameter | Type | Notes ||
-|:-|:-|:-|:-:|
-|collection |String| Location of document | **required**
-|recordId |String| Record identificator |**required**
-|type |Type| Object type |**required**
-|listener |ResponseListener||  optional
-|parallelMode| boolean | Indicates whether the requests are provided in parallel or in series|  **required**
 
-```java
-Synergykit.getRecord("collection","recordId",SynergykitObject.class,new ResponseListener() {
-  @Override
-  public void doneCallback(int statusCode, SynergykitObject object) {
-    //your code
+
+<h3 id="retrieve-an-existing-document-by-id">Retrieve an existing document by ID</h3>
+
+<table>
+<thead>
+<tr>
+  <th align="left">Parameter</th>
+  <th align="left">Type</th>
+  <th align="left">Notes</th>
+  <th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td align="left">collection</td>
+  <td align="left">String</td>
+  <td align="left">Location of document</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+<tr>
+  <td align="left">recordId</td>
+  <td align="left">String</td>
+  <td align="left">Record identificator</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+<tr>
+  <td align="left">type</td>
+  <td align="left">Type</td>
+  <td align="left">Object type</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+<tr>
+  <td align="left">listener</td>
+  <td align="left">ResponseListener</td>
+  <td align="left"></td>
+  <td align="center">optional</td>
+</tr>
+<tr>
+  <td align="left">parallelMode</td>
+  <td align="left">boolean</td>
+  <td align="left">Indicates whether the requests are provided in parallel or in series</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+</tbody></table>
+
+
+
+
+<pre class="prettyprint"><code class="language-java hljs ">Synergykit.getRecord(<span class="hljs-string">"collection"</span>,<span class="hljs-string">"recordId"</span>,SynergykitObject.class,<span class="hljs-keyword">new</span> ResponseListener() {
+  <span class="hljs-annotation">@Override</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doneCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitObject object) {
+    <span class="hljs-comment">//your code</span>
   }
 
-  @Override
-  public void errorCallback(int statusCode, SynergykitError errorObject) {
-	//your code
+  <span class="hljs-annotation">@Override</span>
+  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">errorCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitError errorObject) {
+    <span class="hljs-comment">//your code</span>
   }
-},false);
-```
-### Update document
-| Parameter | Type | Notes ||
-|:-|:-|:-|:-:|
-|collection |String| Location of document | **required**
-|object |SynergykitObject|SynergykitObject or object extended SynergykitObject  |**required**
-|type |Type| Object type |**required**
-|listener |ResponseListener||  optional
-|parallelMode| boolean | Indicates whether the requests are provided in parallel or in series|  **required**
+},<span class="hljs-keyword">false</span>);</code></pre>
 
-```java
- Synergykit.updateRecord("collection",object,new ResponseListener() {
-     @Override
-     public void doneCallback(int statusCode, SynergykitObject object) {
-		//your code
+
+
+<h3 id="update-document">Update document</h3>
+
+<table>
+<thead>
+<tr>
+  <th align="left">Parameter</th>
+  <th align="left">Type</th>
+  <th align="left">Notes</th>
+  <th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td align="left">collection</td>
+  <td align="left">String</td>
+  <td align="left">Location of document</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+<tr>
+  <td align="left">object</td>
+  <td align="left">SynergykitObject</td>
+  <td align="left">SynergykitObject or object extended SynergykitObject</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+<tr>
+  <td align="left">type</td>
+  <td align="left">Type</td>
+  <td align="left">Object type</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+<tr>
+  <td align="left">listener</td>
+  <td align="left">ResponseListener</td>
+  <td align="left"></td>
+  <td align="center">optional</td>
+</tr>
+<tr>
+  <td align="left">parallelMode</td>
+  <td align="left">boolean</td>
+  <td align="left">Indicates whether the requests are provided in parallel or in series</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+</tbody></table>
+
+
+
+
+<pre class="prettyprint"><code class="language-java hljs "> Synergykit.updateRecord(<span class="hljs-string">"collection"</span>,object,<span class="hljs-keyword">new</span> ResponseListener() {
+     <span class="hljs-annotation">@Override</span>
+     <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doneCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitObject object) {
+        <span class="hljs-comment">//your code</span>
      }
 
-     @Override
-     public void errorCallback(int statusCode, SynergykitError errorObject) {
-		//your code
+     <span class="hljs-annotation">@Override</span>
+     <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">errorCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitError errorObject) {
+        <span class="hljs-comment">//your code</span>
      }
- },true);
-```
-### Delete document
+ },<span class="hljs-keyword">true</span>);</code></pre>
 
-| Parameter | Type | Notes | |
-|:-|:-|:-|:-:|
-|collection |String| Location of document | **required**
-|recordId |String| Record identificator |**required**
-|listener |DeleteResponseListener||  optional
-|parallelMode| boolean | Indicates whether the requests are provided in parallel or in series|  **required**
 
-```java
-Synergykit.deleteRecord("collection","recordId",new DeleteResponseListener() {
-    @Override
-    public void doneCallback(int statusCode) {
-		//your code
+
+<h3 id="delete-document">Delete document</h3>
+
+<table>
+<thead>
+<tr>
+  <th align="left">Parameter</th>
+  <th align="left">Type</th>
+  <th align="left">Notes</th>
+  <th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td align="left">collection</td>
+  <td align="left">String</td>
+  <td align="left">Location of document</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+<tr>
+  <td align="left">recordId</td>
+  <td align="left">String</td>
+  <td align="left">Record identificator</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+<tr>
+  <td align="left">listener</td>
+  <td align="left">DeleteResponseListener</td>
+  <td align="left"></td>
+  <td align="center">optional</td>
+</tr>
+<tr>
+  <td align="left">parallelMode</td>
+  <td align="left">boolean</td>
+  <td align="left">Indicates whether the requests are provided in parallel or in series</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+</tbody></table>
+
+
+
+
+<pre class="prettyprint"><code class="language-java hljs ">Synergykit.deleteRecord(<span class="hljs-string">"collection"</span>,<span class="hljs-string">"recordId"</span>,<span class="hljs-keyword">new</span> DeleteResponseListener() {
+    <span class="hljs-annotation">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doneCallback</span>(<span class="hljs-keyword">int</span> statusCode) {
+        <span class="hljs-comment">//your code</span>
     }
 
-    @Override
-    public void errorCallback(int statusCode, SynergykitError errorObject) {
-		//your code
+    <span class="hljs-annotation">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">errorCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitError errorObject) {
+        <span class="hljs-comment">//your code</span>
     }
-},false);
-```
+},<span class="hljs-keyword">false</span>);</code></pre>
 
-## Real-time data observerving
-SDK supports real time communication through sockets. With this funcion you can develop dynamic applications.
 
-### Connect
-To connect socket to SynergyKit server you must call SynergyKit.connect() method.
 
-```java
-SynergyKit.connectSocket();
-```
+<h2 id="real-time-data-observerving">Real-time data observerving</h2>
 
-### Disconnect
-To disconnect socket use method disconnectSocket();
-```java
-SynergyKit.disconnectSocket();
-```
+<p>SDK supports real time communication through sockets. With this funcion you can develop dynamic applications.</p>
 
-### Checking connection state
-If you need to check states `connected`, `disconnected` and `reconnected` you can call connect method with listener.
 
-```java
-SynergyKit.connectSocket(new SocketStateListener() {
-   @Override
-   public void connected() {
-      //this method is called when socket was connected
+
+<h3 id="connect">Connect</h3>
+
+<p>To connect socket to SynergyKit server you must call SynergyKit.connect() method.</p>
+
+
+
+<pre class="prettyprint"><code class="language-java hljs ">SynergyKit.connectSocket();</code></pre>
+
+
+
+<h3 id="disconnect">Disconnect</h3>
+
+<p>To disconnect socket use method disconnectSocket();</p>
+
+
+
+<pre class="prettyprint"><code class="language-java hljs ">SynergyKit.disconnectSocket();</code></pre>
+
+
+
+<h3 id="checking-connection-state">Checking connection state</h3>
+
+<p>If you need to check states <code>connected</code>, <code>disconnected</code> and <code>reconnected</code> you can call connect method with listener.</p>
+
+
+
+<pre class="prettyprint"><code class="language-java hljs ">SynergyKit.connectSocket(<span class="hljs-keyword">new</span> SocketStateListener() {
+   <span class="hljs-annotation">@Override</span>
+   <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">connected</span>() {
+      <span class="hljs-comment">//this method is called when socket was connected</span>
    }
 
-   @Override
-   public void disconnected() {
-	 //this method is called when socket was disconnected
+   <span class="hljs-annotation">@Override</span>
+   <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">disconnected</span>() {
+     <span class="hljs-comment">//this method is called when socket was disconnected</span>
    }
 
-   @Override
-   public void reconnected() {
-	 //this method is called when socket was reconnected
+   <span class="hljs-annotation">@Override</span>
+   <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">reconnected</span>() {
+     <span class="hljs-comment">//this method is called when socket was reconnected</span>
    }
-});
-```
-### Start observing whole collection
+});</code></pre>
 
-SynergyKit provides listening changes of records in data collection. You can listen  `created`, `updated`, `patched`, `deleted` states.  You can set / unset listener(s) befor or after socket is connected (Both situation are supported).
 
-```java
 
-/*
+<h3 id="start-observing-whole-collection">Start observing whole collection</h3>
+
+<p>SynergyKit provides listening changes of records in data collection. You can listen  <code>created</code>, <code>updated</code>, <code>patched</code>, <code>deleted</code> states.  You can set / unset listener(s) befor or after socket is connected (Both situation are supported).</p>
+
+
+
+<pre class="prettyprint"><code class="language-java hljs ">
+<span class="hljs-comment">/*
 * If you wanna listen new posted records to collection demo_collection you can use this code.
-*/
+*/</span>
 
-private static final String COLLECTION = "demo_collection";
+<span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> String COLLECTION = <span class="hljs-string">"demo_collection"</span>;
 
 .
 .
 .
 
-SynergyKit.onSocket(Socket.MESSAGE_CREATED,COLLECTION,new SocketEventListener() {
-	  @Override
-      public void call(Object... args) {
-		// this method is called when new record was created in collection demo_collection
-             
+SynergyKit.onSocket(Socket.MESSAGE_CREATED,COLLECTION,<span class="hljs-keyword">new</span> SocketEventListener() {
+      <span class="hljs-annotation">@Override</span>
+      <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">call</span>(Object... args) {
+        <span class="hljs-comment">// this method is called when new record was created in collection demo_collection</span>
+
       }
 
-      @Override
-      public void subscribed() {
-		// this method is called when listener was subscribed and is ready to listen
+      <span class="hljs-annotation">@Override</span>
+      <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">subscribed</span>() {
+        <span class="hljs-comment">// this method is called when listener was subscribed and is ready to listen</span>
       }
 
-      @Override
-      public void unsubscribed() {
-		// this method is called when you call SynergyKit.offSocket(...); method and listener is unsubscribed 
+      <span class="hljs-annotation">@Override</span>
+      <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">unsubscribed</span>() {
+        <span class="hljs-comment">// this method is called when you call SynergyKit.offSocket(...); method and listener is unsubscribed </span>
       }
 
-      @Override
-      public void unauthorized() {
-		// this method is called when listener was not authorized. Typically it's caused by wrong or invalid token.
+      <span class="hljs-annotation">@Override</span>
+      <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">unauthorized</span>() {
+        <span class="hljs-comment">// this method is called when listener was not authorized. Typically it's caused by wrong or invalid token.</span>
       }
-     });
-```
-### Start observing collection with filter
+     });</code></pre>
 
-SynergyKit provides listening changes of filtered collection records. Just create your filter and set socket listener.
 
-```java
 
-/*
+<h3 id="start-observing-collection-with-filter">Start observing collection with filter</h3>
+
+<p>SynergyKit provides listening changes of filtered collection records. Just create your filter and set socket listener.</p>
+
+
+
+<pre class="prettyprint"><code class="language-java hljs ">
+<span class="hljs-comment">/*
 * If you wanna listen new posted records from user called TestUser on collection demo_collection you can use this code.
-*/
+*/</span>
 
-private static final String COLLECTION = "demo_collection";
-private static final String FILTER_NAME = "filter_records_from_testuser";
+<span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> String COLLECTION = <span class="hljs-string">"demo_collection"</span>;
+<span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> String FILTER_NAME = <span class="hljs-string">"filter_records_from_testuser"</span>;
 
 .
 .
 .
 
-//Build your OData Filter
-ODataBuilder oDataBuilder = ODataBuilder.newInstance().setFilter(Filter.buildAttribute("from"),Filter.OPERATOR_EQUAL,Filter.buildParametr("TestUser"));
+<span class="hljs-comment">//Build your OData Filter</span>
+ODataBuilder oDataBuilder = ODataBuilder.newInstance().setFilter(Filter.buildAttribute(<span class="hljs-string">"from"</span>),Filter.OPERATOR_EQUAL,Filter.buildParametr(<span class="hljs-string">"TestUser"</span>));
 
-//Create filter
-SynergyKitSocketFilter filter = new SynergyKitSocketFilter(FILTER_NAME,oDataBuilder.build());
+<span class="hljs-comment">//Create filter</span>
+SynergyKitSocketFilter filter = <span class="hljs-keyword">new</span> SynergyKitSocketFilter(FILTER_NAME,oDataBuilder.build());
 
-//Set listener with filter
-SynergyKit.onSocket(Socket.MESSAGE_CREATED,COLLECTION, filter,new SocketEventListener() {
-	  @Override
-      public void call(Object... args) {
-		// this method is called when new record was created in collection demo_collection
-             
+<span class="hljs-comment">//Set listener with filter</span>
+SynergyKit.onSocket(Socket.MESSAGE_CREATED,COLLECTION, filter,<span class="hljs-keyword">new</span> SocketEventListener() {
+      <span class="hljs-annotation">@Override</span>
+      <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">call</span>(Object... args) {
+        <span class="hljs-comment">// this method is called when new record was created in collection demo_collection</span>
+
       }
 
-      @Override
-      public void subscribed() {
-		// this method is called when listener was subscribed and is ready to listen
+      <span class="hljs-annotation">@Override</span>
+      <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">subscribed</span>() {
+        <span class="hljs-comment">// this method is called when listener was subscribed and is ready to listen</span>
       }
 
-      @Override
-      public void unsubscribed() {
-		// this method is called when you call SynergyKit.offSocket(...); method and listener is unsubscribed 
+      <span class="hljs-annotation">@Override</span>
+      <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">unsubscribed</span>() {
+        <span class="hljs-comment">// this method is called when you call SynergyKit.offSocket(...); method and listener is unsubscribed </span>
       }
 
-      @Override
-      public void unauthorized() {
-		// this method is called when listener was not authorized. Typically it's caused by wrong or invalid token.
+      <span class="hljs-annotation">@Override</span>
+      <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">unauthorized</span>() {
+        <span class="hljs-comment">// this method is called when listener was not authorized. Typically it's caused by wrong or invalid token.</span>
       }
-     });
-```
-### Stop observing
-If you don't want to listen collection changes anymore you can call SynergyKit.offSocket(...) method.
-```java
+     });</code></pre>
 
-/*
+
+
+<h3 id="stop-observing">Stop observing</h3>
+
+<p>If you don’t want to listen collection changes anymore you can call SynergyKit.offSocket(…) method.</p>
+
+
+
+<pre class="prettyprint"><code class="language-java hljs ">
+<span class="hljs-comment">/*
 * If you wanna stop listen new posted records to collection demo_collection you can use this code.
-*/
+*/</span>
 
 
-private static final String COLLECTION = "demo_collection";
+<span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> String COLLECTION = <span class="hljs-string">"demo_collection"</span>;
 
 .
 .
 .
 
-SynergyKit.offSocket(Socket.MESSAGE_CREATED,COLLECTION);
-```
-### Speak communication
-Communication without data storage from device to device.
+SynergyKit.offSocket(Socket.MESSAGE_CREATED,COLLECTION);</code></pre>
 
-#### Send speak
 
-```java
 
-/*
+<h3 id="speak-communication">Speak communication</h3>
+
+<p>Communication without data storage from device to device.</p>
+
+
+
+<h4 id="send-speak">Send speak</h4>
+
+
+
+<pre class="prettyprint"><code class="language-java hljs ">
+<span class="hljs-comment">/*
 * For example if you're developing chat and you wanna send message about typing you can use this code.
-*/
+*/</span>
 
-private static final String EVENT_TYPING = "typing";
+<span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> String EVENT_TYPING = <span class="hljs-string">"typing"</span>;
 
 .
 .
 .
 
-Message message = new Message();
-message.setText("TestUser is typing");
+Message message = <span class="hljs-keyword">new</span> Message();
+message.setText(<span class="hljs-string">"TestUser is typing"</span>);
 
-SynergyKit.emitViaSocket(EVENT_TYPING,message);
-```
-#### Receive speak
+SynergyKit.emitViaSocket(EVENT_TYPING,message);</code></pre>
 
-```java
 
-/*
+
+<h4 id="receive-speak">Receive speak</h4>
+
+
+
+<pre class="prettyprint"><code class="language-java hljs ">
+<span class="hljs-comment">/*
 * For example if you're developing chat and you wanna listen state typing you can use this code.
-*/
+*/</span>
 
-private static final String EVENT_TYPING = "typing";
+<span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> String EVENT_TYPING = <span class="hljs-string">"typing"</span>;
 
 .
 .
 .
 
-SynergyKit.onSocket(EVENT_TYPING,new SocketEventListener() {
-	  @Override
-      public void call(Object... args) {
-		// this method is called when someone is typing - someone send emit typing.
-        
-        String data =((JSONObject) args[0]).toString();
-        final Message message = GsonWrapper.getGson().fromJson(data, Message.class);     
-        
+SynergyKit.onSocket(EVENT_TYPING,<span class="hljs-keyword">new</span> SocketEventListener() {
+      <span class="hljs-annotation">@Override</span>
+      <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">call</span>(Object... args) {
+        <span class="hljs-comment">// this method is called when someone is typing - someone send emit typing.</span>
+
+        String data =((JSONObject) args[<span class="hljs-number">0</span>]).toString();
+        <span class="hljs-keyword">final</span> Message message = GsonWrapper.getGson().fromJson(data, Message.class);     
+
       }
 
-      @Override
-      public void subscribed() {
-		// this method is called when listener was subscribed and is ready to listen
+      <span class="hljs-annotation">@Override</span>
+      <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">subscribed</span>() {
+        <span class="hljs-comment">// this method is called when listener was subscribed and is ready to listen</span>
       }
 
-      @Override
-      public void unsubscribed() {
-		// this method is called when you call SynergyKit.offSocket(...); method and listener is unsubscribed 
+      <span class="hljs-annotation">@Override</span>
+      <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">unsubscribed</span>() {
+        <span class="hljs-comment">// this method is called when you call SynergyKit.offSocket(...); method and listener is unsubscribed </span>
       }
 
-      @Override
-      public void unauthorized() {
-		// this method is called when listener was not authorized. Typically it's caused by wrong or invalid token.
+      <span class="hljs-annotation">@Override</span>
+      <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">unauthorized</span>() {
+        <span class="hljs-comment">// this method is called when listener was not authorized. Typically it's caused by wrong or invalid token.</span>
       }
-     });
-```
+     });</code></pre>
 
-## Queries
-You can retrieve multiple objects at once by sending a request with query. If query has no conditions API returns simply lists of all objects in collection.
 
-For more complex filtering and sorting Synergykit accepts OData standard. These queries can be used with data, users and files.
 
-### Available conditions
-Query string is builded according to [OData Protocol](http://odata.org) and is appended to the end of the url.
+<h2 id="queries">Queries</h2>
 
-The OData Protocol specification defines how to standardize a typed, resource-oriented CRUD interface for manipulating data sources by providing collections of entries which must have required elements.
+<p>You can retrieve multiple objects at once by sending a request with query. If query has no conditions API returns simply lists of all objects in collection.</p>
 
-#### filter
-Equivalent to if (field == "value" && secondField >= 33 || thirdField < 132000).
-```java
-uriBuilder.setFilter(Filter.newInstance()
-                 .setFilter(Filter.buildAttribute("field")
-				 + Filter.buildParametr("value")
+<p>For more complex filtering and sorting Synergykit accepts OData standard. These queries can be used with data, users and files.</p>
+
+
+
+<h3 id="available-conditions">Available conditions</h3>
+
+<p>Query string is builded according to <a href="http://odata.org">OData Protocol</a> and is appended to the end of the url.</p>
+
+<p>The OData Protocol specification defines how to standardize a typed, resource-oriented CRUD interface for manipulating data sources by providing collections of entries which must have required elements.</p>
+
+
+
+<h4 id="filter">filter</h4>
+
+<p>Equivalent to if (field == “value” &amp;&amp; secondField &gt;= 33 || thirdField &lt; 132000).</p>
+
+
+
+<pre class="prettyprint"><code class="language-java hljs ">uriBuilder.setFilter(Filter.newInstance()
+                 .setFilter(Filter.buildAttribute(<span class="hljs-string">"field"</span>)
+                 + Filter.buildParametr(<span class="hljs-string">"value"</span>)
                  + Filter.OPERATOR_AND 
-                 + Filter.buildAttribute("secondField") 
+                 + Filter.buildAttribute(<span class="hljs-string">"secondField"</span>) 
                  + Filter.OPERATOR_GREATER_THAN_OR_EQUAL 
-                 + Filter.buildParametr(33)
+                 + Filter.buildParametr(<span class="hljs-number">33</span>)
                  + Filter.OPERATOR_OR
-                 + Filter.buildAttribute("thirdField") 
+                 + Filter.buildAttribute(<span class="hljs-string">"thirdField"</span>) 
                  + Filter.OPERATOR_LESS_THAN 
-                 + Filter.buildParametr(132000)));
-```
-Available relation operators
+                 + Filter.buildParametr(<span class="hljs-number">132000</span>)));</code></pre>
 
-- `==` or `eq`
-- `!=` or `ne`
-- `>=` or `ge`
-- `<=` or `le`
-- `>` or `gt`
-- `<` or `lt`
+<p>Available relation operators</p>
 
-#### startswith
-```java
-uriBuilder.setFilter(Filter
-			.newInstance()
-			.setFilter(Filter.buildStartsWithFilter("name","a")));
-```
-#### endswith
-```java
-uriBuilder.setFilter(Filter
-			.newInstance()
-			.setFilter(Filter.buildEndsWithFilter("name","z")));
-```
-#### substringof
-```java
-uriBuilder.setFilter(Filter
-			.newInstance()
-			.setFilter(Filter.buildSubStringOfFilter("name","bc")));
-```
-#### in
-```java
- String[] names = new String[2];
-        names[0] = "Lucas";
-        names[1] = "Thomas";
-        
-uriBuilder.setFilter(Filter
-			.newInstance()
-			.setFilter("name",Filter.OPERATOR_IN,Filter.buildArrayParameter(names)));
-```
-#### nin
-```java
-String[] names = new String[2];
-        names[0] = "John";
-        names[1] = "Mark";
-        
-uriBuilder.setFilter(Filter.newInstance()			.setFilter("name",Filter.OPERATOR_NOT_IN,Filter.buildArrayParameter(names)));
-```
-#### select
-```java
-uriBuilder.addSelect("firstName")
-             .addSelect("lastName");
-```
-#### top
-```java
-uriBuilder.setTop(5);
-```
-#### orderby
-```java
-uriBuilder.setOrderByAsc("name");
-```
-#### inlinecount
-```java
- uriBuilder.setEnabled(true);
-```
-#### skip
-```java
-uriBuilder.setSkip(32);
-```
+<ul>
+<li><code>==</code> or <code>eq</code></li>
+<li><code>!=</code> or <code>ne</code></li>
+<li><code>&gt;=</code> or <code>ge</code></li>
+<li><code>&lt;=</code> or <code>le</code></li>
+<li><code>&gt;</code> or <code>gt</code></li>
+<li><code>&lt;</code> or <code>lt</code></li>
+</ul>
 
-### Querying objects
-If query is prepared, you just call some of Synergykit methods.
-```java
-SynergykitConfig config = SynergykitConfig
-						 .newInstance()
-	                     .setUri(uriBuilder.build())
-	                     .setParallelMode(false)
-	                     .setType(SynergykitObject[].class);
 
-Synergykit.getRecords(config,new RecordsResponseListener() {
- @Override
- public void doneCallback(int statusCode, SynergykitObject[] objects) {
-     
+
+<h4 id="startswith">startswith</h4>
+
+
+
+<pre class="prettyprint"><code class="language-java hljs ">uriBuilder.setFilter(Filter
+            .newInstance()
+            .setFilter(Filter.buildStartsWithFilter(<span class="hljs-string">"name"</span>,<span class="hljs-string">"a"</span>)));</code></pre>
+
+
+
+<h4 id="endswith">endswith</h4>
+
+
+
+<pre class="prettyprint"><code class="language-java hljs ">uriBuilder.setFilter(Filter
+            .newInstance()
+            .setFilter(Filter.buildEndsWithFilter(<span class="hljs-string">"name"</span>,<span class="hljs-string">"z"</span>)));</code></pre>
+
+
+
+<h4 id="substringof">substringof</h4>
+
+
+
+<pre class="prettyprint"><code class="language-java hljs ">uriBuilder.setFilter(Filter
+            .newInstance()
+            .setFilter(Filter.buildSubStringOfFilter(<span class="hljs-string">"name"</span>,<span class="hljs-string">"bc"</span>)));</code></pre>
+
+
+
+<h4 id="in">in</h4>
+
+
+
+<pre class="prettyprint"><code class="language-java hljs "> String[] names = <span class="hljs-keyword">new</span> String[<span class="hljs-number">2</span>];
+        names[<span class="hljs-number">0</span>] = <span class="hljs-string">"Lucas"</span>;
+        names[<span class="hljs-number">1</span>] = <span class="hljs-string">"Thomas"</span>;
+
+uriBuilder.setFilter(Filter
+            .newInstance()
+            .setFilter(<span class="hljs-string">"name"</span>,Filter.OPERATOR_IN,Filter.buildArrayParameter(names)));</code></pre>
+
+
+
+<h4 id="nin">nin</h4>
+
+
+
+<pre class="prettyprint"><code class="language-java hljs ">String[] names = <span class="hljs-keyword">new</span> String[<span class="hljs-number">2</span>];
+        names[<span class="hljs-number">0</span>] = <span class="hljs-string">"John"</span>;
+        names[<span class="hljs-number">1</span>] = <span class="hljs-string">"Mark"</span>;
+
+uriBuilder.setFilter(Filter.newInstance()           .setFilter(<span class="hljs-string">"name"</span>,Filter.OPERATOR_NOT_IN,Filter.buildArrayParameter(names)));</code></pre>
+
+
+
+<h4 id="select">select</h4>
+
+
+
+<pre class="prettyprint"><code class="language-java hljs ">uriBuilder.addSelect(<span class="hljs-string">"firstName"</span>)
+             .addSelect(<span class="hljs-string">"lastName"</span>);</code></pre>
+
+
+
+<h4 id="top">top</h4>
+
+
+
+<pre class="prettyprint"><code class="language-java hljs ">uriBuilder.setTop(<span class="hljs-number">5</span>);</code></pre>
+
+
+
+<h4 id="orderby">orderby</h4>
+
+
+
+<pre class="prettyprint"><code class="language-java hljs ">uriBuilder.setOrderByAsc(<span class="hljs-string">"name"</span>);</code></pre>
+
+
+
+<h4 id="inlinecount">inlinecount</h4>
+
+
+
+<pre class="prettyprint"><code class="language-java hljs "> uriBuilder.setEnabled(<span class="hljs-keyword">true</span>);</code></pre>
+
+
+
+<h4 id="skip">skip</h4>
+
+
+
+<pre class="prettyprint"><code class="language-java hljs ">uriBuilder.setSkip(<span class="hljs-number">32</span>);</code></pre>
+
+
+
+<h3 id="querying-objects">Querying objects</h3>
+
+<p>If query is prepared, you just call some of Synergykit methods.</p>
+
+
+
+<pre class="prettyprint"><code class="language-java hljs ">SynergykitConfig config = SynergykitConfig
+                         .newInstance()
+                         .setUri(uriBuilder.build())
+                         .setParallelMode(<span class="hljs-keyword">false</span>)
+                         .setType(SynergykitObject[].class);
+
+Synergykit.getRecords(config,<span class="hljs-keyword">new</span> RecordsResponseListener() {
+ <span class="hljs-annotation">@Override</span>
+ <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doneCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitObject[] objects) {
+
  }
 
- @Override
- public void errorCallback(int statusCode, SynergykitError errorObject) {
+ <span class="hljs-annotation">@Override</span>
+ <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">errorCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitError errorObject) {
 
  }
-});
-```
+});</code></pre>
 
-### List all users
 
-`SQuery` with `SynergykitUser` object without conditions.
-```java
-SynergykitUri synergykitUri = UriBuilder
+
+<h3 id="list-all-users">List all users</h3>
+
+<p><code>SQuery</code> with <code>SynergykitUser</code> object without conditions.</p>
+
+
+
+<pre class="prettyprint"><code class="language-java hljs ">SynergykitUri synergykitUri = UriBuilder
                                  .newInstance()
                                  .setResource(Resource.RESOURCE_USERS)
                                  .build();
 
 SynergykitConfig config = SynergykitConfig
                                  .newInstance()
-                                 .setParallelMode(false)
+                                 .setParallelMode(<span class="hljs-keyword">false</span>)
                                 .setType(SynergykitUser[].class)
                                 .setUri(synergykitUri);
 
-Synergykit.getUsers(config,new UsersResponseListener() {
-    @Override
-    public void doneCallback(int statusCode, SynergykitUser[] users) {
-        
-    }
-
-    @Override
-    public void errorCallback(int statusCode, SynergykitError errorObject) {
+Synergykit.getUsers(config,<span class="hljs-keyword">new</span> UsersResponseListener() {
+    <span class="hljs-annotation">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doneCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitUser[] users) {
 
     }
-});
-```
-### List all documents
-```java
-SynergykitUri synergykitUri = UriBuilder
+
+    <span class="hljs-annotation">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">errorCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitError errorObject) {
+
+    }
+});</code></pre>
+
+
+
+<h3 id="list-all-documents">List all documents</h3>
+
+
+
+<pre class="prettyprint"><code class="language-java hljs ">SynergykitUri synergykitUri = UriBuilder
                                  .newInstance()
                                  .setResource(Resource.RESOURCE_DATA)
-                                 .setCollection("collection")
+                                 .setCollection(<span class="hljs-string">"collection"</span>)
                                  .build();
 
 SynergykitConfig config = SynergykitConfig
                                  .newInstance()
-                                 .setParallelMode(false)
+                                 .setParallelMode(<span class="hljs-keyword">false</span>)
                                 .setType(SynergykitObject[].class)
                                 .setUri(synergykitUri);
 
-Synergykit.getRecords(config,new RecordsResponseListener() {
-    @Override
-    public void doneCallback(int statusCode, SynergykitObject[] users) {
+Synergykit.getRecords(config,<span class="hljs-keyword">new</span> RecordsResponseListener() {
+    <span class="hljs-annotation">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doneCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitObject[] users) {
 
     }
 
-    @Override
-    public void errorCallback(int statusCode, SynergykitError errorObject) {
+    <span class="hljs-annotation">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">errorCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitError errorObject) {
 
     }
-});
-```
-### List all files
-```java
-SynergykitUri synergykitUri = UriBuilder
+});</code></pre>
+
+
+
+<h3 id="list-all-files">List all files</h3>
+
+
+
+<pre class="prettyprint"><code class="language-java hljs ">SynergykitUri synergykitUri = UriBuilder
                                       .newInstance()
                                       .setResource(Resource.RESOURCE_FILES)
                                       .build();
 
 SynergykitConfig config = SynergykitConfig
                                  .newInstance()
-                                 .setParallelMode(false)
+                                 .setParallelMode(<span class="hljs-keyword">false</span>)
                                 .setType(SynergykitFile[].class)
                                 .setUri(synergykitUri);
 
-Synergykit.getFiles(config, new FilesResponseListener() {
-    @Override
-    public void doneCallback(int statusCode, SynergykitFile[] users) {
+Synergykit.getFiles(config, <span class="hljs-keyword">new</span> FilesResponseListener() {
+    <span class="hljs-annotation">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doneCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitFile[] users) {
 
     }
 
-    @Override
-    public void errorCallback(int statusCode, SynergykitError errorObject) {
+    <span class="hljs-annotation">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">errorCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitError errorObject) {
 
     }
-});
-```
+});</code></pre>
 
-## Users
-Users are alfa and omega of every application. In Synergykit you can easily work with your users by methods listed below.
-### Create a new user	
 
-| Parameter | Type | Notes | |
-|:-|:-|:-|:-:|
-|user |SynergykitUser| SynergykitUser or object extended SynergykitUser | **required**
-|listener |UserResponseListener|  | optional
-|parallelMode |boolean|Indicates whether the requests are provided in parallel or in series  | **required**
 
-```java
-Synergykit.createUser(new SynergykitUser(),new UserResponseListener() {
-    @Override
-    public void doneCallback(int statusCode, SynergykitUser user) {
-		//your code
+<h2 id="users">Users</h2>
+
+<p>Users are alfa and omega of every application. In Synergykit you can easily work with your users by methods listed below.</p>
+
+
+
+<h3 id="create-a-new-user">Create a new user</h3>
+
+<table>
+<thead>
+<tr>
+  <th align="left">Parameter</th>
+  <th align="left">Type</th>
+  <th align="left">Notes</th>
+  <th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td align="left">user</td>
+  <td align="left">SynergykitUser</td>
+  <td align="left">SynergykitUser or object extended SynergykitUser</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+<tr>
+  <td align="left">listener</td>
+  <td align="left">UserResponseListener</td>
+  <td align="left"></td>
+  <td align="center">optional</td>
+</tr>
+<tr>
+  <td align="left">parallelMode</td>
+  <td align="left">boolean</td>
+  <td align="left">Indicates whether the requests are provided in parallel or in series</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+</tbody></table>
+
+
+
+
+<pre class="prettyprint"><code class="language-java hljs ">Synergykit.createUser(<span class="hljs-keyword">new</span> SynergykitUser(),<span class="hljs-keyword">new</span> UserResponseListener() {
+    <span class="hljs-annotation">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doneCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitUser user) {
+        <span class="hljs-comment">//your code</span>
     }
 
-    @Override
-    public void errorCallback(int statusCode, SynergykitError errorObject) {
-		//your code
+    <span class="hljs-annotation">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">errorCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitError errorObject) {
+        <span class="hljs-comment">//your code</span>
     }
-},false);
-```
-### Retrieve an existing user by ID
+},<span class="hljs-keyword">false</span>);</code></pre>
 
-| Parameter | Type | Notes | |
-|:-|:-|:-|:-:|
-|userId |String| User identification | **required**
-|type |Type| User object type | **required**
-|listener |UserResponseListener|  | optional
-|parallelMode |boolean|Indicates whether the requests are provided in parallel or in series  | **required**
 
-```java
-Synergykit.getUser("userId",SynergykitUser.class,new UserResponseListener() {
-    @Override
-    public void doneCallback(int statusCode, SynergykitUser user) {
-		//your code
-    }
 
-    @Override
-    public void errorCallback(int statusCode, SynergykitError errorObject) {
-		//your code
-    }
-},false);
-```
-### Update user
-Save method executes `PUT` request if `_id` is set. 
+<h3 id="retrieve-an-existing-user-by-id">Retrieve an existing user by ID</h3>
 
-| Parameter | Type | Notes | |
-|:-|:-|:-|:-:|
-|user |SynergykitUser| SynergykitUser or object extended SynergykitUser | **required**
-|listener |UserResponseListener|  | optional
-|parallelMode |boolean|Indicates whether the requests are provided in parallel or in series  | **required**
+<table>
+<thead>
+<tr>
+  <th align="left">Parameter</th>
+  <th align="left">Type</th>
+  <th align="left">Notes</th>
+  <th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td align="left">userId</td>
+  <td align="left">String</td>
+  <td align="left">User identification</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+<tr>
+  <td align="left">type</td>
+  <td align="left">Type</td>
+  <td align="left">User object type</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+<tr>
+  <td align="left">listener</td>
+  <td align="left">UserResponseListener</td>
+  <td align="left"></td>
+  <td align="center">optional</td>
+</tr>
+<tr>
+  <td align="left">parallelMode</td>
+  <td align="left">boolean</td>
+  <td align="left">Indicates whether the requests are provided in parallel or in series</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+</tbody></table>
 
-```java
-Synergykit.updateUser(new SynergykitUser(),new UserResponseListener() {
-    @Override
-    public void doneCallback(int statusCode, SynergykitUser user) {
 
-    }
 
-    @Override
-    public void errorCallback(int statusCode, SynergykitError errorObject) {
 
-    }
-},true);
-```
-### Delete user
-
-| Parameter | Type | Notes | |
-|:-|:-|:-|:-:|
-|user |SynergykitUser| SynergykitUser or object extended SynergykitUser to delete | **required**
-|listener |UserResponseListener|  | optional
-|parallelMode |boolean|Indicates whether the requests are provided in parallel or in series  | **required**
-
-```java
-Synergykit.deleteUser(user,new DeleteResponseListener() {
-    @Override
-    public void doneCallback(int statusCode) {
-
+<pre class="prettyprint"><code class="language-java hljs ">Synergykit.getUser(<span class="hljs-string">"userId"</span>,SynergykitUser.class,<span class="hljs-keyword">new</span> UserResponseListener() {
+    <span class="hljs-annotation">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doneCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitUser user) {
+        <span class="hljs-comment">//your code</span>
     }
 
-    @Override
-    public void errorCallback(int statusCode, SynergykitError errorObject) {
-
+    <span class="hljs-annotation">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">errorCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitError errorObject) {
+        <span class="hljs-comment">//your code</span>
     }
-},true);
-```
+},<span class="hljs-keyword">false</span>);</code></pre>
 
-### Add role
 
-| Parameter | Type | Notes | |
-|:-|:-|:-|:-:|
-|user |SynergykitUser| SynergykitUser or object extended SynergykitUser| **required**
-|role |String| Role define in SynergyKit | **required**
-|listener |UserResponseListener|  | optional
-|parallelMode |boolean|Indicates whether the requests are provided in parallel or in series  | **required**
 
-```java
-Synergykit.addRole(user,"role",new UserResponseListener() {
-    @Override
-    public void doneCallback(int statusCode, SynergykitUser user) {
+<h3 id="update-user">Update user</h3>
 
-    }
+<p>Save method executes <code>PUT</code> request if <code>_id</code> is set. </p>
 
-    @Override
-    public void errorCallback(int statusCode, SynergykitError errorObject) {
+<table>
+<thead>
+<tr>
+  <th align="left">Parameter</th>
+  <th align="left">Type</th>
+  <th align="left">Notes</th>
+  <th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td align="left">user</td>
+  <td align="left">SynergykitUser</td>
+  <td align="left">SynergykitUser or object extended SynergykitUser</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+<tr>
+  <td align="left">listener</td>
+  <td align="left">UserResponseListener</td>
+  <td align="left"></td>
+  <td align="center">optional</td>
+</tr>
+<tr>
+  <td align="left">parallelMode</td>
+  <td align="left">boolean</td>
+  <td align="left">Indicates whether the requests are provided in parallel or in series</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+</tbody></table>
 
-    }
-},true);
-```
-### Remove role
 
-| Parameter | Type | Notes | |
-|:-|:-|:-|:-:|
-|user |SynergykitUser| SynergykitUser or object extended SynergykitUser| **required**
-|role |String| Role define in SynergyKit | **required**
-|listener |UserResponseListener|  | optional
-|parallelMode |boolean|Indicates whether the requests are provided in parallel or in series  | **required**
 
-```java
-Synergykit.removeRole(user,"role",new UserResponseListener() {
-    @Override
-    public void doneCallback(int statusCode, SynergykitUser user) {
+
+<pre class="prettyprint"><code class="language-java hljs ">Synergykit.updateUser(<span class="hljs-keyword">new</span> SynergykitUser(),<span class="hljs-keyword">new</span> UserResponseListener() {
+    <span class="hljs-annotation">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doneCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitUser user) {
 
     }
 
-    @Override
-    public void errorCallback(int statusCode, SynergykitError errorObject) {
+    <span class="hljs-annotation">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">errorCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitError errorObject) {
 
     }
-},true);
-```
+},<span class="hljs-keyword">true</span>);</code></pre>
 
-### Add platform to user
-Platforms are useful for pairing individual mobile devices or web applications to the user via registration ID. After assignment platform to the user you will be able to send push notifications to the device or application.
 
-**Before you can work with platforms** of user is needed to login first. After successful login SDK receives sessionToken for authentication of user. Token is held by the SDK and is automatically inserted into the Headers.
 
-| Parameter | Type | Notes | |
-|:-|:-|:-|:-:|
-|user |SynergykitUser| SynergykitUser or object extended SynergykitUser| **required**
-|platform |SynergykitPlatform|  | **required**
-|listener |PlatformResponseListener|  | optional
-|parallelMode |boolean|Indicates whether the requests are provided in parallel or in series  | **required**
+<h3 id="delete-user">Delete user</h3>
 
-```java
-Synergykit.addPlatformToUser(user,platform,new PlatformResponseListener() {
-        @Override
-        public void doneCallback(int statusCode, SynergykitPlatform platform) {
+<table>
+<thead>
+<tr>
+  <th align="left">Parameter</th>
+  <th align="left">Type</th>
+  <th align="left">Notes</th>
+  <th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td align="left">user</td>
+  <td align="left">SynergykitUser</td>
+  <td align="left">SynergykitUser or object extended SynergykitUser to delete</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+<tr>
+  <td align="left">listener</td>
+  <td align="left">UserResponseListener</td>
+  <td align="left"></td>
+  <td align="center">optional</td>
+</tr>
+<tr>
+  <td align="left">parallelMode</td>
+  <td align="left">boolean</td>
+  <td align="left">Indicates whether the requests are provided in parallel or in series</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+</tbody></table>
+
+
+
+
+<pre class="prettyprint"><code class="language-java hljs ">Synergykit.deleteUser(user,<span class="hljs-keyword">new</span> DeleteResponseListener() {
+    <span class="hljs-annotation">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doneCallback</span>(<span class="hljs-keyword">int</span> statusCode) {
+
+    }
+
+    <span class="hljs-annotation">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">errorCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitError errorObject) {
+
+    }
+},<span class="hljs-keyword">true</span>);</code></pre>
+
+
+
+<h3 id="add-role">Add role</h3>
+
+<table>
+<thead>
+<tr>
+  <th align="left">Parameter</th>
+  <th align="left">Type</th>
+  <th align="left">Notes</th>
+  <th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td align="left">user</td>
+  <td align="left">SynergykitUser</td>
+  <td align="left">SynergykitUser or object extended SynergykitUser</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+<tr>
+  <td align="left">role</td>
+  <td align="left">String</td>
+  <td align="left">Role define in SynergyKit</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+<tr>
+  <td align="left">listener</td>
+  <td align="left">UserResponseListener</td>
+  <td align="left"></td>
+  <td align="center">optional</td>
+</tr>
+<tr>
+  <td align="left">parallelMode</td>
+  <td align="left">boolean</td>
+  <td align="left">Indicates whether the requests are provided in parallel or in series</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+</tbody></table>
+
+
+
+
+<pre class="prettyprint"><code class="language-java hljs ">Synergykit.addRole(user,<span class="hljs-string">"role"</span>,<span class="hljs-keyword">new</span> UserResponseListener() {
+    <span class="hljs-annotation">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doneCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitUser user) {
+
+    }
+
+    <span class="hljs-annotation">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">errorCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitError errorObject) {
+
+    }
+},<span class="hljs-keyword">true</span>);</code></pre>
+
+
+
+<h3 id="remove-role">Remove role</h3>
+
+<table>
+<thead>
+<tr>
+  <th align="left">Parameter</th>
+  <th align="left">Type</th>
+  <th align="left">Notes</th>
+  <th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td align="left">user</td>
+  <td align="left">SynergykitUser</td>
+  <td align="left">SynergykitUser or object extended SynergykitUser</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+<tr>
+  <td align="left">role</td>
+  <td align="left">String</td>
+  <td align="left">Role define in SynergyKit</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+<tr>
+  <td align="left">listener</td>
+  <td align="left">UserResponseListener</td>
+  <td align="left"></td>
+  <td align="center">optional</td>
+</tr>
+<tr>
+  <td align="left">parallelMode</td>
+  <td align="left">boolean</td>
+  <td align="left">Indicates whether the requests are provided in parallel or in series</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+</tbody></table>
+
+
+
+
+<pre class="prettyprint"><code class="language-java hljs ">Synergykit.removeRole(user,<span class="hljs-string">"role"</span>,<span class="hljs-keyword">new</span> UserResponseListener() {
+    <span class="hljs-annotation">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doneCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitUser user) {
+
+    }
+
+    <span class="hljs-annotation">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">errorCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitError errorObject) {
+
+    }
+},<span class="hljs-keyword">true</span>);</code></pre>
+
+
+
+<h3 id="add-platform-to-user">Add platform to user</h3>
+
+<p>Platforms are useful for pairing individual mobile devices or web applications to the user via registration ID. After assignment platform to the user you will be able to send push notifications to the device or application.</p>
+
+<p><strong>Before you can work with platforms</strong> of user is needed to login first. After successful login SDK receives sessionToken for authentication of user. Token is held by the SDK and is automatically inserted into the Headers.</p>
+
+<table>
+<thead>
+<tr>
+  <th align="left">Parameter</th>
+  <th align="left">Type</th>
+  <th align="left">Notes</th>
+  <th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td align="left">user</td>
+  <td align="left">SynergykitUser</td>
+  <td align="left">SynergykitUser or object extended SynergykitUser</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+<tr>
+  <td align="left">platform</td>
+  <td align="left">SynergykitPlatform</td>
+  <td align="left"></td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+<tr>
+  <td align="left">listener</td>
+  <td align="left">PlatformResponseListener</td>
+  <td align="left"></td>
+  <td align="center">optional</td>
+</tr>
+<tr>
+  <td align="left">parallelMode</td>
+  <td align="left">boolean</td>
+  <td align="left">Indicates whether the requests are provided in parallel or in series</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+</tbody></table>
+
+
+
+
+<pre class="prettyprint"><code class="language-java hljs ">Synergykit.addPlatformToUser(user,platform,<span class="hljs-keyword">new</span> PlatformResponseListener() {
+        <span class="hljs-annotation">@Override</span>
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doneCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitPlatform platform) {
 
         }
 
-        @Override
-        public void errorCallback(int statusCode, SynergykitError errorObject) {
+        <span class="hljs-annotation">@Override</span>
+        <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">errorCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitError errorObject) {
 
         }
-    },true);
-```
+    },<span class="hljs-keyword">true</span>);</code></pre>
 
-### Retrive platform 
 
-| Parameter | Type | Notes | |
-|:-|:-|:-|:-:|
-|user |SynergykitUser| SynergykitUser or object extended SynergykitUser| **required**
-|platformId |String|  | **required**
-|listener |PlatformResponseListener|  | optional
-|parallelMode |boolean|Indicates whether the requests are provided in parallel or in series  | **required**
 
-```java
-Synergykit.getPlatform(user,"platformId",new PlatformResponseListener() {
-    @Override
-    public void doneCallback(int statusCode, SynergykitPlatform platform) {
+<h3 id="retrive-platform">Retrive platform</h3>
+
+<table>
+<thead>
+<tr>
+  <th align="left">Parameter</th>
+  <th align="left">Type</th>
+  <th align="left">Notes</th>
+  <th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td align="left">user</td>
+  <td align="left">SynergykitUser</td>
+  <td align="left">SynergykitUser or object extended SynergykitUser</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+<tr>
+  <td align="left">platformId</td>
+  <td align="left">String</td>
+  <td align="left"></td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+<tr>
+  <td align="left">listener</td>
+  <td align="left">PlatformResponseListener</td>
+  <td align="left"></td>
+  <td align="center">optional</td>
+</tr>
+<tr>
+  <td align="left">parallelMode</td>
+  <td align="left">boolean</td>
+  <td align="left">Indicates whether the requests are provided in parallel or in series</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+</tbody></table>
+
+
+
+
+<pre class="prettyprint"><code class="language-java hljs ">Synergykit.getPlatform(user,<span class="hljs-string">"platformId"</span>,<span class="hljs-keyword">new</span> PlatformResponseListener() {
+    <span class="hljs-annotation">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doneCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitPlatform platform) {
 
     }
 
-    @Override
-    public void errorCallback(int statusCode, SynergykitError errorObject) {
+    <span class="hljs-annotation">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">errorCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitError errorObject) {
 
     }
-},true);
-```
+},<span class="hljs-keyword">true</span>);</code></pre>
 
-### Update platform
-Platforms contain of a few parameters but only two are updatable. Save method executes `PUT` request if `_id` is set, it could change `development` and `registrationId`. 
 
-| Parameter | Type | Notes | |
-|:-|:-|:-|:-:|
-|user |SynergykitUser| SynergykitUser or object extended SynergykitUser| **required**
-|platform |SynergykitPlatform|  | **required**
-|listener |PlatformResponseListener|  | optional
-|parallelMode |boolean|Indicates whether the requests are provided in parallel or in series  | **required**
 
-```java
-Synergykit.updatePlatformInUser(user,platform,new PlatformResponseListener() {
-   @Override
-   public void doneCallback(int statusCode, SynergykitPlatform platform) {
+<h3 id="update-platform">Update platform</h3>
+
+<p>Platforms contain of a few parameters but only two are updatable. Save method executes <code>PUT</code> request if <code>_id</code> is set, it could change <code>development</code> and <code>registrationId</code>. </p>
+
+<table>
+<thead>
+<tr>
+  <th align="left">Parameter</th>
+  <th align="left">Type</th>
+  <th align="left">Notes</th>
+  <th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td align="left">user</td>
+  <td align="left">SynergykitUser</td>
+  <td align="left">SynergykitUser or object extended SynergykitUser</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+<tr>
+  <td align="left">platform</td>
+  <td align="left">SynergykitPlatform</td>
+  <td align="left"></td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+<tr>
+  <td align="left">listener</td>
+  <td align="left">PlatformResponseListener</td>
+  <td align="left"></td>
+  <td align="center">optional</td>
+</tr>
+<tr>
+  <td align="left">parallelMode</td>
+  <td align="left">boolean</td>
+  <td align="left">Indicates whether the requests are provided in parallel or in series</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+</tbody></table>
+
+
+
+
+<pre class="prettyprint"><code class="language-java hljs ">Synergykit.updatePlatformInUser(user,platform,<span class="hljs-keyword">new</span> PlatformResponseListener() {
+   <span class="hljs-annotation">@Override</span>
+   <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doneCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitPlatform platform) {
 
    }
 
-   @Override
-   public void errorCallback(int statusCode, SynergykitError errorObject) {
+   <span class="hljs-annotation">@Override</span>
+   <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">errorCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitError errorObject) {
 
    }
-},true);
-```
-### Delete platform
+},<span class="hljs-keyword">true</span>);</code></pre>
 
-| Parameter | Type | Notes | |
-|:-|:-|:-|:-:|
-|user |SynergykitUser| SynergykitUser or object extended SynergykitUser| **required**
-|platform |SynergykitPlatform|  | **required**
-|listener |DeleteResponseListener|  | optional
-|parallelMode |boolean|Indicates whether the requests are provided in parallel or in series  | **required**
 
-```java
-Synergykit.deletePlatform(user,platform,new DeleteResponseListener() {
-      @Override
-      public void doneCallback(int statusCode) {
+
+<h3 id="delete-platform">Delete platform</h3>
+
+<table>
+<thead>
+<tr>
+  <th align="left">Parameter</th>
+  <th align="left">Type</th>
+  <th align="left">Notes</th>
+  <th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td align="left">user</td>
+  <td align="left">SynergykitUser</td>
+  <td align="left">SynergykitUser or object extended SynergykitUser</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+<tr>
+  <td align="left">platform</td>
+  <td align="left">SynergykitPlatform</td>
+  <td align="left"></td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+<tr>
+  <td align="left">listener</td>
+  <td align="left">DeleteResponseListener</td>
+  <td align="left"></td>
+  <td align="center">optional</td>
+</tr>
+<tr>
+  <td align="left">parallelMode</td>
+  <td align="left">boolean</td>
+  <td align="left">Indicates whether the requests are provided in parallel or in series</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+</tbody></table>
+
+
+
+
+<pre class="prettyprint"><code class="language-java hljs ">Synergykit.deletePlatform(user,platform,<span class="hljs-keyword">new</span> DeleteResponseListener() {
+      <span class="hljs-annotation">@Override</span>
+      <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doneCallback</span>(<span class="hljs-keyword">int</span> statusCode) {
+
+      }
+
+      <span class="hljs-annotation">@Override</span>
+      <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">errorCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitError errorObject) {
+
+      }
+  },<span class="hljs-keyword">true</span>);</code></pre>
+
+
+
+<h3 id="activating-user">Activating user</h3>
+
+<p>By default, user is not activated. This mean, that you can use this state to validate user e-mail address by sending him activation link.</p>
+
+<p>To activate user, send an email with this activation link /v2.1/users/activation/[ACTIVATION_HASH]. You can provide parameter callback with url address where you want to redirect user after activation.</p>
+
+<p>Or <strong>if you know that e-mai address is valid</strong> you can activate user with SDK.</p>
+
+
+
+<pre class="prettyprint"><code class="language-java hljs ">user.setActivated(<span class="hljs-keyword">true</span>);</code></pre>
+
+
+
+<h3 id="login-user">Login user</h3>
+
+<p>If user was registrated via normal way, which means by email and password, you can authenticate him with login method.</p>
+
+<table>
+<thead>
+<tr>
+  <th align="left">Parameter</th>
+  <th align="left">Type</th>
+  <th align="left">Notes</th>
+  <th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td align="left">user</td>
+  <td align="left">SynergykitUser</td>
+  <td align="left">SynergykitUser with email and password</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+<tr>
+  <td align="left">listener</td>
+  <td align="left">UserResponseListener</td>
+  <td align="left"></td>
+  <td align="center">optional</td>
+</tr>
+</tbody></table>
+
+
+
+
+<pre class="prettyprint"><code class="language-java hljs ">Synergykit.loginUser(user,<span class="hljs-keyword">new</span> UserResponseListener() {
+      <span class="hljs-annotation">@Override</span>
+      <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doneCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitUser user) {
 
       }
 
-      @Override
-      public void errorCallback(int statusCode, SynergykitError errorObject) {
+      <span class="hljs-annotation">@Override</span>
+      <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">errorCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitError errorObject) {
 
       }
-  },true);
-```
+  });</code></pre>
 
-### Activating user
-By default, user is not activated. This mean, that you can use this state to validate user e-mail address by sending him activation link.
 
-To activate user, send an email with this activation link /v2.1/users/activation/[ACTIVATION_HASH]. You can provide parameter callback with url address where you want to redirect user after activation.
 
-Or **if you know that e-mai address is valid** you can activate user with SDK.
+<h2 id="communication">Communication</h2>
 
-```java
-user.setActivated(true);
-```
-### Login user
-If user was registrated via normal way, which means by email and password, you can authenticate him with login method.
+<p>In Synergykit you can communicate with your users by different ways. There are listed some methods below this section.</p>
 
-| Parameter | Type | Notes | |
-|:-|:-|:-|:-:|
-|user |SynergykitUser| SynergykitUser with email and password | **required**
-|listener | UserResponseListener |  | optional
+<p>One way is to sending push notifications into user devices. This action need to have filled your API key for Android devices in Settings, section Android. For push notifications into iOS devices you need to fill your password and certificates into Apple section in Settings.</p>
 
-```java
-Synergykit.loginUser(user,new UserResponseListener() {
-      @Override
-      public void doneCallback(int statusCode, SynergykitUser user) {
-          
-      }
+<p>Another way is to sending emails to your users. For this you need to create email templates in administration under Mailing section.</p>
 
-      @Override
-      public void errorCallback(int statusCode, SynergykitError errorObject) {
 
-      }
-  });
-```
 
-## Communication
-In Synergykit you can communicate with your users by different ways. There are listed some methods below this section.
+<h3 id="send-notification">Send notification</h3>
 
-One way is to sending push notifications into user devices. This action need to have filled your API key for Android devices in Settings, section Android. For push notifications into iOS devices you need to fill your password and certificates into Apple section in Settings.
+<table>
+<thead>
+<tr>
+  <th align="left">Parameter</th>
+  <th align="left">Type</th>
+  <th align="left">Notes</th>
+  <th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td align="left">notification</td>
+  <td align="left">NSArray</td>
+  <td align="left">List of recipient</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+<tr>
+  <td align="left">listener</td>
+  <td align="left">NotificationResponseListener</td>
+  <td align="left"></td>
+  <td align="center">optional</td>
+</tr>
+<tr>
+  <td align="left">parallelMode</td>
+  <td align="left">boolean</td>
+  <td align="left">Indicates whether the requests are provided in parallel or in series</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+</tbody></table>
 
-Another way is to sending emails to your users. For this you need to create email templates in administration under Mailing section.
 
-### Send notification
 
-| Parameter | Type | Notes | |
-|:-|:-|:-|:-:|
-|notification| NSArray| List of recipient | **required**
-|listener | NotificationResponseListener |  | optional
-|parallelMode |boolean|Indicates whether the requests are provided in parallel or in series  | **required**
 
-```java
-SynergykitNotification notification = SynergykitNotification
+<pre class="prettyprint"><code class="language-java hljs ">SynergykitNotification notification = SynergykitNotification
                                         .newInstance()
-                                        .setAlert("My notification")
-                                        .addUserId("userId")
-                                        .setPayload("payload");
+                                        .setAlert(<span class="hljs-string">"My notification"</span>)
+                                        .addUserId(<span class="hljs-string">"userId"</span>)
+                                        .setPayload(<span class="hljs-string">"payload"</span>);
 
-Synergykit.sendNotification(notification,new NotificationResponseListener() {
-    @Override
-    public void doneCallback(int statusCode) {
-
-    }
-
-    @Override
-    public void errorCallback(int statusCode, SynergykitError errorObject) {
+Synergykit.sendNotification(notification,<span class="hljs-keyword">new</span> NotificationResponseListener() {
+    <span class="hljs-annotation">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doneCallback</span>(<span class="hljs-keyword">int</span> statusCode) {
 
     }
-},true);
-```
-### Send e-mail
 
-| Parameter | Type | Notes | |
-|:-|:-|:-|:-:|
-|templateName | String| Name of e-mail template from SynergyKit | **required**
-|email |SynergykitEmail| E-mail information | **required**
-|listener | EmailResponseListener |  | optional
-|parallelMode |boolean|Indicates whether the requests are provided in parallel or in series  | **required**
+    <span class="hljs-annotation">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">errorCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitError errorObject) {
 
-```java
-SynergykitEmail email = SynergykitEmail
+    }
+},<span class="hljs-keyword">true</span>);</code></pre>
+
+
+
+<h3 id="send-e-mail">Send e-mail</h3>
+
+<table>
+<thead>
+<tr>
+  <th align="left">Parameter</th>
+  <th align="left">Type</th>
+  <th align="left">Notes</th>
+  <th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td align="left">templateName</td>
+  <td align="left">String</td>
+  <td align="left">Name of e-mail template from SynergyKit</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+<tr>
+  <td align="left">email</td>
+  <td align="left">SynergykitEmail</td>
+  <td align="left">E-mail information</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+<tr>
+  <td align="left">listener</td>
+  <td align="left">EmailResponseListener</td>
+  <td align="left"></td>
+  <td align="center">optional</td>
+</tr>
+<tr>
+  <td align="left">parallelMode</td>
+  <td align="left">boolean</td>
+  <td align="left">Indicates whether the requests are provided in parallel or in series</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+</tbody></table>
+
+
+
+
+<pre class="prettyprint"><code class="language-java hljs ">SynergykitEmail email = SynergykitEmail
                                .newInstace()
-                               .setEmail("name@domain.com")
-                               .setSubject("subject")
-                               .setFrom("your-email@domain.com");
+                               .setEmail(<span class="hljs-string">"name@domain.com"</span>)
+                               .setSubject(<span class="hljs-string">"subject"</span>)
+                               .setFrom(<span class="hljs-string">"your-email@domain.com"</span>);
 
-   Synergykit.sendEmail("templateName",email,new EmailResponseListener() {
-       @Override
-       public void doneCallback(int statusCode) {
-
-       }
-
-       @Override
-       public void errorCallback(int statusCode, SynergykitError errorObject) {
+   Synergykit.sendEmail(<span class="hljs-string">"templateName"</span>,email,<span class="hljs-keyword">new</span> EmailResponseListener() {
+       <span class="hljs-annotation">@Override</span>
+       <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doneCallback</span>(<span class="hljs-keyword">int</span> statusCode) {
 
        }
-   },false);
-```
-E-mail template should looks like this example.
-```
-<p>Hello %name%,</p>
-<br>
-<p>this e-mail was send from Synergykit Sample Application.</p>
-<br>
-<p>Synergykit Team</p>
-```
 
-## Files
-Synergykit can be also used for storing as much quantity of files as you need for your application.
-### Upload file
-Synergykit Android SDK supports upload bitmaps and byte array. If file is successfully uploaded `SynergykitFile` representing just created file object is returned. `SynergykitFile` contains path to file from where is file accessible.
+       <span class="hljs-annotation">@Override</span>
+       <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">errorCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitError errorObject) {
 
-| Parameter | Type | Notes | |
-|:-|:-|:-|:-:|
-|bitmap |Bitmap| Bitmap to upload | **required**
-|listener	|	FileResponseListener	|		|	optional	|
+       }
+   },<span class="hljs-keyword">false</span>);</code></pre>
 
-```java
-/*
+<p>E-mail template should looks like this example.</p>
+
+
+
+<pre class="prettyprint"><code class=" hljs xml"><span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Hello %name%,<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">br</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>this e-mail was send from Synergykit Sample Application.<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">br</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-title">p</span>&gt;</span>Synergykit Team<span class="hljs-tag">&lt;/<span class="hljs-title">p</span>&gt;</span></code></pre>
+
+
+
+<h2 id="files">Files</h2>
+
+<p>Synergykit can be also used for storing as much quantity of files as you need for your application.</p>
+
+
+
+<h3 id="upload-file">Upload file</h3>
+
+<p>Synergykit Android SDK supports upload bitmaps and byte array. If file is successfully uploaded <code>SynergykitFile</code> representing just created file object is returned. <code>SynergykitFile</code> contains path to file from where is file accessible.</p>
+
+<table>
+<thead>
+<tr>
+  <th align="left">Parameter</th>
+  <th align="left">Type</th>
+  <th align="left">Notes</th>
+  <th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td align="left">bitmap</td>
+  <td align="left">Bitmap</td>
+  <td align="left">Bitmap to upload</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+<tr>
+  <td align="left">listener</td>
+  <td align="left">FileResponseListener</td>
+  <td align="left"></td>
+  <td align="center">optional</td>
+</tr>
+</tbody></table>
+
+
+
+
+<pre class="prettyprint"><code class="language-java hljs "><span class="hljs-comment">/*
 * Example of bitmap uploading
-*/
+*/</span>
 
-Synergykit.createFile(bitmap,new FileResponseListener() {
-   @Override
-   public void doneCallback(int statusCode, SynergykitFile file) {
-       
-   }
-
-   @Override
-   public void errorCallback(int statusCode, SynergykitError errorObject) {
+Synergykit.createFile(bitmap,<span class="hljs-keyword">new</span> FileResponseListener() {
+   <span class="hljs-annotation">@Override</span>
+   <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doneCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitFile file) {
 
    }
-});
-```
-### Retrieve file by ID
 
-| Parameter | Type | Notes | |
-|:-|:-|:-|:-:|
-|fileId |String| File identification | **required**
-|listener	|	FileResponseListener	|		|	optional	
+   <span class="hljs-annotation">@Override</span>
+   <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">errorCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitError errorObject) {
 
-```java
-Synergykit.getFile("fileId",new FileResponseListener() {
-    @Override
-    public void doneCallback(int statusCode, SynergykitFile file) {
+   }
+});</code></pre>
+
+
+
+<h3 id="retrieve-file-by-id">Retrieve file by ID</h3>
+
+<table>
+<thead>
+<tr>
+  <th align="left">Parameter</th>
+  <th align="left">Type</th>
+  <th align="left">Notes</th>
+  <th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td align="left">fileId</td>
+  <td align="left">String</td>
+  <td align="left">File identification</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+<tr>
+  <td align="left">listener</td>
+  <td align="left">FileResponseListener</td>
+  <td align="left"></td>
+  <td align="center">optional</td>
+</tr>
+</tbody></table>
+
+
+
+
+<pre class="prettyprint"><code class="language-java hljs ">Synergykit.getFile(<span class="hljs-string">"fileId"</span>,<span class="hljs-keyword">new</span> FileResponseListener() {
+    <span class="hljs-annotation">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doneCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitFile file) {
 
     }
 
-    @Override
-    public void errorCallback(int statusCode, SynergykitError errorObject) {
+    <span class="hljs-annotation">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">errorCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitError errorObject) {
 
     }
-},false);
-```
-### Delete file
+},<span class="hljs-keyword">false</span>);</code></pre>
 
-| Parameter | Type | Notes | |
-|:-|:-|:-|:-:|
-|fileId |String| File identification | **required**
-|listener	|	DeleteResponseListener	|		|	optional	
 
-```java
-Synergykit.deleteFile("fileId",new DeleteResponseListener() {
-    @Override
-    public void doneCallback(int statusCode) {
+
+<h3 id="delete-file">Delete file</h3>
+
+<table>
+<thead>
+<tr>
+  <th align="left">Parameter</th>
+  <th align="left">Type</th>
+  <th align="left">Notes</th>
+  <th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td align="left">fileId</td>
+  <td align="left">String</td>
+  <td align="left">File identification</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+<tr>
+  <td align="left">listener</td>
+  <td align="left">DeleteResponseListener</td>
+  <td align="left"></td>
+  <td align="center">optional</td>
+</tr>
+</tbody></table>
+
+
+
+
+<pre class="prettyprint"><code class="language-java hljs ">Synergykit.deleteFile(<span class="hljs-string">"fileId"</span>,<span class="hljs-keyword">new</span> DeleteResponseListener() {
+    <span class="hljs-annotation">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doneCallback</span>(<span class="hljs-keyword">int</span> statusCode) {
 
     }
 
-    @Override
-    public void errorCallback(int statusCode, SynergykitError errorObject) {
+    <span class="hljs-annotation">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">errorCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitError errorObject) {
 
     }
-},true);
-```
-
-## Cloud Code
-Our vision is to let developers build any app without dealing with servers. For complex apps, sometimes you just need a bit of logic that isn't running on a mobile device. Cloud Code makes this possible.
-
-Cloud Code runs in the Node.js jailed sandbox and uses strict JavaScript language with some prepared modules and variables, which you can use for your development.
+},<span class="hljs-keyword">true</span>);</code></pre>
 
 
-### Run cloud code
 
-| Parameter | Type | Notes | |
-|:-|:-|:-|:-:|
-|	cloudCode	|	SynergykitCloudCode	|	SynergykitCloudCode or object extended SynergykitCloudCode with other parameters	|	**required**	|
-|	type	|	Type	|	Return object type (Must extend SynergykitObject)	|	**required**	|
-|	listener	|	ResponseListener()	|		|	optional	|
+<h2 id="cloud-code">Cloud Code</h2>
 
-```java
- SynergykitCloudCode cloudCode = SynergykitCloudCode.newInstance("cloudCodeName");
+<p>Our vision is to let developers build any app without dealing with servers. For complex apps, sometimes you just need a bit of logic that isn’t running on a mobile device. Cloud Code makes this possible.</p>
 
- Synergykit.invokeCloudCode(cloudCode, SynergykitObject.class,new ResponseListener() {
-     @Override
-     public void doneCallback(int statusCode, SynergykitObject object) {
+<p>Cloud Code runs in the Node.js jailed sandbox and uses strict JavaScript language with some prepared modules and variables, which you can use for your development.</p>
+
+
+
+<h3 id="run-cloud-code">Run cloud code</h3>
+
+<table>
+<thead>
+<tr>
+  <th align="left">Parameter</th>
+  <th align="left">Type</th>
+  <th align="left">Notes</th>
+  <th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td align="left">cloudCode</td>
+  <td align="left">SynergykitCloudCode</td>
+  <td align="left">SynergykitCloudCode or object extended SynergykitCloudCode with other parameters</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+<tr>
+  <td align="left">type</td>
+  <td align="left">Type</td>
+  <td align="left">Return object type (Must extend SynergykitObject)</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+<tr>
+  <td align="left">listener</td>
+  <td align="left">ResponseListener()</td>
+  <td align="left"></td>
+  <td align="center">optional</td>
+</tr>
+</tbody></table>
+
+
+
+
+<pre class="prettyprint"><code class="language-java hljs "> SynergykitCloudCode cloudCode = SynergykitCloudCode.newInstance(<span class="hljs-string">"cloudCodeName"</span>);
+
+ Synergykit.invokeCloudCode(cloudCode, SynergykitObject.class,<span class="hljs-keyword">new</span> ResponseListener() {
+     <span class="hljs-annotation">@Override</span>
+     <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doneCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitObject object) {
 
      }
 
-     @Override
-     public void errorCallback(int statusCode, SynergykitError errorObject) {
+     <span class="hljs-annotation">@Override</span>
+     <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">errorCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitError errorObject) {
 
      }
- },true);
-```
+ },<span class="hljs-keyword">true</span>);</code></pre>
 
-Example cloud code function should looks like this.
-```
-callback("Hello " + parameters.name + "!")
-```
-## Batch request
-We know that internet connection is sometimes unstable and we know it's not really good for synchronization algorithm where dozens of requests need to be executed without mistake. Batch request minimizes risk with connection failure - it's all in one or nothing, not first five request, then two failed (walk under the bridge) and at the end three successful.
+<p>Example cloud code function should looks like this.</p>
 
-### BatchItem
-You can batch every request you can imagine with `SynergykitBatchItem` object. At first create batch item that says where and how to do it.
 
-| Parameter | Type | Notes | |
-|:-|:-|:-|:-:|
-|	method	|	String	|	REST method	|	**required**	|
-|	endpoint	|	SynergykitEndpoint	|	REST API endpoint	|	**required**	|
-|	body	|	Child of SynergykitObject	|	POST request body	|	optional	|
 
-```java
-SynergykitEndpoint endpoint = UriBuilder.newInstance()
+<pre class="prettyprint"><code class=" hljs erlang"><span class="hljs-function"><span class="hljs-title">callback</span><span class="hljs-params">(<span class="hljs-string">"Hello "</span> + parameters.name + <span class="hljs-string">"!"</span>)</span></span></code></pre>
+
+
+
+<h2 id="batch-request">Batch request</h2>
+
+<p>We know that internet connection is sometimes unstable and we know it’s not really good for synchronization algorithm where dozens of requests need to be executed without mistake. Batch request minimizes risk with connection failure - it’s all in one or nothing, not first five request, then two failed (walk under the bridge) and at the end three successful.</p>
+
+
+
+<h3 id="batchitem">BatchItem</h3>
+
+<p>You can batch every request you can imagine with <code>SynergykitBatchItem</code> object. At first create batch item that says where and how to do it.</p>
+
+<table>
+<thead>
+<tr>
+  <th align="left">Parameter</th>
+  <th align="left">Type</th>
+  <th align="left">Notes</th>
+  <th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td align="left">method</td>
+  <td align="left">String</td>
+  <td align="left">REST method</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+<tr>
+  <td align="left">endpoint</td>
+  <td align="left">SynergykitEndpoint</td>
+  <td align="left">REST API endpoint</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+<tr>
+  <td align="left">body</td>
+  <td align="left">Child of SynergykitObject</td>
+  <td align="left">POST request body</td>
+  <td align="center">optional</td>
+</tr>
+</tbody></table>
+
+
+
+
+<pre class="prettyprint"><code class="language-java hljs ">SynergykitEndpoint endpoint = UriBuilder.newInstance()
                                         .setResource(Resource.RESOURCE_DATA)
-                                        .setRecordId("resourceId")
+                                        .setRecordId(<span class="hljs-string">"resourceId"</span>)
                                         .buildEndpoint();
 
-SynergykitBatchItem batchItem = new SynergykitBatchItem(Synergykit.GET,endpoint);
-```
-### Adding to batch
-Every batch item need to be add to batch which you can send. At firt you must initialize batch. Then you can add BatchItems and send them all together.
-```java
-Synergykit.initBatch("batchId");
+SynergykitBatchItem batchItem = <span class="hljs-keyword">new</span> SynergykitBatchItem(Synergykit.GET,endpoint);</code></pre>
 
-Synergykit.getBatch("batchId").add(batchItem-0);
-Synergykit.getBatch("batchId").add(batchItem-1);
+
+
+<h3 id="adding-to-batch">Adding to batch</h3>
+
+<p>Every batch item need to be add to batch which you can send. At firt you must initialize batch. Then you can add BatchItems and send them all together.</p>
+
+
+
+<pre class="prettyprint"><code class="language-java hljs ">Synergykit.initBatch(<span class="hljs-string">"batchId"</span>);
+
+Synergykit.getBatch(<span class="hljs-string">"batchId"</span>).add(batchItem-<span class="hljs-number">0</span>);
+Synergykit.getBatch(<span class="hljs-string">"batchId"</span>).add(batchItem-<span class="hljs-number">1</span>);
 .
 .
 .
-Synergykit.getBatch("batchId").add(batchItem-n);
-```
-### Sending batch
-Batch executes every request in the order in which they were added.
+Synergykit.getBatch(<span class="hljs-string">"batchId"</span>).add(batchItem-n);</code></pre>
 
-| Parameter | Type | Notes | |
-|:-|:-|:-|:-:|
-|	batchId	|	String	|	Batch identification	|	**required**	|
-|	listener	|	BatchResponseListener	|		|	optional	|
-|	parallelMode	|	boolean	|		|	optional	|
 
-```java
-Synergykit.sendBatch("batchId",new BatchResponseListener() {
-    @Override
-    public void doneCallback(int statusCode, SynergykitBatchResponse[] batchResponse) {
+
+<h3 id="sending-batch">Sending batch</h3>
+
+<p>Batch executes every request in the order in which they were added.</p>
+
+<table>
+<thead>
+<tr>
+  <th align="left">Parameter</th>
+  <th align="left">Type</th>
+  <th align="left">Notes</th>
+  <th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+  <td align="left">batchId</td>
+  <td align="left">String</td>
+  <td align="left">Batch identification</td>
+  <td align="center"><strong>required</strong></td>
+</tr>
+<tr>
+  <td align="left">listener</td>
+  <td align="left">BatchResponseListener</td>
+  <td align="left"></td>
+  <td align="center">optional</td>
+</tr>
+<tr>
+  <td align="left">parallelMode</td>
+  <td align="left">boolean</td>
+  <td align="left"></td>
+  <td align="center">optional</td>
+</tr>
+</tbody></table>
+
+
+
+
+<pre class="prettyprint"><code class="language-java hljs ">Synergykit.sendBatch(<span class="hljs-string">"batchId"</span>,<span class="hljs-keyword">new</span> BatchResponseListener() {
+    <span class="hljs-annotation">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doneCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitBatchResponse[] batchResponse) {
 
     }
 
-    @Override
-    public void errorCallback(int statusCode, SynergykitError errorObject) {
+    <span class="hljs-annotation">@Override</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">errorCallback</span>(<span class="hljs-keyword">int</span> statusCode, SynergykitError errorObject) {
 
     }
-},true);
-```
-## Cache
-The SynergyKit Android SDK provides Http response cache (HttpResponseCache). Http response cache caches all of your application's HTTP requests. This cache requires Android 4.0  or later.
-
-### Install cache
-You can install this cache with default cache dir size (10 MiB):
-```java
-SynergyKit.installCache(getApplicationContext());
-```
-
-Or you can install this cache with your own cache dir size:
-```java
-long cacheSize = 8 * 1024 * 1024; //8 MiB
-SynergyKit.installCache(getApplicationContext(), cacheSize);
-```
-###Flush cache
-You can also flush installed cache:
-
-```java
-SynergyKit.flushCache();
-```
+},<span class="hljs-keyword">true</span>);</code></pre>
 
 
-## Changelog
-### Version 2.1.3
+
+<h2 id="cache">Cache</h2>
+
+<p>The SynergyKit Android SDK provides Http response cache (HttpResponseCache). Http response cache caches all of your application’s HTTP requests. This cache requires Android 4.0  or later.</p>
 
 
-## Author
 
-<img src="http://letsgood.com/src/img/logo-letsgood.png" alt="SynergyKIT" title="SynergyKIT" width="10%"> 
+<h3 id="install-cache">Install cache</h3>
 
-Letsgood.com s.r.o., Prague, Heart of Europe
+<p>You can install this cache with default cache dir size (10 MiB):</p>
 
-development@letsgood.com, http://letsgood.com/en
 
-## License
 
-Synergykit SDK Android is available under the Apache 2.0 licence. See the LICENSE file for more info.
+<pre class="prettyprint"><code class="language-java hljs ">SynergyKit.installCache(getApplicationContext());</code></pre>
+
+<p>Or you can install this cache with your own cache dir size:</p>
+
+
+
+<pre class="prettyprint"><code class="language-java hljs "><span class="hljs-keyword">long</span> cacheSize = <span class="hljs-number">8</span> * <span class="hljs-number">1024</span> * <span class="hljs-number">1024</span>; <span class="hljs-comment">//8 MiB</span>
+SynergyKit.installCache(getApplicationContext(), cacheSize);</code></pre>
+
+
+
+<h3 id="flush-cache">Flush cache</h3>
+
+<p>You can also flush installed cache:</p>
+
+
+
+<pre class="prettyprint"><code class="language-java hljs ">SynergyKit.flushCache();</code></pre>
+
+
+
+<h2 id="changelog">Changelog</h2>
+
+
+
+<h3 id="version-211">Version 2.1.1</h3>
+
+
+
+<h2 id="author">Author</h2>
+
+<p><img src="http://letsgood.com/src/img/logo-letsgood.png" alt="SynergyKIT" title="SynergyKIT" width="10%"> </p>
+
+<p>Letsgood.com s.r.o., Prague, Heart of Europe</p>
+
+<p>development@letsgood.com, <a href="http://letsgood.com/en">http://letsgood.com/en</a></p>
+
+
+
+<h2 id="license">License</h2>
+
+<p>Synergykit SDK Android is available under the Apache 2.0 licence. See the LICENSE file for more info.</p>
