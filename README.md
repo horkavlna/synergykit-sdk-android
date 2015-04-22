@@ -1,7 +1,7 @@
 <h1 id="synergykit-android-sdk">Synergykit Android SDK</h1>
 
 <p align="left">
-<img src="https://synergykit.blob.core.windows.net/synergykit/56a5f0b93ad04ca42265cfab4e1810fb.png" alt="SynergyKIT" title="SynergyKit">
+<img src="https://synergykit.blob.core.windows.net/synergykit/56a5f0b93ad04ca42265cfab4e1810fb.png" alt="SynergyKit" title="SynergyKit">
 </p>
 
 <p>Letsgood.com runs Backend as a Service Synergykit for <em>fast and simple mobile/web/desktop applications development</em>. Synergykit allows enterpreneurs implement an idea to project fast and low cost like Lean Startup, validates and runs product.</p>
@@ -2066,7 +2066,7 @@ SynergyKit.installCache(getApplicationContext(), cacheSize);</code></pre>
 
 <h2 id="author">Author</h2>
 
-<p><img src="http://letsgood.com/src/img/logo-letsgood.png" alt="SynergyKIT" title="SynergyKIT" width="10%"> </p>
+<p><img src="http://letsgood.com/src/img/logo-letsgood.png" alt="SynergyKit" title="SynergyKit" width="10%"> </p>
 
 <p>Letsgood.com s.r.o., Prague, Heart of Europe</p>
 
